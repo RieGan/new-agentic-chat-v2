@@ -1,0 +1,8 @@
+{
+  "gate": "temporal-replay",
+  "result": "PASS",
+  "durationMs": 3717,
+  "tests": 10,
+  "externalActivitiesDuringReplay": 0,
+  "postCommitRetryCanonicalEffects": 1
+}

@@ -1,0 +1,40 @@
+{
+  "result": "PASS",
+  "probes": [
+    {
+      "class": "stale state",
+      "result": "PASS",
+      "evidence": "stale lease and stale SSE cursor"
+    },
+    {
+      "class": "dirty worktree",
+      "result": "NOT_APPLICABLE",
+      "evidence": "git operations prohibited by task contract"
+    },
+    {
+      "class": "hung or long command",
+      "result": "PASS",
+      "evidence": "600000ms command timeout"
+    },
+    {
+      "class": "flaky timing",
+      "result": "PASS",
+      "evidence": "health and runtime-state barriers"
+    },
+    {
+      "class": "misleading success output",
+      "result": "PASS",
+      "evidence": "exact pass-count assertions"
+    },
+    {
+      "class": "cancel/resume",
+      "result": "NOT_APPLICABLE",
+      "evidence": "no cancellation contract in MVP"
+    },
+    {
+      "class": "repeated interruptions",
+      "result": "PASS",
+      "evidence": "two isolated worker restarts"
+    }
+  ]
+}
