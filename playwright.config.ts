@@ -29,7 +29,7 @@ export default defineConfig({
     },
     {
       name: "runtime",
-      testIgnore: ["ui-happy.spec.ts", "ui-adversarial.spec.ts"],
+      testIgnore: "**/ui-*.spec.ts",
     },
   ],
 })
