@@ -1,0 +1,664 @@
+{
+  "metadata": {
+    "runtime": "simple_loop",
+    "testId": "F08",
+    "promptId": "P09",
+    "fixtureNamespace": "wait-reject",
+    "testFile": "/Users/riegan/Project/ruangguru/new-agentic-chat-v2/packages/testkit/e2e/simple-loop-durable.spec.ts",
+    "testTitle": "F08 @restart pending approval rejection preserves the binding",
+    "runtimeDiagnostics": [
+      {
+        "waiting": {
+          "runId": "run_wait-reject_4",
+          "consumedSteps": 3,
+          "wait": {
+            "status": "waiting_for_admin",
+            "callId": "call_send_wait-reject",
+            "approvalId": "approval_wait-reject_17"
+          },
+          "status": "waiting_for_admin"
+        },
+        "decision": "reject",
+        "simulatedSends": 0
+      }
+    ],
+    "executionOutcome": {
+      "runId": "run_wait-reject_4",
+      "status": "completed",
+      "text": "The message was not sent.",
+      "consumedSteps": 4
+    }
+  },
+  "runId": "run_wait-reject_4",
+  "actors": [
+    {
+      "actor": "mvp_user",
+      "action": "message"
+    },
+    {
+      "actor": "ai",
+      "action": "final_response"
+    },
+    {
+      "actor": "mvp_admin",
+      "action": "rejected"
+    }
+  ],
+  "stableIds": {
+    "runId": "run_wait-reject_4",
+    "callIds": [
+      "call_preview_wait-reject",
+      "call_send_wait-reject"
+    ],
+    "jobIds": [],
+    "approvalIds": [
+      "approval_wait-reject_17"
+    ],
+    "commandIds": []
+  },
+  "observedSkill": {
+    "skillId": "communication_assistant",
+    "version": "1",
+    "allowedTools": [
+      "notification.preview",
+      "notification.send_email"
+    ]
+  },
+  "observedToolCalls": [
+    {
+      "callId": "call_preview_wait-reject",
+      "toolName": "notification.preview",
+      "status": "completed",
+      "arguments": {
+        "body": "Approval",
+        "subject": "MVP",
+        "recipient": "qa@example.com"
+      },
+      "result": {
+        "toolName": "notification.preview",
+        "previewId": "preview_021dfc23575efbf2e3e9af27",
+        "normalizedMessage": {
+          "body": "Approval",
+          "subject": "MVP",
+          "recipient": "qa@example.com"
+        }
+      },
+      "error": null
+    },
+    {
+      "callId": "call_send_wait-reject",
+      "toolName": "notification.send_email",
+      "status": "rejected",
+      "arguments": {
+        "previewId": "preview_call_preview_wait-reject"
+      },
+      "result": {
+        "status": "not_sent",
+        "toolName": "notification.send_email"
+      },
+      "error": null
+    }
+  ],
+  "observedApprovals": [
+    {
+      "approvalId": "approval_wait-reject_17",
+      "callId": "call_send_wait-reject",
+      "status": "rejected",
+      "actorId": "mvp_admin",
+      "decision": "rejected"
+    }
+  ],
+  "observedJobs": [],
+  "finalResponse": "The message was not sent.",
+  "finalStatus": "completed",
+  "projections": {
+    "user": {
+      "viewer": "user",
+      "run": {
+        "runId": "run_wait-reject_4",
+        "conversationId": "conversation_wait-reject",
+        "runtime": "simple_loop",
+        "status": "completed",
+        "version": 11,
+        "consumedSteps": 4,
+        "selectedSkill": {
+          "skillId": "communication_assistant",
+          "version": "1",
+          "instructions": "Preview a message before requesting permission to send it.",
+          "allowedTools": [
+            "notification.preview",
+            "notification.send_email"
+          ]
+        },
+        "cursor": {
+          "runId": "run_wait-reject_4",
+          "sequence": 12
+        }
+      },
+      "events": [
+        {
+          "eventId": "event_wait-reject_2",
+          "runId": "run_wait-reject_4",
+          "sequence": 1,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait-reject_5",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_wait-reject_1",
+            "actor": "user",
+            "content": "Preview and send the notification."
+          }
+        },
+        {
+          "eventId": "event_wait-reject_6",
+          "runId": "run_wait-reject_4",
+          "sequence": 2,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait-reject_7",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "queued",
+            "current": "running"
+          }
+        },
+        {
+          "eventId": "event_wait-reject_8",
+          "runId": "run_wait-reject_4",
+          "sequence": 3,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait-reject_9",
+          "type": "skill.loaded",
+          "visibility": "user",
+          "payload": {
+            "skillId": "communication_assistant",
+            "version": "1",
+            "instructions": "Preview a message before requesting permission to send it.",
+            "allowedTools": [
+              "notification.preview",
+              "notification.send_email"
+            ]
+          }
+        },
+        {
+          "eventId": "event_wait-reject_12",
+          "runId": "run_wait-reject_4",
+          "sequence": 4,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait-reject_14",
+          "type": "tool.call.started",
+          "visibility": "user",
+          "payload": {
+            "callId": "call_preview_wait-reject",
+            "toolName": "notification.preview"
+          }
+        },
+        {
+          "eventId": "event_wait-reject_13",
+          "runId": "run_wait-reject_4",
+          "sequence": 5,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait-reject_14",
+          "type": "tool.call.completed",
+          "visibility": "user",
+          "payload": {
+            "callId": "call_preview_wait-reject",
+            "toolName": "notification.preview",
+            "result": {
+              "toolName": "notification.preview",
+              "previewId": "preview_021dfc23575efbf2e3e9af27",
+              "normalizedMessage": {
+                "recipient": "qa@example.com",
+                "subject": "MVP",
+                "body": "Approval"
+              }
+            }
+          }
+        },
+        {
+          "eventId": "event_wait-reject_20",
+          "runId": "run_wait-reject_4",
+          "sequence": 7,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait-reject_21",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "waiting_for_admin"
+          }
+        },
+        {
+          "eventId": "event_wait-reject_23",
+          "runId": "run_wait-reject_4",
+          "sequence": 9,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait-reject_25",
+          "type": "tool.call.rejected",
+          "visibility": "user",
+          "payload": {
+            "callId": "call_send_wait-reject",
+            "toolName": "notification.send_email",
+            "reason": "not sent"
+          }
+        },
+        {
+          "eventId": "event_wait-reject_24",
+          "runId": "run_wait-reject_4",
+          "sequence": 10,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait-reject_25",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "waiting_for_admin",
+            "current": "running"
+          }
+        },
+        {
+          "eventId": "event_wait-reject_28",
+          "runId": "run_wait-reject_4",
+          "sequence": 11,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait-reject_29",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_wait-reject_32",
+            "actor": "ai",
+            "content": "The message was not sent."
+          }
+        },
+        {
+          "eventId": "event_wait-reject_30",
+          "runId": "run_wait-reject_4",
+          "sequence": 12,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait-reject_31",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "completed"
+          }
+        }
+      ]
+    },
+    "admin": {
+      "viewer": "admin",
+      "run": {
+        "runId": "run_wait-reject_4",
+        "conversationId": "conversation_wait-reject",
+        "runtime": "simple_loop",
+        "status": "completed",
+        "version": 11,
+        "consumedSteps": 4,
+        "selectedSkill": {
+          "skillId": "communication_assistant",
+          "version": "1",
+          "instructions": "Preview a message before requesting permission to send it.",
+          "allowedTools": [
+            "notification.preview",
+            "notification.send_email"
+          ]
+        },
+        "cursor": {
+          "runId": "run_wait-reject_4",
+          "sequence": 12
+        }
+      },
+      "events": [
+        {
+          "eventId": "event_wait-reject_2",
+          "runId": "run_wait-reject_4",
+          "sequence": 1,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait-reject_5",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_wait-reject_1",
+            "actor": "user",
+            "content": "Preview and send the notification."
+          }
+        },
+        {
+          "eventId": "event_wait-reject_6",
+          "runId": "run_wait-reject_4",
+          "sequence": 2,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait-reject_7",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "queued",
+            "current": "running"
+          }
+        },
+        {
+          "eventId": "event_wait-reject_8",
+          "runId": "run_wait-reject_4",
+          "sequence": 3,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait-reject_9",
+          "type": "skill.loaded",
+          "visibility": "user",
+          "payload": {
+            "skillId": "communication_assistant",
+            "version": "1",
+            "instructions": "Preview a message before requesting permission to send it.",
+            "allowedTools": [
+              "notification.preview",
+              "notification.send_email"
+            ]
+          }
+        },
+        {
+          "eventId": "event_wait-reject_12",
+          "runId": "run_wait-reject_4",
+          "sequence": 4,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait-reject_14",
+          "type": "tool.call.started",
+          "visibility": "user",
+          "payload": {
+            "callId": "call_preview_wait-reject",
+            "toolName": "notification.preview"
+          }
+        },
+        {
+          "eventId": "event_wait-reject_13",
+          "runId": "run_wait-reject_4",
+          "sequence": 5,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait-reject_14",
+          "type": "tool.call.completed",
+          "visibility": "user",
+          "payload": {
+            "callId": "call_preview_wait-reject",
+            "toolName": "notification.preview",
+            "result": {
+              "toolName": "notification.preview",
+              "previewId": "preview_021dfc23575efbf2e3e9af27",
+              "normalizedMessage": {
+                "recipient": "qa@example.com",
+                "subject": "MVP",
+                "body": "Approval"
+              }
+            }
+          }
+        },
+        {
+          "eventId": "event_wait-reject_19",
+          "runId": "run_wait-reject_4",
+          "sequence": 6,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "call_send_wait-reject",
+          "type": "approval.requested",
+          "visibility": "admin",
+          "payload": {
+            "approvalId": "approval_wait-reject_17",
+            "callId": "call_send_wait-reject",
+            "toolName": "notification.send_email",
+            "argumentsHash": "fb4035ddf2d08fdb4e0f53870fd3f94f8034d8a70364950dfa9aa402cdc9edc2",
+            "expiresAt": "2026-08-16T12:05:00.000Z"
+          }
+        },
+        {
+          "eventId": "event_wait-reject_20",
+          "runId": "run_wait-reject_4",
+          "sequence": 7,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait-reject_21",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "waiting_for_admin"
+          }
+        },
+        {
+          "eventId": "approval_action_wait-reject_22-event",
+          "runId": "run_wait-reject_4",
+          "sequence": 8,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "call_send_wait-reject",
+          "type": "approval.rejected",
+          "visibility": "admin",
+          "payload": {
+            "approvalId": "approval_wait-reject_17",
+            "callId": "call_send_wait-reject",
+            "actorId": "mvp_admin",
+            "reason": "MVP rejection test"
+          }
+        },
+        {
+          "eventId": "event_wait-reject_23",
+          "runId": "run_wait-reject_4",
+          "sequence": 9,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait-reject_25",
+          "type": "tool.call.rejected",
+          "visibility": "user",
+          "payload": {
+            "callId": "call_send_wait-reject",
+            "toolName": "notification.send_email",
+            "reason": "not sent"
+          }
+        },
+        {
+          "eventId": "event_wait-reject_24",
+          "runId": "run_wait-reject_4",
+          "sequence": 10,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait-reject_25",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "waiting_for_admin",
+            "current": "running"
+          }
+        },
+        {
+          "eventId": "event_wait-reject_28",
+          "runId": "run_wait-reject_4",
+          "sequence": 11,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait-reject_29",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_wait-reject_32",
+            "actor": "ai",
+            "content": "The message was not sent."
+          }
+        },
+        {
+          "eventId": "event_wait-reject_30",
+          "runId": "run_wait-reject_4",
+          "sequence": 12,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait-reject_31",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "completed"
+          }
+        }
+      ]
+    }
+  },
+  "normalizedEventTrace": {
+    "events": [
+      {
+        "position": 1,
+        "type": "message.completed",
+        "visibility": "user",
+        "payload": {
+          "messageId": "message_wait-reject_1",
+          "actor": "user",
+          "content": "Preview and send the notification."
+        }
+      },
+      {
+        "position": 2,
+        "type": "run.status_changed",
+        "visibility": "user",
+        "payload": {
+          "previous": "queued",
+          "current": "running"
+        }
+      },
+      {
+        "position": 3,
+        "type": "skill.loaded",
+        "visibility": "user",
+        "payload": {
+          "skillId": "communication_assistant",
+          "version": "1",
+          "instructions": "Preview a message before requesting permission to send it.",
+          "allowedTools": [
+            "notification.preview",
+            "notification.send_email"
+          ]
+        }
+      },
+      {
+        "position": 4,
+        "type": "tool.call.started",
+        "visibility": "user",
+        "payload": {
+          "callId": "call_preview_wait-reject",
+          "toolName": "notification.preview"
+        }
+      },
+      {
+        "position": 5,
+        "type": "tool.call.completed",
+        "visibility": "user",
+        "payload": {
+          "callId": "call_preview_wait-reject",
+          "toolName": "notification.preview",
+          "result": {
+            "toolName": "notification.preview",
+            "previewId": "preview_021dfc23575efbf2e3e9af27",
+            "normalizedMessage": {
+              "recipient": "qa@example.com",
+              "subject": "MVP",
+              "body": "Approval"
+            }
+          }
+        }
+      },
+      {
+        "position": 6,
+        "type": "approval.requested",
+        "visibility": "admin",
+        "payload": {
+          "approvalId": "approval_wait-reject_17",
+          "callId": "call_send_wait-reject",
+          "toolName": "notification.send_email",
+          "argumentsHash": "fb4035ddf2d08fdb4e0f53870fd3f94f8034d8a70364950dfa9aa402cdc9edc2",
+          "expiresAt": "2026-08-16T12:05:00.000Z"
+        }
+      },
+      {
+        "position": 7,
+        "type": "run.status_changed",
+        "visibility": "user",
+        "payload": {
+          "previous": "running",
+          "current": "waiting_for_admin"
+        }
+      },
+      {
+        "position": 8,
+        "type": "approval.rejected",
+        "visibility": "admin",
+        "payload": {
+          "approvalId": "approval_wait-reject_17",
+          "callId": "call_send_wait-reject",
+          "actorId": "mvp_admin",
+          "reason": "MVP rejection test"
+        }
+      },
+      {
+        "position": 9,
+        "type": "tool.call.rejected",
+        "visibility": "user",
+        "payload": {
+          "callId": "call_send_wait-reject",
+          "toolName": "notification.send_email",
+          "reason": "not sent"
+        }
+      },
+      {
+        "position": 10,
+        "type": "run.status_changed",
+        "visibility": "user",
+        "payload": {
+          "previous": "waiting_for_admin",
+          "current": "running"
+        }
+      },
+      {
+        "position": 11,
+        "type": "message.completed",
+        "visibility": "user",
+        "payload": {
+          "messageId": "message_wait-reject_32",
+          "actor": "ai",
+          "content": "The message was not sent."
+        }
+      },
+      {
+        "position": 12,
+        "type": "run.status_changed",
+        "visibility": "user",
+        "payload": {
+          "previous": "running",
+          "current": "completed"
+        }
+      }
+    ]
+  },
+  "schemaVersion": 2,
+  "provenance": {
+    "source": "postgresql_projection_capture",
+    "capturedRunId": "run_wait-reject_4",
+    "processId": 80944,
+    "observationDigest": "c29ab279af2169b9ff15b3396641b11bbdd3da3da02a02db98c817772e92ecee"
+  },
+  "observedApprovalJobEvents": [
+    {
+      "position": 6,
+      "type": "approval.requested",
+      "visibility": "admin",
+      "payload": {
+        "approvalId": "approval_wait-reject_17",
+        "callId": "call_send_wait-reject",
+        "toolName": "notification.send_email",
+        "argumentsHash": "fb4035ddf2d08fdb4e0f53870fd3f94f8034d8a70364950dfa9aa402cdc9edc2",
+        "expiresAt": "2026-08-16T12:05:00.000Z"
+      }
+    },
+    {
+      "position": 8,
+      "type": "approval.rejected",
+      "visibility": "admin",
+      "payload": {
+        "approvalId": "approval_wait-reject_17",
+        "callId": "call_send_wait-reject",
+        "actorId": "mvp_admin",
+        "reason": "MVP rejection test"
+      }
+    }
+  ],
+  "result": "PASS",
+  "failureDetails": null,
+  "evidenceLinks": [
+    "acceptance/simple_loop/F08/P09.json"
+  ]
+}

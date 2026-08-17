@@ -1,0 +1,390 @@
+{
+  "metadata": {
+    "runtime": "simple_loop",
+    "testId": "F09",
+    "promptId": "P10",
+    "fixtureNamespace": "wait-admin",
+    "testFile": "/Users/riegan/Project/ruangguru/new-agentic-chat-v2/packages/testkit/e2e/simple-loop-durable.spec.ts",
+    "testTitle": "F09 hidden Admin guidance resumes the same User-waiting run",
+    "runtimeDiagnostics": [
+      {
+        "commandStatus": "applied"
+      }
+    ],
+    "executionOutcome": {
+      "runId": "run_wait-admin_4",
+      "status": "completed",
+      "text": "ADMIN_GUIDANCE_OK",
+      "consumedSteps": 2
+    }
+  },
+  "runId": "run_wait-admin_4",
+  "actors": [
+    {
+      "actor": "mvp_user",
+      "action": "message"
+    },
+    {
+      "actor": "ai",
+      "action": "final_response"
+    },
+    {
+      "actor": "mvp_user",
+      "action": "message"
+    },
+    {
+      "actor": "mvp_admin",
+      "action": "applied"
+    }
+  ],
+  "stableIds": {
+    "runId": "run_wait-admin_4",
+    "callIds": [],
+    "jobIds": [],
+    "approvalIds": [],
+    "commandIds": [
+      "admin_command_wait-admin_6"
+    ]
+  },
+  "observedSkill": null,
+  "observedToolCalls": [],
+  "observedApprovals": [],
+  "observedJobs": [],
+  "finalResponse": "ADMIN_GUIDANCE_OK",
+  "finalStatus": "completed",
+  "projections": {
+    "user": {
+      "viewer": "user",
+      "run": {
+        "runId": "run_wait-admin_4",
+        "conversationId": "conversation_wait_admin",
+        "runtime": "simple_loop",
+        "status": "completed",
+        "version": 7,
+        "consumedSteps": 2,
+        "cursor": {
+          "runId": "run_wait-admin_4",
+          "sequence": 8
+        }
+      },
+      "events": [
+        {
+          "eventId": "event_wait-admin_2",
+          "runId": "run_wait-admin_4",
+          "sequence": 1,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait-admin_5",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_wait-admin_1",
+            "actor": "user",
+            "content": "Wait for guidance."
+          }
+        },
+        {
+          "eventId": "event_wait_admin_running",
+          "runId": "run_wait-admin_4",
+          "sequence": 2,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait_admin",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "queued",
+            "current": "running"
+          }
+        },
+        {
+          "eventId": "event_wait_admin_status",
+          "runId": "run_wait-admin_4",
+          "sequence": 3,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait_admin",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "waiting_for_user"
+          }
+        },
+        {
+          "eventId": "event_wait-admin_10",
+          "runId": "run_wait-admin_4",
+          "sequence": 5,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait_admin",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_wait-admin_9",
+            "actor": "user",
+            "content": "Respond now."
+          }
+        },
+        {
+          "eventId": "event_wait-admin_16",
+          "runId": "run_wait-admin_4",
+          "sequence": 7,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait-admin_17",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_wait-admin_20",
+            "actor": "ai",
+            "content": "ADMIN_GUIDANCE_OK"
+          }
+        },
+        {
+          "eventId": "event_wait-admin_18",
+          "runId": "run_wait-admin_4",
+          "sequence": 8,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait-admin_19",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "completed"
+          }
+        }
+      ]
+    },
+    "admin": {
+      "viewer": "admin",
+      "run": {
+        "runId": "run_wait-admin_4",
+        "conversationId": "conversation_wait_admin",
+        "runtime": "simple_loop",
+        "status": "completed",
+        "version": 7,
+        "consumedSteps": 2,
+        "cursor": {
+          "runId": "run_wait-admin_4",
+          "sequence": 8
+        }
+      },
+      "events": [
+        {
+          "eventId": "event_wait-admin_2",
+          "runId": "run_wait-admin_4",
+          "sequence": 1,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait-admin_5",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_wait-admin_1",
+            "actor": "user",
+            "content": "Wait for guidance."
+          }
+        },
+        {
+          "eventId": "event_wait_admin_running",
+          "runId": "run_wait-admin_4",
+          "sequence": 2,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait_admin",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "queued",
+            "current": "running"
+          }
+        },
+        {
+          "eventId": "event_wait_admin_status",
+          "runId": "run_wait-admin_4",
+          "sequence": 3,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait_admin",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "waiting_for_user"
+          }
+        },
+        {
+          "eventId": "event_wait-admin_7",
+          "runId": "run_wait-admin_4",
+          "sequence": 4,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait-admin_8",
+          "type": "admin.command.accepted",
+          "visibility": "model_only",
+          "payload": {
+            "commandId": "admin_command_wait-admin_6",
+            "status": "accepted"
+          }
+        },
+        {
+          "eventId": "event_wait-admin_10",
+          "runId": "run_wait-admin_4",
+          "sequence": 5,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait_admin",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_wait-admin_9",
+            "actor": "user",
+            "content": "Respond now."
+          }
+        },
+        {
+          "eventId": "event_wait-admin_12",
+          "runId": "run_wait-admin_4",
+          "sequence": 6,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait-admin_13",
+          "type": "admin.command.applied",
+          "visibility": "model_only",
+          "payload": {
+            "commandId": "admin_command_wait-admin_6",
+            "status": "applied"
+          }
+        },
+        {
+          "eventId": "event_wait-admin_16",
+          "runId": "run_wait-admin_4",
+          "sequence": 7,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait-admin_17",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_wait-admin_20",
+            "actor": "ai",
+            "content": "ADMIN_GUIDANCE_OK"
+          }
+        },
+        {
+          "eventId": "event_wait-admin_18",
+          "runId": "run_wait-admin_4",
+          "sequence": 8,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait-admin_19",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "completed"
+          }
+        }
+      ]
+    }
+  },
+  "normalizedEventTrace": {
+    "events": [
+      {
+        "position": 1,
+        "type": "message.completed",
+        "visibility": "user",
+        "payload": {
+          "messageId": "message_wait-admin_1",
+          "actor": "user",
+          "content": "Wait for guidance."
+        }
+      },
+      {
+        "position": 2,
+        "type": "run.status_changed",
+        "visibility": "user",
+        "payload": {
+          "previous": "queued",
+          "current": "running"
+        }
+      },
+      {
+        "position": 3,
+        "type": "run.status_changed",
+        "visibility": "user",
+        "payload": {
+          "previous": "running",
+          "current": "waiting_for_user"
+        }
+      },
+      {
+        "position": 4,
+        "type": "admin.command.accepted",
+        "visibility": "model_only",
+        "payload": {
+          "commandId": "admin_command_wait-admin_6",
+          "status": "accepted"
+        }
+      },
+      {
+        "position": 5,
+        "type": "message.completed",
+        "visibility": "user",
+        "payload": {
+          "messageId": "message_wait-admin_9",
+          "actor": "user",
+          "content": "Respond now."
+        }
+      },
+      {
+        "position": 6,
+        "type": "admin.command.applied",
+        "visibility": "model_only",
+        "payload": {
+          "commandId": "admin_command_wait-admin_6",
+          "status": "applied"
+        }
+      },
+      {
+        "position": 7,
+        "type": "message.completed",
+        "visibility": "user",
+        "payload": {
+          "messageId": "message_wait-admin_20",
+          "actor": "ai",
+          "content": "ADMIN_GUIDANCE_OK"
+        }
+      },
+      {
+        "position": 8,
+        "type": "run.status_changed",
+        "visibility": "user",
+        "payload": {
+          "previous": "running",
+          "current": "completed"
+        }
+      }
+    ]
+  },
+  "schemaVersion": 2,
+  "provenance": {
+    "source": "postgresql_projection_capture",
+    "capturedRunId": "run_wait-admin_4",
+    "processId": 81234,
+    "observationDigest": "b9662efce404a25da32d16deab83457595ff3c2f0e8649601155b2a3096daa2d"
+  },
+  "observedApprovalJobEvents": [
+    {
+      "position": 4,
+      "type": "admin.command.accepted",
+      "visibility": "model_only",
+      "payload": {
+        "commandId": "admin_command_wait-admin_6",
+        "status": "accepted"
+      }
+    },
+    {
+      "position": 6,
+      "type": "admin.command.applied",
+      "visibility": "model_only",
+      "payload": {
+        "commandId": "admin_command_wait-admin_6",
+        "status": "applied"
+      }
+    }
+  ],
+  "result": "PASS",
+  "failureDetails": null,
+  "evidenceLinks": [
+    "acceptance/simple_loop/F09/P10.json"
+  ]
+}
