@@ -72,6 +72,7 @@ After remediation, the first `curl` must return application-owned readiness and 
 | CMP-MEM-05 | High | [x] Closed | Workers run with a 128 MB V8 old-space cap under a 256 MiB hard limit, with no cgroup reservation; all workers stay healthy without OOM events and fresh logs contain no Temporal unsafe-memory warning. | Temporal SDK 1.22 selects `memory.low`/`memory.min` before `memory.max`; the former 64 MiB reservation made its 75% recommendation 48 MiB even though the hard limit was 256 MiB. |
 | CMP-E2E-06 | Critical | [ ] Open | `playwright.config.ts` starts `packages/testkit/e2e/ui-fixture-server.ts`; UI suites do not traverse Compose services. | Browser tests replace the Vite, API, database, and worker path with fixture services. |
 | CMP-APPROVAL-07 | High | [x] Closed | Deterministic barriers now show an explicit loading state, never false empty, while run discovery is held; subscribe-then-reconcile then renders exactly one card with one target-run subscription. Browser instrumentation also proves that target subscription closes exactly once on route teardown and cannot update the old route afterward. Fresh 375x667 mobile and keyboard-focus captures passed overflow, reachability, and 2px `:focus-visible` assertions. | Approval bootstrap originally had neither a post-subscription canonical reconciliation nor explicit readiness, so the route could first miss an approval and later misrepresent an uninitialized snapshot as empty. |
+| CMP-TESTKIT-08 | High | [x] Closed | Testkit typecheck passes with the in-memory fixture readiness callback; runtime collection contains no `ui-*.spec.ts`; UI projects retain happy, adversarial, approval, and race specs. | The API server contract added required `readiness`, and runtime collection ignored only two of four UI spec files. |
 
 ## Atomic remediation tasks
 
@@ -244,6 +245,31 @@ Visual QA history:
 - **REVISE:** the first independent review found a false-empty bootstrap surface plus missing mobile approval and keyboard-focus captures.
 - **PASS candidate:** two fresh independent read-only reviews found no product or evidence blockers in the current mobile/focus captures; downstream independent review remains the final acceptance gate.
 
+### [x] T08: Restore testkit API and Playwright project boundaries
+
+**Issue:** CMP-TESTKIT-08  
+**Fix files:** `packages/testkit/e2e/ui-fixture-server.ts`, `playwright.config.ts`, `packages/testkit/tests/playwright-boundary.test.ts`  
+**Commit:** `fix(testkit): restore fixture readiness and UI project boundaries`
+
+Tasks:
+
+- [x] Add `readiness: async () => true` only to the in-memory fixture API server options.
+- [x] Exclude every `ui-*.spec.ts` file from the runtime Playwright project with one explicit pattern.
+- [x] Add a focused collection regression proving runtime exclusion and UI project inclusion.
+- [x] Preserve the real API's database-aware readiness behavior.
+
+Focused verification:
+
+```sh
+corepack pnpm --filter @agentic-chat/testkit exec vitest run tests/playwright-boundary.test.ts
+corepack pnpm --filter @agentic-chat/testkit typecheck
+corepack pnpm exec playwright test --config=playwright.config.ts --project=runtime --list
+corepack pnpm exec playwright test --config=playwright.config.ts --project=ui-happy --list
+corepack pnpm exec playwright test --config=playwright.config.ts --project=ui-adversarial --list
+```
+
+**PASS:** the pre-fix collection regression failed because runtime listed `ui-approvals.spec.ts`; after the boundary fix the focused regression passed 2/2, testkit typecheck passed, runtime listed 20 tests in four non-UI files, ui-happy listed 3 tests, and ui-adversarial listed 12 tests across all three intended UI files.
+
 ### [ ] T06: Add real-Compose BrowserMCP coverage
 
 **Issue:** CMP-E2E-06  
@@ -403,6 +429,7 @@ Add rows as commands run. Preserve failures as evidence. Never rewrite a failed 
 | E-019 | T07 Visual QA revision | Independent approval visual review after E-018 | Bootstrap must not render false empty; mobile approval and keyboard-focus evidence must exist. | 2026-08-18: REVISE preserved. Before post-subscription canonical load completed, the route rendered `No pending approvals.` because approval state had no explicit readiness. The evidence set also lacked a 375x667 pending-card capture and a keyboard-focused approval-action capture. | `artifacts/validation/t16/playwright/` | [ ] FAIL |
 | E-020 | T07 Visual QA PASS candidate | Focused readiness red/green; focused approval 5/5; full UI 14/14; mobile/focus captures; two independent read-only reviews | Loading replaces false empty until successful reconciliation; exact one card/subscription remains; mobile has no horizontal overflow and both actions are reachable; keyboard focus ring is visible. | 2026-08-18: PASS candidate. The pre-fix focused test failed on missing `approvals-loading`; green passed in 0.914 seconds. Final focused approval passed 5/5; final one-worker UI passed 14/14 in 14.0 seconds with zero unexpected console/page errors. Mobile document/card `scrollWidth <= clientWidth`; approve/reject were visible and enabled. Keyboard tab reached Approve, `:focus-visible` was true, and computed outline width was at least 2px. Captures were valid PNGs at 375x1117 (full page from 375x667) and 1280x720. Both independent read-only reviewers returned PASS with no blockers. | `artifacts/validation/t16/playwright/ui-approvals-Approval-UI-r-84456-rizontal-overflow-on-mobile-ui-adversarial/admin-approvals-mobile-375x667.png`; `artifacts/validation/t16/playwright/ui-approvals-Approval-UI-r-c804b--approval-action-focus-ring-ui-adversarial/admin-approvals-keyboard-focus.png` | [x] PASS |
 | E-021 | T07 subscription cleanup PASS | Browser-native target `EventSource` constructor/close instrumentation installed before navigation; focused teardown regression; focused approval 6/6; full UI 15/15 | The `run_race_fast` approval stream opens once, closes once when the route tears down, and cannot update its old route after a later approval mutation. | 2026-08-18: PASS. The focused cleanup test passed in 1.0 seconds with counters `{ opened: 1, closed: 0 }` before navigation and `{ opened: 1, closed: 1 }` after teardown. A subsequent fixture approval left the old route and approval cards absent, retained the exact counters, and emitted no console/page error. Focused approval passed 6/6 in 6.1 seconds; the full one-worker UI suite passed 15/15 in 14.6 seconds. Web typecheck/build, changed-file Biome/no-excuse, pure-LOC, and changed-file diagnostics passed. | `artifacts/validation/t16/playwright/` | [x] PASS |
+| E-022 | T08 | Focused boundary regression red/green; testkit typecheck; Playwright `--list` for runtime, ui-happy, and ui-adversarial | Runtime excludes all UI specs; UI projects retain intended files; fixture server satisfies strict API options. | 2026-08-18: RED preserved: typecheck failed on missing `readiness`, and runtime listed approval/race UI specs. GREEN: focused regression passed 2/2, testkit typecheck passed, runtime listed 20 tests in four non-UI files, ui-happy listed 3 tests, and ui-adversarial listed 12 tests across `ui-adversarial.spec.ts`, `ui-approvals.spec.ts`, and `ui-races.spec.ts`. | `artifacts/validation/testkit-boundary/` | [x] PASS |
 
 ## Commit boundaries
 
@@ -414,7 +441,8 @@ Add rows as commands run. Preserve failures as evidence. Never rewrite a failed 
 | 4 | T04 | `fix(runtime): honor compose provider configuration` | Provider factory, worker wiring, base and override rules, and provider tests together. | [ ] |
 | 5 | T05 | `fix(worker): cap node heap for compose workers` | Worker Node flags, cgroup boundary, and focused topology/boot assertions only. | [ ] |
 | 6 | T07 | `fix(web): reconcile approval bootstrap gap` | Approval hook bootstrap ordering, deterministic UI race regression, and CMP-APPROVAL-07 tracker evidence only. | [ ] |
-| 7 | T06 | `test(compose): cover real browser application flows` | Real-Compose browser harness, scripts, matrix tests, and package scripts together. | [ ] |
+| 7 | T08 | `fix(testkit): restore fixture readiness and UI project boundaries` | Testkit fixture readiness, Playwright project filtering, focused collection regression, and CMP-TESTKIT-08 evidence only. | [ ] |
+| 8 | T06 | `test(compose): cover real browser application flows` | Real-Compose browser harness, scripts, matrix tests, and package scripts together. | [ ] |
 
 Do not squash these boundaries. Do not mix generated evidence or local environment files into any commit. If a task needs a migration or contract change, keep that change and its tests in the same task commit and record the scope change here before implementation.
 
@@ -422,8 +450,8 @@ Do not squash these boundaries. Do not mix generated evidence or local environme
 
 The remediation is complete only when every item below is checked:
 
-- [ ] CMP-SEC-01 through CMP-E2E-06 and CMP-APPROVAL-07 are closed with focused `PASS` evidence.
-- [ ] T01 through T07 each have exactly one atomic conventional commit using the listed message.
+- [ ] CMP-SEC-01 through CMP-E2E-06, CMP-APPROVAL-07, and CMP-TESTKIT-08 are closed with focused `PASS` evidence.
+- [ ] T01 through T08 each have exactly one atomic conventional commit using the listed message.
 - [ ] The security rules are satisfied, including image inspection and secret-redaction checks.
 - [ ] Base Compose is deterministic and requires no provider credential.
 - [ ] Optional live-provider override is explicit, isolated, redacted, and non-gating.
