@@ -1,0 +1,173 @@
+x-runtime-environment: &runtime-environment
+  DATABASE_URL: postgresql://agentic_chat:agentic_chat_dev@postgres:5432/agentic_chat
+  REDIS_URL: redis://redis:6379/0
+  TEMPORAL_ADDRESS: temporal:7233
+
+x-runtime-dependencies: &runtime-dependencies
+  postgres:
+    condition: service_healthy
+  redis:
+    condition: service_healthy
+  temporal:
+    condition: service_healthy
+  migration:
+    condition: service_healthy
+
+x-worker: &worker
+  image: agentic-chat-worker:t04
+  build:
+    context: .
+    dockerfile: infra/docker/Dockerfile
+  entrypoint: ["/workspace/infra/docker/service-entrypoint.sh"]
+  init: true
+  depends_on: *runtime-dependencies
+  healthcheck:
+    test: ["CMD-SHELL", "test -f /run/agentic-chat/worker-ready && test \"$$(cat /run/agentic-chat/worker-ready)\" = \"$$WORKER_ROLE\" && kill -0 1"]
+    interval: 2s
+    timeout: 2s
+    retries: 15
+    start_period: 2s
+  deploy:
+    resources:
+      limits:
+        cpus: "0.50"
+        memory: 256M
+      reservations:
+        memory: 64M
+  restart: unless-stopped
+  stop_grace_period: 5s
+
+services:
+  postgres:
+    image: postgres:17.6-alpine3.22
+    environment:
+      POSTGRES_DB: agentic_chat
+      POSTGRES_USER: agentic_chat
+      POSTGRES_PASSWORD: agentic_chat_dev
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+      start_period: 5s
+    restart: unless-stopped
+
+  redis:
+    image: redis:8.2.1-alpine3.22
+    command: ["redis-server", "--save", "", "--appendonly", "no"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 2s
+      timeout: 2s
+      retries: 20
+    restart: unless-stopped
+
+  temporal:
+    image: temporalio/temporal:1.5.1
+    command: ["server", "start-dev", "--ip", "0.0.0.0", "--headless"]
+    ports:
+      - "127.0.0.1:7233:7233"
+    healthcheck:
+      test: ["CMD", "temporal", "operator", "cluster", "health", "--address", "127.0.0.1:7233"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+      start_period: 3s
+    restart: unless-stopped
+
+  migration:
+    image: agentic-chat-app:t04
+    build:
+      context: .
+      dockerfile: infra/docker/Dockerfile
+    entrypoint: ["/workspace/infra/docker/migration-entrypoint.sh"]
+    environment:
+      DATABASE_URL: postgresql://agentic_chat:agentic_chat_dev@postgres:5432/agentic_chat
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "test", "-f", "/run/agentic-chat/migrations-complete"]
+      interval: 2s
+      timeout: 2s
+      retries: 30
+      start_period: 2s
+    restart: unless-stopped
+
+  web:
+    image: agentic-chat-app:t04
+    build:
+      context: .
+      dockerfile: infra/docker/Dockerfile
+    command: ["web"]
+    environment:
+      <<: *runtime-environment
+      SERVICE_KIND: web
+    depends_on: *runtime-dependencies
+    ports:
+      - "127.0.0.1:4173:4173"
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--spider", "http://127.0.0.1:4173/"]
+      interval: 2s
+      timeout: 2s
+      retries: 30
+      start_period: 3s
+    restart: unless-stopped
+
+  api:
+    image: agentic-chat-app:t04
+    build:
+      context: .
+      dockerfile: infra/docker/Dockerfile
+    command: ["api"]
+    environment:
+      <<: *runtime-environment
+      SERVICE_KIND: api
+    depends_on: *runtime-dependencies
+    ports:
+      - "127.0.0.1:3000:3000"
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--spider", "http://127.0.0.1:3000/healthz/"]
+      interval: 2s
+      timeout: 2s
+      retries: 30
+      start_period: 2s
+    restart: unless-stopped
+
+  worker-simple:
+    <<: *worker
+    command: ["worker", "simple_loop"]
+    environment:
+      <<: *runtime-environment
+      SERVICE_KIND: worker-simple
+      WORKER_ROLE: simple_loop
+      AI_PROVIDER_MODE: mock
+      NODE_ENV: test
+      TASK18_COMPOSE_MODE: enabled
+
+  worker-workflow:
+    <<: *worker
+    command: ["worker", "state_workflow"]
+    environment:
+      <<: *runtime-environment
+      SERVICE_KIND: worker-workflow
+      WORKER_ROLE: state_workflow
+      AI_PROVIDER_MODE: mock
+      NODE_ENV: test
+      TASK18_COMPOSE_MODE: enabled
+
+  fixture-worker:
+    <<: *worker
+    command: ["worker", "fixture_jobs"]
+    environment:
+      <<: *runtime-environment
+      SERVICE_KIND: fixture-worker
+      WORKER_ROLE: fixture_jobs
+      AI_PROVIDER_MODE: mock
+      NODE_ENV: test
+      TASK18_COMPOSE_MODE: enabled
+
+volumes:
+  postgres-data:
