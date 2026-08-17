@@ -10,6 +10,7 @@ const execute = promisify(execFile)
 
 export type ApiTestContext = {
   readonly containerName: string
+  readonly connectionString: string
   readonly database: ReturnType<typeof createDatabase>
 }
 
@@ -50,12 +51,11 @@ export const startApiTestContext = async (): Promise<ApiTestContext> => {
       containerName,
     ])
     if (health.stdout.trim() === "healthy") {
-      const database = createDatabase(
-        `postgresql://postgres:postgres@127.0.0.1:${port}/agentic_chat_test`,
-      )
+      const connectionString = `postgresql://postgres:postgres@127.0.0.1:${port}/agentic_chat_test`
+      const database = createDatabase(connectionString)
       await migrateDatabase(database)
       await seedDatabase(database)
-      return { containerName, database }
+      return { connectionString, containerName, database }
     }
     await new Promise((resolve) => setTimeout(resolve, 250))
   }
@@ -83,6 +83,7 @@ export const createTestIds = (namespace: string) => {
 export class ManualRunEventSource implements RunEventSource {
   private readonly listeners = new Map<string, Set<() => void>>()
   private readonly drained = new Set<() => void>()
+  private readonly registered = new Set<() => void>()
   private registrationHook: (() => Promise<void>) | undefined
 
   get listenerCount(): number {
@@ -98,10 +99,17 @@ export class ManualRunEventSource implements RunEventSource {
     return new Promise((resolve) => this.drained.add(resolve))
   }
 
+  waitForListener(): Promise<void> {
+    if (this.listenerCount > 0) return Promise.resolve()
+    return new Promise((resolve) => this.registered.add(resolve))
+  }
+
   async listen(runId: string, listener: () => void): Promise<() => void> {
     const listeners = this.listeners.get(runId) ?? new Set<() => void>()
     listeners.add(listener)
     this.listeners.set(runId, listeners)
+    for (const resolve of this.registered) resolve()
+    this.registered.clear()
     const hook = this.registrationHook
     this.registrationHook = undefined
     await hook?.()
