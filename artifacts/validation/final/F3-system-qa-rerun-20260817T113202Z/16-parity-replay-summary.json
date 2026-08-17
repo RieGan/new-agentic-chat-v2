@@ -1,0 +1,37 @@
+{
+  "parity": {
+    "result": "PASS",
+    "tests25": true,
+    "comparisons": 11,
+    "allTraceAndOutcomeMatch": true,
+    "mutationBarriers": 18,
+    "mutationIds": [
+      "skill-id",
+      "selected-skill-id",
+      "skill-version",
+      "skill-allowlist",
+      "skill-instructions",
+      "tool-argument",
+      "tool-result",
+      "tool-error",
+      "approval-actor",
+      "approval-hash",
+      "approval-decision",
+      "job-percent",
+      "job-result",
+      "event-visibility",
+      "event-type",
+      "event-order",
+      "event-payload",
+      "final-status"
+    ]
+  },
+  "replay": {
+    "result": "PASS",
+    "tests10": true,
+    "tests": 10,
+    "externalActivitiesDuringReplay": 0,
+    "postCommitRetryCanonicalEffects": 1
+  },
+  "verified": true
+}
