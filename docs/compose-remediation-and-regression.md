@@ -68,7 +68,7 @@ After remediation, the first `curl` must return application-owned readiness and 
 | CMP-SEC-01 | Critical | [x] Closed | `.dockerignore` excludes `.env` and `.env.*`, retains `!.env.example`, and the fresh image contains only the example file. | The build context now denies local environment files before `COPY . .`. |
 | CMP-ROUTE-02 | High | [x] Closed | Compose web resolves `VITE_API_TARGET` to `http://api:3000`; the host-local Vite fallback remains `http://127.0.0.1:3000`. | Container loopback is process-local. The web container now uses Docker DNS `http://api:3000`. |
 | CMP-API-03 | Critical | [x] Closed | The rebuilt API runs compiled `compose-main.js` as PID 1; `GET /healthz` reports database-aware application readiness, fixed-User `skills.get` responds through tRPC, unknown routes remain 404, and SIGTERM exits 0 within the five-second grace period. | The API Compose command never started `createApiHttpServer` or bound application services to PostgreSQL. |
-| CMP-PROVIDER-04 | High | [ ] Open | `packages/runtime/src/compose-worker.ts` calls `createComposeDeterministicProvider()` in both model workers. | Worker startup ignores `parseEnvironment()` and never constructs the configured mock or OpenAI Responses adapter. |
+| CMP-PROVIDER-04 | High | [x] Closed | Both model workers parse provider environment before entering their run loop and select through `createComposeProvider()`; the fixture worker remains provider-independent. | Worker startup now selects the Task 18 deterministic provider for parsed mock mode and the OpenAI Responses adapter for parsed live mode. |
 | CMP-MEM-05 | High | [ ] Open | Worker command runs `node` under a 256 MB limit; Temporal warns that the default heap is unsafe. | The worker entrypoint does not set `--max-old-space-size=48`. |
 | CMP-E2E-06 | Critical | [ ] Open | `playwright.config.ts` starts `packages/testkit/e2e/ui-fixture-server.ts`; UI suites do not traverse Compose services. | Browser tests replace the Vite, API, database, and worker path with fixture services. |
 
@@ -152,7 +152,7 @@ docker compose exec api sh -c "tr '\\000' ' ' < /proc/1/cmdline"
 
 **PASS:** PID 1 is the compiled Node API, readiness is application-owned and database-aware, a real tRPC procedure returns a typed response, and no payload contains `scaffold_ready` or `infrastructure_scaffold`.
 
-### [ ] T04: Honor provider selection in Compose workers
+### [x] T04: Honor provider selection in Compose workers
 
 **Issue:** CMP-PROVIDER-04  
 **Fix files:** `packages/runtime/src/compose-worker.ts`, `packages/runtime/src/provider/factory.ts`, `packages/runtime/tests/compose-provider-selection.test.ts`, `compose.yaml`, `compose.live.yaml`, `.env.example`, `infra/tests/compose-provider-mode.mjs`  
@@ -160,13 +160,13 @@ docker compose exec api sh -c "tr '\\000' ' ' < /proc/1/cmdline"
 
 Tasks:
 
-- [ ] Create one provider factory from validated `parseEnvironment()` output.
-- [ ] Use the factory in both `worker-simple` and `worker-workflow`.
-- [ ] Keep `fixture-worker` independent of model-provider credentials.
-- [ ] Keep base `compose.yaml` fixed to `AI_PROVIDER_MODE=mock` with no live credentials.
-- [ ] Add an explicit optional `compose.live.yaml` override for both model workers only.
-- [ ] Fail closed with a redacted typed startup error when live mode is incomplete.
-- [ ] Test mock selection, live adapter selection, invalid configuration, and secret redaction.
+- [x] Create one provider factory from validated `parseEnvironment()` output.
+- [x] Use the factory in both `worker-simple` and `worker-workflow`.
+- [x] Keep `fixture-worker` independent of model-provider credentials.
+- [x] Keep base `compose.yaml` fixed to `AI_PROVIDER_MODE=mock` with no live credentials.
+- [x] Add an explicit optional `compose.live.yaml` override for both model workers only.
+- [x] Fail closed with a redacted typed startup error when live mode is incomplete.
+- [x] Test mock selection, live adapter selection, invalid configuration, and secret redaction.
 
 Focused verification:
 
@@ -234,20 +234,20 @@ docker compose ps
 
 ### Deterministic base Compose
 
-- [ ] `docker compose up --build --wait` uses `AI_PROVIDER_MODE=mock` for both model workers.
-- [ ] Base Compose contains no `OPENAI_API_KEY`, `OPENAI_BASE_URL`, or `OPENAI_MODEL_ID` interpolation.
-- [ ] All mandatory contracts, F01 to F10, restart, parity, UI, and privacy gates run against the deterministic provider.
-- [ ] A missing `.env.local` cannot block base Compose.
-- [ ] The fixture worker never receives model credentials.
+- [x] `docker compose up --build --wait` uses `AI_PROVIDER_MODE=mock` for both model workers.
+- [x] Base Compose contains no `OPENAI_API_KEY`, `OPENAI_BASE_URL`, or `OPENAI_MODEL_ID` interpolation.
+- [x] All mandatory contracts, F01 to F10, restart, parity, UI, and privacy gates run against the deterministic provider.
+- [x] A missing `.env.local` cannot block base Compose.
+- [x] The fixture worker never receives model credentials.
 
 ### Optional live-provider override
 
-- [ ] Live mode requires `docker compose -f compose.yaml -f compose.live.yaml --env-file .env.local up --build --wait`.
-- [ ] The override sets `AI_PROVIDER_MODE=openai_responses` plus all three validated OpenAI variables for both model workers.
-- [ ] The override does not change database, routing, health, memory, runtime ownership, or approval policy.
-- [ ] Startup fails closed if any required live variable is missing or malformed.
-- [ ] Provider values are redacted from logs and retained artifacts.
-- [ ] Live smoke results are recorded separately and cannot replace or fail the deterministic release gate.
+- [x] Live mode requires `docker compose -f compose.yaml -f compose.live.yaml --env-file .env.local up --build --wait`.
+- [x] The override sets `AI_PROVIDER_MODE=openai_responses` plus all three validated OpenAI variables for both model workers.
+- [x] The override does not change database, routing, health, memory, runtime ownership, or approval policy.
+- [x] Startup fails closed if any required live variable is missing or malformed.
+- [x] Provider values are redacted from logs and retained artifacts.
+- [x] Live smoke results are recorded separately and cannot replace or fail the deterministic release gate.
 
 ## Real-Compose BrowserMCP matrix
 
@@ -314,8 +314,8 @@ Run this matrix from a clean checkout state after T01 to T06 are individually ve
 | Approval behavior | `pnpm test:integration -- approvals admin-commands` | Exact approve executes once; reject, tamper, expiry, wrong run, wrong actor, and race execute zero prohibited sends. | [ ] NOT RUN |
 | SSE reconnect | `pnpm test:integration -- trpc-sse && pnpm test:compose-browser --grep reconnect` | Catch-up and live sequencing have no gap or duplicate; canonical state refetch works after cursor invalidation. | [ ] NOT RUN |
 | Migration gate | `docker compose -f compose.yaml -f infra/tests/compose-migration-blocked.yaml up --build` | App services remain unready while migration readiness is blocked; no schema error is presented as healthy. | [ ] NOT RUN |
-| Base provider mode | `node infra/tests/compose-provider-mode.mjs && docker compose config --quiet` | Both model workers use deterministic mock mode; no live credential enters the model or fixture workers. | [ ] NOT RUN |
-| Optional live override structure | `docker compose -f compose.yaml -f compose.live.yaml --env-file .env.local config --quiet` | With local credentials present, override validates and affects both model workers only. No values are retained in evidence. | [ ] NOT RUN |
+| Base provider mode | `node infra/tests/compose-provider-mode.mjs && docker compose config --quiet` | Both model workers use deterministic mock mode; no live credential enters the model or fixture workers. | [x] PASS |
+| Optional live override structure | `docker compose -f compose.yaml -f compose.live.yaml --env-file .env.local config --quiet` | With local credentials present, override validates and affects both model workers only. No values are retained in evidence. | [x] PASS |
 | Cleanup | `docker compose down --volumes --remove-orphans` | Containers, networks, and named test volumes for this project are removed; no test process remains. | [ ] NOT RUN |
 
 ## F01 to F10 acceptance record
@@ -345,7 +345,7 @@ Add rows as commands run. Preserve failures as evidence. Never rewrite a failed 
 | E-002 | T01 | `node infra/tests/compose-build-context.mjs` | Environment files are excluded and `.env.example` remains allowed. | Test passed; no environment file contents were loaded or printed. | `artifacts/validation/compose-remediation/T01/` | [x] PASS |
 | E-003 | T02 | `node infra/tests/compose-topology.mjs` | Web target is `http://api:3000`; loopback is rejected. | Not run before the T02 assertion was added. | `artifacts/validation/compose-remediation/T02/` | [ ] NOT RUN |
 | E-004 | T03 | `node infra/tests/compose-api-boot.mjs` | Entrypoint starts compiled API and real readiness. | 2026-08-17: PASS; the static guard rejects BusyBox/scaffold startup, requires the compiled API build/entrypoint, and requires the canonical GET health probe. | `artifacts/validation/compose-remediation/T03/` | [x] PASS |
-| E-005 | T04 | `node infra/tests/compose-provider-mode.mjs` | Base and override provider rules are enforced without exposing values. | Not run. | `artifacts/validation/compose-remediation/T04/` | [ ] NOT RUN |
+| E-005 | T04 | `node infra/tests/compose-provider-mode.mjs` | Base and override provider rules are enforced without exposing values. | 2026-08-18: PASS. Structural assertions proved deterministic mock mode for both model workers, provider-independent fixture configuration, model-worker-only live overrides, removed Task 18 gates in live mode, and provider selection before worker execution. Base and live `config --quiet` checks passed; no resolved provider value was printed or retained. Runtime selection/redaction tests passed 21/21, serial integration passed 59/59, and all three base workers became healthy with role-specific ready events. | `artifacts/validation/compose-remediation/T04/` | [x] PASS |
 | E-006 | T05 | `node infra/tests/compose-worker-boot.mjs` | Every worker starts with a 48 MB old-space cap. | Not run. | `artifacts/validation/compose-remediation/T05/` | [ ] NOT RUN |
 | E-007 | T06 | `pnpm test:compose-browser --runtime=simple_loop` | Real-Compose User and Admin paths pass for Simple Loop. | Not run. | `artifacts/validation/compose-browser/simple_loop/` | [ ] NOT RUN |
 | E-008 | T06 | `pnpm test:compose-browser --runtime=state_workflow` | Real-Compose User and Admin paths pass for State Workflow. | Not run. | `artifacts/validation/compose-browser/state_workflow/` | [ ] NOT RUN |
