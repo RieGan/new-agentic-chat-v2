@@ -1,0 +1,2 @@
+$ pnpm --filter @agentic-chat/testkit test:restart
+$ node scripts/task18-restart.mjs

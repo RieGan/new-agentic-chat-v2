@@ -1,0 +1,143 @@
+{
+  "gate": "restart",
+  "result": "PASS",
+  "verified": true,
+  "mtime": "2026-08-17T11:39:17.597Z",
+  "scenarios": [
+    {
+      "runtime": "simple_loop",
+      "target": "worker-simple",
+      "recoveryMs": 6491,
+      "report": {
+        "runId": "run_simple_loop_f10_report_4",
+        "workflowIdentity": null,
+        "barrierRunStatus": "waiting_for_tool",
+        "barrierJobStatus": "running",
+        "barrierPercent": 50,
+        "jobId": "job_001",
+        "callId": "call_report_simple_loop_f10_report",
+        "ledgerKey": "report-job-c52c7a3d6b05bed19b3899fc",
+        "jobWorkflowIdentity": "bullmq/report-c52c7a3d6b05bed19b3899fc",
+        "completedRunStatus": "completed",
+        "completedJobStatus": "completed",
+        "completedEvents": 1,
+        "sameRun": true,
+        "sameWorkflow": true,
+        "sameJob": true,
+        "sameCall": true,
+        "sameLedger": true,
+        "sameJobWorkflow": true
+      },
+      "approval": {
+        "runId": "run_simple_loop_pending_approval_4",
+        "workflowIdentity": null,
+        "approvalId": "approval_62042339-1831-46ce-b64b-f5ccf18366c4",
+        "callId": "call_send_simple_loop_pending_approval",
+        "barrierRunStatus": "waiting_for_admin",
+        "barrierApprovalStatus": "pending",
+        "completedRunStatus": "completed",
+        "completedApprovalStatus": "approved",
+        "sends": 1,
+        "completedSendCalls": 1,
+        "sameRun": true,
+        "sameWorkflow": true,
+        "sameApproval": true,
+        "sameCall": true
+      },
+      "restart": {
+        "targetContainerPreserved": true,
+        "targetStartedAtChanged": true,
+        "targetHealthy": true,
+        "allPeersUntouched": true
+      },
+      "simpleLoopAcknowledgement": {
+        "barrierReportExecuteIntents": [
+          {
+            "id": "dispatch_simple_loop_f10_report_3",
+            "status": "dispatched",
+            "attempts": 1
+          }
+        ],
+        "resumeAbsentAtProgress": true,
+        "completedReportExecuteIntents": [
+          {
+            "id": "dispatch_simple_loop_f10_report_3",
+            "status": "dispatched",
+            "attempts": 1,
+            "deduplicationKey": "run_simple_loop_f10_report_4:admission"
+          },
+          {
+            "id": "report-job-c52c7a3d6b05bed19b3899fc-resume",
+            "status": "dispatched",
+            "attempts": 1,
+            "deduplicationKey": "run_simple_loop_f10_report_4:report:report-job-c52c7a3d6b05bed19b3899fc:completed"
+          }
+        ],
+        "completedApprovalExecuteIntents": [
+          {
+            "id": "dispatch_simple_loop_pending_approval_3",
+            "status": "dispatched",
+            "attempts": 1,
+            "deduplicationKey": "run_simple_loop_pending_approval_4:admission"
+          },
+          {
+            "id": "approval_action_simple_loop_pending_approval_decision_1-resume",
+            "status": "dispatched",
+            "attempts": 1,
+            "deduplicationKey": "run_simple_loop_pending_approval_4:approval:approval_62042339-1831-46ce-b64b-f5ccf18366c4:approved"
+          }
+        ],
+        "pendingAfterCompletion": 0,
+        "allAcknowledgedOnce": true
+      }
+    },
+    {
+      "runtime": "state_workflow",
+      "target": "worker-workflow",
+      "recoveryMs": 10559,
+      "report": {
+        "runId": "run_state_workflow_f10_report_4",
+        "workflowIdentity": "agent-run/run_state_workflow_f10_report_4",
+        "barrierRunStatus": "waiting_for_tool",
+        "barrierJobStatus": "running",
+        "barrierPercent": 50,
+        "jobId": "job_001",
+        "callId": "call_report_state_workflow_f10_report",
+        "ledgerKey": "report-job-e56c10109fe2841d3ab9d736",
+        "jobWorkflowIdentity": "bullmq/report-e56c10109fe2841d3ab9d736",
+        "completedRunStatus": "completed",
+        "completedJobStatus": "completed",
+        "completedEvents": 1,
+        "sameRun": true,
+        "sameWorkflow": true,
+        "sameJob": true,
+        "sameCall": true,
+        "sameLedger": true,
+        "sameJobWorkflow": true
+      },
+      "approval": {
+        "runId": "run_state_workflow_pending_approval_4",
+        "workflowIdentity": "agent-run/run_state_workflow_pending_approval_4",
+        "approvalId": "approval_91c8e0d30713dff2f9409061a52eb35e628eb67cc247ebc1ffad7fd57bf9624a",
+        "callId": "call_send_state_workflow_pending_approval",
+        "barrierRunStatus": "waiting_for_admin",
+        "barrierApprovalStatus": "pending",
+        "completedRunStatus": "completed",
+        "completedApprovalStatus": "approved",
+        "sends": 1,
+        "completedSendCalls": 1,
+        "sameRun": true,
+        "sameWorkflow": true,
+        "sameApproval": true,
+        "sameCall": true
+      },
+      "restart": {
+        "targetContainerPreserved": true,
+        "targetStartedAtChanged": true,
+        "targetHealthy": true,
+        "allPeersUntouched": true
+      },
+      "simpleLoopAcknowledgement": null
+    }
+  ]
+}
