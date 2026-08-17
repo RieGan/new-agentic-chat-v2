@@ -17,6 +17,7 @@
     "test:integration": "pnpm --filter @agentic-chat/runtime test:integration && pnpm --filter @agentic-chat/api test:integration",
     "test:temporal-replay": "pnpm --filter @agentic-chat/runtime test:temporal-replay",
     "test:e2e": "pnpm --filter @agentic-chat/testkit test:e2e",
+    "test:compose-browser": "pnpm --filter @agentic-chat/testkit test:compose-browser",
     "test:acceptance:harness-negative": "pnpm --filter @agentic-chat/testkit test:acceptance:harness-negative",
     "test:parity": "pnpm --filter @agentic-chat/testkit test:parity",
     "test:restart": "pnpm --filter @agentic-chat/testkit test:restart"

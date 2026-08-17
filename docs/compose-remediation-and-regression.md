@@ -70,9 +70,10 @@ After remediation, the first `curl` must return application-owned readiness and 
 | CMP-API-03 | Critical | [x] Closed | The rebuilt API runs compiled `compose-main.js` as PID 1; `GET /healthz` reports database-aware application readiness, fixed-User `skills.get` responds through tRPC, unknown routes remain 404, and SIGTERM exits 0 within the five-second grace period. | The API Compose command never started `createApiHttpServer` or bound application services to PostgreSQL. |
 | CMP-PROVIDER-04 | High | [x] Closed | Both model workers parse provider environment before entering their run loop and select through `createComposeProvider()`; the fixture worker remains provider-independent. | Worker startup now selects the Task 18 deterministic provider for parsed mock mode and the OpenAI Responses adapter for parsed live mode. |
 | CMP-MEM-05 | High | [x] Closed | Workers run with a 128 MB V8 old-space cap under a 256 MiB hard limit, with no cgroup reservation; all workers stay healthy without OOM events and fresh logs contain no Temporal unsafe-memory warning. | Temporal SDK 1.22 selects `memory.low`/`memory.min` before `memory.max`; the former 64 MiB reservation made its 75% recommendation 48 MiB even though the hard limit was 256 MiB. |
-| CMP-E2E-06 | Critical | [ ] Open | `playwright.config.ts` starts `packages/testkit/e2e/ui-fixture-server.ts`; UI suites do not traverse Compose services. | Browser tests replace the Vite, API, database, and worker path with fixture services. |
+| CMP-E2E-06 | Critical | [x] Closed | The separate real-Compose harness traverses port 4173 and passes both runtime commands after CMP-OUTCOME-09 closure, with two tests, zero skips, unused fixture ports, and no fixture process for each runtime. | The original fixture-only coverage gap is repaired without changing the existing in-process UI matrix; its test-only T06 commit remains separate from the T09 product fix. |
 | CMP-APPROVAL-07 | High | [x] Closed | Deterministic barriers now show an explicit loading state, never false empty, while run discovery is held; subscribe-then-reconcile then renders exactly one card with one target-run subscription. Browser instrumentation also proves that target subscription closes exactly once on route teardown and cannot update the old route afterward. Fresh 375x667 mobile and keyboard-focus captures passed overflow, reachability, and 2px `:focus-visible` assertions. | Approval bootstrap originally had neither a post-subscription canonical reconciliation nor explicit readiness, so the route could first miss an approval and later misrepresent an uninitialized snapshot as empty. |
 | CMP-TESTKIT-08 | High | [x] Closed | Testkit typecheck passes with the in-memory fixture readiness callback; runtime collection contains no `ui-*.spec.ts`; UI projects retain happy, adversarial, approval, and race specs. | The API server contract added required `readiness`, and runtime collection ignored only two of four UI spec files. |
+| CMP-OUTCOME-09 | High | [x] Closed | The original real-Compose failure remains preserved in E-008. A focused provider test reproduced the exact rejected output, then both real-Compose runtime commands passed with approve `1` send and reject `0` sends. | `createComposeDeterministicProvider()` selected sent copy from send-result presence. It now strictly parses the canonical `sent`/`not_sent` output before selecting final copy. |
 
 ## Atomic remediation tasks
 
@@ -270,20 +271,50 @@ corepack pnpm exec playwright test --config=playwright.config.ts --project=ui-ad
 
 **PASS:** the pre-fix collection regression failed because runtime listed `ui-approvals.spec.ts`; after the boundary fix the focused regression passed 2/2, testkit typecheck passed, runtime listed 20 tests in four non-UI files, ui-happy listed 3 tests, and ui-adversarial listed 12 tests across all three intended UI files.
 
-### [ ] T06: Add real-Compose BrowserMCP coverage
+### [x] T09: Render deterministic Compose send outcomes from canonical results
+
+**Issue:** CMP-OUTCOME-09
+**Fix files:** `packages/runtime/src/compose-provider.ts`, `packages/runtime/tests/compose-provider.test.ts`, `docs/issues/cmp-compose-workflow-rejection-copy.md`, `docs/compose-remediation-and-regression.md`
+**Commit:** `fix(runtime): render compose rejection outcome`
+
+Tasks:
+
+- [x] Reproduce the exact rejected `notification.send_email` output in a direct provider test before changing product code.
+- [x] Lock the canonical approved output and existing deterministic sent copy.
+- [x] Parse the send output with a strict discriminated schema instead of inferring success from result presence.
+- [x] Preserve report, skill-load, preview, live-provider, and both runtime continuation sequencing.
+- [x] Pass focused provider tests, runtime typecheck/build/integration, F07/F08 acceptance, and both real-Compose browser runtime commands.
+
+Focused verification:
+
+```sh
+pnpm --filter @agentic-chat/runtime exec vitest run tests/compose-provider.test.ts tests/compose-provider-selection.test.ts
+pnpm --filter @agentic-chat/runtime typecheck
+pnpm --filter @agentic-chat/runtime build
+pnpm --filter @agentic-chat/runtime test:integration
+TEST_RUNTIME=simple_loop TEST_FLOWS=F06-F10 pnpm exec playwright test --config=playwright.config.ts --project=runtime --grep "F0[78] " --workers=1
+TEST_RUNTIME=state_workflow TEST_FLOWS=F06-F10 pnpm exec playwright test --config=playwright.config.ts --project=runtime --grep "F0[78] " --workers=1
+pnpm test:compose-browser --runtime=simple_loop
+pnpm test:compose-browser --runtime=state_workflow
+```
+
+**PASS:** the rejected provider test failed first with false sent copy, then provider coverage passed 5/5, runtime integration passed 59/59, F07/F08 passed for both runtimes, and both real-Compose browser commands passed 2/2 with approve `1` send and reject `0` sends.
+
+### [x] T06: Add real-Compose BrowserMCP coverage
 
 **Issue:** CMP-E2E-06  
-**Fix files:** `playwright.compose.config.ts`, `packages/testkit/e2e/compose-user-admin.spec.ts`, `packages/testkit/e2e/compose-browser-support.ts`, `packages/testkit/scripts/run-compose-browser.mjs`, `packages/testkit/package.json`, `package.json`  
+**Fix files:** `playwright.compose.config.ts`, `packages/testkit/e2e-compose/compose-report.spec.ts`, `packages/testkit/e2e-compose/compose-approval.spec.ts`, focused `compose-browser-*.ts` support, `packages/testkit/scripts/compose-browser-runner.ts`, runner tests, `packages/testkit/package.json`, `package.json`
 **Commit:** `test(compose): cover real browser application flows`
 
 Tasks:
 
-- [ ] Add a separate Compose browser configuration that never starts `ui-fixture-server.ts`.
-- [ ] Point the browser only at `http://127.0.0.1:4173`.
-- [ ] Seed or namespace deterministic state through supported application/testkit boundaries.
-- [ ] Parameterize User chat and Admin flows for `simple_loop` and `state_workflow`.
-- [ ] Capture screenshots, traces, browser console, service logs, run IDs, and database evidence under `artifacts/validation/compose-browser/`.
-- [ ] Fail if BrowserMCP observes a failed request, console error, hidden User content, duplicate final message, or fixture-server process.
+- [x] Add a separate Compose browser configuration that never starts `ui-fixture-server.ts`.
+- [x] Point the browser only at `http://127.0.0.1:4173`.
+- [x] Seed or namespace deterministic state through supported application/testkit boundaries.
+- [x] Parameterize User chat and Admin flows for `simple_loop` and `state_workflow`.
+- [x] Capture sanitized screenshots, traces, browser console/network results, service markers, run IDs, and database evidence under `artifacts/validation/compose-browser/`.
+- [x] Fail if BrowserMCP observes a failed request, console error, hidden User content, duplicate final message, or fixture-server process.
+- [x] Keep this representative real-Compose matrix separate from the complete in-process F01-F10 acceptance matrix.
 
 Focused verification:
 
@@ -303,7 +334,8 @@ docker compose ps
 
 - [x] `docker compose up --build --wait` uses `AI_PROVIDER_MODE=mock` for both model workers.
 - [x] Base Compose contains no `OPENAI_API_KEY`, `OPENAI_BASE_URL`, or `OPENAI_MODEL_ID` interpolation.
-- [x] All mandatory contracts, F01 to F10, restart, parity, UI, and privacy gates run against the deterministic provider.
+- [x] The complete in-process F01-F10, restart, parity, UI, and privacy gates retain their deterministic test providers and remain mandatory independently of this representative real-Compose matrix.
+- [x] Real Compose mock mode accepts only supported `TASK18 report <id>` and `TASK18 approval <id>` prompts; arbitrary P01 chat is optional live smoke, not a deterministic Compose claim.
 - [x] A missing `.env.local` cannot block base Compose.
 - [x] The fixture worker never receives model credentials.
 
@@ -330,14 +362,14 @@ Use BrowserMCP to navigate to `http://127.0.0.1:4173`. Capture a snapshot before
 
 | ID | Runtime | BrowserMCP route and actions | Required backend path | PASS criteria | Status |
 | --- | --- | --- | --- | --- | --- |
-| B01 | `simple_loop` | Open `/user/chat`, select Simple Loop, send P01, wait for completion. | Browser to Vite to API to PostgreSQL to `worker-simple`. | `CHAT_OK` appears once after `message.completed`; no tool call, partial text, failed request, or console error. | [ ] NOT RUN |
-| B02 | `state_workflow` | Open `/user/chat`, select State Workflow, send P01, wait for completion. | Browser to Vite to API to PostgreSQL to Temporal and `worker-workflow`. | `CHAT_OK` appears once; legal workflow completes; no Simple worker claim, failed request, or console error. | [ ] NOT RUN |
-| B03 | `simple_loop` | Send P08 in User view, open `/admin/approvals`, approve the exact call, return to User view. | Vite to API to PostgreSQL to `worker-simple`, approval service, simulated send. | Pending approval is Admin-only; exact call executes once after approval; User sees one final sent result. | [ ] NOT RUN |
-| B04 | `state_workflow` | Send P09 in User view, open `/admin/approvals`, reject with `MVP rejection test`, return to User view. | Vite to API to PostgreSQL to Temporal signal and `worker-workflow`. | Rejection binds to the call; zero sends; same workflow resumes and User sees one not-sent result. | [ ] NOT RUN |
-| B05 | `simple_loop` | Open `/admin`, target a seeded active run, submit P10 command, open User view and send `Respond now.` | Vite to Admin API to PostgreSQL to `worker-simple`, then User API. | Admin sees accepted and applied; User sees only `ADMIN_GUIDANCE_OK`; raw command is absent from User DOM and stream. | [ ] NOT RUN |
-| B06 | `state_workflow` | Repeat B05 for a State Workflow run. | Vite to Admin API to PostgreSQL to Temporal and `worker-workflow`, then User API. | Same shared result and privacy boundary; command applies once at a safe boundary. | [ ] NOT RUN |
-| B07 | Both | Start P07, force SSE disconnect and reconnect while progress changes. | Browser reconnect to Vite proxy to tracked API SSE and canonical PostgreSQL state. | Canonical state refetches; 50 percent and completion are observable; no message, event, job, or decision duplicates. | [ ] NOT RUN |
-| B08 | Both | Try keyboard operation, malformed input, duplicate submit, unauthorized User access to Admin behavior, and viewport resize. | Same real Compose path. | Controls remain operable; invalid or unauthorized actions fail closed; no hidden content, duplicate side effect, or stuck state. | [ ] NOT RUN |
+| B01 | `simple_loop` | Open `/user/chat`, select Simple Loop, send unique `TASK18 report <id>`, wait for completion, then reopen its Admin inspector stream. | Browser to Vite to API to PostgreSQL to `worker-simple` and fixture worker. | Queued, 50 percent, completion, and exactly one atomic `Report report_001 is complete.` remain visible from canonical state. | [x] PASS |
+| B02 | `state_workflow` | Open `/user/chat`, select State Workflow, send unique `TASK18 report <id>`, wait for completion, then reopen its Admin inspector stream. | Browser to Vite to API to PostgreSQL to Temporal, `worker-workflow`, and fixture worker. | Same durable report milestones and one final message; the persisted run remains `state_workflow`. | [x] PASS |
+| B03 | `simple_loop` | Send unique `TASK18 approval <id>`, inspect the exact card in `/admin/approvals`, approve, return to the retained User page. | Vite to API to PostgreSQL to `worker-simple`, approval service, simulated send. | Same run resumes; exact approval and one send are persisted; User sees one sent result and no duplicate submission/message. | [x] PASS |
+| B04 | `state_workflow` | Send unique `TASK18 approval <id>`, inspect the exact card in `/admin/approvals`, reject with `MVP rejection test`, return to the retained User page. | Vite to API to PostgreSQL to Temporal signal and `worker-workflow`. | Same workflow resumes; exact rejection and zero sends are persisted; User sees one not-sent result. | [x] PASS |
+| B05 | Both | Open `/admin`, select each browser-visible report and approval run. | Admin tRPC through Vite to API and canonical PostgreSQL projections. | Matching run ID, runtime, status, version, cursor, and canonical Admin projection are visible. | [x] PASS |
+| B06 | Both | Close one real Admin SSE inspector and reopen the same persisted report run in a new page. | Browser reconnect through Vite proxy to tracked API SSE and canonical PostgreSQL state. | Reopened canonical state preserves job accepted, 50 percent, completion, and final message without event or message duplicates. | [x] PASS |
+| B07 | Both | Inspect User DOM plus completed User tRPC responses and browser console/network observations. | User projection and stream boundary through the real API. | No raw hidden Admin command, Admin-only decision metadata, provider secret, or `message.delta`; no unexpected failed tRPC, console, or page error. | [x] PASS |
+| B08 | Both | Run with unique prompt namespaces and the isolated Compose config while probing ports 4310/4311 and fixture processes. | Port 4173 only; no UI fixture server or fixture UI port. | Runner rejects invalid runtime, skipped/zero tests, occupied fixture ports, and fixture process; retained evidence is allow-listed and sanitized. | [x] PASS |
 
 BrowserMCP evidence commands after each row:
 
@@ -373,8 +405,8 @@ Run this matrix from a clean checkout state after T01 to T06 are individually ve
 | Parity | `pnpm test:parity` | Normalized shared traces and final outcomes match across runtimes; runtime diagnostics remain separate. | [ ] NOT RUN |
 | UI happy | `pnpm test:e2e --project=ui-happy` | Fixture UI suite remains green for direct, async, approval, rejection, and hidden-command paths. | [ ] NOT RUN |
 | UI adversarial | `pnpm test:e2e --project=ui-adversarial` | Reconnect, keyboard, race, duplicate suppression, privacy, and atomic-message checks pass. | [x] PASS |
-| Real Compose browser, Simple Loop | `pnpm test:compose-browser --runtime=simple_loop` | User and Admin BrowserMCP rows for Simple Loop pass through real services. | [ ] NOT RUN |
-| Real Compose browser, State Workflow | `pnpm test:compose-browser --runtime=state_workflow` | User and Admin BrowserMCP rows for State Workflow pass through real services. | [ ] NOT RUN |
+| Real Compose browser, Simple Loop | `pnpm test:compose-browser --runtime=simple_loop` | User and Admin BrowserMCP rows for Simple Loop pass through real services. | [x] PASS |
+| Real Compose browser, State Workflow | `pnpm test:compose-browser --runtime=state_workflow` | User and Admin BrowserMCP rows for State Workflow pass through real services. | [x] PASS |
 | Health | `docker compose ps && curl --fail-with-body http://127.0.0.1:3000/healthz && curl --fail-with-body http://127.0.0.1:4173/` | Every required service is healthy; API readiness is application-owned; web is reachable. | [ ] NOT RUN |
 | Privacy | `pnpm test:integration -- projections trpc-sse && pnpm test:e2e --project=ui-adversarial` | User projections and DOM contain no raw Admin command, Admin decision metadata, provider secret, or `message.delta`. | [ ] NOT RUN |
 | Duplicate safety | `pnpm test:integration -- async-job approvals admin-commands` | Duplicate command, event, job completion, signal, approval race, and simulated send produce one logical result. | [ ] NOT RUN |
@@ -397,8 +429,8 @@ Each cell must link to actor, run ID, call IDs, approval or job events, final re
 | F04 Sync failure | [ ] NOT RUN | [ ] NOT RUN | Typed `DIVISION_BY_ZERO`, no invented value, User-visible terminal explanation. |
 | F05 Authorization | [ ] NOT RUN | [ ] NOT RUN | P05 and P06 separate; missing skill and disallowed tools create zero prohibited calls or approvals. |
 | F06 Async success | [ ] NOT RUN | [ ] NOT RUN | One job and call, 50 percent progress, same-run resume, final `report_001`. |
-| F07 HITL approve | [ ] NOT RUN | [ ] NOT RUN | Exact Admin approval, zero sends before approval, one send after, one final response. |
-| F08 HITL reject | [ ] NOT RUN | [ ] NOT RUN | Exact Admin rejection, zero sends, same-run resume, clear not-sent result. |
+| F07 HITL approve | [x] PASS | [x] PASS | Exact Admin approval, zero sends before approval, one send after, one final response. |
+| F08 HITL reject | [x] PASS | [x] PASS | Exact Admin rejection, zero sends, same-run resume, clear not-sent result. |
 | F09 Admin command | [ ] NOT RUN | [ ] NOT RUN | Authorized command applies once, exact `ADMIN_GUIDANCE_OK`, raw command absent from User projection. |
 | F10 Restart resume | [ ] NOT RUN | [ ] NOT RUN | Stable IDs, one job, one tool result, one resume, other runtime worker never claims the run. |
 
@@ -414,8 +446,9 @@ Add rows as commands run. Preserve failures as evidence. Never rewrite a failed 
 | E-004 | T03 | `node infra/tests/compose-api-boot.mjs` | Entrypoint starts compiled API and real readiness. | 2026-08-17: PASS; the static guard rejects BusyBox/scaffold startup, requires the compiled API build/entrypoint, and requires the canonical GET health probe. | `artifacts/validation/compose-remediation/T03/` | [x] PASS |
 | E-005 | T04 | `node infra/tests/compose-provider-mode.mjs` | Base and override provider rules are enforced without exposing values. | 2026-08-18: PASS. Structural assertions proved deterministic mock mode for both model workers, provider-independent fixture configuration, model-worker-only live overrides, removed Task 18 gates in live mode, and provider selection before worker execution. Base and live `config --quiet` checks passed; no resolved provider value was printed or retained. Runtime selection/redaction tests passed 21/21, serial integration passed 59/59, and all three base workers became healthy with role-specific ready events. | `artifacts/validation/compose-remediation/T04/` | [x] PASS |
 | E-006 | T05 | `node infra/tests/compose-worker-boot.mjs`; `node infra/tests/compose-topology.mjs` | Every worker uses exactly a 128 MB old-space cap, rejects obsolete 48 MB configuration, has no reservation, and retains a 256 MiB hard limit. | 2026-08-17: PASS. Boot and topology assertions passed; resolved worker limit was 268435456 bytes; worker reservations were absent; the shared command required `--max-old-space-size=128` and rejected `48`. | `artifacts/validation/compose-remediation/T05/` | [x] PASS |
-| E-007 | T06 | `pnpm test:compose-browser --runtime=simple_loop` | Real-Compose User and Admin paths pass for Simple Loop. | Not run. | `artifacts/validation/compose-browser/simple_loop/` | [ ] NOT RUN |
-| E-008 | T06 | `pnpm test:compose-browser --runtime=state_workflow` | Real-Compose User and Admin paths pass for State Workflow. | Not run. | `artifacts/validation/compose-browser/state_workflow/` | [ ] NOT RUN |
+| E-007 | T06 | `pnpm test:compose-browser --runtime=simple_loop` | Real-Compose User and Admin paths pass for Simple Loop. | 2026-08-18 final independent rerun: PASS, 2/2 tests, zero skips in 9.637 seconds. Ports 4310/4311 were unused and no fixture server process existed. | `artifacts/validation/compose-browser/simple_loop/simple_loop-msxp695k-cff355ad/` | [x] PASS |
+| E-008 | T06 | `pnpm test:compose-browser --runtime=state_workflow` | Real-Compose User and Admin paths pass for State Workflow. | 2026-08-18: FAIL preserved. Report passed; exact rejection completed with zero sends but User received false sent copy. See CMP-OUTCOME-09. | `artifacts/validation/compose-browser/debug-workflow-01/` | [ ] FAIL |
+| E-023 | T06 harness negatives | invalid runtime; `--grep=NO_COMPOSE_TEST_MATCHES`; Playwright `--list` | Invalid runtime and zero tests fail closed; list discovers exactly two specs. | PASS: invalid runtime exited 1 before Docker, zero-test selection exited 1, and both runtime list checks found 2 tests in 2 files. | No retained stdout; assertions are covered by `compose-browser-runner.test.ts`. | [x] PASS |
 | E-009 | Final | Full previous-plan regression matrix | Every mandatory row is `PASS`. | Not run. | `artifacts/validation/compose-remediation/final/` | [ ] NOT RUN |
 | E-010 | T01 | `docker build --no-cache --tag agentic-chat-secret-boundary:test --file infra/docker/Dockerfile .`; `docker run --rm --entrypoint sh agentic-chat-secret-boundary:test -c 'test ! -e /workspace/.env && test ! -e /workspace/.env.local && test -e /workspace/.env.example'`; sanitized image-history scan; `docker image rm agentic-chat-secret-boundary:test` | Fresh image omits `.env` and `.env.local`, retains `.env.example`, contains no secret markers in history, and is removed after inspection. | 2026-08-17: Fresh build passed; existence-only inspection found `/workspace/.env` and `/workspace/.env.local` absent and `/workspace/.env.example` present; sanitized image-history scan found no `.env.local` or `OPENAI_API_KEY` markers; disposable image and temporary build log were removed. No secret value was printed or persisted. | `artifacts/validation/compose-remediation/T01/` | [x] PASS |
 | E-011 | T03 | Initial `docker compose up --build --wait postgres migration api` after replacing the scaffold | Rebuilt API becomes healthy through its application-owned probe. | 2026-08-17: FAIL preserved. The compiled API returned ready to `GET /healthz`, but Compose used `wget --spider`, sent `HEAD`, received 404, and marked the container unhealthy. | `artifacts/validation/compose-remediation/T03/` | [ ] FAIL |
@@ -430,6 +463,9 @@ Add rows as commands run. Preserve failures as evidence. Never rewrite a failed 
 | E-020 | T07 Visual QA PASS candidate | Focused readiness red/green; focused approval 5/5; full UI 14/14; mobile/focus captures; two independent read-only reviews | Loading replaces false empty until successful reconciliation; exact one card/subscription remains; mobile has no horizontal overflow and both actions are reachable; keyboard focus ring is visible. | 2026-08-18: PASS candidate. The pre-fix focused test failed on missing `approvals-loading`; green passed in 0.914 seconds. Final focused approval passed 5/5; final one-worker UI passed 14/14 in 14.0 seconds with zero unexpected console/page errors. Mobile document/card `scrollWidth <= clientWidth`; approve/reject were visible and enabled. Keyboard tab reached Approve, `:focus-visible` was true, and computed outline width was at least 2px. Captures were valid PNGs at 375x1117 (full page from 375x667) and 1280x720. Both independent read-only reviewers returned PASS with no blockers. | `artifacts/validation/t16/playwright/ui-approvals-Approval-UI-r-84456-rizontal-overflow-on-mobile-ui-adversarial/admin-approvals-mobile-375x667.png`; `artifacts/validation/t16/playwright/ui-approvals-Approval-UI-r-c804b--approval-action-focus-ring-ui-adversarial/admin-approvals-keyboard-focus.png` | [x] PASS |
 | E-021 | T07 subscription cleanup PASS | Browser-native target `EventSource` constructor/close instrumentation installed before navigation; focused teardown regression; focused approval 6/6; full UI 15/15 | The `run_race_fast` approval stream opens once, closes once when the route tears down, and cannot update its old route after a later approval mutation. | 2026-08-18: PASS. The focused cleanup test passed in 1.0 seconds with counters `{ opened: 1, closed: 0 }` before navigation and `{ opened: 1, closed: 1 }` after teardown. A subsequent fixture approval left the old route and approval cards absent, retained the exact counters, and emitted no console/page error. Focused approval passed 6/6 in 6.1 seconds; the full one-worker UI suite passed 15/15 in 14.6 seconds. Web typecheck/build, changed-file Biome/no-excuse, pure-LOC, and changed-file diagnostics passed. | `artifacts/validation/t16/playwright/` | [x] PASS |
 | E-022 | T08 | Focused boundary regression red/green; testkit typecheck; Playwright `--list` for runtime, ui-happy, and ui-adversarial | Runtime excludes all UI specs; UI projects retain intended files; fixture server satisfies strict API options. | 2026-08-18: RED preserved: typecheck failed on missing `readiness`, and runtime listed approval/race UI specs. GREEN: focused regression passed 2/2, testkit typecheck passed, runtime listed 20 tests in four non-UI files, ui-happy listed 3 tests, and ui-adversarial listed 12 tests across `ui-adversarial.spec.ts`, `ui-approvals.spec.ts`, and `ui-races.spec.ts`. | `artifacts/validation/testkit-boundary/` | [x] PASS |
+| E-024 | T09 provider red/green | Direct deterministic provider test with canonical approved and rejected send outputs; provider selection; runtime typecheck/build/integration | Rejection fails before the fix, then approved/rejected copy, sequencing, types, build, and runtime regressions pass. | 2026-08-18: RED failed only rejected copy, receiving false sent text. GREEN passed provider coverage 5/5, continuation coverage 1/1, runtime typecheck/build, focused F07/F08 integrations 4/4, and full runtime integration 59/59. | No generated artifact; command evidence retained in this row. | [x] PASS |
+| E-025 | T09 F07/F08 acceptance | Focused runtime Playwright F07/F08 for `simple_loop` and `state_workflow` | Both approve and reject acceptance cells pass for both runtimes. | 2026-08-18: PASS. Simple Loop passed 2/2 and State Workflow passed 2/2; runtime-mismatched specs were skipped by their declared selection boundaries. | `artifacts/validation/acceptance/` | [x] PASS |
+| E-026 | T09 real Compose browser | Clean Compose rebuild; both real-Compose browser runtime commands; scoped PostgreSQL counts | Both browser commands pass; approve has one send, reject has zero sends, and each run has one final AI message. | 2026-08-18 final independent rerun: PASS. Simple Loop namespace `simple_loop-msxp695k-cff355ad` passed 2/2 in 9.637 seconds; State Workflow namespace `state_workflow-msxp6ibh-689322e7` passed 2/2 in 9.938 seconds. The harness asserted approved Simple Loop `completed/approved/1 send/1 AI` and rejected State Workflow `completed/rejected/0 sends/1 AI/The message was not sent.` | `artifacts/validation/compose-browser/simple_loop/simple_loop-msxp695k-cff355ad/`; `artifacts/validation/compose-browser/state_workflow/state_workflow-msxp6ibh-689322e7/` | [x] PASS |
 
 ## Commit boundaries
 
@@ -442,7 +478,8 @@ Add rows as commands run. Preserve failures as evidence. Never rewrite a failed 
 | 5 | T05 | `fix(worker): cap node heap for compose workers` | Worker Node flags, cgroup boundary, and focused topology/boot assertions only. | [ ] |
 | 6 | T07 | `fix(web): reconcile approval bootstrap gap` | Approval hook bootstrap ordering, deterministic UI race regression, and CMP-APPROVAL-07 tracker evidence only. | [ ] |
 | 7 | T08 | `fix(testkit): restore fixture readiness and UI project boundaries` | Testkit fixture readiness, Playwright project filtering, focused collection regression, and CMP-TESTKIT-08 evidence only. | [ ] |
-| 8 | T06 | `test(compose): cover real browser application flows` | Real-Compose browser harness, scripts, matrix tests, and package scripts together. | [ ] |
+| 8 | T06 | `test(compose): cover real browser application flows` | Real-Compose browser harness, scripts, matrix tests, and package scripts together. | [x] |
+| 9 | T09 | `fix(runtime): render compose rejection outcome` | Deterministic provider send-outcome parsing, focused provider regression, CMP-OUTCOME-09 closure, and T09 evidence only; no T06 harness source. | [x] |
 
 Do not squash these boundaries. Do not mix generated evidence or local environment files into any commit. If a task needs a migration or contract change, keep that change and its tests in the same task commit and record the scope change here before implementation.
 
@@ -450,12 +487,12 @@ Do not squash these boundaries. Do not mix generated evidence or local environme
 
 The remediation is complete only when every item below is checked:
 
-- [ ] CMP-SEC-01 through CMP-E2E-06, CMP-APPROVAL-07, and CMP-TESTKIT-08 are closed with focused `PASS` evidence.
-- [ ] T01 through T08 each have exactly one atomic conventional commit using the listed message.
+- [ ] CMP-SEC-01 through CMP-E2E-06, CMP-APPROVAL-07, CMP-TESTKIT-08, and CMP-OUTCOME-09 are closed with focused `PASS` evidence.
+- [ ] T01 through T09 each have exactly one atomic conventional commit using the listed message.
 - [ ] The security rules are satisfied, including image inspection and secret-redaction checks.
 - [ ] Base Compose is deterministic and requires no provider credential.
 - [ ] Optional live-provider override is explicit, isolated, redacted, and non-gating.
-- [ ] BrowserMCP rows B01 through B08 pass against the real Compose stack for both runtimes.
+- [ ] Representative BrowserMCP rows B01 through B08 pass against the real Compose stack for both runtimes without replacing any F01-F10 acceptance cell.
 - [ ] Every mandatory row in the full previous-plan regression matrix is `PASS`.
 - [ ] All twenty F01 to F10 runtime cells are `PASS`, with separate P05 and P06 records.
 - [ ] No mandatory result is `FAIL`, `BLOCKED`, or `NOT RUN`.

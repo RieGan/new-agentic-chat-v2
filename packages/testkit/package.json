@@ -18,6 +18,7 @@
   "scripts": {
     "test:integration": "vitest run tests/integration --passWithNoTests",
     "test:e2e": "node scripts/run-playwright.mjs",
+    "test:compose-browser": "node --experimental-strip-types scripts/compose-browser-runner.ts",
     "test:acceptance:harness-negative": "vitest run tests/acceptance/harness.test.ts -t altered",
     "test:acceptance:baseline": "vitest run tests/acceptance/baseline-characterization.test.ts",
     "test:parity": "node scripts/task18-parity.mjs",
