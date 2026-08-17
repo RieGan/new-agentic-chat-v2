@@ -1,0 +1,411 @@
+{
+  "metadata": {
+    "runtime": "simple_loop",
+    "testId": "F04",
+    "promptId": "P04",
+    "fixtureNamespace": "e2e_f04",
+    "testFile": "/Users/riegan/Project/ruangguru/new-agentic-chat-v2/packages/testkit/e2e/simple-loop.spec.ts",
+    "testTitle": "F04 typed calculator failure still yields a complete explanation",
+    "runtimeDiagnostics": [
+      {
+        "providerInvocations": 3
+      }
+    ],
+    "executionOutcome": {
+      "runId": "run_e2e_f04_4",
+      "status": "completed",
+      "text": "Division by zero is undefined.",
+      "consumedSteps": 3
+    }
+  },
+  "runId": "run_e2e_f04_4",
+  "actors": [
+    {
+      "actor": "mvp_user",
+      "action": "message"
+    },
+    {
+      "actor": "ai",
+      "action": "final_response"
+    }
+  ],
+  "stableIds": {
+    "runId": "run_e2e_f04_4",
+    "callIds": [
+      "call_e2e_f04_calculator"
+    ],
+    "jobIds": [],
+    "approvalIds": [],
+    "commandIds": []
+  },
+  "observedSkill": {
+    "skillId": "calculator_assistant",
+    "version": "1",
+    "allowedTools": [
+      "calculator.evaluate"
+    ]
+  },
+  "observedToolCalls": [
+    {
+      "callId": "call_e2e_f04_calculator",
+      "toolName": "calculator.evaluate",
+      "status": "failed",
+      "arguments": {
+        "expression": "10 / 0"
+      },
+      "result": null,
+      "error": {
+        "code": "DIVISION_BY_ZERO",
+        "message": "Division by zero is undefined"
+      }
+    }
+  ],
+  "observedApprovals": [],
+  "observedJobs": [],
+  "finalResponse": "Division by zero is undefined.",
+  "finalStatus": "completed",
+  "projections": {
+    "user": {
+      "viewer": "user",
+      "run": {
+        "runId": "run_e2e_f04_4",
+        "conversationId": "conversation_e2e_f04",
+        "runtime": "simple_loop",
+        "status": "completed",
+        "version": 7,
+        "consumedSteps": 3,
+        "selectedSkill": {
+          "skillId": "calculator_assistant",
+          "version": "1",
+          "instructions": "Always use calculator.evaluate for arithmetic requested by the user.",
+          "allowedTools": [
+            "calculator.evaluate"
+          ]
+        },
+        "cursor": {
+          "runId": "run_e2e_f04_4",
+          "sequence": 7
+        }
+      },
+      "events": [
+        {
+          "eventId": "event_e2e_f04_2",
+          "runId": "run_e2e_f04_4",
+          "sequence": 1,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_e2e_f04_5",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_e2e_f04_1",
+            "actor": "user",
+            "content": "Use calculator_assistant version 1 and calculate 10 / 0."
+          }
+        },
+        {
+          "eventId": "event_e2e_f04_6",
+          "runId": "run_e2e_f04_4",
+          "sequence": 2,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_e2e_f04_7",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "queued",
+            "current": "running"
+          }
+        },
+        {
+          "eventId": "event_e2e_f04_8",
+          "runId": "run_e2e_f04_4",
+          "sequence": 3,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_e2e_f04_9",
+          "type": "skill.loaded",
+          "visibility": "user",
+          "payload": {
+            "skillId": "calculator_assistant",
+            "version": "1",
+            "instructions": "Always use calculator.evaluate for arithmetic requested by the user.",
+            "allowedTools": [
+              "calculator.evaluate"
+            ]
+          }
+        },
+        {
+          "eventId": "event_e2e_f04_12",
+          "runId": "run_e2e_f04_4",
+          "sequence": 4,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_e2e_f04_14",
+          "type": "tool.call.started",
+          "visibility": "user",
+          "payload": {
+            "callId": "call_e2e_f04_calculator",
+            "toolName": "calculator.evaluate"
+          }
+        },
+        {
+          "eventId": "event_e2e_f04_13",
+          "runId": "run_e2e_f04_4",
+          "sequence": 5,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_e2e_f04_14",
+          "type": "tool.call.failed",
+          "visibility": "user",
+          "payload": {
+            "callId": "call_e2e_f04_calculator",
+            "toolName": "calculator.evaluate",
+            "error": {
+              "message": "Division by zero is undefined",
+              "code": "DIVISION_BY_ZERO"
+            }
+          }
+        },
+        {
+          "eventId": "event_e2e_f04_17",
+          "runId": "run_e2e_f04_4",
+          "sequence": 6,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_e2e_f04_18",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_e2e_f04_21",
+            "actor": "ai",
+            "content": "Division by zero is undefined."
+          }
+        },
+        {
+          "eventId": "event_e2e_f04_19",
+          "runId": "run_e2e_f04_4",
+          "sequence": 7,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_e2e_f04_20",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "completed"
+          }
+        }
+      ]
+    },
+    "admin": {
+      "viewer": "admin",
+      "run": {
+        "runId": "run_e2e_f04_4",
+        "conversationId": "conversation_e2e_f04",
+        "runtime": "simple_loop",
+        "status": "completed",
+        "version": 7,
+        "consumedSteps": 3,
+        "selectedSkill": {
+          "skillId": "calculator_assistant",
+          "version": "1",
+          "instructions": "Always use calculator.evaluate for arithmetic requested by the user.",
+          "allowedTools": [
+            "calculator.evaluate"
+          ]
+        },
+        "cursor": {
+          "runId": "run_e2e_f04_4",
+          "sequence": 7
+        }
+      },
+      "events": [
+        {
+          "eventId": "event_e2e_f04_2",
+          "runId": "run_e2e_f04_4",
+          "sequence": 1,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_e2e_f04_5",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_e2e_f04_1",
+            "actor": "user",
+            "content": "Use calculator_assistant version 1 and calculate 10 / 0."
+          }
+        },
+        {
+          "eventId": "event_e2e_f04_6",
+          "runId": "run_e2e_f04_4",
+          "sequence": 2,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_e2e_f04_7",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "queued",
+            "current": "running"
+          }
+        },
+        {
+          "eventId": "event_e2e_f04_8",
+          "runId": "run_e2e_f04_4",
+          "sequence": 3,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_e2e_f04_9",
+          "type": "skill.loaded",
+          "visibility": "user",
+          "payload": {
+            "skillId": "calculator_assistant",
+            "version": "1",
+            "instructions": "Always use calculator.evaluate for arithmetic requested by the user.",
+            "allowedTools": [
+              "calculator.evaluate"
+            ]
+          }
+        },
+        {
+          "eventId": "event_e2e_f04_12",
+          "runId": "run_e2e_f04_4",
+          "sequence": 4,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_e2e_f04_14",
+          "type": "tool.call.started",
+          "visibility": "user",
+          "payload": {
+            "callId": "call_e2e_f04_calculator",
+            "toolName": "calculator.evaluate"
+          }
+        },
+        {
+          "eventId": "event_e2e_f04_13",
+          "runId": "run_e2e_f04_4",
+          "sequence": 5,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_e2e_f04_14",
+          "type": "tool.call.failed",
+          "visibility": "user",
+          "payload": {
+            "callId": "call_e2e_f04_calculator",
+            "toolName": "calculator.evaluate",
+            "error": {
+              "message": "Division by zero is undefined",
+              "code": "DIVISION_BY_ZERO"
+            }
+          }
+        },
+        {
+          "eventId": "event_e2e_f04_17",
+          "runId": "run_e2e_f04_4",
+          "sequence": 6,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_e2e_f04_18",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_e2e_f04_21",
+            "actor": "ai",
+            "content": "Division by zero is undefined."
+          }
+        },
+        {
+          "eventId": "event_e2e_f04_19",
+          "runId": "run_e2e_f04_4",
+          "sequence": 7,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_e2e_f04_20",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "completed"
+          }
+        }
+      ]
+    }
+  },
+  "normalizedEventTrace": {
+    "events": [
+      {
+        "position": 1,
+        "type": "message.completed",
+        "visibility": "user",
+        "payload": {
+          "messageId": "message_e2e_f04_1",
+          "actor": "user",
+          "content": "Use calculator_assistant version 1 and calculate 10 / 0."
+        }
+      },
+      {
+        "position": 2,
+        "type": "run.status_changed",
+        "visibility": "user",
+        "payload": {
+          "previous": "queued",
+          "current": "running"
+        }
+      },
+      {
+        "position": 3,
+        "type": "skill.loaded",
+        "visibility": "user",
+        "payload": {
+          "skillId": "calculator_assistant",
+          "version": "1",
+          "instructions": "Always use calculator.evaluate for arithmetic requested by the user.",
+          "allowedTools": [
+            "calculator.evaluate"
+          ]
+        }
+      },
+      {
+        "position": 4,
+        "type": "tool.call.started",
+        "visibility": "user",
+        "payload": {
+          "callId": "call_e2e_f04_calculator",
+          "toolName": "calculator.evaluate"
+        }
+      },
+      {
+        "position": 5,
+        "type": "tool.call.failed",
+        "visibility": "user",
+        "payload": {
+          "callId": "call_e2e_f04_calculator",
+          "toolName": "calculator.evaluate",
+          "error": {
+            "message": "Division by zero is undefined",
+            "code": "DIVISION_BY_ZERO"
+          }
+        }
+      },
+      {
+        "position": 6,
+        "type": "message.completed",
+        "visibility": "user",
+        "payload": {
+          "messageId": "message_e2e_f04_21",
+          "actor": "ai",
+          "content": "Division by zero is undefined."
+        }
+      },
+      {
+        "position": 7,
+        "type": "run.status_changed",
+        "visibility": "user",
+        "payload": {
+          "previous": "running",
+          "current": "completed"
+        }
+      }
+    ]
+  },
+  "schemaVersion": 2,
+  "provenance": {
+    "source": "postgresql_projection_capture",
+    "capturedRunId": "run_e2e_f04_4",
+    "processId": 80347,
+    "observationDigest": "55c929ac98109c72420ee220673eabf0aff828c21f10fb60014bcaa7a5cdd79f"
+  },
+  "observedApprovalJobEvents": [],
+  "result": "PASS",
+  "failureDetails": null,
+  "evidenceLinks": [
+    "acceptance/simple_loop/F04/P04.json"
+  ]
+}
