@@ -1,0 +1,57 @@
+ Container new-agentic-chat-v2-migration-1 Running 
+ Container new-agentic-chat-v2-redis-1 Running 
+ Container new-agentic-chat-v2-temporal-1 Running 
+ Container new-agentic-chat-v2-postgres-1 Running 
+ Container new-agentic-chat-v2-worker-workflow-1 Creating 
+ Container new-agentic-chat-v2-api-1 Creating 
+ Container new-agentic-chat-v2-web-1 Creating 
+ Container new-agentic-chat-v2-fixture-worker-1 Creating 
+ Container new-agentic-chat-v2-worker-simple-1 Creating 
+ Container new-agentic-chat-v2-api-1 Created 
+ Container new-agentic-chat-v2-worker-workflow-1 Created 
+ Container new-agentic-chat-v2-worker-simple-1 Created 
+ Container new-agentic-chat-v2-web-1 Created 
+ Container new-agentic-chat-v2-fixture-worker-1 Created 
+ Container new-agentic-chat-v2-postgres-1 Waiting 
+ Container new-agentic-chat-v2-postgres-1 Healthy 
+ Container new-agentic-chat-v2-postgres-1 Waiting 
+ Container new-agentic-chat-v2-temporal-1 Waiting 
+ Container new-agentic-chat-v2-migration-1 Waiting 
+ Container new-agentic-chat-v2-postgres-1 Waiting 
+ Container new-agentic-chat-v2-redis-1 Waiting 
+ Container new-agentic-chat-v2-migration-1 Waiting 
+ Container new-agentic-chat-v2-postgres-1 Waiting 
+ Container new-agentic-chat-v2-redis-1 Waiting 
+ Container new-agentic-chat-v2-temporal-1 Waiting 
+ Container new-agentic-chat-v2-redis-1 Waiting 
+ Container new-agentic-chat-v2-temporal-1 Waiting 
+ Container new-agentic-chat-v2-migration-1 Waiting 
+ Container new-agentic-chat-v2-postgres-1 Waiting 
+ Container new-agentic-chat-v2-migration-1 Waiting 
+ Container new-agentic-chat-v2-redis-1 Waiting 
+ Container new-agentic-chat-v2-postgres-1 Waiting 
+ Container new-agentic-chat-v2-temporal-1 Waiting 
+ Container new-agentic-chat-v2-migration-1 Waiting 
+ Container new-agentic-chat-v2-redis-1 Waiting 
+ Container new-agentic-chat-v2-temporal-1 Waiting 
+ Container new-agentic-chat-v2-temporal-1 Healthy 
+ Container new-agentic-chat-v2-postgres-1 Healthy 
+ Container new-agentic-chat-v2-temporal-1 Healthy 
+ Container new-agentic-chat-v2-postgres-1 Healthy 
+ Container new-agentic-chat-v2-redis-1 Healthy 
+ Container new-agentic-chat-v2-migration-1 Error dependency migration failed to start
+ Container new-agentic-chat-v2-temporal-1 Healthy 
+ Container new-agentic-chat-v2-redis-1 Healthy 
+ Container new-agentic-chat-v2-postgres-1 Healthy 
+ Container new-agentic-chat-v2-redis-1 Healthy 
+ Container new-agentic-chat-v2-temporal-1 Healthy 
+ Container new-agentic-chat-v2-migration-1 Error dependency migration failed to start
+ Container new-agentic-chat-v2-redis-1 Healthy 
+ Container new-agentic-chat-v2-redis-1 Error dependency redis failed to start
+ Container new-agentic-chat-v2-temporal-1 Healthy 
+ Container new-agentic-chat-v2-migration-1 Error dependency migration failed to start
+ Container new-agentic-chat-v2-postgres-1 Healthy 
+ Container new-agentic-chat-v2-migration-1 Error dependency migration failed to start
+ Container new-agentic-chat-v2-migration-1 Error dependency migration failed to start
+ Container new-agentic-chat-v2-postgres-1 Healthy 
+dependency failed to start: container new-agentic-chat-v2-migration-1 is unhealthy
