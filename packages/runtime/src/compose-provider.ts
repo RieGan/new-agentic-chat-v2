@@ -1,4 +1,5 @@
-import { CallIdSchema, PreviewIdSchema } from "@agentic-chat/contracts"
+import { CallIdSchema, MessageIdSchema, PreviewIdSchema } from "@agentic-chat/contracts"
+import { z } from "zod"
 
 import {
   type ModelProvider,
@@ -6,6 +7,22 @@ import {
   ProviderRequestSchema,
   type ProviderResult,
 } from "./provider/contracts.js"
+
+const DeterministicNotificationSendOutcomeSchema = z.discriminatedUnion("status", [
+  z
+    .object({
+      toolName: z.literal("notification.send_email"),
+      messageId: MessageIdSchema,
+      status: z.literal("sent"),
+    })
+    .strict(),
+  z
+    .object({
+      toolName: z.literal("notification.send_email"),
+      status: z.literal("not_sent"),
+    })
+    .strict(),
+])
 
 const scenarioFrom = (
   message: string,
@@ -70,7 +87,8 @@ export const createComposeDeterministicProvider = (): ModelProvider => ({
         },
       ])
     }
-    if (!results.some((result) => result.toolName === "notification.send_email")) {
+    const sendResult = results.find((result) => result.toolName === "notification.send_email")
+    if (!sendResult) {
       return generated([
         {
           kind: "tool_call",
@@ -80,6 +98,18 @@ export const createComposeDeterministicProvider = (): ModelProvider => ({
         },
       ])
     }
-    return generated([{ kind: "text", text: `Message message_call_send_${scenario.id} was sent.` }])
+    const sendOutcome = DeterministicNotificationSendOutcomeSchema.parse(sendResult.output)
+    switch (sendOutcome.status) {
+      case "sent":
+        return generated([
+          { kind: "text", text: `Message message_call_send_${scenario.id} was sent.` },
+        ])
+      case "not_sent":
+        return generated([{ kind: "text", text: "The message was not sent." }])
+      default: {
+        const exhaustiveOutcome: never = sendOutcome
+        return exhaustiveOutcome
+      }
+    }
   },
 })
