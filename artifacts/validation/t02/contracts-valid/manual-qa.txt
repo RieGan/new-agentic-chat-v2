@@ -1,0 +1,5 @@
+Command: node --no-warnings --experimental-transform-types --experimental-loader ./manual-loader.mjs manual-qa.mts
+Exit code: 0
+Output: {"eventType":"run.status_changed","forbiddenUserAdminEventRejected":true,"runId":"run_manual_001","status":"waiting_for_user"}
+Surface: temporary Node driver imported @agentic-chat/contracts through its package export.
+Assertions: valid run snapshot parsed; valid discrete event parsed; User-visible Admin command event was rejected.

@@ -1,0 +1,5 @@
+Command: pnpm test:contracts
+Exit code: 0
+Observed: @agentic-chat/contracts exported only an empty index and Vitest reported "No test files found".
+Observed script: vitest run --passWithNoTests
+Characterization: baseline success was non-meaningful and Task 2 must replace it with real contract tests.

@@ -1,0 +1,3 @@
+Temporary manual-QA files removed: packages/contracts/manual-qa.mts and packages/contracts/manual-loader.mjs.
+Temporary processes: none remained; every command was bounded and exited.
+Hung command handling: not applicable; no long-running process was started.
