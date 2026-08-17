@@ -69,7 +69,7 @@ After remediation, the first `curl` must return application-owned readiness and 
 | CMP-ROUTE-02 | High | [x] Closed | Compose web resolves `VITE_API_TARGET` to `http://api:3000`; the host-local Vite fallback remains `http://127.0.0.1:3000`. | Container loopback is process-local. The web container now uses Docker DNS `http://api:3000`. |
 | CMP-API-03 | Critical | [x] Closed | The rebuilt API runs compiled `compose-main.js` as PID 1; `GET /healthz` reports database-aware application readiness, fixed-User `skills.get` responds through tRPC, unknown routes remain 404, and SIGTERM exits 0 within the five-second grace period. | The API Compose command never started `createApiHttpServer` or bound application services to PostgreSQL. |
 | CMP-PROVIDER-04 | High | [x] Closed | Both model workers parse provider environment before entering their run loop and select through `createComposeProvider()`; the fixture worker remains provider-independent. | Worker startup now selects the Task 18 deterministic provider for parsed mock mode and the OpenAI Responses adapter for parsed live mode. |
-| CMP-MEM-05 | High | [ ] Open | Worker command runs `node` under a 256 MB limit; Temporal warns that the default heap is unsafe. | The worker entrypoint does not set `--max-old-space-size=48`. |
+| CMP-MEM-05 | High | [x] Closed | Workers run with a 128 MB V8 old-space cap under a 256 MiB hard limit, with no cgroup reservation; all workers stay healthy without OOM events and fresh logs contain no Temporal unsafe-memory warning. | Temporal SDK 1.22 selects `memory.low`/`memory.min` before `memory.max`; the former 64 MiB reservation made its 75% recommendation 48 MiB even though the hard limit was 256 MiB. |
 | CMP-E2E-06 | Critical | [ ] Open | `playwright.config.ts` starts `packages/testkit/e2e/ui-fixture-server.ts`; UI suites do not traverse Compose services. | Browser tests replace the Vite, API, database, and worker path with fixture services. |
 
 ## Atomic remediation tasks
@@ -180,28 +180,30 @@ docker compose -f compose.yaml -f compose.live.yaml --env-file .env.local config
 
 **PASS:** base Compose resolves both model workers to mock mode with no key; the optional override resolves both to `openai_responses`; missing live values stop startup with variable names only; the fixture worker receives no OpenAI values. A live model response is non-gating.
 
-### [ ] T05: Cap Node heap for Compose workers
+### [x] T05: Cap Node heap for Compose workers
 
 **Issue:** CMP-MEM-05  
-**Fix files:** `infra/docker/service-entrypoint.sh`, `infra/tests/compose-worker-boot.mjs`  
+**Fix files:** `compose.yaml`, `infra/docker/service-entrypoint.sh`, `infra/tests/compose-topology.mjs`, `infra/tests/compose-worker-boot.mjs`
 **Commit:** `fix(worker): cap node heap for compose workers`
 
 Tasks:
 
-- [ ] Start every worker role with `node --max-old-space-size=48` while preserving production conditions and source maps.
-- [ ] Extend the worker boot test to require the heap flag.
-- [ ] Confirm the workflow worker no longer prints the unsafe heap warning under the 256 MB limit.
+- [x] Start every worker role with `node --max-old-space-size=128` while preserving production conditions and source maps.
+- [x] Remove only the worker `memory` reservation while retaining the `256M` hard limit and CPU setting.
+- [x] Extend the topology and worker boot tests to require the hard limit, reject reservations and the obsolete 48 MB flag, and require the exact 128 MB worker command.
+- [x] Confirm the workflow worker no longer prints the unsafe heap warning under the 256 MB limit.
 
 Focused verification:
 
 ```sh
 node infra/tests/compose-worker-boot.mjs
+node infra/tests/compose-topology.mjs
 docker compose up --build --wait worker-simple worker-workflow fixture-worker
 docker compose exec worker-workflow node -e 'const v8=require("node:v8"); console.log(Math.round(v8.getHeapStatistics().heap_size_limit/1024/1024))'
 docker compose logs worker-workflow
 ```
 
-**PASS:** the boot test exits 0, worker PID 1 includes `--max-old-space-size=48`, the reported heap limit reflects the cap, all worker health checks stay healthy, and the unsafe heap warning is absent.
+**PASS:** the boot and topology tests exit 0; the worker Node child includes exactly `--max-old-space-size=128`; cgroup `memory.low` and `memory.min` are zero while `memory.max` remains 268435456; the reported V8 heap limit is 131 MiB; all workers stay healthy through two startups and both runtime restart scenarios; OOM events remain zero; and fresh worker logs contain no unsafe-memory warning or V8 fatal marker.
 
 ### [ ] T06: Add real-Compose BrowserMCP coverage
 
@@ -346,7 +348,7 @@ Add rows as commands run. Preserve failures as evidence. Never rewrite a failed 
 | E-003 | T02 | `node infra/tests/compose-topology.mjs` | Web target is `http://api:3000`; loopback is rejected. | Not run before the T02 assertion was added. | `artifacts/validation/compose-remediation/T02/` | [ ] NOT RUN |
 | E-004 | T03 | `node infra/tests/compose-api-boot.mjs` | Entrypoint starts compiled API and real readiness. | 2026-08-17: PASS; the static guard rejects BusyBox/scaffold startup, requires the compiled API build/entrypoint, and requires the canonical GET health probe. | `artifacts/validation/compose-remediation/T03/` | [x] PASS |
 | E-005 | T04 | `node infra/tests/compose-provider-mode.mjs` | Base and override provider rules are enforced without exposing values. | 2026-08-18: PASS. Structural assertions proved deterministic mock mode for both model workers, provider-independent fixture configuration, model-worker-only live overrides, removed Task 18 gates in live mode, and provider selection before worker execution. Base and live `config --quiet` checks passed; no resolved provider value was printed or retained. Runtime selection/redaction tests passed 21/21, serial integration passed 59/59, and all three base workers became healthy with role-specific ready events. | `artifacts/validation/compose-remediation/T04/` | [x] PASS |
-| E-006 | T05 | `node infra/tests/compose-worker-boot.mjs` | Every worker starts with a 48 MB old-space cap. | Not run. | `artifacts/validation/compose-remediation/T05/` | [ ] NOT RUN |
+| E-006 | T05 | `node infra/tests/compose-worker-boot.mjs`; `node infra/tests/compose-topology.mjs` | Every worker uses exactly a 128 MB old-space cap, rejects obsolete 48 MB configuration, has no reservation, and retains a 256 MiB hard limit. | 2026-08-17: PASS. Boot and topology assertions passed; resolved worker limit was 268435456 bytes; worker reservations were absent; the shared command required `--max-old-space-size=128` and rejected `48`. | `artifacts/validation/compose-remediation/T05/` | [x] PASS |
 | E-007 | T06 | `pnpm test:compose-browser --runtime=simple_loop` | Real-Compose User and Admin paths pass for Simple Loop. | Not run. | `artifacts/validation/compose-browser/simple_loop/` | [ ] NOT RUN |
 | E-008 | T06 | `pnpm test:compose-browser --runtime=state_workflow` | Real-Compose User and Admin paths pass for State Workflow. | Not run. | `artifacts/validation/compose-browser/state_workflow/` | [ ] NOT RUN |
 | E-009 | Final | Full previous-plan regression matrix | Every mandatory row is `PASS`. | Not run. | `artifacts/validation/compose-remediation/final/` | [ ] NOT RUN |
@@ -355,6 +357,9 @@ Add rows as commands run. Preserve failures as evidence. Never rewrite a failed 
 | E-012 | T03 | `pnpm --filter @agentic-chat/api build`; `pnpm --filter @agentic-chat/api test:integration`; `node infra/tests/compose-api-boot.mjs`; `docker compose up --wait --force-recreate api`; live health, tRPC, 404, PID 1, and SIGTERM probes | Compiled Node API is healthy, database-aware, routable, fail-closed, and shuts down within five seconds. | 2026-08-17: PASS. Build exited 0; API integration passed 21/21; Compose API became healthy; health returned application/database ready JSON; fixed-User `skills.get` returned the seeded typed skill; `/unknown` returned 404; `/proc/1/cmdline` named compiled `compose-main.js`; stop completed in 0.309 seconds with exit 0 and no OOM. | `artifacts/validation/compose-remediation/T03/` | [x] PASS |
 | E-013 | T02 | `docker compose config --quiet`; `node infra/tests/compose-topology.mjs`; `docker compose up --build --wait web api` | Resolved web target is exact Docker DNS and rebuilt web/API pair is healthy. | 2026-08-18: PASS. The pre-fix topology assertion failed with `actual: undefined`; after the Compose-only override, config validation passed, topology passed, and rebuilt web/API services became healthy. | `artifacts/validation/compose-remediation/T02/` | [x] PASS |
 | E-014 | T02 | `docker compose exec -T web sh -c 'wget --server-response --output-document=- http://api:3000/healthz'`; `curl --fail-with-body --show-error --get --data-urlencode 'input={"skillId":"calculator_assistant","version":"1"}' http://127.0.0.1:4173/trpc/user/skills.get`; scoped web log review | Web container reaches API by service name; through-web typed tRPC query returns the seeded response with no proxy refusal, 502, or HTML fallback. | 2026-08-18: PASS, independently rerun by parent. Container health probe resolved `api` to Docker IP and returned HTTP 200 application readiness; through-web `skills.get` returned `calculator_assistant` version `1`, typed instructions, and `calculator.evaluate`; web logs from the rerun had no proxy error, `ECONNREFUSED`, 502, or bad gateway. | `artifacts/validation/compose-remediation/T02/` | [x] PASS |
+| E-015 | T05 | Clean rebuilt workers with `node --max-old-space-size=48` under the 256 MiB worker limit | Workers should boot without V8 fatal errors. | 2026-08-17: FAIL preserved. All three roles repeatedly reached roughly 45-48 MiB heap usage and emitted V8 `FATAL ERROR` / `heap out of memory` before readiness. | `artifacts/validation/compose-remediation/T05/` | [ ] FAIL |
+| E-016 | T05 | Clean rebuilt workers with `node --max-old-space-size=128` while the 64 MiB worker reservation remained | Workers should boot without the Temporal unsafe-memory warning. | 2026-08-17: FAIL preserved. All workers became healthy with 131 MiB V8 limits and `OOMKilled=false`, but fresh workflow logs emitted `high probability` and recommended `--max-old-space-size=48`; cgroup reservation precedence selected 64 MiB. | `artifacts/validation/compose-remediation/T05/` | [ ] FAIL |
+| E-017 | T05 | Remove worker reservation; clean rebuild/startup twice; numeric cgroup probes; PID/heap/OOM/memory probes; `node packages/testkit/scripts/task18-restart.mjs`; fresh log scan | No nonzero reservation, 256 MiB hard limit retained, bounded 128 MB workers healthy through repeated startup and Simple Loop/State Workflow restart recovery, no OOM events, and no unsafe/fatal log markers. | 2026-08-17: PASS. Installed Temporal SDK 1.22 source showed `memory.low ?? memory.min ?? soft_limit` selected before `memory.high ?? memory.max`, then 75% recommendation. Workflow cgroup values were `memory.low=0`, `memory.min=0`, `memory.max=268435456`, `memory.events` all zero; child commands had exactly `--max-old-space-size=128`; V8 limit was 131 MiB; startup memory stayed below 256 MiB; all workers emitted `worker.ready` on both startups; restart gate passed both runtime recovery scenarios and cleanup; fresh logs matched neither unsafe warning nor `heap out of memory`/`FATAL ERROR`. | `artifacts/validation/compose-remediation/T05/`, `artifacts/validation/final-runtime-evidence/` | [x] PASS |
 
 ## Commit boundaries
 
@@ -364,7 +369,7 @@ Add rows as commands run. Preserve failures as evidence. Never rewrite a failed 
 | 2 | T02 | `fix(web): route compose trpc traffic to api` | Compose web target and topology assertion only. | [ ] |
 | 3 | T03 | `fix(api): run real trpc server in compose` | API startup, readiness, image build, Compose wiring, and focused tests together. | [ ] |
 | 4 | T04 | `fix(runtime): honor compose provider configuration` | Provider factory, worker wiring, base and override rules, and provider tests together. | [ ] |
-| 5 | T05 | `fix(worker): cap node heap for compose workers` | Worker Node flags and boot assertion only. | [ ] |
+| 5 | T05 | `fix(worker): cap node heap for compose workers` | Worker Node flags, cgroup boundary, and focused topology/boot assertions only. | [ ] |
 | 6 | T06 | `test(compose): cover real browser application flows` | Real-Compose browser harness, scripts, matrix tests, and package scripts together. | [ ] |
 
 Do not squash these boundaries. Do not mix generated evidence or local environment files into any commit. If a task needs a migration or contract change, keep that change and its tests in the same task commit and record the scope change here before implementation.
