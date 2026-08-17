@@ -1,0 +1,95 @@
+{
+  "gate": "restart",
+  "result": "PASS",
+  "mtime": "2026-08-17T10:45:40.731Z",
+  "scenarios": [
+    {
+      "runtime": "simple_loop",
+      "target": "worker-simple",
+      "recoveryMs": 6353,
+      "reportRunId": "run_simple_loop_f10_report_4",
+      "approvalRunId": "run_simple_loop_pending_approval_4",
+      "reportBarrier": {
+        "runStatus": "waiting_for_tool",
+        "jobStatus": "running",
+        "percent": 50
+      },
+      "approvalBarrier": {
+        "runStatus": "waiting_for_admin",
+        "approvalStatus": "pending",
+        "approvalId": "approval_c3733f03-cbca-4bd5-835f-46c58d8334a7"
+      },
+      "sameReportIdentities": {
+        "run": true,
+        "job": true,
+        "call": true,
+        "ledger": true,
+        "workflow": true
+      },
+      "sameApprovalIdentities": {
+        "run": true,
+        "approval": true,
+        "call": true
+      },
+      "completion": {
+        "reportStatus": "completed",
+        "jobStatus": "completed",
+        "jobCompletedEvents": 1,
+        "approvalRunStatus": "completed",
+        "approvalStatus": "approved",
+        "sends": 1,
+        "sendCalls": 1
+      },
+      "restart": {
+        "targetContainerPreserved": true,
+        "targetStartedAtChanged": true,
+        "targetHealthy": true,
+        "allPeersUntouched": true
+      }
+    },
+    {
+      "runtime": "state_workflow",
+      "target": "worker-workflow",
+      "recoveryMs": 10523,
+      "reportRunId": "run_state_workflow_f10_report_4",
+      "approvalRunId": "run_state_workflow_pending_approval_4",
+      "reportBarrier": {
+        "runStatus": "waiting_for_tool",
+        "jobStatus": "running",
+        "percent": 50
+      },
+      "approvalBarrier": {
+        "runStatus": "waiting_for_admin",
+        "approvalStatus": "pending",
+        "approvalId": "approval_91c8e0d30713dff2f9409061a52eb35e628eb67cc247ebc1ffad7fd57bf9624a"
+      },
+      "sameReportIdentities": {
+        "run": true,
+        "job": true,
+        "call": true,
+        "ledger": true,
+        "workflow": true
+      },
+      "sameApprovalIdentities": {
+        "run": true,
+        "approval": true,
+        "call": true
+      },
+      "completion": {
+        "reportStatus": "completed",
+        "jobStatus": "completed",
+        "jobCompletedEvents": 1,
+        "approvalRunStatus": "completed",
+        "approvalStatus": "approved",
+        "sends": 1,
+        "sendCalls": 1
+      },
+      "restart": {
+        "targetContainerPreserved": true,
+        "targetStartedAtChanged": true,
+        "targetHealthy": true,
+        "allPeersUntouched": true
+      }
+    }
+  ]
+}
