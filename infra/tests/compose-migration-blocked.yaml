@@ -1,0 +1,11 @@
+services:
+  migration:
+    entrypoint:
+      - /bin/sh
+      - -c
+      - rm -f /run/agentic-chat/migrations-complete; exec sleep infinity
+    healthcheck:
+      interval: 1s
+      timeout: 1s
+      retries: 3
+      start_period: 1s
