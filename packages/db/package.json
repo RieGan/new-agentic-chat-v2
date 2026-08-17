@@ -1,0 +1,31 @@
+{
+  "name": "@agentic-chat/db",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "production": "./dist/index.js",
+      "default": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "db:generate": "drizzle-kit generate --config drizzle.config.ts",
+    "db:migrate": "drizzle-kit migrate --config drizzle.config.ts",
+    "db:seed": "node dist/seed-cli.js",
+    "test": "vitest run --fileParallelism=false",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@agentic-chat/contracts": "workspace:*",
+    "@agentic-chat/tools": "workspace:*",
+    "drizzle-orm": "0.45.2",
+    "pg": "8.23.0",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@types/pg": "8.18.0",
+    "drizzle-kit": "0.31.10"
+  }
+}
