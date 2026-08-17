@@ -12,6 +12,7 @@ RUN pnpm install --frozen-lockfile --ignore-scripts \
   && pnpm --filter @agentic-chat/tools build \
   && pnpm --filter @agentic-chat/db build \
   && pnpm --filter @agentic-chat/runtime build \
+  && pnpm --filter @agentic-chat/api build \
   && pnpm --filter @agentic-chat/web build \
   && chmod +x /workspace/infra/docker/*.sh
 

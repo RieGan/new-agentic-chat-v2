@@ -12,10 +12,7 @@ case "$service_kind" in
   api)
     [ "$#" -eq 1 ] || { echo "api accepts no role" >&2; exit 64; }
     [ "${SERVICE_KIND:-}" = "api" ] || { echo "SERVICE_KIND must be api" >&2; exit 64; }
-    mkdir -p /run/agentic-chat/http/healthz
-    printf '%s\n' '{"service":"api","status":"scaffold_ready"}' > /run/agentic-chat/http/index.html
-    printf '%s\n' '{"status":"ready","scope":"infrastructure_scaffold"}' > /run/agentic-chat/http/healthz/index.html
-    exec busybox httpd -f -p 3000 -h /run/agentic-chat/http
+    exec node --conditions=production --enable-source-maps /workspace/apps/api/dist/compose-main.js
     ;;
   worker)
     worker_role="${2:?worker role is required}"

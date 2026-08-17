@@ -67,7 +67,7 @@ After remediation, the first `curl` must return application-owned readiness and 
 | --- | --- | --- | --- | --- |
 | CMP-SEC-01 | Critical | [x] Closed | `.dockerignore` excludes `.env` and `.env.*`, retains `!.env.example`, and the fresh image contains only the example file. | The build context now denies local environment files before `COPY . .`. |
 | CMP-ROUTE-02 | High | [ ] Open | `apps/web/vite.config.ts` defaults `VITE_API_TARGET` to `http://127.0.0.1:3000`; `compose.yaml` does not override it. | Container loopback is process-local. The web container must use Docker DNS `http://api:3000`. |
-| CMP-API-03 | Critical | [ ] Open | `infra/docker/service-entrypoint.sh` writes scaffold files and executes `busybox httpd`; `/healthz/` reports scaffold readiness. | The API Compose command never starts `createApiHttpServer` or binds application services to PostgreSQL. |
+| CMP-API-03 | Critical | [x] Closed | The rebuilt API runs compiled `compose-main.js` as PID 1; `GET /healthz` reports database-aware application readiness, fixed-User `skills.get` responds through tRPC, unknown routes remain 404, and SIGTERM exits 0 within the five-second grace period. | The API Compose command never started `createApiHttpServer` or bound application services to PostgreSQL. |
 | CMP-PROVIDER-04 | High | [ ] Open | `packages/runtime/src/compose-worker.ts` calls `createComposeDeterministicProvider()` in both model workers. | Worker startup ignores `parseEnvironment()` and never constructs the configured mock or OpenAI Responses adapter. |
 | CMP-MEM-05 | High | [ ] Open | Worker command runs `node` under a 256 MB limit; Temporal warns that the default heap is unsafe. | The worker entrypoint does not set `--max-old-space-size=48`. |
 | CMP-E2E-06 | Critical | [ ] Open | `playwright.config.ts` starts `packages/testkit/e2e/ui-fixture-server.ts`; UI suites do not traverse Compose services. | Browser tests replace the Vite, API, database, and worker path with fixture services. |
@@ -123,20 +123,20 @@ curl --fail-with-body --show-error http://127.0.0.1:4173/trpc/user/catalog.skill
 
 **PASS:** the resolved web target is `http://api:3000`; the web container reaches API readiness by service name; the browser-facing `/trpc` request returns a tRPC response with no connection refusal, `502`, or Vite HTML fallback.
 
-### [ ] T03: Start the real tRPC API and application health check
+### [x] T03: Start the real tRPC API and application health check
 
 **Issue:** CMP-API-03  
-**Fix files:** `apps/api/package.json`, `apps/api/src/server.ts`, `apps/api/src/compose-main.ts`, `infra/docker/Dockerfile`, `infra/docker/service-entrypoint.sh`, `compose.yaml`, `infra/tests/compose-api-boot.mjs`, `apps/api/tests/compose-server.integration.test.ts`  
+**Fix files:** `apps/api/package.json`, `apps/api/src/application.ts`, `apps/api/src/server.ts`, `apps/api/src/compose-main.ts`, `apps/api/src/index.ts`, `apps/api/tests/compose-server.integration.test.ts`, `apps/api/tests/trpc-sse-http.integration.test.ts`, `apps/api/tests/trpc-sse-support.ts`, `packages/runtime/package.json`, `infra/docker/Dockerfile`, `infra/docker/service-entrypoint.sh`, `compose.yaml`, `infra/tests/compose-api-boot.mjs`
 **Commit:** `fix(api): run real trpc server in compose`
 
 Tasks:
 
-- [ ] Add an application entrypoint that validates environment, creates database-backed services and event source, starts `createApiHttpServer`, and handles shutdown.
-- [ ] Add application-owned `/healthz` readiness that checks the API process and its required PostgreSQL dependency.
-- [ ] Build `@agentic-chat/api` into the shared image.
-- [ ] Replace BusyBox API startup with the compiled API entrypoint.
-- [ ] Point the Compose API health check at the application-owned endpoint.
-- [ ] Add focused tests proving a tRPC request reaches the real router and a broken database dependency makes readiness fail.
+- [x] Add an application entrypoint that validates environment, creates database-backed services and event source, starts `createApiHttpServer`, and handles shutdown.
+- [x] Add application-owned `/healthz` readiness that checks the API process and its required PostgreSQL dependency.
+- [x] Build `@agentic-chat/api` into the shared image.
+- [x] Replace BusyBox API startup with the compiled API entrypoint.
+- [x] Point the Compose API health check at the application-owned endpoint.
+- [x] Add focused tests proving a tRPC request reaches the real router and a broken database dependency makes readiness fail.
 
 Focused verification:
 
@@ -146,8 +146,8 @@ pnpm --filter @agentic-chat/api test:integration
 node infra/tests/compose-api-boot.mjs
 docker compose up --build --wait postgres migration api
 curl --fail-with-body --show-error http://127.0.0.1:3000/healthz
-curl --fail-with-body --show-error http://127.0.0.1:3000/trpc/user/catalog.skills
-docker compose exec api sh -c 'ps -o args= 1'
+curl --fail-with-body --show-error --get --data-urlencode 'input={"skillId":"calculator_assistant","version":"1"}' http://127.0.0.1:3000/trpc/user/skills.get
+docker compose exec api sh -c "tr '\\000' ' ' < /proc/1/cmdline"
 ```
 
 **PASS:** PID 1 is the compiled Node API, readiness is application-owned and database-aware, a real tRPC procedure returns a typed response, and no payload contains `scaffold_ready` or `infrastructure_scaffold`.
@@ -344,13 +344,15 @@ Add rows as commands run. Preserve failures as evidence. Never rewrite a failed 
 | E-001 | Baseline | `docker compose up --build --wait` | Real API and all dependencies become ready. | Current stack reports false API health; remediation not run. | `artifacts/validation/compose-remediation/baseline/` | [ ] FAIL |
 | E-002 | T01 | `node infra/tests/compose-build-context.mjs` | Environment files are excluded and `.env.example` remains allowed. | Test passed; no environment file contents were loaded or printed. | `artifacts/validation/compose-remediation/T01/` | [x] PASS |
 | E-003 | T02 | `node infra/tests/compose-topology.mjs` | Web target is `http://api:3000`; loopback is rejected. | Not run. | `artifacts/validation/compose-remediation/T02/` | [ ] NOT RUN |
-| E-004 | T03 | `node infra/tests/compose-api-boot.mjs` | Entrypoint starts compiled API and real readiness. | Not run. | `artifacts/validation/compose-remediation/T03/` | [ ] NOT RUN |
+| E-004 | T03 | `node infra/tests/compose-api-boot.mjs` | Entrypoint starts compiled API and real readiness. | 2026-08-17: PASS; the static guard rejects BusyBox/scaffold startup, requires the compiled API build/entrypoint, and requires the canonical GET health probe. | `artifacts/validation/compose-remediation/T03/` | [x] PASS |
 | E-005 | T04 | `node infra/tests/compose-provider-mode.mjs` | Base and override provider rules are enforced without exposing values. | Not run. | `artifacts/validation/compose-remediation/T04/` | [ ] NOT RUN |
 | E-006 | T05 | `node infra/tests/compose-worker-boot.mjs` | Every worker starts with a 48 MB old-space cap. | Not run. | `artifacts/validation/compose-remediation/T05/` | [ ] NOT RUN |
 | E-007 | T06 | `pnpm test:compose-browser --runtime=simple_loop` | Real-Compose User and Admin paths pass for Simple Loop. | Not run. | `artifacts/validation/compose-browser/simple_loop/` | [ ] NOT RUN |
 | E-008 | T06 | `pnpm test:compose-browser --runtime=state_workflow` | Real-Compose User and Admin paths pass for State Workflow. | Not run. | `artifacts/validation/compose-browser/state_workflow/` | [ ] NOT RUN |
 | E-009 | Final | Full previous-plan regression matrix | Every mandatory row is `PASS`. | Not run. | `artifacts/validation/compose-remediation/final/` | [ ] NOT RUN |
 | E-010 | T01 | `docker build --no-cache --tag agentic-chat-secret-boundary:test --file infra/docker/Dockerfile .`; `docker run --rm --entrypoint sh agentic-chat-secret-boundary:test -c 'test ! -e /workspace/.env && test ! -e /workspace/.env.local && test -e /workspace/.env.example'`; sanitized image-history scan; `docker image rm agentic-chat-secret-boundary:test` | Fresh image omits `.env` and `.env.local`, retains `.env.example`, contains no secret markers in history, and is removed after inspection. | 2026-08-17: Fresh build passed; existence-only inspection found `/workspace/.env` and `/workspace/.env.local` absent and `/workspace/.env.example` present; sanitized image-history scan found no `.env.local` or `OPENAI_API_KEY` markers; disposable image and temporary build log were removed. No secret value was printed or persisted. | `artifacts/validation/compose-remediation/T01/` | [x] PASS |
+| E-011 | T03 | Initial `docker compose up --build --wait postgres migration api` after replacing the scaffold | Rebuilt API becomes healthy through its application-owned probe. | 2026-08-17: FAIL preserved. The compiled API returned ready to `GET /healthz`, but Compose used `wget --spider`, sent `HEAD`, received 404, and marked the container unhealthy. | `artifacts/validation/compose-remediation/T03/` | [ ] FAIL |
+| E-012 | T03 | `pnpm --filter @agentic-chat/api build`; `pnpm --filter @agentic-chat/api test:integration`; `node infra/tests/compose-api-boot.mjs`; `docker compose up --wait --force-recreate api`; live health, tRPC, 404, PID 1, and SIGTERM probes | Compiled Node API is healthy, database-aware, routable, fail-closed, and shuts down within five seconds. | 2026-08-17: PASS. Build exited 0; API integration passed 21/21; Compose API became healthy; health returned application/database ready JSON; fixed-User `skills.get` returned the seeded typed skill; `/unknown` returned 404; `/proc/1/cmdline` named compiled `compose-main.js`; stop completed in 0.309 seconds with exit 0 and no OOM. | `artifacts/validation/compose-remediation/T03/` | [x] PASS |
 
 ## Commit boundaries
 
