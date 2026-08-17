@@ -1,0 +1,31 @@
+{
+  "name": "agentic-chat-mvp",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "packageManager": "pnpm@11.21.0",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "build": "pnpm -r --if-present build",
+    "format": "biome format --write .",
+    "lint": "biome check .",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "test:contracts": "pnpm --filter @agentic-chat/contracts test",
+    "test:db": "pnpm --filter @agentic-chat/db test",
+    "test:integration": "pnpm --filter @agentic-chat/runtime test:integration && pnpm --filter @agentic-chat/api test:integration",
+    "test:temporal-replay": "pnpm --filter @agentic-chat/runtime test:temporal-replay",
+    "test:e2e": "pnpm --filter @agentic-chat/testkit test:e2e",
+    "test:acceptance:harness-negative": "pnpm --filter @agentic-chat/testkit test:acceptance:harness-negative",
+    "test:parity": "pnpm --filter @agentic-chat/testkit test:parity",
+    "test:restart": "pnpm --filter @agentic-chat/testkit test:restart"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.8",
+    "@playwright/test": "1.62.1",
+    "@types/node": "22.20.1",
+    "typescript": "7.0.2",
+    "vitest": "4.1.10"
+  }
+}
