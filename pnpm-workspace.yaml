@@ -1,0 +1,12 @@
+packages:
+  - "packages/*"
+  - "apps/*"
+allowBuilds:
+  "@swc/core": true
+  cpu-features: set this to true or false
+  esbuild: set this to true or false
+  msgpackr-extract: false
+  protobufjs: true
+  ssh2: set this to true or false
+minimumReleaseAgeExclude:
+  - bullmq@6.1.2
