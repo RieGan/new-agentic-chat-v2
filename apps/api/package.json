@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "test:integration": "vitest run tests/trpc-sse*.integration.test.ts --fileParallelism=false",
+    "start": "node --conditions=production --enable-source-maps dist/compose-main.js",
+    "test:integration": "vitest run tests/trpc-sse*.integration.test.ts tests/compose-server.integration.test.ts --fileParallelism=false",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
