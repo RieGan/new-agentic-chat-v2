@@ -1,0 +1,39 @@
+Task 01 invalid-environment validation
+Date: 2026-08-16
+
+Mock startup
+Command: AI_PROVIDER_MODE=mock OPENAI_MODEL_ID= OPENAI_BASE_URL= OPENAI_API_KEY= corepack pnpm --filter @agentic-chat/runtime env:check
+Exit: 0
+Result: startup configuration accepted without credentials.
+
+Missing live-provider values
+Command: AI_PROVIDER_MODE=openai_responses OPENAI_MODEL_ID= OPENAI_BASE_URL= OPENAI_API_KEY= corepack pnpm --filter @agentic-chat/runtime env:check
+Exit: 1
+Result: EnvironmentConfigError named OPENAI_MODEL_ID, OPENAI_BASE_URL, and OPENAI_API_KEY only.
+
+Malformed provider mode
+Command: AI_PROVIDER_MODE=unsupported [valid non-secret placeholders] corepack pnpm --filter @agentic-chat/runtime env:check
+Exit: 1
+Result: EnvironmentConfigError named AI_PROVIDER_MODE only.
+
+Malformed base URL
+Command: AI_PROVIDER_MODE=openai_responses OPENAI_BASE_URL=not-a-url [valid non-secret placeholders] corepack pnpm --filter @agentic-chat/runtime env:check
+Exit: 1
+Result: EnvironmentConfigError named OPENAI_BASE_URL and did not print the malformed input or API-key probe value.
+
+Redaction
+- Error output contained variable names only.
+- No supplied model, URL, or API-key value appeared in error output.
+
+Task 01 verification correction
+Date: 2026-08-16
+
+Mock startup rerun
+Command: AI_PROVIDER_MODE=mock OPENAI_MODEL_ID= OPENAI_BASE_URL= OPENAI_API_KEY= corepack pnpm --filter @agentic-chat/runtime env:check
+Exit: 0
+Result: startup configuration accepted without credentials.
+
+Missing live-provider values rerun
+Command: AI_PROVIDER_MODE=openai_responses OPENAI_MODEL_ID= OPENAI_BASE_URL= OPENAI_API_KEY= corepack pnpm --filter @agentic-chat/runtime env:check
+Exit: 1
+Result: EnvironmentConfigError named OPENAI_MODEL_ID, OPENAI_BASE_URL, and OPENAI_API_KEY only; no supplied value was printed.
