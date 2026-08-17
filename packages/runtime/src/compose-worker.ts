@@ -8,9 +8,11 @@ import { NativeConnection } from "@temporalio/worker"
 import { z } from "zod"
 import { secureIds, systemClock } from "./application/dependencies.js"
 import { createReconciliationService } from "./application/reconciliation.js"
-import { createComposeDeterministicProvider } from "./compose-provider.js"
 import { handleSimpleLoopDispatch } from "./compose-simple-dispatch.js"
+import { parseEnvironment } from "./environment.js"
 import { createBullReportQueue, createReportFixtureTestWorker } from "./jobs/report-queue.js"
+import type { ModelProvider } from "./provider/contracts.js"
+import { createComposeProvider } from "./provider/factory.js"
 import { createSimpleLoopRuntime } from "./simple-loop/runtime.js"
 import { createSimpleLoopWorker } from "./simple-loop/worker.js"
 import { createStateWorkflowActivities } from "./state-workflow/activities.js"
@@ -24,19 +26,24 @@ const environmentSchema = z.looseObject({
   DATABASE_URL: z.url(),
   REDIS_URL: z.url(),
   TEMPORAL_ADDRESS: z.string().min(1),
+})
+const task18EnvironmentSchema = z.looseObject({
   NODE_ENV: z.literal("test"),
   TASK18_COMPOSE_MODE: z.literal("enabled"),
 })
 const delay = (): Promise<void> => new Promise((resolve) => setTimeout(resolve, 100))
 
-const runSimpleWorker = async (environment: z.infer<typeof environmentSchema>): Promise<void> => {
+const runSimpleWorker = async (
+  environment: z.infer<typeof environmentSchema>,
+  provider: ModelProvider,
+): Promise<void> => {
   const database = createDatabase(environment.DATABASE_URL)
   const reportQueue = createBullReportQueue({ redisUrl: environment.REDIS_URL })
   const runtime = createSimpleLoopRuntime({
     database,
     clock: systemClock,
     ids: secureIds,
-    provider: createComposeDeterministicProvider(),
+    provider,
     tools: createToolRegistry(),
     timeoutMs: 5_000,
     durableWaits: { namespace: "task18-compose", reportQueue },
@@ -80,7 +87,10 @@ const runSimpleWorker = async (environment: z.infer<typeof environmentSchema>): 
   await database.close()
 }
 
-const runWorkflowWorker = async (environment: z.infer<typeof environmentSchema>): Promise<void> => {
+const runWorkflowWorker = async (
+  environment: z.infer<typeof environmentSchema>,
+  provider: ModelProvider,
+): Promise<void> => {
   const database = createDatabase(environment.DATABASE_URL)
   const reportQueue = createBullReportQueue({ redisUrl: environment.REDIS_URL })
   const nativeConnection = await NativeConnection.connect({ address: environment.TEMPORAL_ADDRESS })
@@ -89,7 +99,7 @@ const runWorkflowWorker = async (environment: z.infer<typeof environmentSchema>)
   const adapter = createStateWorkflowActivityAdapter({
     database,
     clock: systemClock,
-    provider: createComposeDeterministicProvider(),
+    provider,
     tools: createToolRegistry(),
     timeoutMs: 5_000,
     durableWaits: { namespace: "task18-compose", reportQueue },
@@ -167,13 +177,20 @@ const runFixtureWorker = async (environment: z.infer<typeof environmentSchema>):
 const role = roleSchema.parse(process.argv[2])
 const environment = environmentSchema.parse(process.env)
 switch (role) {
-  case "simple_loop":
-    await runSimpleWorker(environment)
+  case "simple_loop": {
+    const providerConfiguration = parseEnvironment(process.env)
+    if (providerConfiguration.mode === "mock") task18EnvironmentSchema.parse(process.env)
+    await runSimpleWorker(environment, createComposeProvider(providerConfiguration))
     break
-  case "state_workflow":
-    await runWorkflowWorker(environment)
+  }
+  case "state_workflow": {
+    const providerConfiguration = parseEnvironment(process.env)
+    if (providerConfiguration.mode === "mock") task18EnvironmentSchema.parse(process.env)
+    await runWorkflowWorker(environment, createComposeProvider(providerConfiguration))
     break
+  }
   case "fixture_jobs":
+    task18EnvironmentSchema.parse(process.env)
     await runFixtureWorker(environment)
     break
   default: {
