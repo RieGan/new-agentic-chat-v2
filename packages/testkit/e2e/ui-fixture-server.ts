@@ -8,6 +8,7 @@ const WEB_PORT = 4310
 const api = createApiHttpServer({
   services: createUiFixtureServices(),
   events: createPollingRunEventSource(15),
+  readiness: async () => true,
 })
 await new Promise<void>((resolve) => api.listen(API_PORT, "127.0.0.1", resolve))
 const vite = await createViteServer({
