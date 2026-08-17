@@ -1,0 +1,319 @@
+ Image agentic-chat-app:t04 Building 
+ Image agentic-chat-app:t04 Building 
+ Image agentic-chat-worker:t04 Building 
+ Image agentic-chat-worker:t04 Building 
+ Image agentic-chat-app:t04 Building 
+ Image agentic-chat-worker:t04 Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 3.15kB done
+#1 DONE 0.0s
+
+#2 [fixture-worker internal] load build definition from Dockerfile
+#2 transferring dockerfile: 425B 0.0s done
+#2 DONE 0.0s
+
+#3 [worker-simple internal] load metadata for docker.io/library/node:22.22.0-alpine3.22
+#3 DONE 1.5s
+
+#4 [worker-workflow internal] load .dockerignore
+#4 transferring context: 121B done
+#4 DONE 0.0s
+
+#5 [fixture-worker 1/5] FROM docker.io/library/node:22.22.0-alpine3.22@sha256:7aa86fa052f6e4b101557ccb56717cb4311be1334381f526fe013418fe157384
+#5 resolve docker.io/library/node:22.22.0-alpine3.22@sha256:7aa86fa052f6e4b101557ccb56717cb4311be1334381f526fe013418fe157384 0.0s done
+#5 DONE 0.0s
+
+#6 [worker-simple internal] load build context
+#6 transferring context: 6.73kB 0.0s done
+#6 DONE 0.0s
+
+#7 [fixture-worker 2/5] RUN apk add --no-cache busybox-extras   && npm install --global pnpm@11.21.0
+#7 CACHED
+
+#8 [fixture-worker 3/5] WORKDIR /workspace
+#8 CACHED
+
+#9 [worker-simple 4/5] COPY . .
+#9 DONE 0.1s
+
+#10 [worker-workflow 5/5] RUN pnpm install --frozen-lockfile --ignore-scripts   && pnpm --filter @agentic-chat/db build   && pnpm --filter @agentic-chat/web build   && chmod +x /workspace/infra/docker/*.sh
+#10 1.401 Scope: all 9 workspace projects
+#10 1.666 ? Verifying lockfile against supply-chain policies (263 entries)...
+#10 1.677 Lockfile is up to date, resolution step is skipped
+#10 2.065 Progress: resolved 1, reused 0, downloaded 0, added 0
+#10 2.162 Packages: +120
+#10 2.162 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#10 3.105 Progress: resolved 120, reused 0, downloaded 0, added 0
+#10 3.926 Packages are hard linked from the content-addressable store to the virtual store.
+#10 3.926   Content-addressable store is at: /root/.local/share/pnpm/store/v11
+#10 3.926   Virtual store is at:             node_modules/.pnpm
+#10 4.161 Progress: resolved 120, reused 0, downloaded 42, added 8
+#10 5.189 Progress: resolved 120, reused 0, downloaded 108, added 80
+#10 5.748 
+#10 5.748    ╭──────────────────────────────────────────╮
+#10 5.748    │                                          │
+#10 5.748    │   Update available! 11.21.0 → 11.22.0.   │
+#10 5.748    │   Changelog: https://pnpm.io/v/11.22.0   │
+#10 5.748    │     To update, run: pnpm add -g pnpm     │
+#10 5.748    │                                          │
+#10 5.748    ╰──────────────────────────────────────────╯
+#10 5.748 
+#10 6.223 Progress: resolved 120, reused 0, downloaded 111, added 111
+#10 8.879 Progress: resolved 120, reused 0, downloaded 112, added 111
+#10 9.867 ✓ Lockfile passes supply-chain policies (263 entries in 8.2s)
+#10 9.878 Progress: resolved 120, reused 0, downloaded 117, added 117
+#10 10.88 Progress: resolved 120, reused 0, downloaded 119, added 119
+#10 12.00 Progress: resolved 120, reused 0, downloaded 120, added 119
+#10 12.01 Progress: resolved 120, reused 0, downloaded 120, added 120, done
+#10 12.39 
+#10 12.39 devDependencies:
+#10 12.39 + @biomejs/biome 2.5.8
+#10 12.39 + @playwright/test 1.62.1
+#10 12.39 + @types/node 22.20.1
+#10 12.39 + typescript 7.0.2
+#10 12.39 + vitest 4.1.10
+#10 12.39 
+#10 12.48 Done in 12.1s using pnpm v11.21.0
+#10 13.26 $ tsc -p tsconfig.build.json
+#10 14.78 $ vite build
+#10 15.40 vite v8.2.1 building client environment for production...
+#10 15.42 [2Ktransforming...✓ 15 modules transformed.
+#10 15.67 rendering chunks...
+#10 15.70 computing gzip size...
+#10 15.71 dist/index.html                   0.40 kB │ gzip:  0.27 kB
+#10 15.71 dist/assets/index-B2VE6WIS.css    4.19 kB │ gzip:  1.40 kB
+#10 15.71 dist/assets/index-9jNvfbmt.js   190.38 kB │ gzip: 59.94 kB
+#10 15.71 
+#10 15.71 ✓ built in 310ms
+#10 DONE 16.2s
+
+#11 [fixture-worker] exporting to image
+#11 exporting layers
+#11 ...
+
+#12 [worker-simple] exporting to image
+#12 ...
+
+#13 [web] exporting to image
+#13 ...
+
+#14 [api] exporting to image
+#14 ...
+
+#15 [worker-workflow] exporting to image
+#15 ...
+
+#16 [migration] exporting to image
+#16 exporting layers 14.8s done
+#16 exporting manifest sha256:2ca5b3fe22eee85b46689c404dca4bcc33cd0b876df3e2f9599546523905ae3c
+#16 exporting manifest sha256:2ca5b3fe22eee85b46689c404dca4bcc33cd0b876df3e2f9599546523905ae3c 0.1s done
+#16 exporting config sha256:77fb7adf011cb7eeb64f0984845eae26eddd9630546524188d14c25ef7c962fa
+#16 ...
+
+#13 [web] exporting to image
+#13 exporting layers 14.8s done
+#13 exporting manifest sha256:066afdebc926dff15edb91086e68dcdcd37f994878cbe61c7a2bcce33006efe2 0.1s done
+#13 exporting config sha256:11822f186d90af7c9a0d116dd089ffca04a1bacd3361b2977fc4403b6f3f4f6f
+#13 exporting config sha256:11822f186d90af7c9a0d116dd089ffca04a1bacd3361b2977fc4403b6f3f4f6f 0.1s done
+#13 exporting attestation manifest sha256:530e5a2e354364bbfae269d75668c5eceefa479d14d9ebad7d1256791d56bc17
+#13 exporting attestation manifest sha256:530e5a2e354364bbfae269d75668c5eceefa479d14d9ebad7d1256791d56bc17 0.2s done
+#13 exporting manifest list sha256:d89e28d8a9ada163883e3c748ca2e778f08beb88492fc654b6976ea5925368f1
+#13 exporting manifest list sha256:d89e28d8a9ada163883e3c748ca2e778f08beb88492fc654b6976ea5925368f1 0.1s done
+#13 naming to docker.io/library/agentic-chat-app:t04 0.0s done
+#13 unpacking to docker.io/library/agentic-chat-app:t04
+#13 ...
+
+#12 [worker-simple] exporting to image
+#12 exporting layers 14.8s done
+#12 exporting manifest sha256:882089511cee91955df88001fcd3b0e8cd6a48f87fa990a8c327e13130cdf26f 0.1s done
+#12 exporting config sha256:5af314c7a94b3dcf99d3c98590a43f823ed2a405231e1e4059cc833c16ffa75c 0.1s done
+#12 exporting attestation manifest sha256:5bd2e961a5caec88cc2b6752120c5447a4329604a67d097d9f6dc5830d18a1da 0.2s done
+#12 exporting manifest list sha256:1c9fb5aa6540ae6bf44c6d43883c6e79554c387b27b248dd20ed37bf1cfb98ea 0.1s done
+#12 naming to docker.io/library/agentic-chat-worker:t04 0.0s done
+#12 unpacking to docker.io/library/agentic-chat-worker:t04
+#12 ...
+
+#11 [fixture-worker] exporting to image
+#11 exporting layers 14.8s done
+#11 exporting manifest sha256:cb184f4e12b4bd052f338e2eb13ff596cf90814873feb4968dae919702067138 0.1s done
+#11 exporting config sha256:e22a074747394fbc52fce20e1ca4ef782de4ffeb3beac110ac0af354408721d4 0.1s done
+#11 exporting attestation manifest sha256:f3a8d45ede68aee9f91c80c87efaade19abaf97c4e8bf510b07d6ec2b3b506cd 0.2s done
+#11 exporting manifest list sha256:66e00b1ba2406b0f96dd1e782c157fa00a5a46926eb777250c8836e85303e736 0.1s done
+#11 naming to docker.io/library/agentic-chat-worker:t04 0.0s done
+#11 ...
+
+#15 [worker-workflow] exporting to image
+#15 exporting layers 14.8s done
+#15 exporting manifest sha256:3fc3da671492f644b5735758fb047ea3682fb784bc7d65e80aa717dd1fdb7a11 0.1s done
+#15 exporting config sha256:4f9da93adb2a800127a09a0faa62ea10fe628685a052dbcfc11d546ff82d6ed0 0.1s done
+#15 exporting attestation manifest sha256:63b507a02480cf48c6bc513454445d0c9c41ef6d5297ca0215338988dfa97266 0.2s done
+#15 exporting manifest list sha256:187e8cc034393fcc092a4c4182bd85b8a23c6cef3863928d75dbe1b33ef83759 0.1s done
+#15 naming to docker.io/library/agentic-chat-worker:t04 0.0s done
+#15 ...
+
+#14 [api] exporting to image
+#14 exporting layers 14.8s done
+#14 exporting manifest sha256:5c0355711ec20fa7ae826f536cecbb256d6a68f96351bb53c9f043560c8d0a1e 0.1s done
+#14 exporting config sha256:ecd13b6f3a7c3b7b1841e6a4bef5768b5e856dff0ac01a2ff014adf6dc762e7b 0.1s done
+#14 exporting attestation manifest sha256:99cd125e353c2231a9dbb04036a9a1b8f645c597fddead5784b1feb1ef3aad64 0.2s done
+#14 exporting manifest list sha256:428b6854b72e4e82c0e07be9323985a561f913ee5bf5449ae30152b85f2bc10f 0.1s done
+#14 naming to docker.io/library/agentic-chat-app:t04 0.0s done
+#14 ...
+
+#16 [migration] exporting to image
+#16 exporting config sha256:77fb7adf011cb7eeb64f0984845eae26eddd9630546524188d14c25ef7c962fa 0.1s done
+#16 exporting attestation manifest sha256:006124b161e8e0e52cb50dc06a185c769d4a74c7df4747eca88b711d9e1b6f21 0.2s done
+#16 exporting manifest list sha256:19d10675d7de8b66c6661892b9f9321b3cafdcd197b4e5e9f5eadde60f5d8644 0.1s done
+#16 naming to docker.io/library/agentic-chat-app:t04 0.0s done
+#16 ...
+
+#14 [api] exporting to image
+#14 unpacking to docker.io/library/agentic-chat-app:t04 14.6s done
+#14 DONE 30.2s
+
+#15 [worker-workflow] exporting to image
+#15 unpacking to docker.io/library/agentic-chat-worker:t04 14.7s done
+#15 DONE 30.1s
+
+#12 [worker-simple] exporting to image
+#12 unpacking to docker.io/library/agentic-chat-worker:t04 14.6s done
+#12 DONE 30.2s
+
+#13 [web] exporting to image
+#13 unpacking to docker.io/library/agentic-chat-app:t04 14.8s done
+#13 DONE 30.5s
+
+#16 [migration] exporting to image
+#16 unpacking to docker.io/library/agentic-chat-app:t04 15.1s done
+#16 DONE 30.5s
+
+#11 [fixture-worker] exporting to image
+#11 unpacking to docker.io/library/agentic-chat-worker:t04 15.1s done
+#11 DONE 30.6s
+
+#17 [worker-workflow] resolving provenance for metadata file
+#17 ...
+
+#18 [fixture-worker] resolving provenance for metadata file
+#18 DONE 0.2s
+
+#19 [api] resolving provenance for metadata file
+#19 DONE 0.3s
+
+#20 [worker-simple] resolving provenance for metadata file
+#20 DONE 0.3s
+
+#21 [web] resolving provenance for metadata file
+#21 DONE 0.1s
+
+#17 [worker-workflow] resolving provenance for metadata file
+#17 DONE 0.4s
+
+#22 [migration] resolving provenance for metadata file
+#22 DONE 0.1s
+ Image agentic-chat-worker:t04 Built 
+ Image agentic-chat-app:t04 Built 
+ Image agentic-chat-worker:t04 Built 
+ Image agentic-chat-app:t04 Built 
+ Image agentic-chat-worker:t04 Built 
+ Image agentic-chat-app:t04 Built 
+ Network new-agentic-chat-v2_default Creating 
+ Network new-agentic-chat-v2_default Created 
+ Volume new-agentic-chat-v2_postgres-data Creating 
+ Volume new-agentic-chat-v2_postgres-data Created 
+ Container new-agentic-chat-v2-postgres-1 Creating 
+ Container new-agentic-chat-v2-redis-1 Creating 
+ Container new-agentic-chat-v2-temporal-1 Creating 
+ Container new-agentic-chat-v2-temporal-1 Created 
+ Container new-agentic-chat-v2-postgres-1 Created 
+ Container new-agentic-chat-v2-migration-1 Creating 
+ Container new-agentic-chat-v2-redis-1 Created 
+ Container new-agentic-chat-v2-migration-1 Created 
+ Container new-agentic-chat-v2-worker-workflow-1 Creating 
+ Container new-agentic-chat-v2-web-1 Creating 
+ Container new-agentic-chat-v2-worker-simple-1 Creating 
+ Container new-agentic-chat-v2-fixture-worker-1 Creating 
+ Container new-agentic-chat-v2-api-1 Creating 
+ Container new-agentic-chat-v2-web-1 Created 
+ Container new-agentic-chat-v2-worker-simple-1 Created 
+ Container new-agentic-chat-v2-worker-workflow-1 Created 
+ Container new-agentic-chat-v2-fixture-worker-1 Created 
+ Container new-agentic-chat-v2-api-1 Created 
+ Container new-agentic-chat-v2-postgres-1 Starting 
+ Container new-agentic-chat-v2-temporal-1 Starting 
+ Container new-agentic-chat-v2-redis-1 Starting 
+ Container new-agentic-chat-v2-postgres-1 Started 
+ Container new-agentic-chat-v2-postgres-1 Waiting 
+ Container new-agentic-chat-v2-redis-1 Started 
+ Container new-agentic-chat-v2-temporal-1 Started 
+ Container new-agentic-chat-v2-postgres-1 Healthy 
+ Container new-agentic-chat-v2-migration-1 Starting 
+ Container new-agentic-chat-v2-migration-1 Started 
+ Container new-agentic-chat-v2-temporal-1 Waiting 
+ Container new-agentic-chat-v2-migration-1 Waiting 
+ Container new-agentic-chat-v2-postgres-1 Waiting 
+ Container new-agentic-chat-v2-redis-1 Waiting 
+ Container new-agentic-chat-v2-migration-1 Waiting 
+ Container new-agentic-chat-v2-postgres-1 Waiting 
+ Container new-agentic-chat-v2-redis-1 Waiting 
+ Container new-agentic-chat-v2-temporal-1 Waiting 
+ Container new-agentic-chat-v2-temporal-1 Waiting 
+ Container new-agentic-chat-v2-migration-1 Waiting 
+ Container new-agentic-chat-v2-postgres-1 Waiting 
+ Container new-agentic-chat-v2-redis-1 Waiting 
+ Container new-agentic-chat-v2-migration-1 Waiting 
+ Container new-agentic-chat-v2-postgres-1 Waiting 
+ Container new-agentic-chat-v2-redis-1 Waiting 
+ Container new-agentic-chat-v2-temporal-1 Waiting 
+ Container new-agentic-chat-v2-temporal-1 Waiting 
+ Container new-agentic-chat-v2-migration-1 Waiting 
+ Container new-agentic-chat-v2-postgres-1 Waiting 
+ Container new-agentic-chat-v2-redis-1 Waiting 
+ Container new-agentic-chat-v2-postgres-1 Healthy 
+ Container new-agentic-chat-v2-redis-1 Healthy 
+ Container new-agentic-chat-v2-temporal-1 Healthy 
+ Container new-agentic-chat-v2-redis-1 Healthy 
+ Container new-agentic-chat-v2-temporal-1 Healthy 
+ Container new-agentic-chat-v2-postgres-1 Healthy 
+ Container new-agentic-chat-v2-redis-1 Healthy 
+ Container new-agentic-chat-v2-temporal-1 Healthy 
+ Container new-agentic-chat-v2-temporal-1 Healthy 
+ Container new-agentic-chat-v2-postgres-1 Healthy 
+ Container new-agentic-chat-v2-redis-1 Healthy 
+ Container new-agentic-chat-v2-redis-1 Healthy 
+ Container new-agentic-chat-v2-postgres-1 Healthy 
+ Container new-agentic-chat-v2-temporal-1 Healthy 
+ Container new-agentic-chat-v2-postgres-1 Healthy 
+ Container new-agentic-chat-v2-migration-1 Healthy 
+ Container new-agentic-chat-v2-web-1 Starting 
+ Container new-agentic-chat-v2-migration-1 Healthy 
+ Container new-agentic-chat-v2-api-1 Starting 
+ Container new-agentic-chat-v2-migration-1 Healthy 
+ Container new-agentic-chat-v2-worker-simple-1 Starting 
+ Container new-agentic-chat-v2-migration-1 Healthy 
+ Container new-agentic-chat-v2-fixture-worker-1 Starting 
+ Container new-agentic-chat-v2-migration-1 Healthy 
+ Container new-agentic-chat-v2-worker-workflow-1 Starting 
+ Container new-agentic-chat-v2-web-1 Started 
+ Container new-agentic-chat-v2-fixture-worker-1 Started 
+ Container new-agentic-chat-v2-api-1 Started 
+ Container new-agentic-chat-v2-worker-workflow-1 Started 
+ Container new-agentic-chat-v2-worker-simple-1 Started 
+ Container new-agentic-chat-v2-api-1 Waiting 
+ Container new-agentic-chat-v2-redis-1 Waiting 
+ Container new-agentic-chat-v2-postgres-1 Waiting 
+ Container new-agentic-chat-v2-worker-workflow-1 Waiting 
+ Container new-agentic-chat-v2-worker-simple-1 Waiting 
+ Container new-agentic-chat-v2-migration-1 Waiting 
+ Container new-agentic-chat-v2-web-1 Waiting 
+ Container new-agentic-chat-v2-temporal-1 Waiting 
+ Container new-agentic-chat-v2-fixture-worker-1 Waiting 
+ Container new-agentic-chat-v2-temporal-1 Healthy 
+ Container new-agentic-chat-v2-redis-1 Healthy 
+ Container new-agentic-chat-v2-migration-1 Healthy 
+ Container new-agentic-chat-v2-postgres-1 Healthy 
+ Container new-agentic-chat-v2-fixture-worker-1 Healthy 
+ Container new-agentic-chat-v2-web-1 Healthy 
+ Container new-agentic-chat-v2-worker-workflow-1 Healthy 
+ Container new-agentic-chat-v2-api-1 Healthy 
+ Container new-agentic-chat-v2-worker-simple-1 Healthy 
