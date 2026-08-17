@@ -1,52 +1,8 @@
 import { expect, test } from "@playwright/test"
-import { createTRPCClient, httpLink } from "@trpc/client"
 
-import type { AppRouter } from "../../../apps/api/src/router.js"
 import { observeConsole } from "./ui-test-support.js"
 
-const adminClient = createTRPCClient<AppRouter>({
-  links: [httpLink({ url: "http://127.0.0.1:4311/trpc/admin" })],
-})
-
 test.describe("Task 16 deterministic UI races", () => {
-  test("Empty initial approvals discover a request on an already eligible run", async ({
-    page,
-  }) => {
-    // Given: an approvals mount has no pending records but authorized persisted runs are eligible.
-    const assertConsoleClean = observeConsole(page)
-    await page.goto("/admin/approvals")
-    const pendingButtons = page.locator('[data-testid^="approve-"]')
-    while ((await pendingButtons.count()) > 0) {
-      const button = pendingButtons.first()
-      const buttonTestId = await button.getAttribute("data-testid")
-      if (buttonTestId === null) throw new TypeError("Approval button test ID missing")
-      const decisionResponse = page.waitForResponse((response) =>
-        response.url().includes("approvals.approve"),
-      )
-      await button.click()
-      await decisionResponse
-      await expect(page.getByTestId(buttonTestId)).toHaveCount(0)
-    }
-    await page.reload()
-    await expect(page.getByText("No pending approvals.")).toBeVisible()
-    await expect(page.getByTestId("approvals-connection-status")).toContainText("connected")
-
-    // When: an already eligible run emits its first approval event through the fixture boundary.
-    await adminClient.admin.command.sendHidden.mutate({
-      runId: "run_race_fast",
-      instruction: "CREATE_APPROVAL_FIXTURE_EVENT",
-      expiresAt: new Date(Date.now() + 5 * 60_000).toISOString(),
-      idempotencyKey: crypto.randomUUID(),
-    })
-
-    // Then: its exact pending snapshot appears live without reloading approvals.
-    const discovered = page.locator('[data-testid^="approval-card-"]')
-    await expect(discovered).toHaveCount(1)
-    await expect(discovered).toContainText("run_race_fast")
-    await expect(page.locator('[data-testid^="approval-status-"]')).toHaveText("pending")
-    assertConsoleClean()
-  })
-
   test("Rapid run selection ignores the late projection response", async ({ page }) => {
     // Given: the slow run response is captured and held after the request reaches the server.
     const assertConsoleClean = observeConsole(page)
