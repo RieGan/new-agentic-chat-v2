@@ -1,0 +1,119 @@
+{
+  "runtime": "state_workflow",
+  "passed": 10,
+  "total": 10,
+  "cells": [
+    {
+      "testId": "F01",
+      "runtime": "state_workflow",
+      "promptIds": [
+        "P01"
+      ],
+      "result": "PASS",
+      "evidenceLinks": [
+        "acceptance/state_workflow/F01/P01.json"
+      ]
+    },
+    {
+      "testId": "F02",
+      "runtime": "state_workflow",
+      "promptIds": [
+        "P02"
+      ],
+      "result": "PASS",
+      "evidenceLinks": [
+        "acceptance/state_workflow/F02/P02.json"
+      ]
+    },
+    {
+      "testId": "F03",
+      "runtime": "state_workflow",
+      "promptIds": [
+        "P03"
+      ],
+      "result": "PASS",
+      "evidenceLinks": [
+        "acceptance/state_workflow/F03/P03.json"
+      ]
+    },
+    {
+      "testId": "F04",
+      "runtime": "state_workflow",
+      "promptIds": [
+        "P04"
+      ],
+      "result": "PASS",
+      "evidenceLinks": [
+        "acceptance/state_workflow/F04/P04.json"
+      ]
+    },
+    {
+      "testId": "F05",
+      "runtime": "state_workflow",
+      "promptIds": [
+        "P05",
+        "P06"
+      ],
+      "result": "PASS",
+      "evidenceLinks": [
+        "acceptance/state_workflow/F05/P05.json",
+        "acceptance/state_workflow/F05/P06.json"
+      ]
+    },
+    {
+      "testId": "F06",
+      "runtime": "state_workflow",
+      "promptIds": [
+        "P07"
+      ],
+      "result": "PASS",
+      "evidenceLinks": [
+        "acceptance/state_workflow/F06/P07.json"
+      ]
+    },
+    {
+      "testId": "F07",
+      "runtime": "state_workflow",
+      "promptIds": [
+        "P08"
+      ],
+      "result": "PASS",
+      "evidenceLinks": [
+        "acceptance/state_workflow/F07/P08.json"
+      ]
+    },
+    {
+      "testId": "F08",
+      "runtime": "state_workflow",
+      "promptIds": [
+        "P09"
+      ],
+      "result": "PASS",
+      "evidenceLinks": [
+        "acceptance/state_workflow/F08/P09.json"
+      ]
+    },
+    {
+      "testId": "F09",
+      "runtime": "state_workflow",
+      "promptIds": [
+        "P10"
+      ],
+      "result": "PASS",
+      "evidenceLinks": [
+        "acceptance/state_workflow/F09/P10.json"
+      ]
+    },
+    {
+      "testId": "F10",
+      "runtime": "state_workflow",
+      "promptIds": [
+        "P11"
+      ],
+      "result": "PASS",
+      "evidenceLinks": [
+        "acceptance/state_workflow/F10/P11.json"
+      ]
+    }
+  ]
+}

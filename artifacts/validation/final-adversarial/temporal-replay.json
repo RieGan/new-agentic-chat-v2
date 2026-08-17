@@ -1,0 +1,12 @@
+{
+  "result": "PASS",
+  "zeroSilentSuccess": true,
+  "injections": [
+    "duplicate Temporal signal",
+    "wrong signal correlation",
+    "post-commit Activity retry",
+    "duplicate workflow start",
+    "forbidden workflow I/O import",
+    "history replay external I/O"
+  ]
+}
