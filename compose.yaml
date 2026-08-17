@@ -166,7 +166,6 @@ services:
       <<: *runtime-environment
       SERVICE_KIND: fixture-worker
       WORKER_ROLE: fixture_jobs
-      AI_PROVIDER_MODE: mock
       NODE_ENV: test
       TASK18_COMPOSE_MODE: enabled
 
