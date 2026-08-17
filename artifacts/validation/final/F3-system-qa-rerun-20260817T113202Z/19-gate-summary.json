@@ -1,0 +1,102 @@
+{
+  "startedAt": "2026-08-17T11:32:02Z",
+  "completedAt": "2026-08-17T11:41:43.319Z",
+  "compose": {
+    "services": 9,
+    "allHealthy": true,
+    "ids": {
+      "api": "cf68bbbcd24f",
+      "fixture-worker": "cb45da3fd9d9",
+      "migration": "ddbadb154204",
+      "postgres": "bed3c8640619",
+      "redis": "b545058d4f97",
+      "temporal": "9ef9ec2d0f20",
+      "web": "9a9515a47572",
+      "worker-simple": "981c7b6e5099",
+      "worker-workflow": "78996b72ccc7"
+    }
+  },
+  "acceptance": {
+    "simple": {
+      "passed": 10,
+      "total": 10,
+      "allPass": true,
+      "junit": {
+        "tests": 20,
+        "failures": 0,
+        "skipped": 10,
+        "errors": 0
+      }
+    },
+    "workflow": {
+      "passed": 10,
+      "total": 10,
+      "allPass": true,
+      "junit": {
+        "tests": 20,
+        "failures": 0,
+        "skipped": 10,
+        "errors": 0
+      }
+    }
+  },
+  "ui": {
+    "tests": {
+      "tests": 10,
+      "failures": 0,
+      "skipped": 0,
+      "errors": 0
+    },
+    "traces": 10,
+    "pngs": 22,
+    "allNonEmpty": true,
+    "oldest": "2026-08-17T11:35:31.780Z",
+    "newest": "2026-08-17T11:35:39.864Z"
+  },
+  "restart": {
+    "result": "PASS",
+    "verified": true
+  },
+  "parity": {
+    "result": "PASS",
+    "tests25": true,
+    "comparisons": 11,
+    "allTraceAndOutcomeMatch": true,
+    "mutationBarriers": 18,
+    "mutationIds": [
+      "skill-id",
+      "selected-skill-id",
+      "skill-version",
+      "skill-allowlist",
+      "skill-instructions",
+      "tool-argument",
+      "tool-result",
+      "tool-error",
+      "approval-actor",
+      "approval-hash",
+      "approval-decision",
+      "job-percent",
+      "job-result",
+      "event-visibility",
+      "event-type",
+      "event-order",
+      "event-payload",
+      "final-status"
+    ]
+  },
+  "replay": {
+    "result": "PASS",
+    "tests10": true,
+    "tests": 10,
+    "externalActivitiesDuringReplay": 0,
+    "postCommitRetryCanonicalEffects": 1
+  },
+  "cleanup": {
+    "result": "PASS",
+    "remainingContainers": "",
+    "remainingVolumes": "",
+    "remainingNetworks": "",
+    "listeners": []
+  },
+  "verified": true
+}
