@@ -7,10 +7,7 @@ import { createTRPCClient, httpLink, httpSubscriptionLink, splitLink } from "@tr
 import { EventSource } from "eventsource"
 import { afterAll, beforeAll, describe, expect, it } from "vitest"
 
-import {
-  createDatabaseReadiness,
-  startApiApplication,
-} from "../src/application.js"
+import { createDatabaseReadiness, startApiApplication } from "../src/application.js"
 import type { AppRouter } from "../src/router.js"
 import { createApiHttpServer } from "../src/server.js"
 import { createApiServices } from "../src/services.js"
@@ -112,7 +109,9 @@ describe("Compose API application", () => {
       readiness: createDatabaseReadiness(context.database),
     })
     const baseUrl = await listen(server)
-    const client = createTRPCClient<AppRouter>({ links: [httpLink({ url: `${baseUrl}/trpc/user` })] })
+    const client = createTRPCClient<AppRouter>({
+      links: [httpLink({ url: `${baseUrl}/trpc/user` })],
+    })
 
     // When: User reads a seeded skill and an unrelated route is requested.
     const skill = await client.skills.get.query({ skillId: "calculator_assistant", version: "1" })
@@ -135,9 +134,13 @@ describe("Compose API application", () => {
     ].join("\n")
 
     // When: the production package root is imported by Node.
-    const result = await execute(process.execPath, ["--conditions=production", "--input-type=module", "--eval", probe], {
-      cwd: new URL("..", import.meta.url),
-    })
+    const result = await execute(
+      process.execPath,
+      ["--conditions=production", "--input-type=module", "--eval", probe],
+      {
+        cwd: new URL("..", import.meta.url),
+      },
+    )
 
     // Then: production resolution reaches executable compiled exports.
     expect(JSON.parse(result.stdout)).toEqual({ clock: "function", ids: "function" })
@@ -176,7 +179,10 @@ describe("Compose API application", () => {
       message: "shutdown",
       idempotencyKey: "idempotency_shutdown",
     })
-    const subscription = client.runs.events.subscribe({ runId: receipt.runId }, { onData: () => {} })
+    const subscription = client.runs.events.subscribe(
+      { runId: receipt.runId },
+      { onData: () => {} },
+    )
     await events.waitForListener()
 
     // When: the application lifecycle shuts down with an SSE connection active.

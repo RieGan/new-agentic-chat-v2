@@ -11,7 +11,10 @@ const worker = readFileSync(
 assert.doesNotMatch(entrypoint, /sleep infinity/)
 assert.doesNotMatch(entrypoint, /--max-old-space-size=48/)
 assert.match(entrypoint, /packages\/runtime\/dist\/compose-worker\.js/)
-assert.match(entrypoint, /exec node --max-old-space-size=128 --conditions=production --enable-source-maps \/workspace\/packages\/runtime\/dist\/compose-worker\.js "\$worker_role"/)
+assert.match(
+  entrypoint,
+  /exec node --max-old-space-size=128 --conditions=production --enable-source-maps \/workspace\/packages\/runtime\/dist\/compose-worker\.js "\$worker_role"/,
+)
 assert.match(dockerfile, /@agentic-chat\/runtime build/)
 assert.match(worker, /NODE_ENV:\s*z\.literal\("test"\)/)
 

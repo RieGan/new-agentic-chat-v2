@@ -4,7 +4,7 @@ import type { DatabaseClient } from "@agentic-chat/db"
 
 import type { RunEventSource } from "./events/source.js"
 import { createApiHttpServer } from "./server.js"
-import { createApiServices, type ApiServiceDependencies } from "./services.js"
+import { type ApiServiceDependencies, createApiServices } from "./services.js"
 
 type ApiApplicationOptions = {
   readonly dependencies: ApiServiceDependencies
@@ -21,7 +21,8 @@ export type ApiApplication = {
 }
 
 export const createDatabaseReadiness =
-  (database: DatabaseClient): (() => Promise<boolean>) => async () => {
+  (database: DatabaseClient): (() => Promise<boolean>) =>
+  async () => {
     try {
       await database.pool.query("select 1")
       return true
