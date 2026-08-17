@@ -1,0 +1,18 @@
+services:
+  worker-simple:
+    environment:
+      AI_PROVIDER_MODE: openai_responses
+      OPENAI_MODEL_ID: ${OPENAI_MODEL_ID:?OPENAI_MODEL_ID is required}
+      OPENAI_BASE_URL: ${OPENAI_BASE_URL:?OPENAI_BASE_URL is required}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:?OPENAI_API_KEY is required}
+      NODE_ENV: null
+      TASK18_COMPOSE_MODE: null
+
+  worker-workflow:
+    environment:
+      AI_PROVIDER_MODE: openai_responses
+      OPENAI_MODEL_ID: ${OPENAI_MODEL_ID:?OPENAI_MODEL_ID is required}
+      OPENAI_BASE_URL: ${OPENAI_BASE_URL:?OPENAI_BASE_URL is required}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:?OPENAI_API_KEY is required}
+      NODE_ENV: null
+      TASK18_COMPOSE_MODE: null
