@@ -1,0 +1,171 @@
+{
+  "gate": "parity",
+  "result": "PASS",
+  "comparisons": [
+    {
+      "path": "F01/P01",
+      "schemaVersion": [
+        2,
+        2
+      ],
+      "sources": [
+        "postgresql_projection_capture",
+        "postgresql_projection_capture"
+      ],
+      "traceMatch": true,
+      "outcomeMatch": true,
+      "simpleObservationDigest": "830a7c530a0466e0de26972f3e6f757a823698e0cc706f9fae783f7211fab7d0",
+      "workflowObservationDigest": "4d66d24034f935615d452bf4467238edecf9d5ffc93c689385f7262dd4b5ae27"
+    },
+    {
+      "path": "F02/P02",
+      "schemaVersion": [
+        2,
+        2
+      ],
+      "sources": [
+        "postgresql_projection_capture",
+        "postgresql_projection_capture"
+      ],
+      "traceMatch": true,
+      "outcomeMatch": true,
+      "simpleObservationDigest": "9e4dff7c3824d529d84f82d83835ea130392886cec872b701f800a1d24b2cd81",
+      "workflowObservationDigest": "f03da96c8d4ba1e45dad4d001bfcec2a499a1597b9738607421871faac99de6b"
+    },
+    {
+      "path": "F03/P03",
+      "schemaVersion": [
+        2,
+        2
+      ],
+      "sources": [
+        "postgresql_projection_capture",
+        "postgresql_projection_capture"
+      ],
+      "traceMatch": true,
+      "outcomeMatch": true,
+      "simpleObservationDigest": "146019a60a275e380cb9d776b412db91956d2f9524b511139353bb8ac8e814fd",
+      "workflowObservationDigest": "6f8ab9abff852c7f9198bf029e9135e13c660e566dd8508081d3b369723bfad7"
+    },
+    {
+      "path": "F04/P04",
+      "schemaVersion": [
+        2,
+        2
+      ],
+      "sources": [
+        "postgresql_projection_capture",
+        "postgresql_projection_capture"
+      ],
+      "traceMatch": true,
+      "outcomeMatch": true,
+      "simpleObservationDigest": "55c929ac98109c72420ee220673eabf0aff828c21f10fb60014bcaa7a5cdd79f",
+      "workflowObservationDigest": "d96816301d82fc6d6b8ac50a635db40dc736bdb2f9d1acb3ccc37108190b4314"
+    },
+    {
+      "path": "F05/P05",
+      "schemaVersion": [
+        2,
+        2
+      ],
+      "sources": [
+        "postgresql_projection_capture",
+        "postgresql_projection_capture"
+      ],
+      "traceMatch": true,
+      "outcomeMatch": true,
+      "simpleObservationDigest": "610c8cf93ae473b0fe271cbd2166bde0e7f713d37bea75734803e3f5c7e3a65b",
+      "workflowObservationDigest": "7047833da4b27e38237c909e9cb24c59bf406c4ef78f395ba692f3075c8f09ec"
+    },
+    {
+      "path": "F05/P06",
+      "schemaVersion": [
+        2,
+        2
+      ],
+      "sources": [
+        "postgresql_projection_capture",
+        "postgresql_projection_capture"
+      ],
+      "traceMatch": true,
+      "outcomeMatch": true,
+      "simpleObservationDigest": "71b90a6698d5e0ed42d6b9114b32dd4df6395f941c5bde29baf884e2376accf3",
+      "workflowObservationDigest": "c14eb54b6fd3e59f3949f235e4154c3db2fc7e97a4aba585532ff515dcd6569d"
+    },
+    {
+      "path": "F06/P07",
+      "schemaVersion": [
+        2,
+        2
+      ],
+      "sources": [
+        "postgresql_projection_capture",
+        "postgresql_projection_capture"
+      ],
+      "traceMatch": true,
+      "outcomeMatch": true,
+      "simpleObservationDigest": "7580faebba5aedddeb5ceff91eb0a4c523e64f753bfb4df73e088758058affc5",
+      "workflowObservationDigest": "452c200caab3ab90a2c44af81beff0b218a168fe579f039c80011b5338aafb6d"
+    },
+    {
+      "path": "F07/P08",
+      "schemaVersion": [
+        2,
+        2
+      ],
+      "sources": [
+        "postgresql_projection_capture",
+        "postgresql_projection_capture"
+      ],
+      "traceMatch": true,
+      "outcomeMatch": true,
+      "simpleObservationDigest": "1231a03b649e3fbdba6656f71b81f883d08fa655a3565d2e7e49df35ecac71b5",
+      "workflowObservationDigest": "f4f1269deec2d17ae93991d6379c5c16d20acc2f546500ccba4b408a4a5671d3"
+    },
+    {
+      "path": "F08/P09",
+      "schemaVersion": [
+        2,
+        2
+      ],
+      "sources": [
+        "postgresql_projection_capture",
+        "postgresql_projection_capture"
+      ],
+      "traceMatch": true,
+      "outcomeMatch": true,
+      "simpleObservationDigest": "c29ab279af2169b9ff15b3396641b11bbdd3da3da02a02db98c817772e92ecee",
+      "workflowObservationDigest": "1c94a40f922c661cb26299f8fb38c28852d816628ba57f825e781ae7a2dd5f8e"
+    },
+    {
+      "path": "F09/P10",
+      "schemaVersion": [
+        2,
+        2
+      ],
+      "sources": [
+        "postgresql_projection_capture",
+        "postgresql_projection_capture"
+      ],
+      "traceMatch": true,
+      "outcomeMatch": true,
+      "simpleObservationDigest": "b9662efce404a25da32d16deab83457595ff3c2f0e8649601155b2a3096daa2d",
+      "workflowObservationDigest": "2c610b195b2486256b1e4d10019268f538f953d74c2deed591ef7889126b1d91"
+    },
+    {
+      "path": "F10/P11",
+      "schemaVersion": [
+        2,
+        2
+      ],
+      "sources": [
+        "postgresql_projection_capture",
+        "postgresql_projection_capture"
+      ],
+      "traceMatch": true,
+      "outcomeMatch": true,
+      "simpleObservationDigest": "45c0d10ee40a5c37f6ee657073652239c79529c1ab3ae368a757f85b27434bd8",
+      "workflowObservationDigest": "aa0680376fef25145b48784e9835dc683ec9d7ab2643dbd3d6fe120edfa96ac2"
+    }
+  ]
+}

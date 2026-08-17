@@ -1,0 +1,639 @@
+{
+  "commands": [
+    {
+      "command": "docker compose down --volumes --remove-orphans",
+      "status": 0,
+      "durationMs": 7450
+    },
+    {
+      "command": "docker compose up --build --wait",
+      "status": 0,
+      "durationMs": 24095
+    },
+    {
+      "command": "docker compose exec -T worker-simple node --conditions=production --enable-source-maps /workspace/packages/runtime/dist/compose-control.js admit simple_loop report simple_loop_f10_report",
+      "status": 0,
+      "durationMs": 2015
+    },
+    {
+      "command": "docker compose exec -T worker-simple node --conditions=production --enable-source-maps /workspace/packages/runtime/dist/compose-control.js admit simple_loop approval simple_loop_pending_approval",
+      "status": 0,
+      "durationMs": 2072
+    },
+    {
+      "command": "docker compose exec -T worker-simple node --conditions=production --enable-source-maps /workspace/packages/runtime/dist/compose-control.js inspect run_simple_loop_f10_report_4",
+      "status": 0,
+      "durationMs": 2015
+    },
+    {
+      "command": "docker compose exec -T worker-simple node --conditions=production --enable-source-maps /workspace/packages/runtime/dist/compose-control.js inspect run_simple_loop_pending_approval_4",
+      "status": 0,
+      "durationMs": 2073
+    },
+    {
+      "command": "docker compose ps -q postgres",
+      "status": 0,
+      "durationMs": 369
+    },
+    {
+      "command": "docker inspect cb5ae8352b28db04dba73e6efdc9caef6649f1dee7ce3912dfb94effd69e9cce",
+      "status": 0,
+      "durationMs": 267
+    },
+    {
+      "command": "docker compose ps -q redis",
+      "status": 0,
+      "durationMs": 333
+    },
+    {
+      "command": "docker inspect 2728db96f0b3994968a2d1bbf9d68e2579cee362348dfce894aefa7c1b9d93ec",
+      "status": 0,
+      "durationMs": 261
+    },
+    {
+      "command": "docker compose ps -q temporal",
+      "status": 0,
+      "durationMs": 360
+    },
+    {
+      "command": "docker inspect 53ebf582d4e53e1ab9fd3320a4d7af4121a3bd35f4dfe936a1cf1cc04f8e4e50",
+      "status": 0,
+      "durationMs": 264
+    },
+    {
+      "command": "docker compose ps -q api",
+      "status": 0,
+      "durationMs": 325
+    },
+    {
+      "command": "docker inspect 3f2da735b482a51b8db669388053532d17910e8d58b008b2ce42a9133dc8f903",
+      "status": 0,
+      "durationMs": 262
+    },
+    {
+      "command": "docker compose ps -q web",
+      "status": 0,
+      "durationMs": 326
+    },
+    {
+      "command": "docker inspect 49e20d76caba9aab63e5d4f723e55172076e132e125f846c234a8e4d630bad92",
+      "status": 0,
+      "durationMs": 266
+    },
+    {
+      "command": "docker compose ps -q fixture-worker",
+      "status": 0,
+      "durationMs": 328
+    },
+    {
+      "command": "docker inspect 85da601972be1ed0f4045eafa8e42ace340b3962c62cc8e73a1117b434356fc3",
+      "status": 0,
+      "durationMs": 277
+    },
+    {
+      "command": "docker compose ps -q worker-simple",
+      "status": 0,
+      "durationMs": 338
+    },
+    {
+      "command": "docker inspect 30fea98f1d6cf17722626ee0eb62aaaeeef5e39225329afbaab99217abad268c",
+      "status": 0,
+      "durationMs": 260
+    },
+    {
+      "command": "docker compose ps -q worker-workflow",
+      "status": 0,
+      "durationMs": 323
+    },
+    {
+      "command": "docker inspect 337b7b7a16a5b866f6fcb279ca5e9b4694f567a1580ccc18b105dfc5b7e2f756",
+      "status": 0,
+      "durationMs": 270
+    },
+    {
+      "command": "docker compose restart worker-simple",
+      "status": 0,
+      "durationMs": 619
+    },
+    {
+      "command": "docker compose ps -q worker-simple",
+      "status": 0,
+      "durationMs": 355
+    },
+    {
+      "command": "docker inspect 30fea98f1d6cf17722626ee0eb62aaaeeef5e39225329afbaab99217abad268c",
+      "status": 0,
+      "durationMs": 264
+    },
+    {
+      "command": "docker compose ps -q worker-simple",
+      "status": 0,
+      "durationMs": 349
+    },
+    {
+      "command": "docker inspect 30fea98f1d6cf17722626ee0eb62aaaeeef5e39225329afbaab99217abad268c",
+      "status": 0,
+      "durationMs": 266
+    },
+    {
+      "command": "docker compose ps -q worker-simple",
+      "status": 0,
+      "durationMs": 358
+    },
+    {
+      "command": "docker inspect 30fea98f1d6cf17722626ee0eb62aaaeeef5e39225329afbaab99217abad268c",
+      "status": 0,
+      "durationMs": 299
+    },
+    {
+      "command": "docker compose ps -q worker-simple",
+      "status": 0,
+      "durationMs": 352
+    },
+    {
+      "command": "docker inspect 30fea98f1d6cf17722626ee0eb62aaaeeef5e39225329afbaab99217abad268c",
+      "status": 0,
+      "durationMs": 267
+    },
+    {
+      "command": "docker compose ps -q worker-simple",
+      "status": 0,
+      "durationMs": 346
+    },
+    {
+      "command": "docker inspect 30fea98f1d6cf17722626ee0eb62aaaeeef5e39225329afbaab99217abad268c",
+      "status": 0,
+      "durationMs": 268
+    },
+    {
+      "command": "docker compose ps -q worker-simple",
+      "status": 0,
+      "durationMs": 354
+    },
+    {
+      "command": "docker inspect 30fea98f1d6cf17722626ee0eb62aaaeeef5e39225329afbaab99217abad268c",
+      "status": 0,
+      "durationMs": 270
+    },
+    {
+      "command": "docker compose ps -q worker-simple",
+      "status": 0,
+      "durationMs": 348
+    },
+    {
+      "command": "docker inspect 30fea98f1d6cf17722626ee0eb62aaaeeef5e39225329afbaab99217abad268c",
+      "status": 0,
+      "durationMs": 268
+    },
+    {
+      "command": "docker compose ps -q postgres",
+      "status": 0,
+      "durationMs": 352
+    },
+    {
+      "command": "docker inspect cb5ae8352b28db04dba73e6efdc9caef6649f1dee7ce3912dfb94effd69e9cce",
+      "status": 0,
+      "durationMs": 268
+    },
+    {
+      "command": "docker compose ps -q redis",
+      "status": 0,
+      "durationMs": 332
+    },
+    {
+      "command": "docker inspect 2728db96f0b3994968a2d1bbf9d68e2579cee362348dfce894aefa7c1b9d93ec",
+      "status": 0,
+      "durationMs": 261
+    },
+    {
+      "command": "docker compose ps -q temporal",
+      "status": 0,
+      "durationMs": 334
+    },
+    {
+      "command": "docker inspect 53ebf582d4e53e1ab9fd3320a4d7af4121a3bd35f4dfe936a1cf1cc04f8e4e50",
+      "status": 0,
+      "durationMs": 265
+    },
+    {
+      "command": "docker compose ps -q api",
+      "status": 0,
+      "durationMs": 330
+    },
+    {
+      "command": "docker inspect 3f2da735b482a51b8db669388053532d17910e8d58b008b2ce42a9133dc8f903",
+      "status": 0,
+      "durationMs": 269
+    },
+    {
+      "command": "docker compose ps -q web",
+      "status": 0,
+      "durationMs": 329
+    },
+    {
+      "command": "docker inspect 49e20d76caba9aab63e5d4f723e55172076e132e125f846c234a8e4d630bad92",
+      "status": 0,
+      "durationMs": 266
+    },
+    {
+      "command": "docker compose ps -q fixture-worker",
+      "status": 0,
+      "durationMs": 332
+    },
+    {
+      "command": "docker inspect 85da601972be1ed0f4045eafa8e42ace340b3962c62cc8e73a1117b434356fc3",
+      "status": 0,
+      "durationMs": 266
+    },
+    {
+      "command": "docker compose ps -q worker-simple",
+      "status": 0,
+      "durationMs": 348
+    },
+    {
+      "command": "docker inspect 30fea98f1d6cf17722626ee0eb62aaaeeef5e39225329afbaab99217abad268c",
+      "status": 0,
+      "durationMs": 269
+    },
+    {
+      "command": "docker compose ps -q worker-workflow",
+      "status": 0,
+      "durationMs": 340
+    },
+    {
+      "command": "docker inspect 337b7b7a16a5b866f6fcb279ca5e9b4694f567a1580ccc18b105dfc5b7e2f756",
+      "status": 0,
+      "durationMs": 268
+    },
+    {
+      "command": "docker compose exec -T worker-simple node --conditions=production --enable-source-maps /workspace/packages/runtime/dist/compose-control.js release_fixture simple_loop_f10_report",
+      "status": 0,
+      "durationMs": 2299
+    },
+    {
+      "command": "docker compose exec -T worker-simple node --conditions=production --enable-source-maps /workspace/packages/runtime/dist/compose-control.js approve run_simple_loop_pending_approval_4 simple_loop_pending_approval",
+      "status": 0,
+      "durationMs": 2004
+    },
+    {
+      "command": "docker compose exec -T worker-simple node --conditions=production --enable-source-maps /workspace/packages/runtime/dist/compose-control.js inspect run_simple_loop_f10_report_4",
+      "status": 0,
+      "durationMs": 2001
+    },
+    {
+      "command": "docker compose exec -T worker-simple node --conditions=production --enable-source-maps /workspace/packages/runtime/dist/compose-control.js inspect run_simple_loop_pending_approval_4",
+      "status": 0,
+      "durationMs": 2004
+    },
+    {
+      "command": "docker compose logs --no-color worker-simple",
+      "status": 0,
+      "durationMs": 352
+    },
+    {
+      "command": "docker compose exec -T worker-workflow node --conditions=production --enable-source-maps /workspace/packages/runtime/dist/compose-control.js admit state_workflow report state_workflow_f10_report",
+      "status": 0,
+      "durationMs": 2083
+    },
+    {
+      "command": "docker compose exec -T worker-workflow node --conditions=production --enable-source-maps /workspace/packages/runtime/dist/compose-control.js admit state_workflow approval state_workflow_pending_approval",
+      "status": 0,
+      "durationMs": 2414
+    },
+    {
+      "command": "docker compose exec -T worker-workflow node --conditions=production --enable-source-maps /workspace/packages/runtime/dist/compose-control.js inspect run_state_workflow_f10_report_4",
+      "status": 0,
+      "durationMs": 2197
+    },
+    {
+      "command": "docker compose exec -T worker-workflow node --conditions=production --enable-source-maps /workspace/packages/runtime/dist/compose-control.js inspect run_state_workflow_pending_approval_4",
+      "status": 0,
+      "durationMs": 1881
+    },
+    {
+      "command": "docker compose ps -q postgres",
+      "status": 0,
+      "durationMs": 334
+    },
+    {
+      "command": "docker inspect cb5ae8352b28db04dba73e6efdc9caef6649f1dee7ce3912dfb94effd69e9cce",
+      "status": 0,
+      "durationMs": 255
+    },
+    {
+      "command": "docker compose ps -q redis",
+      "status": 0,
+      "durationMs": 320
+    },
+    {
+      "command": "docker inspect 2728db96f0b3994968a2d1bbf9d68e2579cee362348dfce894aefa7c1b9d93ec",
+      "status": 0,
+      "durationMs": 261
+    },
+    {
+      "command": "docker compose ps -q temporal",
+      "status": 0,
+      "durationMs": 313
+    },
+    {
+      "command": "docker inspect 53ebf582d4e53e1ab9fd3320a4d7af4121a3bd35f4dfe936a1cf1cc04f8e4e50",
+      "status": 0,
+      "durationMs": 255
+    },
+    {
+      "command": "docker compose ps -q api",
+      "status": 0,
+      "durationMs": 314
+    },
+    {
+      "command": "docker inspect 3f2da735b482a51b8db669388053532d17910e8d58b008b2ce42a9133dc8f903",
+      "status": 0,
+      "durationMs": 262
+    },
+    {
+      "command": "docker compose ps -q web",
+      "status": 0,
+      "durationMs": 312
+    },
+    {
+      "command": "docker inspect 49e20d76caba9aab63e5d4f723e55172076e132e125f846c234a8e4d630bad92",
+      "status": 0,
+      "durationMs": 256
+    },
+    {
+      "command": "docker compose ps -q fixture-worker",
+      "status": 0,
+      "durationMs": 313
+    },
+    {
+      "command": "docker inspect 85da601972be1ed0f4045eafa8e42ace340b3962c62cc8e73a1117b434356fc3",
+      "status": 0,
+      "durationMs": 256
+    },
+    {
+      "command": "docker compose ps -q worker-simple",
+      "status": 0,
+      "durationMs": 308
+    },
+    {
+      "command": "docker inspect 30fea98f1d6cf17722626ee0eb62aaaeeef5e39225329afbaab99217abad268c",
+      "status": 0,
+      "durationMs": 252
+    },
+    {
+      "command": "docker compose ps -q worker-workflow",
+      "status": 0,
+      "durationMs": 324
+    },
+    {
+      "command": "docker inspect 337b7b7a16a5b866f6fcb279ca5e9b4694f567a1580ccc18b105dfc5b7e2f756",
+      "status": 0,
+      "durationMs": 257
+    },
+    {
+      "command": "docker compose restart worker-workflow",
+      "status": 0,
+      "durationMs": 609
+    },
+    {
+      "command": "docker compose ps -q worker-workflow",
+      "status": 0,
+      "durationMs": 336
+    },
+    {
+      "command": "docker inspect 337b7b7a16a5b866f6fcb279ca5e9b4694f567a1580ccc18b105dfc5b7e2f756",
+      "status": 0,
+      "durationMs": 258
+    },
+    {
+      "command": "docker compose ps -q worker-workflow",
+      "status": 0,
+      "durationMs": 345
+    },
+    {
+      "command": "docker inspect 337b7b7a16a5b866f6fcb279ca5e9b4694f567a1580ccc18b105dfc5b7e2f756",
+      "status": 0,
+      "durationMs": 260
+    },
+    {
+      "command": "docker compose ps -q worker-workflow",
+      "status": 0,
+      "durationMs": 368
+    },
+    {
+      "command": "docker inspect 337b7b7a16a5b866f6fcb279ca5e9b4694f567a1580ccc18b105dfc5b7e2f756",
+      "status": 0,
+      "durationMs": 249
+    },
+    {
+      "command": "docker compose ps -q worker-workflow",
+      "status": 0,
+      "durationMs": 332
+    },
+    {
+      "command": "docker inspect 337b7b7a16a5b866f6fcb279ca5e9b4694f567a1580ccc18b105dfc5b7e2f756",
+      "status": 0,
+      "durationMs": 263
+    },
+    {
+      "command": "docker compose ps -q worker-workflow",
+      "status": 0,
+      "durationMs": 343
+    },
+    {
+      "command": "docker inspect 337b7b7a16a5b866f6fcb279ca5e9b4694f567a1580ccc18b105dfc5b7e2f756",
+      "status": 0,
+      "durationMs": 262
+    },
+    {
+      "command": "docker compose ps -q worker-workflow",
+      "status": 0,
+      "durationMs": 337
+    },
+    {
+      "command": "docker inspect 337b7b7a16a5b866f6fcb279ca5e9b4694f567a1580ccc18b105dfc5b7e2f756",
+      "status": 0,
+      "durationMs": 267
+    },
+    {
+      "command": "docker compose ps -q worker-workflow",
+      "status": 0,
+      "durationMs": 328
+    },
+    {
+      "command": "docker inspect 337b7b7a16a5b866f6fcb279ca5e9b4694f567a1580ccc18b105dfc5b7e2f756",
+      "status": 0,
+      "durationMs": 255
+    },
+    {
+      "command": "docker compose ps -q worker-workflow",
+      "status": 0,
+      "durationMs": 331
+    },
+    {
+      "command": "docker inspect 337b7b7a16a5b866f6fcb279ca5e9b4694f567a1580ccc18b105dfc5b7e2f756",
+      "status": 0,
+      "durationMs": 254
+    },
+    {
+      "command": "docker compose ps -q worker-workflow",
+      "status": 0,
+      "durationMs": 340
+    },
+    {
+      "command": "docker inspect 337b7b7a16a5b866f6fcb279ca5e9b4694f567a1580ccc18b105dfc5b7e2f756",
+      "status": 0,
+      "durationMs": 261
+    },
+    {
+      "command": "docker compose ps -q worker-workflow",
+      "status": 0,
+      "durationMs": 351
+    },
+    {
+      "command": "docker inspect 337b7b7a16a5b866f6fcb279ca5e9b4694f567a1580ccc18b105dfc5b7e2f756",
+      "status": 0,
+      "durationMs": 266
+    },
+    {
+      "command": "docker compose ps -q worker-workflow",
+      "status": 0,
+      "durationMs": 329
+    },
+    {
+      "command": "docker inspect 337b7b7a16a5b866f6fcb279ca5e9b4694f567a1580ccc18b105dfc5b7e2f756",
+      "status": 0,
+      "durationMs": 265
+    },
+    {
+      "command": "docker compose ps -q worker-workflow",
+      "status": 0,
+      "durationMs": 328
+    },
+    {
+      "command": "docker inspect 337b7b7a16a5b866f6fcb279ca5e9b4694f567a1580ccc18b105dfc5b7e2f756",
+      "status": 0,
+      "durationMs": 260
+    },
+    {
+      "command": "docker compose ps -q postgres",
+      "status": 0,
+      "durationMs": 318
+    },
+    {
+      "command": "docker inspect cb5ae8352b28db04dba73e6efdc9caef6649f1dee7ce3912dfb94effd69e9cce",
+      "status": 0,
+      "durationMs": 263
+    },
+    {
+      "command": "docker compose ps -q redis",
+      "status": 0,
+      "durationMs": 322
+    },
+    {
+      "command": "docker inspect 2728db96f0b3994968a2d1bbf9d68e2579cee362348dfce894aefa7c1b9d93ec",
+      "status": 0,
+      "durationMs": 268
+    },
+    {
+      "command": "docker compose ps -q temporal",
+      "status": 0,
+      "durationMs": 324
+    },
+    {
+      "command": "docker inspect 53ebf582d4e53e1ab9fd3320a4d7af4121a3bd35f4dfe936a1cf1cc04f8e4e50",
+      "status": 0,
+      "durationMs": 263
+    },
+    {
+      "command": "docker compose ps -q api",
+      "status": 0,
+      "durationMs": 330
+    },
+    {
+      "command": "docker inspect 3f2da735b482a51b8db669388053532d17910e8d58b008b2ce42a9133dc8f903",
+      "status": 0,
+      "durationMs": 264
+    },
+    {
+      "command": "docker compose ps -q web",
+      "status": 0,
+      "durationMs": 336
+    },
+    {
+      "command": "docker inspect 49e20d76caba9aab63e5d4f723e55172076e132e125f846c234a8e4d630bad92",
+      "status": 0,
+      "durationMs": 269
+    },
+    {
+      "command": "docker compose ps -q fixture-worker",
+      "status": 0,
+      "durationMs": 340
+    },
+    {
+      "command": "docker inspect 85da601972be1ed0f4045eafa8e42ace340b3962c62cc8e73a1117b434356fc3",
+      "status": 0,
+      "durationMs": 266
+    },
+    {
+      "command": "docker compose ps -q worker-simple",
+      "status": 0,
+      "durationMs": 321
+    },
+    {
+      "command": "docker inspect 30fea98f1d6cf17722626ee0eb62aaaeeef5e39225329afbaab99217abad268c",
+      "status": 0,
+      "durationMs": 253
+    },
+    {
+      "command": "docker compose ps -q worker-workflow",
+      "status": 0,
+      "durationMs": 317
+    },
+    {
+      "command": "docker inspect 337b7b7a16a5b866f6fcb279ca5e9b4694f567a1580ccc18b105dfc5b7e2f756",
+      "status": 0,
+      "durationMs": 268
+    },
+    {
+      "command": "docker compose exec -T worker-workflow node --conditions=production --enable-source-maps /workspace/packages/runtime/dist/compose-control.js release_fixture state_workflow_f10_report",
+      "status": 0,
+      "durationMs": 1892
+    },
+    {
+      "command": "docker compose exec -T worker-workflow node --conditions=production --enable-source-maps /workspace/packages/runtime/dist/compose-control.js approve run_state_workflow_pending_approval_4 state_workflow_pending_approval",
+      "status": 0,
+      "durationMs": 2101
+    },
+    {
+      "command": "docker compose exec -T worker-workflow node --conditions=production --enable-source-maps /workspace/packages/runtime/dist/compose-control.js inspect run_state_workflow_f10_report_4",
+      "status": 0,
+      "durationMs": 2173
+    },
+    {
+      "command": "docker compose exec -T worker-workflow node --conditions=production --enable-source-maps /workspace/packages/runtime/dist/compose-control.js inspect run_state_workflow_pending_approval_4",
+      "status": 0,
+      "durationMs": 1897
+    },
+    {
+      "command": "docker compose logs --no-color worker-workflow",
+      "status": 0,
+      "durationMs": 340
+    },
+    {
+      "command": "corepack pnpm --filter @agentic-chat/db exec vitest run tests/database.integration.test.ts tests/control-records.integration.test.ts tests/races.integration.test.ts --fileParallelism=false",
+      "status": 0,
+      "durationMs": 11569
+    },
+    {
+      "command": "corepack pnpm --filter @agentic-chat/runtime exec vitest run tests/projections-and-isolation.integration.test.ts tests/admission.integration.test.ts tests/admin-commands.integration.test.ts tests/approvals.integration.test.ts tests/async-job-worker.integration.test.ts tests/event-catchup.integration.test.ts --fileParallelism=false",
+      "status": 0,
+      "durationMs": 23439
+    },
+    {
+      "command": "corepack pnpm --filter @agentic-chat/api test:integration",
+      "status": 0,
+      "durationMs": 14573
+    }
+  ]
+}

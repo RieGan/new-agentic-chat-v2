@@ -1,0 +1,3182 @@
+{
+  "gate": "restart",
+  "result": "PASS",
+  "scenarios": [
+    {
+      "runtime": "simple_loop",
+      "target": "worker-simple",
+      "otherWorker": "worker-workflow",
+      "file": "simple-loop-durable.spec.ts",
+      "scenarios": 2,
+      "recoveryMs": 6491,
+      "runIds": {
+        "report": "run_simple_loop_f10_report_4",
+        "approval": "run_simple_loop_pending_approval_4"
+      },
+      "barriers": {
+        "report": {
+          "run": {
+            "id": "run_simple_loop_f10_report_4",
+            "conversation_id": "conversation_simple_loop_f10_report",
+            "user_id": "mvp_user",
+            "runtime": "simple_loop",
+            "status": "waiting_for_tool",
+            "version": 5,
+            "consumed_steps": 2,
+            "lease_owner": null,
+            "lease_expires_at": null,
+            "fencing_version": 1,
+            "workflow_identity": null,
+            "continuation": {
+              "kind": "simple_loop",
+              "wait": {
+                "kind": "report",
+                "jobId": "job_001",
+                "callId": "call_report_simple_loop_f10_report",
+                "reportId": "report_001",
+                "ledgerKey": "report-job-c52c7a3d6b05bed19b3899fc",
+                "namespace": "task18-compose"
+              },
+              "messages": [
+                {
+                  "role": "user",
+                  "content": "TASK18 report simple_loop_f10_report"
+                },
+                {
+                  "role": "assistant",
+                  "content": [
+                    {
+                      "kind": "tool_call",
+                      "callId": "call_skill_simple_loop_f10_report",
+                      "toolName": "skill.load",
+                      "arguments": {
+                        "skillId": "report_assistant",
+                        "version": "1"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "role": "tool",
+                  "content": [
+                    {
+                      "kind": "tool_result",
+                      "callId": "call_skill_simple_loop_f10_report",
+                      "output": {
+                        "skillId": "report_assistant",
+                        "version": "1",
+                        "allowedTools": [
+                          "report.generate"
+                        ]
+                      },
+                      "toolName": "skill.load"
+                    }
+                  ]
+                },
+                {
+                  "role": "assistant",
+                  "content": [
+                    {
+                      "kind": "tool_call",
+                      "callId": "call_report_simple_loop_f10_report",
+                      "toolName": "report.generate",
+                      "arguments": {
+                        "topic": "quarterly",
+                        "sections": [
+                          "summary"
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ],
+              "consumedSteps": 2,
+              "selectedSkill": {
+                "skillId": "report_assistant",
+                "version": "1",
+                "allowedTools": [
+                  "report.generate"
+                ],
+                "instructions": "Use report.generate for report requests and wait for its final result."
+              }
+            },
+            "created_at": "2026-08-17T11:37:20.060Z",
+            "updated_at": "2026-08-17T11:37:20.538Z"
+          },
+          "events": [
+            {
+              "id": "event_simple_loop_f10_report_2",
+              "run_id": "run_simple_loop_f10_report_4",
+              "sequence": 1,
+              "type": "message.completed",
+              "visibility": "user",
+              "payload": {
+                "actor": "user",
+                "content": "TASK18 report simple_loop_f10_report",
+                "messageId": "message_simple_loop_f10_report_1"
+              },
+              "correlation_id": "correlation_simple_loop_f10_report_5",
+              "occurred_at": "2026-08-17T11:37:20.060Z"
+            },
+            {
+              "id": "event_9dc5bc88-14a2-44d7-8d42-d7e65167115b",
+              "run_id": "run_simple_loop_f10_report_4",
+              "sequence": 2,
+              "type": "run.status_changed",
+              "visibility": "user",
+              "payload": {
+                "current": "running",
+                "previous": "queued"
+              },
+              "correlation_id": "correlation_228bec57-f710-403b-9b26-5e6a498735de",
+              "occurred_at": "2026-08-17T11:37:20.273Z"
+            },
+            {
+              "id": "event_b1b591dd-f845-4b0d-80ae-fe7aef380e4f",
+              "run_id": "run_simple_loop_f10_report_4",
+              "sequence": 3,
+              "type": "skill.loaded",
+              "visibility": "user",
+              "payload": {
+                "skillId": "report_assistant",
+                "version": "1",
+                "allowedTools": [
+                  "report.generate"
+                ],
+                "instructions": "Use report.generate for report requests and wait for its final result."
+              },
+              "correlation_id": "correlation_0d9fcb9f-7e19-44f5-96e0-2d88406f0597",
+              "occurred_at": "2026-08-17T11:37:20.335Z"
+            },
+            {
+              "id": "report-c52c7a3d6b05bed19b3899fc-run-accepted",
+              "run_id": "run_simple_loop_f10_report_4",
+              "sequence": 4,
+              "type": "job.accepted",
+              "visibility": "user",
+              "payload": {
+                "jobId": "job_001",
+                "callId": "call_report_simple_loop_f10_report",
+                "status": "queued"
+              },
+              "correlation_id": "call_report_simple_loop_f10_report",
+              "occurred_at": "2026-08-17T11:37:20.538Z"
+            },
+            {
+              "id": "event_9e69bd2b-57fc-4888-a1bf-50569c7f478e",
+              "run_id": "run_simple_loop_f10_report_4",
+              "sequence": 5,
+              "type": "run.status_changed",
+              "visibility": "user",
+              "payload": {
+                "current": "waiting_for_tool",
+                "previous": "running"
+              },
+              "correlation_id": "correlation_8acbaad8-2f18-4be3-a0d2-8455e19b8d46",
+              "occurred_at": "2026-08-17T11:37:20.538Z"
+            },
+            {
+              "id": "report-c52c7a3d6b05bed19b3899fc-run-progress",
+              "run_id": "run_simple_loop_f10_report_4",
+              "sequence": 6,
+              "type": "job.progress",
+              "visibility": "user",
+              "payload": {
+                "jobId": "job_001",
+                "callId": "call_report_simple_loop_f10_report",
+                "status": "running",
+                "percent": 50
+              },
+              "correlation_id": "call_report_simple_loop_f10_report",
+              "occurred_at": "2026-08-17T11:37:20.593Z"
+            }
+          ],
+          "calls": [
+            {
+              "id": "call_report_simple_loop_f10_report",
+              "run_id": "run_simple_loop_f10_report_4",
+              "tool_id": "report.generate",
+              "tool_version": "1",
+              "status": "waiting_job",
+              "arguments": {
+                "topic": "quarterly",
+                "sections": [
+                  "summary"
+                ]
+              },
+              "arguments_hash": "6d8989e73198741ef0dab92452a67d66cc3125c731d3ea54a281030ee49f2397",
+              "result": null,
+              "error": null,
+              "version": 0,
+              "created_at": "2026-08-17T11:37:20.538Z",
+              "updated_at": "2026-08-17T11:37:20.538Z"
+            }
+          ],
+          "jobs": [
+            {
+              "id": "job_001",
+              "run_id": "run_simple_loop_f10_report_4",
+              "call_id": "call_report_simple_loop_f10_report",
+              "workflow_identity": "bullmq/report-c52c7a3d6b05bed19b3899fc",
+              "status": "running",
+              "percent": 50,
+              "result": null,
+              "error": null,
+              "version": 1,
+              "created_at": "2026-08-17T11:37:20.538Z",
+              "updated_at": "2026-08-17T11:37:20.593Z",
+              "ledger_key": "report-job-c52c7a3d6b05bed19b3899fc",
+              "namespace": "task18-compose",
+              "bullmq_job_id": "report-c52c7a3d6b05bed19b3899fc"
+            }
+          ],
+          "approvals": [],
+          "messages": [
+            {
+              "id": "message_simple_loop_f10_report_1",
+              "conversation_id": "conversation_simple_loop_f10_report",
+              "run_id": "run_simple_loop_f10_report_4",
+              "actor": "user",
+              "content": "TASK18 report simple_loop_f10_report",
+              "created_at": "2026-08-17T11:37:20.060Z"
+            }
+          ],
+          "sends": [],
+          "intents": [
+            {
+              "id": "dispatch_simple_loop_f10_report_3",
+              "aggregate_type": "run",
+              "aggregate_id": "run_simple_loop_f10_report_4",
+              "deduplication_key": "run_simple_loop_f10_report_4:admission",
+              "topic": "simple_loop.execute",
+              "payload": {
+                "runId": "run_simple_loop_f10_report_4",
+                "runtime": "simple_loop",
+                "workflowIdentity": null
+              },
+              "status": "dispatched",
+              "attempts": 1,
+              "available_at": "2026-08-17T11:37:20.060Z",
+              "dispatched_at": "2026-08-17T11:37:20.237Z",
+              "created_at": "2026-08-17T11:37:20.060Z"
+            },
+            {
+              "id": "report-c52c7a3d6b05bed19b3899fc-dispatch",
+              "aggregate_type": "report_job",
+              "aggregate_id": "report-job-c52c7a3d6b05bed19b3899fc",
+              "deduplication_key": "report-job/report-job-c52c7a3d6b05bed19b3899fc",
+              "topic": "report.generate",
+              "payload": {
+                "jobId": "job_001",
+                "runId": "run_simple_loop_f10_report_4",
+                "callId": "call_report_simple_loop_f10_report",
+                "reportId": "report_001",
+                "ledgerKey": "report-job-c52c7a3d6b05bed19b3899fc",
+                "namespace": "task18-compose",
+                "bullmqJobId": "report-c52c7a3d6b05bed19b3899fc"
+              },
+              "status": "dispatched",
+              "attempts": 1,
+              "available_at": "2026-08-17T11:37:20.538Z",
+              "dispatched_at": "2026-08-17T11:37:20.562Z",
+              "created_at": "2026-08-17T11:37:20.538Z"
+            }
+          ]
+        },
+        "approval": {
+          "run": {
+            "id": "run_simple_loop_pending_approval_4",
+            "conversation_id": "conversation_simple_loop_pending_approval",
+            "user_id": "mvp_user",
+            "runtime": "simple_loop",
+            "status": "waiting_for_admin",
+            "version": 7,
+            "consumed_steps": 3,
+            "lease_owner": null,
+            "lease_expires_at": null,
+            "fencing_version": 1,
+            "workflow_identity": null,
+            "continuation": {
+              "kind": "simple_loop",
+              "wait": {
+                "kind": "approval",
+                "callId": "call_send_simple_loop_pending_approval",
+                "approvalId": "approval_62042339-1831-46ce-b64b-f5ccf18366c4"
+              },
+              "messages": [
+                {
+                  "role": "user",
+                  "content": "TASK18 approval simple_loop_pending_approval"
+                },
+                {
+                  "role": "assistant",
+                  "content": [
+                    {
+                      "kind": "tool_call",
+                      "callId": "call_skill_simple_loop_pending_approval",
+                      "toolName": "skill.load",
+                      "arguments": {
+                        "skillId": "communication_assistant",
+                        "version": "1"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "role": "tool",
+                  "content": [
+                    {
+                      "kind": "tool_result",
+                      "callId": "call_skill_simple_loop_pending_approval",
+                      "output": {
+                        "skillId": "communication_assistant",
+                        "version": "1",
+                        "allowedTools": [
+                          "notification.preview",
+                          "notification.send_email"
+                        ]
+                      },
+                      "toolName": "skill.load"
+                    }
+                  ]
+                },
+                {
+                  "role": "assistant",
+                  "content": [
+                    {
+                      "kind": "tool_call",
+                      "callId": "call_preview_simple_loop_pending_approval",
+                      "toolName": "notification.preview",
+                      "arguments": {
+                        "body": "Approval",
+                        "subject": "MVP",
+                        "recipient": "qa@example.com"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "role": "tool",
+                  "content": [
+                    {
+                      "kind": "tool_result",
+                      "callId": "call_preview_simple_loop_pending_approval",
+                      "output": {
+                        "toolName": "notification.preview",
+                        "previewId": "preview_021dfc23575efbf2e3e9af27",
+                        "normalizedMessage": {
+                          "body": "Approval",
+                          "subject": "MVP",
+                          "recipient": "qa@example.com"
+                        }
+                      },
+                      "toolName": "notification.preview"
+                    }
+                  ]
+                },
+                {
+                  "role": "assistant",
+                  "content": [
+                    {
+                      "kind": "tool_call",
+                      "callId": "call_send_simple_loop_pending_approval",
+                      "toolName": "notification.send_email",
+                      "arguments": {
+                        "previewId": "preview_call_preview_simple_loop_pending_approval"
+                      }
+                    }
+                  ]
+                }
+              ],
+              "consumedSteps": 3,
+              "selectedSkill": {
+                "skillId": "communication_assistant",
+                "version": "1",
+                "allowedTools": [
+                  "notification.preview",
+                  "notification.send_email"
+                ],
+                "instructions": "Preview a message before requesting permission to send it."
+              }
+            },
+            "created_at": "2026-08-17T11:37:22.138Z",
+            "updated_at": "2026-08-17T11:37:22.337Z"
+          },
+          "events": [
+            {
+              "id": "event_simple_loop_pending_approval_2",
+              "run_id": "run_simple_loop_pending_approval_4",
+              "sequence": 1,
+              "type": "message.completed",
+              "visibility": "user",
+              "payload": {
+                "actor": "user",
+                "content": "TASK18 approval simple_loop_pending_approval",
+                "messageId": "message_simple_loop_pending_approval_1"
+              },
+              "correlation_id": "correlation_simple_loop_pending_approval_5",
+              "occurred_at": "2026-08-17T11:37:22.138Z"
+            },
+            {
+              "id": "event_406d1559-bf36-4833-a69d-1c24432b70a0",
+              "run_id": "run_simple_loop_pending_approval_4",
+              "sequence": 2,
+              "type": "run.status_changed",
+              "visibility": "user",
+              "payload": {
+                "current": "running",
+                "previous": "queued"
+              },
+              "correlation_id": "correlation_3e974445-1888-491d-ade9-3418dcfd0db4",
+              "occurred_at": "2026-08-17T11:37:22.276Z"
+            },
+            {
+              "id": "event_51ed4e11-178d-4d97-9828-1b7f36085064",
+              "run_id": "run_simple_loop_pending_approval_4",
+              "sequence": 3,
+              "type": "skill.loaded",
+              "visibility": "user",
+              "payload": {
+                "skillId": "communication_assistant",
+                "version": "1",
+                "allowedTools": [
+                  "notification.preview",
+                  "notification.send_email"
+                ],
+                "instructions": "Preview a message before requesting permission to send it."
+              },
+              "correlation_id": "correlation_b12169f7-3d68-4acd-b3b0-7408d95ee952",
+              "occurred_at": "2026-08-17T11:37:22.280Z"
+            },
+            {
+              "id": "event_e80db861-6d97-4873-94be-79a4527e7bfa",
+              "run_id": "run_simple_loop_pending_approval_4",
+              "sequence": 4,
+              "type": "tool.call.started",
+              "visibility": "user",
+              "payload": {
+                "callId": "call_preview_simple_loop_pending_approval",
+                "toolName": "notification.preview"
+              },
+              "correlation_id": "correlation_3e8cf0c9-f0c3-4fd3-b9de-5a605d79298a",
+              "occurred_at": "2026-08-17T11:37:22.293Z"
+            },
+            {
+              "id": "event_a87ca643-c2eb-4f2d-a6ae-f8e71ed75b47",
+              "run_id": "run_simple_loop_pending_approval_4",
+              "sequence": 5,
+              "type": "tool.call.completed",
+              "visibility": "user",
+              "payload": {
+                "callId": "call_preview_simple_loop_pending_approval",
+                "result": {
+                  "toolName": "notification.preview",
+                  "previewId": "preview_021dfc23575efbf2e3e9af27",
+                  "normalizedMessage": {
+                    "body": "Approval",
+                    "subject": "MVP",
+                    "recipient": "qa@example.com"
+                  }
+                },
+                "toolName": "notification.preview"
+              },
+              "correlation_id": "correlation_3e8cf0c9-f0c3-4fd3-b9de-5a605d79298a",
+              "occurred_at": "2026-08-17T11:37:22.293Z"
+            },
+            {
+              "id": "event_1ef19ea8-6792-47fc-82c2-28169026136c",
+              "run_id": "run_simple_loop_pending_approval_4",
+              "sequence": 6,
+              "type": "approval.requested",
+              "visibility": "admin",
+              "payload": {
+                "callId": "call_send_simple_loop_pending_approval",
+                "toolName": "notification.send_email",
+                "expiresAt": "2026-08-17T11:42:22.337Z",
+                "approvalId": "approval_62042339-1831-46ce-b64b-f5ccf18366c4",
+                "argumentsHash": "b3524d3c3d8fc7cbee85511ab921fdd5c5ef430b933edbe13e00ccf39658dc80"
+              },
+              "correlation_id": "call_send_simple_loop_pending_approval",
+              "occurred_at": "2026-08-17T11:37:22.337Z"
+            },
+            {
+              "id": "event_620d5c4d-6944-4b2e-9d61-5c4782e0d375",
+              "run_id": "run_simple_loop_pending_approval_4",
+              "sequence": 7,
+              "type": "run.status_changed",
+              "visibility": "user",
+              "payload": {
+                "current": "waiting_for_admin",
+                "previous": "running"
+              },
+              "correlation_id": "correlation_3abf230a-3199-49aa-9693-05f3d530cf7f",
+              "occurred_at": "2026-08-17T11:37:22.337Z"
+            }
+          ],
+          "calls": [
+            {
+              "id": "call_preview_simple_loop_pending_approval",
+              "run_id": "run_simple_loop_pending_approval_4",
+              "tool_id": "notification.preview",
+              "tool_version": "1",
+              "status": "completed",
+              "arguments": {
+                "body": "Approval",
+                "subject": "MVP",
+                "recipient": "qa@example.com"
+              },
+              "arguments_hash": "021dfc23575efbf2e3e9af27e182f221d4a425ca6e841ae20ff2ba55fb1bb412",
+              "result": {
+                "toolName": "notification.preview",
+                "previewId": "preview_021dfc23575efbf2e3e9af27",
+                "normalizedMessage": {
+                  "body": "Approval",
+                  "subject": "MVP",
+                  "recipient": "qa@example.com"
+                }
+              },
+              "error": null,
+              "version": 1,
+              "created_at": "2026-08-17T11:37:22.293Z",
+              "updated_at": "2026-08-17T11:37:22.293Z"
+            },
+            {
+              "id": "call_send_simple_loop_pending_approval",
+              "run_id": "run_simple_loop_pending_approval_4",
+              "tool_id": "notification.send_email",
+              "tool_version": "1",
+              "status": "approval_required",
+              "arguments": {
+                "previewId": "preview_call_preview_simple_loop_pending_approval"
+              },
+              "arguments_hash": "b3524d3c3d8fc7cbee85511ab921fdd5c5ef430b933edbe13e00ccf39658dc80",
+              "result": null,
+              "error": null,
+              "version": 1,
+              "created_at": "2026-08-17T11:37:22.337Z",
+              "updated_at": "2026-08-17T11:37:22.337Z"
+            }
+          ],
+          "jobs": [],
+          "approvals": [
+            {
+              "id": "approval_62042339-1831-46ce-b64b-f5ccf18366c4",
+              "run_id": "run_simple_loop_pending_approval_4",
+              "call_id": "call_send_simple_loop_pending_approval",
+              "tool_id": "notification.send_email",
+              "arguments": {
+                "previewId": "preview_call_preview_simple_loop_pending_approval"
+              },
+              "arguments_hash": "b3524d3c3d8fc7cbee85511ab921fdd5c5ef430b933edbe13e00ccf39658dc80",
+              "required_actor_id": "mvp_admin",
+              "status": "pending",
+              "version": 0,
+              "expires_at": "2026-08-17T11:42:22.337Z",
+              "created_at": "2026-08-17T11:37:22.337Z",
+              "updated_at": "2026-08-17T11:37:22.337Z",
+              "tool_version": "1"
+            }
+          ],
+          "messages": [
+            {
+              "id": "message_simple_loop_pending_approval_1",
+              "conversation_id": "conversation_simple_loop_pending_approval",
+              "run_id": "run_simple_loop_pending_approval_4",
+              "actor": "user",
+              "content": "TASK18 approval simple_loop_pending_approval",
+              "created_at": "2026-08-17T11:37:22.138Z"
+            }
+          ],
+          "sends": [],
+          "intents": [
+            {
+              "id": "dispatch_simple_loop_pending_approval_3",
+              "aggregate_type": "run",
+              "aggregate_id": "run_simple_loop_pending_approval_4",
+              "deduplication_key": "run_simple_loop_pending_approval_4:admission",
+              "topic": "simple_loop.execute",
+              "payload": {
+                "runId": "run_simple_loop_pending_approval_4",
+                "runtime": "simple_loop",
+                "workflowIdentity": null
+              },
+              "status": "dispatched",
+              "attempts": 1,
+              "available_at": "2026-08-17T11:37:22.138Z",
+              "dispatched_at": "2026-08-17T11:37:22.266Z",
+              "created_at": "2026-08-17T11:37:22.138Z"
+            }
+          ]
+        }
+      },
+      "completed": {
+        "report": {
+          "run": {
+            "id": "run_simple_loop_f10_report_4",
+            "conversation_id": "conversation_simple_loop_f10_report",
+            "user_id": "mvp_user",
+            "runtime": "simple_loop",
+            "status": "completed",
+            "version": 9,
+            "consumed_steps": 3,
+            "lease_owner": null,
+            "lease_expires_at": null,
+            "fencing_version": 2,
+            "workflow_identity": null,
+            "continuation": {
+              "kind": "simple_loop",
+              "messages": [
+                {
+                  "role": "user",
+                  "content": "TASK18 report simple_loop_f10_report"
+                },
+                {
+                  "role": "assistant",
+                  "content": [
+                    {
+                      "kind": "tool_call",
+                      "callId": "call_skill_simple_loop_f10_report",
+                      "toolName": "skill.load",
+                      "arguments": {
+                        "skillId": "report_assistant",
+                        "version": "1"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "role": "tool",
+                  "content": [
+                    {
+                      "kind": "tool_result",
+                      "callId": "call_skill_simple_loop_f10_report",
+                      "output": {
+                        "skillId": "report_assistant",
+                        "version": "1",
+                        "allowedTools": [
+                          "report.generate"
+                        ]
+                      },
+                      "toolName": "skill.load"
+                    }
+                  ]
+                },
+                {
+                  "role": "assistant",
+                  "content": [
+                    {
+                      "kind": "tool_call",
+                      "callId": "call_report_simple_loop_f10_report",
+                      "toolName": "report.generate",
+                      "arguments": {
+                        "topic": "quarterly",
+                        "sections": [
+                          "summary"
+                        ]
+                      }
+                    }
+                  ]
+                },
+                {
+                  "role": "tool",
+                  "content": [
+                    {
+                      "kind": "tool_result",
+                      "callId": "call_report_simple_loop_f10_report",
+                      "output": {
+                        "jobId": "job_001",
+                        "status": "completed",
+                        "reportId": "report_001",
+                        "toolName": "report.generate"
+                      },
+                      "toolName": "report.generate"
+                    }
+                  ]
+                }
+              ],
+              "consumedSteps": 3,
+              "selectedSkill": {
+                "skillId": "report_assistant",
+                "version": "1",
+                "allowedTools": [
+                  "report.generate"
+                ],
+                "instructions": "Use report.generate for report requests and wait for its final result."
+              }
+            },
+            "created_at": "2026-08-17T11:37:20.060Z",
+            "updated_at": "2026-08-17T11:37:45.004Z"
+          },
+          "events": [
+            {
+              "id": "event_simple_loop_f10_report_2",
+              "run_id": "run_simple_loop_f10_report_4",
+              "sequence": 1,
+              "type": "message.completed",
+              "visibility": "user",
+              "payload": {
+                "actor": "user",
+                "content": "TASK18 report simple_loop_f10_report",
+                "messageId": "message_simple_loop_f10_report_1"
+              },
+              "correlation_id": "correlation_simple_loop_f10_report_5",
+              "occurred_at": "2026-08-17T11:37:20.060Z"
+            },
+            {
+              "id": "event_9dc5bc88-14a2-44d7-8d42-d7e65167115b",
+              "run_id": "run_simple_loop_f10_report_4",
+              "sequence": 2,
+              "type": "run.status_changed",
+              "visibility": "user",
+              "payload": {
+                "current": "running",
+                "previous": "queued"
+              },
+              "correlation_id": "correlation_228bec57-f710-403b-9b26-5e6a498735de",
+              "occurred_at": "2026-08-17T11:37:20.273Z"
+            },
+            {
+              "id": "event_b1b591dd-f845-4b0d-80ae-fe7aef380e4f",
+              "run_id": "run_simple_loop_f10_report_4",
+              "sequence": 3,
+              "type": "skill.loaded",
+              "visibility": "user",
+              "payload": {
+                "skillId": "report_assistant",
+                "version": "1",
+                "allowedTools": [
+                  "report.generate"
+                ],
+                "instructions": "Use report.generate for report requests and wait for its final result."
+              },
+              "correlation_id": "correlation_0d9fcb9f-7e19-44f5-96e0-2d88406f0597",
+              "occurred_at": "2026-08-17T11:37:20.335Z"
+            },
+            {
+              "id": "report-c52c7a3d6b05bed19b3899fc-run-accepted",
+              "run_id": "run_simple_loop_f10_report_4",
+              "sequence": 4,
+              "type": "job.accepted",
+              "visibility": "user",
+              "payload": {
+                "jobId": "job_001",
+                "callId": "call_report_simple_loop_f10_report",
+                "status": "queued"
+              },
+              "correlation_id": "call_report_simple_loop_f10_report",
+              "occurred_at": "2026-08-17T11:37:20.538Z"
+            },
+            {
+              "id": "event_9e69bd2b-57fc-4888-a1bf-50569c7f478e",
+              "run_id": "run_simple_loop_f10_report_4",
+              "sequence": 5,
+              "type": "run.status_changed",
+              "visibility": "user",
+              "payload": {
+                "current": "waiting_for_tool",
+                "previous": "running"
+              },
+              "correlation_id": "correlation_8acbaad8-2f18-4be3-a0d2-8455e19b8d46",
+              "occurred_at": "2026-08-17T11:37:20.538Z"
+            },
+            {
+              "id": "report-c52c7a3d6b05bed19b3899fc-run-progress",
+              "run_id": "run_simple_loop_f10_report_4",
+              "sequence": 6,
+              "type": "job.progress",
+              "visibility": "user",
+              "payload": {
+                "jobId": "job_001",
+                "callId": "call_report_simple_loop_f10_report",
+                "status": "running",
+                "percent": 50
+              },
+              "correlation_id": "call_report_simple_loop_f10_report",
+              "occurred_at": "2026-08-17T11:37:20.593Z"
+            },
+            {
+              "id": "report-c52c7a3d6b05bed19b3899fc-run-completed",
+              "run_id": "run_simple_loop_f10_report_4",
+              "sequence": 7,
+              "type": "job.completed",
+              "visibility": "user",
+              "payload": {
+                "jobId": "job_001",
+                "callId": "call_report_simple_loop_f10_report",
+                "status": "completed",
+                "reportId": "report_001"
+              },
+              "correlation_id": "call_report_simple_loop_f10_report",
+              "occurred_at": "2026-08-17T11:37:44.782Z"
+            },
+            {
+              "id": "event_5e59a888-da1c-414b-9f12-e05a204a516b",
+              "run_id": "run_simple_loop_f10_report_4",
+              "sequence": 8,
+              "type": "tool.call.completed",
+              "visibility": "user",
+              "payload": {
+                "callId": "call_report_simple_loop_f10_report",
+                "result": {
+                  "jobId": "job_001",
+                  "status": "completed",
+                  "reportId": "report_001",
+                  "toolName": "report.generate"
+                },
+                "toolName": "report.generate"
+              },
+              "correlation_id": "correlation_95980a66-6fe0-4818-b035-898beba07785",
+              "occurred_at": "2026-08-17T11:37:44.909Z"
+            },
+            {
+              "id": "event_ab4aa35a-6c79-4450-900d-62825cb65264",
+              "run_id": "run_simple_loop_f10_report_4",
+              "sequence": 9,
+              "type": "run.status_changed",
+              "visibility": "user",
+              "payload": {
+                "current": "running",
+                "previous": "waiting_for_tool"
+              },
+              "correlation_id": "correlation_95980a66-6fe0-4818-b035-898beba07785",
+              "occurred_at": "2026-08-17T11:37:44.909Z"
+            },
+            {
+              "id": "event_cf744826-99fb-4c2b-9c72-83f44632814c",
+              "run_id": "run_simple_loop_f10_report_4",
+              "sequence": 10,
+              "type": "message.completed",
+              "visibility": "user",
+              "payload": {
+                "actor": "ai",
+                "content": "Report report_001 is complete.",
+                "messageId": "message_da8a920a-8325-4d56-88e3-4458173f7771"
+              },
+              "correlation_id": "correlation_23f5203e-cf27-4e99-a984-7062f28d861b",
+              "occurred_at": "2026-08-17T11:37:45.004Z"
+            },
+            {
+              "id": "event_26845809-8e49-4aff-9433-00cb242ccdf0",
+              "run_id": "run_simple_loop_f10_report_4",
+              "sequence": 11,
+              "type": "run.status_changed",
+              "visibility": "user",
+              "payload": {
+                "current": "completed",
+                "previous": "running"
+              },
+              "correlation_id": "correlation_88ea27c1-4f77-4689-ae1d-382d08a775ec",
+              "occurred_at": "2026-08-17T11:37:45.004Z"
+            }
+          ],
+          "calls": [
+            {
+              "id": "call_report_simple_loop_f10_report",
+              "run_id": "run_simple_loop_f10_report_4",
+              "tool_id": "report.generate",
+              "tool_version": "1",
+              "status": "completed",
+              "arguments": {
+                "topic": "quarterly",
+                "sections": [
+                  "summary"
+                ]
+              },
+              "arguments_hash": "6d8989e73198741ef0dab92452a67d66cc3125c731d3ea54a281030ee49f2397",
+              "result": {
+                "jobId": "job_001",
+                "status": "completed",
+                "reportId": "report_001",
+                "toolName": "report.generate"
+              },
+              "error": null,
+              "version": 2,
+              "created_at": "2026-08-17T11:37:20.538Z",
+              "updated_at": "2026-08-17T11:37:44.909Z"
+            }
+          ],
+          "jobs": [
+            {
+              "id": "job_001",
+              "run_id": "run_simple_loop_f10_report_4",
+              "call_id": "call_report_simple_loop_f10_report",
+              "workflow_identity": "bullmq/report-c52c7a3d6b05bed19b3899fc",
+              "status": "completed",
+              "percent": 100,
+              "result": {
+                "jobId": "job_001",
+                "status": "completed",
+                "reportId": "report_001",
+                "toolName": "report.generate"
+              },
+              "error": null,
+              "version": 2,
+              "created_at": "2026-08-17T11:37:20.538Z",
+              "updated_at": "2026-08-17T11:37:44.782Z",
+              "ledger_key": "report-job-c52c7a3d6b05bed19b3899fc",
+              "namespace": "task18-compose",
+              "bullmq_job_id": "report-c52c7a3d6b05bed19b3899fc"
+            }
+          ],
+          "approvals": [],
+          "messages": [
+            {
+              "id": "message_simple_loop_f10_report_1",
+              "conversation_id": "conversation_simple_loop_f10_report",
+              "run_id": "run_simple_loop_f10_report_4",
+              "actor": "user",
+              "content": "TASK18 report simple_loop_f10_report",
+              "created_at": "2026-08-17T11:37:20.060Z"
+            },
+            {
+              "id": "message_da8a920a-8325-4d56-88e3-4458173f7771",
+              "conversation_id": "conversation_simple_loop_f10_report",
+              "run_id": "run_simple_loop_f10_report_4",
+              "actor": "ai",
+              "content": "Report report_001 is complete.",
+              "created_at": "2026-08-17T11:37:45.004Z"
+            }
+          ],
+          "sends": [],
+          "intents": [
+            {
+              "id": "dispatch_simple_loop_f10_report_3",
+              "aggregate_type": "run",
+              "aggregate_id": "run_simple_loop_f10_report_4",
+              "deduplication_key": "run_simple_loop_f10_report_4:admission",
+              "topic": "simple_loop.execute",
+              "payload": {
+                "runId": "run_simple_loop_f10_report_4",
+                "runtime": "simple_loop",
+                "workflowIdentity": null
+              },
+              "status": "dispatched",
+              "attempts": 1,
+              "available_at": "2026-08-17T11:37:20.060Z",
+              "dispatched_at": "2026-08-17T11:37:20.237Z",
+              "created_at": "2026-08-17T11:37:20.060Z"
+            },
+            {
+              "id": "report-c52c7a3d6b05bed19b3899fc-dispatch",
+              "aggregate_type": "report_job",
+              "aggregate_id": "report-job-c52c7a3d6b05bed19b3899fc",
+              "deduplication_key": "report-job/report-job-c52c7a3d6b05bed19b3899fc",
+              "topic": "report.generate",
+              "payload": {
+                "jobId": "job_001",
+                "runId": "run_simple_loop_f10_report_4",
+                "callId": "call_report_simple_loop_f10_report",
+                "reportId": "report_001",
+                "ledgerKey": "report-job-c52c7a3d6b05bed19b3899fc",
+                "namespace": "task18-compose",
+                "bullmqJobId": "report-c52c7a3d6b05bed19b3899fc"
+              },
+              "status": "dispatched",
+              "attempts": 1,
+              "available_at": "2026-08-17T11:37:20.538Z",
+              "dispatched_at": "2026-08-17T11:37:20.562Z",
+              "created_at": "2026-08-17T11:37:20.538Z"
+            },
+            {
+              "id": "report-job-c52c7a3d6b05bed19b3899fc-resume",
+              "aggregate_type": "run",
+              "aggregate_id": "run_simple_loop_f10_report_4",
+              "deduplication_key": "run_simple_loop_f10_report_4:report:report-job-c52c7a3d6b05bed19b3899fc:completed",
+              "topic": "simple_loop.execute",
+              "payload": {
+                "jobId": "job_001",
+                "runId": "run_simple_loop_f10_report_4",
+                "runtime": "simple_loop"
+              },
+              "status": "dispatched",
+              "attempts": 1,
+              "available_at": "2026-08-17T11:37:44.782Z",
+              "dispatched_at": "2026-08-17T11:37:44.874Z",
+              "created_at": "2026-08-17T11:37:44.782Z"
+            }
+          ]
+        },
+        "approval": {
+          "run": {
+            "id": "run_simple_loop_pending_approval_4",
+            "conversation_id": "conversation_simple_loop_pending_approval",
+            "user_id": "mvp_user",
+            "runtime": "simple_loop",
+            "status": "completed",
+            "version": 11,
+            "consumed_steps": 4,
+            "lease_owner": null,
+            "lease_expires_at": null,
+            "fencing_version": 2,
+            "workflow_identity": null,
+            "continuation": {
+              "kind": "simple_loop",
+              "messages": [
+                {
+                  "role": "user",
+                  "content": "TASK18 approval simple_loop_pending_approval"
+                },
+                {
+                  "role": "assistant",
+                  "content": [
+                    {
+                      "kind": "tool_call",
+                      "callId": "call_skill_simple_loop_pending_approval",
+                      "toolName": "skill.load",
+                      "arguments": {
+                        "skillId": "communication_assistant",
+                        "version": "1"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "role": "tool",
+                  "content": [
+                    {
+                      "kind": "tool_result",
+                      "callId": "call_skill_simple_loop_pending_approval",
+                      "output": {
+                        "skillId": "communication_assistant",
+                        "version": "1",
+                        "allowedTools": [
+                          "notification.preview",
+                          "notification.send_email"
+                        ]
+                      },
+                      "toolName": "skill.load"
+                    }
+                  ]
+                },
+                {
+                  "role": "assistant",
+                  "content": [
+                    {
+                      "kind": "tool_call",
+                      "callId": "call_preview_simple_loop_pending_approval",
+                      "toolName": "notification.preview",
+                      "arguments": {
+                        "body": "Approval",
+                        "subject": "MVP",
+                        "recipient": "qa@example.com"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "role": "tool",
+                  "content": [
+                    {
+                      "kind": "tool_result",
+                      "callId": "call_preview_simple_loop_pending_approval",
+                      "output": {
+                        "toolName": "notification.preview",
+                        "previewId": "preview_021dfc23575efbf2e3e9af27",
+                        "normalizedMessage": {
+                          "body": "Approval",
+                          "subject": "MVP",
+                          "recipient": "qa@example.com"
+                        }
+                      },
+                      "toolName": "notification.preview"
+                    }
+                  ]
+                },
+                {
+                  "role": "assistant",
+                  "content": [
+                    {
+                      "kind": "tool_call",
+                      "callId": "call_send_simple_loop_pending_approval",
+                      "toolName": "notification.send_email",
+                      "arguments": {
+                        "previewId": "preview_call_preview_simple_loop_pending_approval"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "role": "tool",
+                  "content": [
+                    {
+                      "kind": "tool_result",
+                      "callId": "call_send_simple_loop_pending_approval",
+                      "output": {
+                        "status": "sent",
+                        "toolName": "notification.send_email",
+                        "messageId": "message_60bd0ba526542c6fd4648ec7"
+                      },
+                      "toolName": "notification.send_email"
+                    }
+                  ]
+                }
+              ],
+              "consumedSteps": 4,
+              "selectedSkill": {
+                "skillId": "communication_assistant",
+                "version": "1",
+                "allowedTools": [
+                  "notification.preview",
+                  "notification.send_email"
+                ],
+                "instructions": "Preview a message before requesting permission to send it."
+              }
+            },
+            "created_at": "2026-08-17T11:37:22.138Z",
+            "updated_at": "2026-08-17T11:37:46.966Z"
+          },
+          "events": [
+            {
+              "id": "event_simple_loop_pending_approval_2",
+              "run_id": "run_simple_loop_pending_approval_4",
+              "sequence": 1,
+              "type": "message.completed",
+              "visibility": "user",
+              "payload": {
+                "actor": "user",
+                "content": "TASK18 approval simple_loop_pending_approval",
+                "messageId": "message_simple_loop_pending_approval_1"
+              },
+              "correlation_id": "correlation_simple_loop_pending_approval_5",
+              "occurred_at": "2026-08-17T11:37:22.138Z"
+            },
+            {
+              "id": "event_406d1559-bf36-4833-a69d-1c24432b70a0",
+              "run_id": "run_simple_loop_pending_approval_4",
+              "sequence": 2,
+              "type": "run.status_changed",
+              "visibility": "user",
+              "payload": {
+                "current": "running",
+                "previous": "queued"
+              },
+              "correlation_id": "correlation_3e974445-1888-491d-ade9-3418dcfd0db4",
+              "occurred_at": "2026-08-17T11:37:22.276Z"
+            },
+            {
+              "id": "event_51ed4e11-178d-4d97-9828-1b7f36085064",
+              "run_id": "run_simple_loop_pending_approval_4",
+              "sequence": 3,
+              "type": "skill.loaded",
+              "visibility": "user",
+              "payload": {
+                "skillId": "communication_assistant",
+                "version": "1",
+                "allowedTools": [
+                  "notification.preview",
+                  "notification.send_email"
+                ],
+                "instructions": "Preview a message before requesting permission to send it."
+              },
+              "correlation_id": "correlation_b12169f7-3d68-4acd-b3b0-7408d95ee952",
+              "occurred_at": "2026-08-17T11:37:22.280Z"
+            },
+            {
+              "id": "event_e80db861-6d97-4873-94be-79a4527e7bfa",
+              "run_id": "run_simple_loop_pending_approval_4",
+              "sequence": 4,
+              "type": "tool.call.started",
+              "visibility": "user",
+              "payload": {
+                "callId": "call_preview_simple_loop_pending_approval",
+                "toolName": "notification.preview"
+              },
+              "correlation_id": "correlation_3e8cf0c9-f0c3-4fd3-b9de-5a605d79298a",
+              "occurred_at": "2026-08-17T11:37:22.293Z"
+            },
+            {
+              "id": "event_a87ca643-c2eb-4f2d-a6ae-f8e71ed75b47",
+              "run_id": "run_simple_loop_pending_approval_4",
+              "sequence": 5,
+              "type": "tool.call.completed",
+              "visibility": "user",
+              "payload": {
+                "callId": "call_preview_simple_loop_pending_approval",
+                "result": {
+                  "toolName": "notification.preview",
+                  "previewId": "preview_021dfc23575efbf2e3e9af27",
+                  "normalizedMessage": {
+                    "body": "Approval",
+                    "subject": "MVP",
+                    "recipient": "qa@example.com"
+                  }
+                },
+                "toolName": "notification.preview"
+              },
+              "correlation_id": "correlation_3e8cf0c9-f0c3-4fd3-b9de-5a605d79298a",
+              "occurred_at": "2026-08-17T11:37:22.293Z"
+            },
+            {
+              "id": "event_1ef19ea8-6792-47fc-82c2-28169026136c",
+              "run_id": "run_simple_loop_pending_approval_4",
+              "sequence": 6,
+              "type": "approval.requested",
+              "visibility": "admin",
+              "payload": {
+                "callId": "call_send_simple_loop_pending_approval",
+                "toolName": "notification.send_email",
+                "expiresAt": "2026-08-17T11:42:22.337Z",
+                "approvalId": "approval_62042339-1831-46ce-b64b-f5ccf18366c4",
+                "argumentsHash": "b3524d3c3d8fc7cbee85511ab921fdd5c5ef430b933edbe13e00ccf39658dc80"
+              },
+              "correlation_id": "call_send_simple_loop_pending_approval",
+              "occurred_at": "2026-08-17T11:37:22.337Z"
+            },
+            {
+              "id": "event_620d5c4d-6944-4b2e-9d61-5c4782e0d375",
+              "run_id": "run_simple_loop_pending_approval_4",
+              "sequence": 7,
+              "type": "run.status_changed",
+              "visibility": "user",
+              "payload": {
+                "current": "waiting_for_admin",
+                "previous": "running"
+              },
+              "correlation_id": "correlation_3abf230a-3199-49aa-9693-05f3d530cf7f",
+              "occurred_at": "2026-08-17T11:37:22.337Z"
+            },
+            {
+              "id": "approval_action_simple_loop_pending_approval_decision_1-event",
+              "run_id": "run_simple_loop_pending_approval_4",
+              "sequence": 8,
+              "type": "approval.approved",
+              "visibility": "admin",
+              "payload": {
+                "callId": "call_send_simple_loop_pending_approval",
+                "actorId": "mvp_admin",
+                "approvalId": "approval_62042339-1831-46ce-b64b-f5ccf18366c4"
+              },
+              "correlation_id": "call_send_simple_loop_pending_approval",
+              "occurred_at": "2026-08-17T11:37:46.691Z"
+            },
+            {
+              "id": "event_c180c824-6bb0-4b98-bc5d-659b8af82b73",
+              "run_id": "run_simple_loop_pending_approval_4",
+              "sequence": 9,
+              "type": "tool.call.completed",
+              "visibility": "user",
+              "payload": {
+                "callId": "call_send_simple_loop_pending_approval",
+                "result": {
+                  "status": "sent",
+                  "toolName": "notification.send_email",
+                  "messageId": "message_60bd0ba526542c6fd4648ec7"
+                },
+                "toolName": "notification.send_email"
+              },
+              "correlation_id": "correlation_9d5b8dd0-dafd-4159-8462-07f578cc0e61",
+              "occurred_at": "2026-08-17T11:37:46.898Z"
+            },
+            {
+              "id": "event_5565bd4b-d820-4bb1-a858-9ad8385ae429",
+              "run_id": "run_simple_loop_pending_approval_4",
+              "sequence": 10,
+              "type": "run.status_changed",
+              "visibility": "user",
+              "payload": {
+                "current": "running",
+                "previous": "waiting_for_admin"
+              },
+              "correlation_id": "correlation_9d5b8dd0-dafd-4159-8462-07f578cc0e61",
+              "occurred_at": "2026-08-17T11:37:46.898Z"
+            },
+            {
+              "id": "event_fd8127dc-076f-40e1-aaae-7200d0574d9b",
+              "run_id": "run_simple_loop_pending_approval_4",
+              "sequence": 11,
+              "type": "message.completed",
+              "visibility": "user",
+              "payload": {
+                "actor": "ai",
+                "content": "Message message_call_send_simple_loop_pending_approval was sent.",
+                "messageId": "message_c5ac4d9c-384e-4982-83e7-29397bdc67f9"
+              },
+              "correlation_id": "correlation_2d808a29-6c2d-4cef-a795-b1a3064ff020",
+              "occurred_at": "2026-08-17T11:37:46.966Z"
+            },
+            {
+              "id": "event_613ce7c1-8f05-4bac-bf0d-deff3c098572",
+              "run_id": "run_simple_loop_pending_approval_4",
+              "sequence": 12,
+              "type": "run.status_changed",
+              "visibility": "user",
+              "payload": {
+                "current": "completed",
+                "previous": "running"
+              },
+              "correlation_id": "correlation_4d1d9b4d-e55d-49ef-a107-00e2bd36ddcc",
+              "occurred_at": "2026-08-17T11:37:46.966Z"
+            }
+          ],
+          "calls": [
+            {
+              "id": "call_preview_simple_loop_pending_approval",
+              "run_id": "run_simple_loop_pending_approval_4",
+              "tool_id": "notification.preview",
+              "tool_version": "1",
+              "status": "completed",
+              "arguments": {
+                "body": "Approval",
+                "subject": "MVP",
+                "recipient": "qa@example.com"
+              },
+              "arguments_hash": "021dfc23575efbf2e3e9af27e182f221d4a425ca6e841ae20ff2ba55fb1bb412",
+              "result": {
+                "toolName": "notification.preview",
+                "previewId": "preview_021dfc23575efbf2e3e9af27",
+                "normalizedMessage": {
+                  "body": "Approval",
+                  "subject": "MVP",
+                  "recipient": "qa@example.com"
+                }
+              },
+              "error": null,
+              "version": 1,
+              "created_at": "2026-08-17T11:37:22.293Z",
+              "updated_at": "2026-08-17T11:37:22.293Z"
+            },
+            {
+              "id": "call_send_simple_loop_pending_approval",
+              "run_id": "run_simple_loop_pending_approval_4",
+              "tool_id": "notification.send_email",
+              "tool_version": "1",
+              "status": "completed",
+              "arguments": {
+                "previewId": "preview_call_preview_simple_loop_pending_approval"
+              },
+              "arguments_hash": "b3524d3c3d8fc7cbee85511ab921fdd5c5ef430b933edbe13e00ccf39658dc80",
+              "result": {
+                "status": "sent",
+                "toolName": "notification.send_email",
+                "messageId": "message_60bd0ba526542c6fd4648ec7"
+              },
+              "error": null,
+              "version": 3,
+              "created_at": "2026-08-17T11:37:22.337Z",
+              "updated_at": "2026-08-17T11:37:46.898Z"
+            }
+          ],
+          "jobs": [],
+          "approvals": [
+            {
+              "id": "approval_62042339-1831-46ce-b64b-f5ccf18366c4",
+              "run_id": "run_simple_loop_pending_approval_4",
+              "call_id": "call_send_simple_loop_pending_approval",
+              "tool_id": "notification.send_email",
+              "arguments": {
+                "previewId": "preview_call_preview_simple_loop_pending_approval"
+              },
+              "arguments_hash": "b3524d3c3d8fc7cbee85511ab921fdd5c5ef430b933edbe13e00ccf39658dc80",
+              "required_actor_id": "mvp_admin",
+              "status": "approved",
+              "version": 1,
+              "expires_at": "2026-08-17T11:42:22.337Z",
+              "created_at": "2026-08-17T11:37:22.337Z",
+              "updated_at": "2026-08-17T11:37:46.691Z",
+              "tool_version": "1"
+            }
+          ],
+          "messages": [
+            {
+              "id": "message_simple_loop_pending_approval_1",
+              "conversation_id": "conversation_simple_loop_pending_approval",
+              "run_id": "run_simple_loop_pending_approval_4",
+              "actor": "user",
+              "content": "TASK18 approval simple_loop_pending_approval",
+              "created_at": "2026-08-17T11:37:22.138Z"
+            },
+            {
+              "id": "message_c5ac4d9c-384e-4982-83e7-29397bdc67f9",
+              "conversation_id": "conversation_simple_loop_pending_approval",
+              "run_id": "run_simple_loop_pending_approval_4",
+              "actor": "ai",
+              "content": "Message message_call_send_simple_loop_pending_approval was sent.",
+              "created_at": "2026-08-17T11:37:46.966Z"
+            }
+          ],
+          "sends": [
+            {
+              "call_id": "call_send_simple_loop_pending_approval",
+              "message_id": "message_60bd0ba526542c6fd4648ec7",
+              "sent_at": "2026-08-17T11:37:46.883Z"
+            }
+          ],
+          "intents": [
+            {
+              "id": "dispatch_simple_loop_pending_approval_3",
+              "aggregate_type": "run",
+              "aggregate_id": "run_simple_loop_pending_approval_4",
+              "deduplication_key": "run_simple_loop_pending_approval_4:admission",
+              "topic": "simple_loop.execute",
+              "payload": {
+                "runId": "run_simple_loop_pending_approval_4",
+                "runtime": "simple_loop",
+                "workflowIdentity": null
+              },
+              "status": "dispatched",
+              "attempts": 1,
+              "available_at": "2026-08-17T11:37:22.138Z",
+              "dispatched_at": "2026-08-17T11:37:22.266Z",
+              "created_at": "2026-08-17T11:37:22.138Z"
+            },
+            {
+              "id": "approval_action_simple_loop_pending_approval_decision_1-resume",
+              "aggregate_type": "run",
+              "aggregate_id": "run_simple_loop_pending_approval_4",
+              "deduplication_key": "run_simple_loop_pending_approval_4:approval:approval_62042339-1831-46ce-b64b-f5ccf18366c4:approved",
+              "topic": "simple_loop.execute",
+              "payload": {
+                "runId": "run_simple_loop_pending_approval_4",
+                "runtime": "simple_loop",
+                "approvalId": "approval_62042339-1831-46ce-b64b-f5ccf18366c4"
+              },
+              "status": "dispatched",
+              "attempts": 1,
+              "available_at": "2026-08-17T11:37:46.691Z",
+              "dispatched_at": "2026-08-17T11:37:46.864Z",
+              "created_at": "2026-08-17T11:37:46.691Z"
+            }
+          ]
+        }
+      },
+      "before": {
+        "postgres": {
+          "service": "postgres",
+          "containerId": "cb5ae8352b28db04dba73e6efdc9caef6649f1dee7ce3912dfb94effd69e9cce",
+          "name": "/new-agentic-chat-v2-postgres-1",
+          "status": "running",
+          "health": "healthy",
+          "startedAt": "2026-08-17T11:36:57.114903631Z",
+          "restartCount": 0
+        },
+        "redis": {
+          "service": "redis",
+          "containerId": "2728db96f0b3994968a2d1bbf9d68e2579cee362348dfce894aefa7c1b9d93ec",
+          "name": "/new-agentic-chat-v2-redis-1",
+          "status": "running",
+          "health": "healthy",
+          "startedAt": "2026-08-17T11:36:57.111912214Z",
+          "restartCount": 0
+        },
+        "temporal": {
+          "service": "temporal",
+          "containerId": "53ebf582d4e53e1ab9fd3320a4d7af4121a3bd35f4dfe936a1cf1cc04f8e4e50",
+          "name": "/new-agentic-chat-v2-temporal-1",
+          "status": "running",
+          "health": "healthy",
+          "startedAt": "2026-08-17T11:36:57.114085839Z",
+          "restartCount": 0
+        },
+        "api": {
+          "service": "api",
+          "containerId": "3f2da735b482a51b8db669388053532d17910e8d58b008b2ce42a9133dc8f903",
+          "name": "/new-agentic-chat-v2-api-1",
+          "status": "running",
+          "health": "healthy",
+          "startedAt": "2026-08-17T11:37:08.487149345Z",
+          "restartCount": 0
+        },
+        "web": {
+          "service": "web",
+          "containerId": "49e20d76caba9aab63e5d4f723e55172076e132e125f846c234a8e4d630bad92",
+          "name": "/new-agentic-chat-v2-web-1",
+          "status": "running",
+          "health": "healthy",
+          "startedAt": "2026-08-17T11:37:08.479051678Z",
+          "restartCount": 0
+        },
+        "fixture-worker": {
+          "service": "fixture-worker",
+          "containerId": "85da601972be1ed0f4045eafa8e42ace340b3962c62cc8e73a1117b434356fc3",
+          "name": "/new-agentic-chat-v2-fixture-worker-1",
+          "status": "running",
+          "health": "healthy",
+          "startedAt": "2026-08-17T11:37:08.48581522Z",
+          "restartCount": 0
+        },
+        "worker-simple": {
+          "service": "worker-simple",
+          "containerId": "30fea98f1d6cf17722626ee0eb62aaaeeef5e39225329afbaab99217abad268c",
+          "name": "/new-agentic-chat-v2-worker-simple-1",
+          "status": "running",
+          "health": "healthy",
+          "startedAt": "2026-08-17T11:37:08.468146678Z",
+          "restartCount": 0
+        },
+        "worker-workflow": {
+          "service": "worker-workflow",
+          "containerId": "337b7b7a16a5b866f6fcb279ca5e9b4694f567a1580ccc18b105dfc5b7e2f756",
+          "name": "/new-agentic-chat-v2-worker-workflow-1",
+          "status": "running",
+          "health": "healthy",
+          "startedAt": "2026-08-17T11:37:08.48374297Z",
+          "restartCount": 0
+        }
+      },
+      "after": {
+        "postgres": {
+          "service": "postgres",
+          "containerId": "cb5ae8352b28db04dba73e6efdc9caef6649f1dee7ce3912dfb94effd69e9cce",
+          "name": "/new-agentic-chat-v2-postgres-1",
+          "status": "running",
+          "health": "healthy",
+          "startedAt": "2026-08-17T11:36:57.114903631Z",
+          "restartCount": 0
+        },
+        "redis": {
+          "service": "redis",
+          "containerId": "2728db96f0b3994968a2d1bbf9d68e2579cee362348dfce894aefa7c1b9d93ec",
+          "name": "/new-agentic-chat-v2-redis-1",
+          "status": "running",
+          "health": "healthy",
+          "startedAt": "2026-08-17T11:36:57.111912214Z",
+          "restartCount": 0
+        },
+        "temporal": {
+          "service": "temporal",
+          "containerId": "53ebf582d4e53e1ab9fd3320a4d7af4121a3bd35f4dfe936a1cf1cc04f8e4e50",
+          "name": "/new-agentic-chat-v2-temporal-1",
+          "status": "running",
+          "health": "healthy",
+          "startedAt": "2026-08-17T11:36:57.114085839Z",
+          "restartCount": 0
+        },
+        "api": {
+          "service": "api",
+          "containerId": "3f2da735b482a51b8db669388053532d17910e8d58b008b2ce42a9133dc8f903",
+          "name": "/new-agentic-chat-v2-api-1",
+          "status": "running",
+          "health": "healthy",
+          "startedAt": "2026-08-17T11:37:08.487149345Z",
+          "restartCount": 0
+        },
+        "web": {
+          "service": "web",
+          "containerId": "49e20d76caba9aab63e5d4f723e55172076e132e125f846c234a8e4d630bad92",
+          "name": "/new-agentic-chat-v2-web-1",
+          "status": "running",
+          "health": "healthy",
+          "startedAt": "2026-08-17T11:37:08.479051678Z",
+          "restartCount": 0
+        },
+        "fixture-worker": {
+          "service": "fixture-worker",
+          "containerId": "85da601972be1ed0f4045eafa8e42ace340b3962c62cc8e73a1117b434356fc3",
+          "name": "/new-agentic-chat-v2-fixture-worker-1",
+          "status": "running",
+          "health": "healthy",
+          "startedAt": "2026-08-17T11:37:08.48581522Z",
+          "restartCount": 0
+        },
+        "worker-simple": {
+          "service": "worker-simple",
+          "containerId": "30fea98f1d6cf17722626ee0eb62aaaeeef5e39225329afbaab99217abad268c",
+          "name": "/new-agentic-chat-v2-worker-simple-1",
+          "status": "running",
+          "health": "healthy",
+          "startedAt": "2026-08-17T11:37:31.719689175Z",
+          "restartCount": 0
+        },
+        "worker-workflow": {
+          "service": "worker-workflow",
+          "containerId": "337b7b7a16a5b866f6fcb279ca5e9b4694f567a1580ccc18b105dfc5b7e2f756",
+          "name": "/new-agentic-chat-v2-worker-workflow-1",
+          "status": "running",
+          "health": "healthy",
+          "startedAt": "2026-08-17T11:37:08.48374297Z",
+          "restartCount": 0
+        }
+      }
+    },
+    {
+      "runtime": "state_workflow",
+      "target": "worker-workflow",
+      "otherWorker": "worker-simple",
+      "file": "state-workflow-durable.spec.ts",
+      "scenarios": 2,
+      "recoveryMs": 10559,
+      "runIds": {
+        "report": "run_state_workflow_f10_report_4",
+        "approval": "run_state_workflow_pending_approval_4"
+      },
+      "barriers": {
+        "report": {
+          "run": {
+            "id": "run_state_workflow_f10_report_4",
+            "conversation_id": "conversation_state_workflow_f10_report",
+            "user_id": "mvp_user",
+            "runtime": "state_workflow",
+            "status": "waiting_for_tool",
+            "version": 4,
+            "consumed_steps": 2,
+            "lease_owner": null,
+            "lease_expires_at": null,
+            "fencing_version": 0,
+            "workflow_identity": "agent-run/run_state_workflow_f10_report_4",
+            "continuation": {
+              "kind": "state_workflow",
+              "wait": {
+                "kind": "report",
+                "jobId": "job_001",
+                "callId": "call_report_state_workflow_f10_report",
+                "reportId": "report_001",
+                "ledgerKey": "report-job-e56c10109fe2841d3ab9d736",
+                "namespace": "task18-compose"
+              },
+              "messages": [
+                {
+                  "role": "user",
+                  "content": "TASK18 report state_workflow_f10_report"
+                },
+                {
+                  "role": "assistant",
+                  "content": [
+                    {
+                      "kind": "tool_call",
+                      "callId": "call_skill_state_workflow_f10_report",
+                      "toolName": "skill.load",
+                      "arguments": {
+                        "skillId": "report_assistant",
+                        "version": "1"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "role": "tool",
+                  "content": [
+                    {
+                      "kind": "tool_result",
+                      "callId": "call_skill_state_workflow_f10_report",
+                      "output": {
+                        "skillId": "report_assistant",
+                        "version": "1",
+                        "allowedTools": [
+                          "report.generate"
+                        ]
+                      },
+                      "toolName": "skill.load"
+                    }
+                  ]
+                },
+                {
+                  "role": "assistant",
+                  "content": [
+                    {
+                      "kind": "tool_call",
+                      "callId": "call_report_state_workflow_f10_report",
+                      "toolName": "report.generate",
+                      "arguments": {
+                        "topic": "quarterly",
+                        "sections": [
+                          "summary"
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ],
+              "consumedSteps": 2,
+              "selectedSkill": {
+                "skillId": "report_assistant",
+                "version": "1",
+                "allowedTools": [
+                  "report.generate"
+                ],
+                "instructions": "Use report.generate for report requests and wait for its final result."
+              }
+            },
+            "created_at": "2026-08-17T11:37:53.137Z",
+            "updated_at": "2026-08-17T11:37:53.823Z"
+          },
+          "events": [
+            {
+              "id": "event_state_workflow_f10_report_2",
+              "run_id": "run_state_workflow_f10_report_4",
+              "sequence": 1,
+              "type": "message.completed",
+              "visibility": "user",
+              "payload": {
+                "actor": "user",
+                "content": "TASK18 report state_workflow_f10_report",
+                "messageId": "message_state_workflow_f10_report_1"
+              },
+              "correlation_id": "correlation_state_workflow_f10_report_5",
+              "occurred_at": "2026-08-17T11:37:53.137Z"
+            },
+            {
+              "id": "event_c8a2fe1a322253c2b0d61981315f6290ff5d24113d5e66e04757e50647c52404",
+              "run_id": "run_state_workflow_f10_report_4",
+              "sequence": 2,
+              "type": "run.status_changed",
+              "visibility": "user",
+              "payload": {
+                "current": "running",
+                "previous": "queued"
+              },
+              "correlation_id": "correlation_c8a2fe1a322253c2b0d61981315f6290ff5d24113d5e66e04757e50647c52404",
+              "occurred_at": "2026-08-17T11:37:53.707Z"
+            },
+            {
+              "id": "event_ff5c7913dbed5a21184911fd2779d320719ca1fee34b9d9a5c7cb3adde5bf29e",
+              "run_id": "run_state_workflow_f10_report_4",
+              "sequence": 3,
+              "type": "skill.loaded",
+              "visibility": "user",
+              "payload": {
+                "skillId": "report_assistant",
+                "version": "1",
+                "allowedTools": [
+                  "report.generate"
+                ],
+                "instructions": "Use report.generate for report requests and wait for its final result."
+              },
+              "correlation_id": "correlation_ff5c7913dbed5a21184911fd2779d320719ca1fee34b9d9a5c7cb3adde5bf29e",
+              "occurred_at": "2026-08-17T11:37:53.720Z"
+            },
+            {
+              "id": "report-e56c10109fe2841d3ab9d736-run-accepted",
+              "run_id": "run_state_workflow_f10_report_4",
+              "sequence": 4,
+              "type": "job.accepted",
+              "visibility": "user",
+              "payload": {
+                "jobId": "job_001",
+                "callId": "call_report_state_workflow_f10_report",
+                "status": "queued"
+              },
+              "correlation_id": "call_report_state_workflow_f10_report",
+              "occurred_at": "2026-08-17T11:37:53.823Z"
+            },
+            {
+              "id": "event_7ee86d617eeebd4959ff22a82decb13e20cd3edb6fd5578ea6234a1cd90b0c4e",
+              "run_id": "run_state_workflow_f10_report_4",
+              "sequence": 5,
+              "type": "run.status_changed",
+              "visibility": "user",
+              "payload": {
+                "current": "waiting_for_tool",
+                "previous": "running"
+              },
+              "correlation_id": "call_report_state_workflow_f10_report",
+              "occurred_at": "2026-08-17T11:37:53.823Z"
+            },
+            {
+              "id": "report-e56c10109fe2841d3ab9d736-run-progress",
+              "run_id": "run_state_workflow_f10_report_4",
+              "sequence": 6,
+              "type": "job.progress",
+              "visibility": "user",
+              "payload": {
+                "jobId": "job_001",
+                "callId": "call_report_state_workflow_f10_report",
+                "status": "running",
+                "percent": 50
+              },
+              "correlation_id": "call_report_state_workflow_f10_report",
+              "occurred_at": "2026-08-17T11:37:53.927Z"
+            }
+          ],
+          "calls": [
+            {
+              "id": "call_report_state_workflow_f10_report",
+              "run_id": "run_state_workflow_f10_report_4",
+              "tool_id": "report.generate",
+              "tool_version": "1",
+              "status": "waiting_job",
+              "arguments": {
+                "topic": "quarterly",
+                "sections": [
+                  "summary"
+                ]
+              },
+              "arguments_hash": "6d8989e73198741ef0dab92452a67d66cc3125c731d3ea54a281030ee49f2397",
+              "result": null,
+              "error": null,
+              "version": 0,
+              "created_at": "2026-08-17T11:37:53.823Z",
+              "updated_at": "2026-08-17T11:37:53.823Z"
+            }
+          ],
+          "jobs": [
+            {
+              "id": "job_001",
+              "run_id": "run_state_workflow_f10_report_4",
+              "call_id": "call_report_state_workflow_f10_report",
+              "workflow_identity": "bullmq/report-e56c10109fe2841d3ab9d736",
+              "status": "running",
+              "percent": 50,
+              "result": null,
+              "error": null,
+              "version": 1,
+              "created_at": "2026-08-17T11:37:53.823Z",
+              "updated_at": "2026-08-17T11:37:53.927Z",
+              "ledger_key": "report-job-e56c10109fe2841d3ab9d736",
+              "namespace": "task18-compose",
+              "bullmq_job_id": "report-e56c10109fe2841d3ab9d736"
+            }
+          ],
+          "approvals": [],
+          "messages": [
+            {
+              "id": "message_state_workflow_f10_report_1",
+              "conversation_id": "conversation_state_workflow_f10_report",
+              "run_id": "run_state_workflow_f10_report_4",
+              "actor": "user",
+              "content": "TASK18 report state_workflow_f10_report",
+              "created_at": "2026-08-17T11:37:53.137Z"
+            }
+          ],
+          "sends": [],
+          "intents": [
+            {
+              "id": "dispatch_state_workflow_f10_report_3",
+              "aggregate_type": "run",
+              "aggregate_id": "run_state_workflow_f10_report_4",
+              "deduplication_key": "run_state_workflow_f10_report_4:admission",
+              "topic": "state_workflow.start",
+              "payload": {
+                "runId": "run_state_workflow_f10_report_4",
+                "runtime": "state_workflow",
+                "workflowIdentity": "agent-run/run_state_workflow_f10_report_4"
+              },
+              "status": "dispatched",
+              "attempts": 1,
+              "available_at": "2026-08-17T11:37:53.137Z",
+              "dispatched_at": "2026-08-17T11:37:53.526Z",
+              "created_at": "2026-08-17T11:37:53.137Z"
+            },
+            {
+              "id": "report-e56c10109fe2841d3ab9d736-dispatch",
+              "aggregate_type": "report_job",
+              "aggregate_id": "report-job-e56c10109fe2841d3ab9d736",
+              "deduplication_key": "report-job/report-job-e56c10109fe2841d3ab9d736",
+              "topic": "report.generate",
+              "payload": {
+                "jobId": "job_001",
+                "runId": "run_state_workflow_f10_report_4",
+                "callId": "call_report_state_workflow_f10_report",
+                "reportId": "report_001",
+                "ledgerKey": "report-job-e56c10109fe2841d3ab9d736",
+                "namespace": "task18-compose",
+                "bullmqJobId": "report-e56c10109fe2841d3ab9d736"
+              },
+              "status": "dispatched",
+              "attempts": 1,
+              "available_at": "2026-08-17T11:37:53.823Z",
+              "dispatched_at": "2026-08-17T11:37:53.926Z",
+              "created_at": "2026-08-17T11:37:53.823Z"
+            }
+          ]
+        },
+        "approval": {
+          "run": {
+            "id": "run_state_workflow_pending_approval_4",
+            "conversation_id": "conversation_state_workflow_pending_approval",
+            "user_id": "mvp_user",
+            "runtime": "state_workflow",
+            "status": "waiting_for_admin",
+            "version": 6,
+            "consumed_steps": 3,
+            "lease_owner": null,
+            "lease_expires_at": null,
+            "fencing_version": 0,
+            "workflow_identity": "agent-run/run_state_workflow_pending_approval_4",
+            "continuation": {
+              "kind": "state_workflow",
+              "wait": {
+                "kind": "approval",
+                "callId": "call_send_state_workflow_pending_approval",
+                "approvalId": "approval_91c8e0d30713dff2f9409061a52eb35e628eb67cc247ebc1ffad7fd57bf9624a"
+              },
+              "messages": [
+                {
+                  "role": "user",
+                  "content": "TASK18 approval state_workflow_pending_approval"
+                },
+                {
+                  "role": "assistant",
+                  "content": [
+                    {
+                      "kind": "tool_call",
+                      "callId": "call_skill_state_workflow_pending_approval",
+                      "toolName": "skill.load",
+                      "arguments": {
+                        "skillId": "communication_assistant",
+                        "version": "1"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "role": "tool",
+                  "content": [
+                    {
+                      "kind": "tool_result",
+                      "callId": "call_skill_state_workflow_pending_approval",
+                      "output": {
+                        "skillId": "communication_assistant",
+                        "version": "1",
+                        "allowedTools": [
+                          "notification.preview",
+                          "notification.send_email"
+                        ]
+                      },
+                      "toolName": "skill.load"
+                    }
+                  ]
+                },
+                {
+                  "role": "assistant",
+                  "content": [
+                    {
+                      "kind": "tool_call",
+                      "callId": "call_preview_state_workflow_pending_approval",
+                      "toolName": "notification.preview",
+                      "arguments": {
+                        "body": "Approval",
+                        "subject": "MVP",
+                        "recipient": "qa@example.com"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "role": "tool",
+                  "content": [
+                    {
+                      "kind": "tool_result",
+                      "callId": "call_preview_state_workflow_pending_approval",
+                      "output": {
+                        "toolName": "notification.preview",
+                        "previewId": "preview_021dfc23575efbf2e3e9af27",
+                        "normalizedMessage": {
+                          "body": "Approval",
+                          "subject": "MVP",
+                          "recipient": "qa@example.com"
+                        }
+                      },
+                      "toolName": "notification.preview"
+                    }
+                  ]
+                },
+                {
+                  "role": "assistant",
+                  "content": [
+                    {
+                      "kind": "tool_call",
+                      "callId": "call_send_state_workflow_pending_approval",
+                      "toolName": "notification.send_email",
+                      "arguments": {
+                        "previewId": "preview_call_preview_state_workflow_pending_approval"
+                      }
+                    }
+                  ]
+                }
+              ],
+              "consumedSteps": 3,
+              "selectedSkill": {
+                "skillId": "communication_assistant",
+                "version": "1",
+                "allowedTools": [
+                  "notification.preview",
+                  "notification.send_email"
+                ],
+                "instructions": "Preview a message before requesting permission to send it."
+              }
+            },
+            "created_at": "2026-08-17T11:37:55.506Z",
+            "updated_at": "2026-08-17T11:37:55.834Z"
+          },
+          "events": [
+            {
+              "id": "event_state_workflow_pending_approval_2",
+              "run_id": "run_state_workflow_pending_approval_4",
+              "sequence": 1,
+              "type": "message.completed",
+              "visibility": "user",
+              "payload": {
+                "actor": "user",
+                "content": "TASK18 approval state_workflow_pending_approval",
+                "messageId": "message_state_workflow_pending_approval_1"
+              },
+              "correlation_id": "correlation_state_workflow_pending_approval_5",
+              "occurred_at": "2026-08-17T11:37:55.506Z"
+            },
+            {
+              "id": "event_8f615f9e32a80c8ddb3db93a4c0733fe0baf9ab76cf1600206c91d97bc3a6ea3",
+              "run_id": "run_state_workflow_pending_approval_4",
+              "sequence": 2,
+              "type": "run.status_changed",
+              "visibility": "user",
+              "payload": {
+                "current": "running",
+                "previous": "queued"
+              },
+              "correlation_id": "correlation_8f615f9e32a80c8ddb3db93a4c0733fe0baf9ab76cf1600206c91d97bc3a6ea3",
+              "occurred_at": "2026-08-17T11:37:55.762Z"
+            },
+            {
+              "id": "event_ecb85205426bed1aa984c97fa52883b19da1cf82b8af568e6b2bece6d8b0fc0b",
+              "run_id": "run_state_workflow_pending_approval_4",
+              "sequence": 3,
+              "type": "skill.loaded",
+              "visibility": "user",
+              "payload": {
+                "skillId": "communication_assistant",
+                "version": "1",
+                "allowedTools": [
+                  "notification.preview",
+                  "notification.send_email"
+                ],
+                "instructions": "Preview a message before requesting permission to send it."
+              },
+              "correlation_id": "correlation_ecb85205426bed1aa984c97fa52883b19da1cf82b8af568e6b2bece6d8b0fc0b",
+              "occurred_at": "2026-08-17T11:37:55.773Z"
+            },
+            {
+              "id": "event_2c5a9b65bb130d805bb8afb97799071de6d3c6d33525bd44c595821a352f26e0",
+              "run_id": "run_state_workflow_pending_approval_4",
+              "sequence": 4,
+              "type": "tool.call.started",
+              "visibility": "user",
+              "payload": {
+                "callId": "call_preview_state_workflow_pending_approval",
+                "toolName": "notification.preview"
+              },
+              "correlation_id": "correlation_8e265b542ae5ae1bd4b592ca692036c98ed038cd6569690a48f3518700702b84",
+              "occurred_at": "2026-08-17T11:37:55.810Z"
+            },
+            {
+              "id": "event_741982f46f7423ec91daf5b7e28cdbc9e9648ff159f3ca1c0ef625ae7c8a3f30",
+              "run_id": "run_state_workflow_pending_approval_4",
+              "sequence": 5,
+              "type": "tool.call.completed",
+              "visibility": "user",
+              "payload": {
+                "callId": "call_preview_state_workflow_pending_approval",
+                "result": {
+                  "toolName": "notification.preview",
+                  "previewId": "preview_021dfc23575efbf2e3e9af27",
+                  "normalizedMessage": {
+                    "body": "Approval",
+                    "subject": "MVP",
+                    "recipient": "qa@example.com"
+                  }
+                },
+                "toolName": "notification.preview"
+              },
+              "correlation_id": "correlation_8e265b542ae5ae1bd4b592ca692036c98ed038cd6569690a48f3518700702b84",
+              "occurred_at": "2026-08-17T11:37:55.810Z"
+            },
+            {
+              "id": "event_29f42e57feebce32d49e11140e7d2c90e98ee8ad83c6d21329763e8ad4f29d86",
+              "run_id": "run_state_workflow_pending_approval_4",
+              "sequence": 6,
+              "type": "approval.requested",
+              "visibility": "admin",
+              "payload": {
+                "callId": "call_send_state_workflow_pending_approval",
+                "toolName": "notification.send_email",
+                "expiresAt": "2026-08-17T11:42:55.835Z",
+                "approvalId": "approval_91c8e0d30713dff2f9409061a52eb35e628eb67cc247ebc1ffad7fd57bf9624a",
+                "argumentsHash": "83532bc59fa49d081a511aa2551e4c9ac892de7fff0cf15ac363c0d2f63f5dd9"
+              },
+              "correlation_id": "call_send_state_workflow_pending_approval",
+              "occurred_at": "2026-08-17T11:37:55.834Z"
+            },
+            {
+              "id": "event_75695628a47e218b840c1ede084f3d973f41695246a68b43ee9bb2756c10abfb",
+              "run_id": "run_state_workflow_pending_approval_4",
+              "sequence": 7,
+              "type": "run.status_changed",
+              "visibility": "user",
+              "payload": {
+                "current": "waiting_for_admin",
+                "previous": "running"
+              },
+              "correlation_id": "call_send_state_workflow_pending_approval",
+              "occurred_at": "2026-08-17T11:37:55.834Z"
+            }
+          ],
+          "calls": [
+            {
+              "id": "call_preview_state_workflow_pending_approval",
+              "run_id": "run_state_workflow_pending_approval_4",
+              "tool_id": "notification.preview",
+              "tool_version": "1",
+              "status": "completed",
+              "arguments": {
+                "body": "Approval",
+                "subject": "MVP",
+                "recipient": "qa@example.com"
+              },
+              "arguments_hash": "021dfc23575efbf2e3e9af27e182f221d4a425ca6e841ae20ff2ba55fb1bb412",
+              "result": {
+                "toolName": "notification.preview",
+                "previewId": "preview_021dfc23575efbf2e3e9af27",
+                "normalizedMessage": {
+                  "body": "Approval",
+                  "subject": "MVP",
+                  "recipient": "qa@example.com"
+                }
+              },
+              "error": null,
+              "version": 1,
+              "created_at": "2026-08-17T11:37:55.810Z",
+              "updated_at": "2026-08-17T11:37:55.810Z"
+            },
+            {
+              "id": "call_send_state_workflow_pending_approval",
+              "run_id": "run_state_workflow_pending_approval_4",
+              "tool_id": "notification.send_email",
+              "tool_version": "1",
+              "status": "approval_required",
+              "arguments": {
+                "previewId": "preview_call_preview_state_workflow_pending_approval"
+              },
+              "arguments_hash": "83532bc59fa49d081a511aa2551e4c9ac892de7fff0cf15ac363c0d2f63f5dd9",
+              "result": null,
+              "error": null,
+              "version": 1,
+              "created_at": "2026-08-17T11:37:55.834Z",
+              "updated_at": "2026-08-17T11:37:55.834Z"
+            }
+          ],
+          "jobs": [],
+          "approvals": [
+            {
+              "id": "approval_91c8e0d30713dff2f9409061a52eb35e628eb67cc247ebc1ffad7fd57bf9624a",
+              "run_id": "run_state_workflow_pending_approval_4",
+              "call_id": "call_send_state_workflow_pending_approval",
+              "tool_id": "notification.send_email",
+              "arguments": {
+                "previewId": "preview_call_preview_state_workflow_pending_approval"
+              },
+              "arguments_hash": "83532bc59fa49d081a511aa2551e4c9ac892de7fff0cf15ac363c0d2f63f5dd9",
+              "required_actor_id": "mvp_admin",
+              "status": "pending",
+              "version": 0,
+              "expires_at": "2026-08-17T11:42:55.835Z",
+              "created_at": "2026-08-17T11:37:55.834Z",
+              "updated_at": "2026-08-17T11:37:55.834Z",
+              "tool_version": "1"
+            }
+          ],
+          "messages": [
+            {
+              "id": "message_state_workflow_pending_approval_1",
+              "conversation_id": "conversation_state_workflow_pending_approval",
+              "run_id": "run_state_workflow_pending_approval_4",
+              "actor": "user",
+              "content": "TASK18 approval state_workflow_pending_approval",
+              "created_at": "2026-08-17T11:37:55.506Z"
+            }
+          ],
+          "sends": [],
+          "intents": [
+            {
+              "id": "dispatch_state_workflow_pending_approval_3",
+              "aggregate_type": "run",
+              "aggregate_id": "run_state_workflow_pending_approval_4",
+              "deduplication_key": "run_state_workflow_pending_approval_4:admission",
+              "topic": "state_workflow.start",
+              "payload": {
+                "runId": "run_state_workflow_pending_approval_4",
+                "runtime": "state_workflow",
+                "workflowIdentity": "agent-run/run_state_workflow_pending_approval_4"
+              },
+              "status": "dispatched",
+              "attempts": 1,
+              "available_at": "2026-08-17T11:37:55.506Z",
+              "dispatched_at": "2026-08-17T11:37:55.739Z",
+              "created_at": "2026-08-17T11:37:55.506Z"
+            }
+          ]
+        }
+      },
+      "completed": {
+        "report": {
+          "run": {
+            "id": "run_state_workflow_f10_report_4",
+            "conversation_id": "conversation_state_workflow_f10_report",
+            "user_id": "mvp_user",
+            "runtime": "state_workflow",
+            "status": "completed",
+            "version": 7,
+            "consumed_steps": 3,
+            "lease_owner": null,
+            "lease_expires_at": null,
+            "fencing_version": 0,
+            "workflow_identity": "agent-run/run_state_workflow_f10_report_4",
+            "continuation": {
+              "kind": "state_workflow",
+              "messages": [
+                {
+                  "role": "user",
+                  "content": "TASK18 report state_workflow_f10_report"
+                },
+                {
+                  "role": "assistant",
+                  "content": [
+                    {
+                      "kind": "tool_call",
+                      "callId": "call_skill_state_workflow_f10_report",
+                      "toolName": "skill.load",
+                      "arguments": {
+                        "skillId": "report_assistant",
+                        "version": "1"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "role": "tool",
+                  "content": [
+                    {
+                      "kind": "tool_result",
+                      "callId": "call_skill_state_workflow_f10_report",
+                      "output": {
+                        "skillId": "report_assistant",
+                        "version": "1",
+                        "allowedTools": [
+                          "report.generate"
+                        ]
+                      },
+                      "toolName": "skill.load"
+                    }
+                  ]
+                },
+                {
+                  "role": "assistant",
+                  "content": [
+                    {
+                      "kind": "tool_call",
+                      "callId": "call_report_state_workflow_f10_report",
+                      "toolName": "report.generate",
+                      "arguments": {
+                        "topic": "quarterly",
+                        "sections": [
+                          "summary"
+                        ]
+                      }
+                    }
+                  ]
+                },
+                {
+                  "role": "tool",
+                  "content": [
+                    {
+                      "kind": "tool_result",
+                      "callId": "call_report_state_workflow_f10_report",
+                      "output": {
+                        "jobId": "job_001",
+                        "status": "completed",
+                        "reportId": "report_001",
+                        "toolName": "report.generate"
+                      },
+                      "toolName": "report.generate"
+                    }
+                  ]
+                }
+              ],
+              "consumedSteps": 3,
+              "selectedSkill": {
+                "skillId": "report_assistant",
+                "version": "1",
+                "allowedTools": [
+                  "report.generate"
+                ],
+                "instructions": "Use report.generate for report requests and wait for its final result."
+              }
+            },
+            "created_at": "2026-08-17T11:37:53.137Z",
+            "updated_at": "2026-08-17T11:38:22.179Z"
+          },
+          "events": [
+            {
+              "id": "event_state_workflow_f10_report_2",
+              "run_id": "run_state_workflow_f10_report_4",
+              "sequence": 1,
+              "type": "message.completed",
+              "visibility": "user",
+              "payload": {
+                "actor": "user",
+                "content": "TASK18 report state_workflow_f10_report",
+                "messageId": "message_state_workflow_f10_report_1"
+              },
+              "correlation_id": "correlation_state_workflow_f10_report_5",
+              "occurred_at": "2026-08-17T11:37:53.137Z"
+            },
+            {
+              "id": "event_c8a2fe1a322253c2b0d61981315f6290ff5d24113d5e66e04757e50647c52404",
+              "run_id": "run_state_workflow_f10_report_4",
+              "sequence": 2,
+              "type": "run.status_changed",
+              "visibility": "user",
+              "payload": {
+                "current": "running",
+                "previous": "queued"
+              },
+              "correlation_id": "correlation_c8a2fe1a322253c2b0d61981315f6290ff5d24113d5e66e04757e50647c52404",
+              "occurred_at": "2026-08-17T11:37:53.707Z"
+            },
+            {
+              "id": "event_ff5c7913dbed5a21184911fd2779d320719ca1fee34b9d9a5c7cb3adde5bf29e",
+              "run_id": "run_state_workflow_f10_report_4",
+              "sequence": 3,
+              "type": "skill.loaded",
+              "visibility": "user",
+              "payload": {
+                "skillId": "report_assistant",
+                "version": "1",
+                "allowedTools": [
+                  "report.generate"
+                ],
+                "instructions": "Use report.generate for report requests and wait for its final result."
+              },
+              "correlation_id": "correlation_ff5c7913dbed5a21184911fd2779d320719ca1fee34b9d9a5c7cb3adde5bf29e",
+              "occurred_at": "2026-08-17T11:37:53.720Z"
+            },
+            {
+              "id": "report-e56c10109fe2841d3ab9d736-run-accepted",
+              "run_id": "run_state_workflow_f10_report_4",
+              "sequence": 4,
+              "type": "job.accepted",
+              "visibility": "user",
+              "payload": {
+                "jobId": "job_001",
+                "callId": "call_report_state_workflow_f10_report",
+                "status": "queued"
+              },
+              "correlation_id": "call_report_state_workflow_f10_report",
+              "occurred_at": "2026-08-17T11:37:53.823Z"
+            },
+            {
+              "id": "event_7ee86d617eeebd4959ff22a82decb13e20cd3edb6fd5578ea6234a1cd90b0c4e",
+              "run_id": "run_state_workflow_f10_report_4",
+              "sequence": 5,
+              "type": "run.status_changed",
+              "visibility": "user",
+              "payload": {
+                "current": "waiting_for_tool",
+                "previous": "running"
+              },
+              "correlation_id": "call_report_state_workflow_f10_report",
+              "occurred_at": "2026-08-17T11:37:53.823Z"
+            },
+            {
+              "id": "report-e56c10109fe2841d3ab9d736-run-progress",
+              "run_id": "run_state_workflow_f10_report_4",
+              "sequence": 6,
+              "type": "job.progress",
+              "visibility": "user",
+              "payload": {
+                "jobId": "job_001",
+                "callId": "call_report_state_workflow_f10_report",
+                "status": "running",
+                "percent": 50
+              },
+              "correlation_id": "call_report_state_workflow_f10_report",
+              "occurred_at": "2026-08-17T11:37:53.927Z"
+            },
+            {
+              "id": "report-e56c10109fe2841d3ab9d736-run-completed",
+              "run_id": "run_state_workflow_f10_report_4",
+              "sequence": 7,
+              "type": "job.completed",
+              "visibility": "user",
+              "payload": {
+                "jobId": "job_001",
+                "callId": "call_report_state_workflow_f10_report",
+                "status": "completed",
+                "reportId": "report_001"
+              },
+              "correlation_id": "call_report_state_workflow_f10_report",
+              "occurred_at": "2026-08-17T11:38:21.524Z"
+            },
+            {
+              "id": "event_99097809e5730de2405ad37a61a37a1a9d77b854bf7a5950033b8e6ef1b1d6aa",
+              "run_id": "run_state_workflow_f10_report_4",
+              "sequence": 8,
+              "type": "tool.call.completed",
+              "visibility": "user",
+              "payload": {
+                "callId": "call_report_state_workflow_f10_report",
+                "result": {
+                  "jobId": "job_001",
+                  "status": "completed",
+                  "reportId": "report_001",
+                  "toolName": "report.generate"
+                },
+                "toolName": "report.generate"
+              },
+              "correlation_id": "correlation_3890d57005b53fdda9bdf0bd10ceb061f8d8ce47e929ead61c1cc75bdea7a22b",
+              "occurred_at": "2026-08-17T11:38:21.865Z"
+            },
+            {
+              "id": "event_fe25ac8f483fa2d48db581e1672e9ec2d6b80264475f8dd4784e457c9b2f023a",
+              "run_id": "run_state_workflow_f10_report_4",
+              "sequence": 9,
+              "type": "run.status_changed",
+              "visibility": "user",
+              "payload": {
+                "current": "running",
+                "previous": "waiting_for_tool"
+              },
+              "correlation_id": "correlation_3890d57005b53fdda9bdf0bd10ceb061f8d8ce47e929ead61c1cc75bdea7a22b",
+              "occurred_at": "2026-08-17T11:38:21.865Z"
+            },
+            {
+              "id": "event_54c8c4c539c98e60fbd9abd5261336ed45716b48a42137bdbd1732f026df7089",
+              "run_id": "run_state_workflow_f10_report_4",
+              "sequence": 10,
+              "type": "message.completed",
+              "visibility": "user",
+              "payload": {
+                "actor": "ai",
+                "content": "Report report_001 is complete.",
+                "messageId": "message_6f921decaf876241db5fbec934bf7e509809c942064bf5d941284d7cdac5c0ee"
+              },
+              "correlation_id": "correlation_54c8c4c539c98e60fbd9abd5261336ed45716b48a42137bdbd1732f026df7089",
+              "occurred_at": "2026-08-17T11:38:22.179Z"
+            },
+            {
+              "id": "event_0dacfef9cbeb3c0fd2f5b399f1fda484cd1a2ed29480a809adcb341de92cc5e7",
+              "run_id": "run_state_workflow_f10_report_4",
+              "sequence": 11,
+              "type": "run.status_changed",
+              "visibility": "user",
+              "payload": {
+                "current": "completed",
+                "previous": "running"
+              },
+              "correlation_id": "correlation_0dacfef9cbeb3c0fd2f5b399f1fda484cd1a2ed29480a809adcb341de92cc5e7",
+              "occurred_at": "2026-08-17T11:38:22.179Z"
+            }
+          ],
+          "calls": [
+            {
+              "id": "call_report_state_workflow_f10_report",
+              "run_id": "run_state_workflow_f10_report_4",
+              "tool_id": "report.generate",
+              "tool_version": "1",
+              "status": "completed",
+              "arguments": {
+                "topic": "quarterly",
+                "sections": [
+                  "summary"
+                ]
+              },
+              "arguments_hash": "6d8989e73198741ef0dab92452a67d66cc3125c731d3ea54a281030ee49f2397",
+              "result": {
+                "jobId": "job_001",
+                "status": "completed",
+                "reportId": "report_001",
+                "toolName": "report.generate"
+              },
+              "error": null,
+              "version": 2,
+              "created_at": "2026-08-17T11:37:53.823Z",
+              "updated_at": "2026-08-17T11:38:21.865Z"
+            }
+          ],
+          "jobs": [
+            {
+              "id": "job_001",
+              "run_id": "run_state_workflow_f10_report_4",
+              "call_id": "call_report_state_workflow_f10_report",
+              "workflow_identity": "bullmq/report-e56c10109fe2841d3ab9d736",
+              "status": "completed",
+              "percent": 100,
+              "result": {
+                "jobId": "job_001",
+                "status": "completed",
+                "reportId": "report_001",
+                "toolName": "report.generate"
+              },
+              "error": null,
+              "version": 2,
+              "created_at": "2026-08-17T11:37:53.823Z",
+              "updated_at": "2026-08-17T11:38:21.524Z",
+              "ledger_key": "report-job-e56c10109fe2841d3ab9d736",
+              "namespace": "task18-compose",
+              "bullmq_job_id": "report-e56c10109fe2841d3ab9d736"
+            }
+          ],
+          "approvals": [],
+          "messages": [
+            {
+              "id": "message_state_workflow_f10_report_1",
+              "conversation_id": "conversation_state_workflow_f10_report",
+              "run_id": "run_state_workflow_f10_report_4",
+              "actor": "user",
+              "content": "TASK18 report state_workflow_f10_report",
+              "created_at": "2026-08-17T11:37:53.137Z"
+            },
+            {
+              "id": "message_6f921decaf876241db5fbec934bf7e509809c942064bf5d941284d7cdac5c0ee",
+              "conversation_id": "conversation_state_workflow_f10_report",
+              "run_id": "run_state_workflow_f10_report_4",
+              "actor": "ai",
+              "content": "Report report_001 is complete.",
+              "created_at": "2026-08-17T11:38:22.179Z"
+            }
+          ],
+          "sends": [],
+          "intents": [
+            {
+              "id": "dispatch_state_workflow_f10_report_3",
+              "aggregate_type": "run",
+              "aggregate_id": "run_state_workflow_f10_report_4",
+              "deduplication_key": "run_state_workflow_f10_report_4:admission",
+              "topic": "state_workflow.start",
+              "payload": {
+                "runId": "run_state_workflow_f10_report_4",
+                "runtime": "state_workflow",
+                "workflowIdentity": "agent-run/run_state_workflow_f10_report_4"
+              },
+              "status": "dispatched",
+              "attempts": 1,
+              "available_at": "2026-08-17T11:37:53.137Z",
+              "dispatched_at": "2026-08-17T11:37:53.526Z",
+              "created_at": "2026-08-17T11:37:53.137Z"
+            },
+            {
+              "id": "report-e56c10109fe2841d3ab9d736-dispatch",
+              "aggregate_type": "report_job",
+              "aggregate_id": "report-job-e56c10109fe2841d3ab9d736",
+              "deduplication_key": "report-job/report-job-e56c10109fe2841d3ab9d736",
+              "topic": "report.generate",
+              "payload": {
+                "jobId": "job_001",
+                "runId": "run_state_workflow_f10_report_4",
+                "callId": "call_report_state_workflow_f10_report",
+                "reportId": "report_001",
+                "ledgerKey": "report-job-e56c10109fe2841d3ab9d736",
+                "namespace": "task18-compose",
+                "bullmqJobId": "report-e56c10109fe2841d3ab9d736"
+              },
+              "status": "dispatched",
+              "attempts": 1,
+              "available_at": "2026-08-17T11:37:53.823Z",
+              "dispatched_at": "2026-08-17T11:37:53.926Z",
+              "created_at": "2026-08-17T11:37:53.823Z"
+            },
+            {
+              "id": "report-job-e56c10109fe2841d3ab9d736-workflow-signal",
+              "aggregate_type": "run",
+              "aggregate_id": "run_state_workflow_f10_report_4",
+              "deduplication_key": "run_state_workflow_f10_report_4:workflow-report:report-job-e56c10109fe2841d3ab9d736:completed",
+              "topic": "state_workflow.signal",
+              "payload": {
+                "kind": "job_completion",
+                "jobId": "job_001",
+                "runId": "run_state_workflow_f10_report_4",
+                "callId": "call_report_state_workflow_f10_report",
+                "outcome": "completed"
+              },
+              "status": "dispatched",
+              "attempts": 1,
+              "available_at": "2026-08-17T11:38:21.524Z",
+              "dispatched_at": "2026-08-17T11:38:21.583Z",
+              "created_at": "2026-08-17T11:38:21.524Z"
+            }
+          ]
+        },
+        "approval": {
+          "run": {
+            "id": "run_state_workflow_pending_approval_4",
+            "conversation_id": "conversation_state_workflow_pending_approval",
+            "user_id": "mvp_user",
+            "runtime": "state_workflow",
+            "status": "completed",
+            "version": 9,
+            "consumed_steps": 4,
+            "lease_owner": null,
+            "lease_expires_at": null,
+            "fencing_version": 0,
+            "workflow_identity": "agent-run/run_state_workflow_pending_approval_4",
+            "continuation": {
+              "kind": "state_workflow",
+              "messages": [
+                {
+                  "role": "user",
+                  "content": "TASK18 approval state_workflow_pending_approval"
+                },
+                {
+                  "role": "assistant",
+                  "content": [
+                    {
+                      "kind": "tool_call",
+                      "callId": "call_skill_state_workflow_pending_approval",
+                      "toolName": "skill.load",
+                      "arguments": {
+                        "skillId": "communication_assistant",
+                        "version": "1"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "role": "tool",
+                  "content": [
+                    {
+                      "kind": "tool_result",
+                      "callId": "call_skill_state_workflow_pending_approval",
+                      "output": {
+                        "skillId": "communication_assistant",
+                        "version": "1",
+                        "allowedTools": [
+                          "notification.preview",
+                          "notification.send_email"
+                        ]
+                      },
+                      "toolName": "skill.load"
+                    }
+                  ]
+                },
+                {
+                  "role": "assistant",
+                  "content": [
+                    {
+                      "kind": "tool_call",
+                      "callId": "call_preview_state_workflow_pending_approval",
+                      "toolName": "notification.preview",
+                      "arguments": {
+                        "body": "Approval",
+                        "subject": "MVP",
+                        "recipient": "qa@example.com"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "role": "tool",
+                  "content": [
+                    {
+                      "kind": "tool_result",
+                      "callId": "call_preview_state_workflow_pending_approval",
+                      "output": {
+                        "toolName": "notification.preview",
+                        "previewId": "preview_021dfc23575efbf2e3e9af27",
+                        "normalizedMessage": {
+                          "body": "Approval",
+                          "subject": "MVP",
+                          "recipient": "qa@example.com"
+                        }
+                      },
+                      "toolName": "notification.preview"
+                    }
+                  ]
+                },
+                {
+                  "role": "assistant",
+                  "content": [
+                    {
+                      "kind": "tool_call",
+                      "callId": "call_send_state_workflow_pending_approval",
+                      "toolName": "notification.send_email",
+                      "arguments": {
+                        "previewId": "preview_call_preview_state_workflow_pending_approval"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "role": "tool",
+                  "content": [
+                    {
+                      "kind": "tool_result",
+                      "callId": "call_send_state_workflow_pending_approval",
+                      "output": {
+                        "status": "sent",
+                        "toolName": "notification.send_email",
+                        "messageId": "message_84fd19c730237a8368517451"
+                      },
+                      "toolName": "notification.send_email"
+                    }
+                  ]
+                }
+              ],
+              "consumedSteps": 4,
+              "selectedSkill": {
+                "skillId": "communication_assistant",
+                "version": "1",
+                "allowedTools": [
+                  "notification.preview",
+                  "notification.send_email"
+                ],
+                "instructions": "Preview a message before requesting permission to send it."
+              }
+            },
+            "created_at": "2026-08-17T11:37:55.506Z",
+            "updated_at": "2026-08-17T11:38:23.796Z"
+          },
+          "events": [
+            {
+              "id": "event_state_workflow_pending_approval_2",
+              "run_id": "run_state_workflow_pending_approval_4",
+              "sequence": 1,
+              "type": "message.completed",
+              "visibility": "user",
+              "payload": {
+                "actor": "user",
+                "content": "TASK18 approval state_workflow_pending_approval",
+                "messageId": "message_state_workflow_pending_approval_1"
+              },
+              "correlation_id": "correlation_state_workflow_pending_approval_5",
+              "occurred_at": "2026-08-17T11:37:55.506Z"
+            },
+            {
+              "id": "event_8f615f9e32a80c8ddb3db93a4c0733fe0baf9ab76cf1600206c91d97bc3a6ea3",
+              "run_id": "run_state_workflow_pending_approval_4",
+              "sequence": 2,
+              "type": "run.status_changed",
+              "visibility": "user",
+              "payload": {
+                "current": "running",
+                "previous": "queued"
+              },
+              "correlation_id": "correlation_8f615f9e32a80c8ddb3db93a4c0733fe0baf9ab76cf1600206c91d97bc3a6ea3",
+              "occurred_at": "2026-08-17T11:37:55.762Z"
+            },
+            {
+              "id": "event_ecb85205426bed1aa984c97fa52883b19da1cf82b8af568e6b2bece6d8b0fc0b",
+              "run_id": "run_state_workflow_pending_approval_4",
+              "sequence": 3,
+              "type": "skill.loaded",
+              "visibility": "user",
+              "payload": {
+                "skillId": "communication_assistant",
+                "version": "1",
+                "allowedTools": [
+                  "notification.preview",
+                  "notification.send_email"
+                ],
+                "instructions": "Preview a message before requesting permission to send it."
+              },
+              "correlation_id": "correlation_ecb85205426bed1aa984c97fa52883b19da1cf82b8af568e6b2bece6d8b0fc0b",
+              "occurred_at": "2026-08-17T11:37:55.773Z"
+            },
+            {
+              "id": "event_2c5a9b65bb130d805bb8afb97799071de6d3c6d33525bd44c595821a352f26e0",
+              "run_id": "run_state_workflow_pending_approval_4",
+              "sequence": 4,
+              "type": "tool.call.started",
+              "visibility": "user",
+              "payload": {
+                "callId": "call_preview_state_workflow_pending_approval",
+                "toolName": "notification.preview"
+              },
+              "correlation_id": "correlation_8e265b542ae5ae1bd4b592ca692036c98ed038cd6569690a48f3518700702b84",
+              "occurred_at": "2026-08-17T11:37:55.810Z"
+            },
+            {
+              "id": "event_741982f46f7423ec91daf5b7e28cdbc9e9648ff159f3ca1c0ef625ae7c8a3f30",
+              "run_id": "run_state_workflow_pending_approval_4",
+              "sequence": 5,
+              "type": "tool.call.completed",
+              "visibility": "user",
+              "payload": {
+                "callId": "call_preview_state_workflow_pending_approval",
+                "result": {
+                  "toolName": "notification.preview",
+                  "previewId": "preview_021dfc23575efbf2e3e9af27",
+                  "normalizedMessage": {
+                    "body": "Approval",
+                    "subject": "MVP",
+                    "recipient": "qa@example.com"
+                  }
+                },
+                "toolName": "notification.preview"
+              },
+              "correlation_id": "correlation_8e265b542ae5ae1bd4b592ca692036c98ed038cd6569690a48f3518700702b84",
+              "occurred_at": "2026-08-17T11:37:55.810Z"
+            },
+            {
+              "id": "event_29f42e57feebce32d49e11140e7d2c90e98ee8ad83c6d21329763e8ad4f29d86",
+              "run_id": "run_state_workflow_pending_approval_4",
+              "sequence": 6,
+              "type": "approval.requested",
+              "visibility": "admin",
+              "payload": {
+                "callId": "call_send_state_workflow_pending_approval",
+                "toolName": "notification.send_email",
+                "expiresAt": "2026-08-17T11:42:55.835Z",
+                "approvalId": "approval_91c8e0d30713dff2f9409061a52eb35e628eb67cc247ebc1ffad7fd57bf9624a",
+                "argumentsHash": "83532bc59fa49d081a511aa2551e4c9ac892de7fff0cf15ac363c0d2f63f5dd9"
+              },
+              "correlation_id": "call_send_state_workflow_pending_approval",
+              "occurred_at": "2026-08-17T11:37:55.834Z"
+            },
+            {
+              "id": "event_75695628a47e218b840c1ede084f3d973f41695246a68b43ee9bb2756c10abfb",
+              "run_id": "run_state_workflow_pending_approval_4",
+              "sequence": 7,
+              "type": "run.status_changed",
+              "visibility": "user",
+              "payload": {
+                "current": "waiting_for_admin",
+                "previous": "running"
+              },
+              "correlation_id": "call_send_state_workflow_pending_approval",
+              "occurred_at": "2026-08-17T11:37:55.834Z"
+            },
+            {
+              "id": "approval_action_state_workflow_pending_approval_decision_1-event",
+              "run_id": "run_state_workflow_pending_approval_4",
+              "sequence": 8,
+              "type": "approval.approved",
+              "visibility": "admin",
+              "payload": {
+                "callId": "call_send_state_workflow_pending_approval",
+                "actorId": "mvp_admin",
+                "approvalId": "approval_91c8e0d30713dff2f9409061a52eb35e628eb67cc247ebc1ffad7fd57bf9624a"
+              },
+              "correlation_id": "call_send_state_workflow_pending_approval",
+              "occurred_at": "2026-08-17T11:38:23.561Z"
+            },
+            {
+              "id": "event_79907f694a01de0fa3be038e84ff64a0e049e8816f7a5f433bf6da5dc55dd05f",
+              "run_id": "run_state_workflow_pending_approval_4",
+              "sequence": 9,
+              "type": "tool.call.completed",
+              "visibility": "user",
+              "payload": {
+                "callId": "call_send_state_workflow_pending_approval",
+                "result": {
+                  "status": "sent",
+                  "toolName": "notification.send_email",
+                  "messageId": "message_84fd19c730237a8368517451"
+                },
+                "toolName": "notification.send_email"
+              },
+              "correlation_id": "correlation_e41f246ac034626fcfa7f14a1d1f087352888e386080e98ddf43f81802343070",
+              "occurred_at": "2026-08-17T11:38:23.715Z"
+            },
+            {
+              "id": "event_07c856ea529592a2678c20f2c25fd403e0e2338a99599ef10f05e6818048ad51",
+              "run_id": "run_state_workflow_pending_approval_4",
+              "sequence": 10,
+              "type": "run.status_changed",
+              "visibility": "user",
+              "payload": {
+                "current": "running",
+                "previous": "waiting_for_admin"
+              },
+              "correlation_id": "correlation_e41f246ac034626fcfa7f14a1d1f087352888e386080e98ddf43f81802343070",
+              "occurred_at": "2026-08-17T11:38:23.715Z"
+            },
+            {
+              "id": "event_a0c9581c84a42b755c24a632744924380b92fa78232919a3631c698221cc373c",
+              "run_id": "run_state_workflow_pending_approval_4",
+              "sequence": 11,
+              "type": "message.completed",
+              "visibility": "user",
+              "payload": {
+                "actor": "ai",
+                "content": "Message message_call_send_state_workflow_pending_approval was sent.",
+                "messageId": "message_55be8bbfc89384e52bb3c1302632dcec7e0828413b93f09efa362207d051c598"
+              },
+              "correlation_id": "correlation_a0c9581c84a42b755c24a632744924380b92fa78232919a3631c698221cc373c",
+              "occurred_at": "2026-08-17T11:38:23.796Z"
+            },
+            {
+              "id": "event_6f766c8bb3a58aec477aa4c7d2d3d764d13b870ec862b682daa3a7cb5b50636b",
+              "run_id": "run_state_workflow_pending_approval_4",
+              "sequence": 12,
+              "type": "run.status_changed",
+              "visibility": "user",
+              "payload": {
+                "current": "completed",
+                "previous": "running"
+              },
+              "correlation_id": "correlation_6f766c8bb3a58aec477aa4c7d2d3d764d13b870ec862b682daa3a7cb5b50636b",
+              "occurred_at": "2026-08-17T11:38:23.796Z"
+            }
+          ],
+          "calls": [
+            {
+              "id": "call_preview_state_workflow_pending_approval",
+              "run_id": "run_state_workflow_pending_approval_4",
+              "tool_id": "notification.preview",
+              "tool_version": "1",
+              "status": "completed",
+              "arguments": {
+                "body": "Approval",
+                "subject": "MVP",
+                "recipient": "qa@example.com"
+              },
+              "arguments_hash": "021dfc23575efbf2e3e9af27e182f221d4a425ca6e841ae20ff2ba55fb1bb412",
+              "result": {
+                "toolName": "notification.preview",
+                "previewId": "preview_021dfc23575efbf2e3e9af27",
+                "normalizedMessage": {
+                  "body": "Approval",
+                  "subject": "MVP",
+                  "recipient": "qa@example.com"
+                }
+              },
+              "error": null,
+              "version": 1,
+              "created_at": "2026-08-17T11:37:55.810Z",
+              "updated_at": "2026-08-17T11:37:55.810Z"
+            },
+            {
+              "id": "call_send_state_workflow_pending_approval",
+              "run_id": "run_state_workflow_pending_approval_4",
+              "tool_id": "notification.send_email",
+              "tool_version": "1",
+              "status": "completed",
+              "arguments": {
+                "previewId": "preview_call_preview_state_workflow_pending_approval"
+              },
+              "arguments_hash": "83532bc59fa49d081a511aa2551e4c9ac892de7fff0cf15ac363c0d2f63f5dd9",
+              "result": {
+                "status": "sent",
+                "toolName": "notification.send_email",
+                "messageId": "message_84fd19c730237a8368517451"
+              },
+              "error": null,
+              "version": 3,
+              "created_at": "2026-08-17T11:37:55.834Z",
+              "updated_at": "2026-08-17T11:38:23.715Z"
+            }
+          ],
+          "jobs": [],
+          "approvals": [
+            {
+              "id": "approval_91c8e0d30713dff2f9409061a52eb35e628eb67cc247ebc1ffad7fd57bf9624a",
+              "run_id": "run_state_workflow_pending_approval_4",
+              "call_id": "call_send_state_workflow_pending_approval",
+              "tool_id": "notification.send_email",
+              "arguments": {
+                "previewId": "preview_call_preview_state_workflow_pending_approval"
+              },
+              "arguments_hash": "83532bc59fa49d081a511aa2551e4c9ac892de7fff0cf15ac363c0d2f63f5dd9",
+              "required_actor_id": "mvp_admin",
+              "status": "approved",
+              "version": 1,
+              "expires_at": "2026-08-17T11:42:55.835Z",
+              "created_at": "2026-08-17T11:37:55.834Z",
+              "updated_at": "2026-08-17T11:38:23.561Z",
+              "tool_version": "1"
+            }
+          ],
+          "messages": [
+            {
+              "id": "message_state_workflow_pending_approval_1",
+              "conversation_id": "conversation_state_workflow_pending_approval",
+              "run_id": "run_state_workflow_pending_approval_4",
+              "actor": "user",
+              "content": "TASK18 approval state_workflow_pending_approval",
+              "created_at": "2026-08-17T11:37:55.506Z"
+            },
+            {
+              "id": "message_55be8bbfc89384e52bb3c1302632dcec7e0828413b93f09efa362207d051c598",
+              "conversation_id": "conversation_state_workflow_pending_approval",
+              "run_id": "run_state_workflow_pending_approval_4",
+              "actor": "ai",
+              "content": "Message message_call_send_state_workflow_pending_approval was sent.",
+              "created_at": "2026-08-17T11:38:23.796Z"
+            }
+          ],
+          "sends": [
+            {
+              "call_id": "call_send_state_workflow_pending_approval",
+              "message_id": "message_84fd19c730237a8368517451",
+              "sent_at": "2026-08-17T11:38:23.717Z"
+            }
+          ],
+          "intents": [
+            {
+              "id": "dispatch_state_workflow_pending_approval_3",
+              "aggregate_type": "run",
+              "aggregate_id": "run_state_workflow_pending_approval_4",
+              "deduplication_key": "run_state_workflow_pending_approval_4:admission",
+              "topic": "state_workflow.start",
+              "payload": {
+                "runId": "run_state_workflow_pending_approval_4",
+                "runtime": "state_workflow",
+                "workflowIdentity": "agent-run/run_state_workflow_pending_approval_4"
+              },
+              "status": "dispatched",
+              "attempts": 1,
+              "available_at": "2026-08-17T11:37:55.506Z",
+              "dispatched_at": "2026-08-17T11:37:55.739Z",
+              "created_at": "2026-08-17T11:37:55.506Z"
+            },
+            {
+              "id": "approval_action_state_workflow_pending_approval_decision_1-resume",
+              "aggregate_type": "run",
+              "aggregate_id": "run_state_workflow_pending_approval_4",
+              "deduplication_key": "run_state_workflow_pending_approval_4:approval:approval_91c8e0d30713dff2f9409061a52eb35e628eb67cc247ebc1ffad7fd57bf9624a:approved",
+              "topic": "state_workflow.signal",
+              "payload": {
+                "kind": "admin_decision",
+                "runId": "run_state_workflow_pending_approval_4",
+                "callId": "call_send_state_workflow_pending_approval",
+                "decision": "approved",
+                "approvalId": "approval_91c8e0d30713dff2f9409061a52eb35e628eb67cc247ebc1ffad7fd57bf9624a"
+              },
+              "status": "dispatched",
+              "attempts": 1,
+              "available_at": "2026-08-17T11:38:23.561Z",
+              "dispatched_at": "2026-08-17T11:38:23.685Z",
+              "created_at": "2026-08-17T11:38:23.561Z"
+            }
+          ]
+        }
+      },
+      "before": {
+        "postgres": {
+          "service": "postgres",
+          "containerId": "cb5ae8352b28db04dba73e6efdc9caef6649f1dee7ce3912dfb94effd69e9cce",
+          "name": "/new-agentic-chat-v2-postgres-1",
+          "status": "running",
+          "health": "healthy",
+          "startedAt": "2026-08-17T11:36:57.114903631Z",
+          "restartCount": 0
+        },
+        "redis": {
+          "service": "redis",
+          "containerId": "2728db96f0b3994968a2d1bbf9d68e2579cee362348dfce894aefa7c1b9d93ec",
+          "name": "/new-agentic-chat-v2-redis-1",
+          "status": "running",
+          "health": "healthy",
+          "startedAt": "2026-08-17T11:36:57.111912214Z",
+          "restartCount": 0
+        },
+        "temporal": {
+          "service": "temporal",
+          "containerId": "53ebf582d4e53e1ab9fd3320a4d7af4121a3bd35f4dfe936a1cf1cc04f8e4e50",
+          "name": "/new-agentic-chat-v2-temporal-1",
+          "status": "running",
+          "health": "healthy",
+          "startedAt": "2026-08-17T11:36:57.114085839Z",
+          "restartCount": 0
+        },
+        "api": {
+          "service": "api",
+          "containerId": "3f2da735b482a51b8db669388053532d17910e8d58b008b2ce42a9133dc8f903",
+          "name": "/new-agentic-chat-v2-api-1",
+          "status": "running",
+          "health": "healthy",
+          "startedAt": "2026-08-17T11:37:08.487149345Z",
+          "restartCount": 0
+        },
+        "web": {
+          "service": "web",
+          "containerId": "49e20d76caba9aab63e5d4f723e55172076e132e125f846c234a8e4d630bad92",
+          "name": "/new-agentic-chat-v2-web-1",
+          "status": "running",
+          "health": "healthy",
+          "startedAt": "2026-08-17T11:37:08.479051678Z",
+          "restartCount": 0
+        },
+        "fixture-worker": {
+          "service": "fixture-worker",
+          "containerId": "85da601972be1ed0f4045eafa8e42ace340b3962c62cc8e73a1117b434356fc3",
+          "name": "/new-agentic-chat-v2-fixture-worker-1",
+          "status": "running",
+          "health": "healthy",
+          "startedAt": "2026-08-17T11:37:08.48581522Z",
+          "restartCount": 0
+        },
+        "worker-simple": {
+          "service": "worker-simple",
+          "containerId": "30fea98f1d6cf17722626ee0eb62aaaeeef5e39225329afbaab99217abad268c",
+          "name": "/new-agentic-chat-v2-worker-simple-1",
+          "status": "running",
+          "health": "healthy",
+          "startedAt": "2026-08-17T11:37:31.719689175Z",
+          "restartCount": 0
+        },
+        "worker-workflow": {
+          "service": "worker-workflow",
+          "containerId": "337b7b7a16a5b866f6fcb279ca5e9b4694f567a1580ccc18b105dfc5b7e2f756",
+          "name": "/new-agentic-chat-v2-worker-workflow-1",
+          "status": "running",
+          "health": "healthy",
+          "startedAt": "2026-08-17T11:37:08.48374297Z",
+          "restartCount": 0
+        }
+      },
+      "after": {
+        "postgres": {
+          "service": "postgres",
+          "containerId": "cb5ae8352b28db04dba73e6efdc9caef6649f1dee7ce3912dfb94effd69e9cce",
+          "name": "/new-agentic-chat-v2-postgres-1",
+          "status": "running",
+          "health": "healthy",
+          "startedAt": "2026-08-17T11:36:57.114903631Z",
+          "restartCount": 0
+        },
+        "redis": {
+          "service": "redis",
+          "containerId": "2728db96f0b3994968a2d1bbf9d68e2579cee362348dfce894aefa7c1b9d93ec",
+          "name": "/new-agentic-chat-v2-redis-1",
+          "status": "running",
+          "health": "healthy",
+          "startedAt": "2026-08-17T11:36:57.111912214Z",
+          "restartCount": 0
+        },
+        "temporal": {
+          "service": "temporal",
+          "containerId": "53ebf582d4e53e1ab9fd3320a4d7af4121a3bd35f4dfe936a1cf1cc04f8e4e50",
+          "name": "/new-agentic-chat-v2-temporal-1",
+          "status": "running",
+          "health": "healthy",
+          "startedAt": "2026-08-17T11:36:57.114085839Z",
+          "restartCount": 0
+        },
+        "api": {
+          "service": "api",
+          "containerId": "3f2da735b482a51b8db669388053532d17910e8d58b008b2ce42a9133dc8f903",
+          "name": "/new-agentic-chat-v2-api-1",
+          "status": "running",
+          "health": "healthy",
+          "startedAt": "2026-08-17T11:37:08.487149345Z",
+          "restartCount": 0
+        },
+        "web": {
+          "service": "web",
+          "containerId": "49e20d76caba9aab63e5d4f723e55172076e132e125f846c234a8e4d630bad92",
+          "name": "/new-agentic-chat-v2-web-1",
+          "status": "running",
+          "health": "healthy",
+          "startedAt": "2026-08-17T11:37:08.479051678Z",
+          "restartCount": 0
+        },
+        "fixture-worker": {
+          "service": "fixture-worker",
+          "containerId": "85da601972be1ed0f4045eafa8e42ace340b3962c62cc8e73a1117b434356fc3",
+          "name": "/new-agentic-chat-v2-fixture-worker-1",
+          "status": "running",
+          "health": "healthy",
+          "startedAt": "2026-08-17T11:37:08.48581522Z",
+          "restartCount": 0
+        },
+        "worker-simple": {
+          "service": "worker-simple",
+          "containerId": "30fea98f1d6cf17722626ee0eb62aaaeeef5e39225329afbaab99217abad268c",
+          "name": "/new-agentic-chat-v2-worker-simple-1",
+          "status": "running",
+          "health": "healthy",
+          "startedAt": "2026-08-17T11:37:31.719689175Z",
+          "restartCount": 0
+        },
+        "worker-workflow": {
+          "service": "worker-workflow",
+          "containerId": "337b7b7a16a5b866f6fcb279ca5e9b4694f567a1580ccc18b105dfc5b7e2f756",
+          "name": "/new-agentic-chat-v2-worker-workflow-1",
+          "status": "running",
+          "health": "healthy",
+          "startedAt": "2026-08-17T11:38:04.854554843Z",
+          "restartCount": 0
+        }
+      }
+    }
+  ]
+}
