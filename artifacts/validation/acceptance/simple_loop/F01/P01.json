@@ -1,0 +1,244 @@
+{
+  "metadata": {
+    "runtime": "simple_loop",
+    "testId": "F01",
+    "promptId": "P01",
+    "fixtureNamespace": "e2e_f01",
+    "testFile": "/Users/riegan/Project/ruangguru/new-agentic-chat-v2/packages/testkit/e2e/simple-loop.spec.ts",
+    "testTitle": "F01 direct answer is atomically visible",
+    "runtimeDiagnostics": [
+      {
+        "providerInvocations": 1
+      }
+    ],
+    "executionOutcome": {
+      "runId": "run_e2e_f01_4",
+      "status": "completed",
+      "text": "CHAT_OK",
+      "consumedSteps": 1
+    }
+  },
+  "runId": "run_e2e_f01_4",
+  "actors": [
+    {
+      "actor": "mvp_user",
+      "action": "message"
+    },
+    {
+      "actor": "ai",
+      "action": "final_response"
+    }
+  ],
+  "stableIds": {
+    "runId": "run_e2e_f01_4",
+    "callIds": [],
+    "jobIds": [],
+    "approvalIds": [],
+    "commandIds": []
+  },
+  "observedSkill": null,
+  "observedToolCalls": [],
+  "observedApprovals": [],
+  "observedJobs": [],
+  "finalResponse": "CHAT_OK",
+  "finalStatus": "completed",
+  "projections": {
+    "user": {
+      "viewer": "user",
+      "run": {
+        "runId": "run_e2e_f01_4",
+        "conversationId": "conversation_e2e_f01",
+        "runtime": "simple_loop",
+        "status": "completed",
+        "version": 3,
+        "consumedSteps": 1,
+        "cursor": {
+          "runId": "run_e2e_f01_4",
+          "sequence": 4
+        }
+      },
+      "events": [
+        {
+          "eventId": "event_e2e_f01_2",
+          "runId": "run_e2e_f01_4",
+          "sequence": 1,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_e2e_f01_5",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_e2e_f01_1",
+            "actor": "user",
+            "content": "Reply with exactly CHAT_OK. Do not load a skill or call a tool."
+          }
+        },
+        {
+          "eventId": "event_e2e_f01_6",
+          "runId": "run_e2e_f01_4",
+          "sequence": 2,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_e2e_f01_7",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "queued",
+            "current": "running"
+          }
+        },
+        {
+          "eventId": "event_e2e_f01_8",
+          "runId": "run_e2e_f01_4",
+          "sequence": 3,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_e2e_f01_9",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_e2e_f01_12",
+            "actor": "ai",
+            "content": "CHAT_OK"
+          }
+        },
+        {
+          "eventId": "event_e2e_f01_10",
+          "runId": "run_e2e_f01_4",
+          "sequence": 4,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_e2e_f01_11",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "completed"
+          }
+        }
+      ]
+    },
+    "admin": {
+      "viewer": "admin",
+      "run": {
+        "runId": "run_e2e_f01_4",
+        "conversationId": "conversation_e2e_f01",
+        "runtime": "simple_loop",
+        "status": "completed",
+        "version": 3,
+        "consumedSteps": 1,
+        "cursor": {
+          "runId": "run_e2e_f01_4",
+          "sequence": 4
+        }
+      },
+      "events": [
+        {
+          "eventId": "event_e2e_f01_2",
+          "runId": "run_e2e_f01_4",
+          "sequence": 1,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_e2e_f01_5",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_e2e_f01_1",
+            "actor": "user",
+            "content": "Reply with exactly CHAT_OK. Do not load a skill or call a tool."
+          }
+        },
+        {
+          "eventId": "event_e2e_f01_6",
+          "runId": "run_e2e_f01_4",
+          "sequence": 2,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_e2e_f01_7",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "queued",
+            "current": "running"
+          }
+        },
+        {
+          "eventId": "event_e2e_f01_8",
+          "runId": "run_e2e_f01_4",
+          "sequence": 3,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_e2e_f01_9",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_e2e_f01_12",
+            "actor": "ai",
+            "content": "CHAT_OK"
+          }
+        },
+        {
+          "eventId": "event_e2e_f01_10",
+          "runId": "run_e2e_f01_4",
+          "sequence": 4,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_e2e_f01_11",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "completed"
+          }
+        }
+      ]
+    }
+  },
+  "normalizedEventTrace": {
+    "events": [
+      {
+        "position": 1,
+        "type": "message.completed",
+        "visibility": "user",
+        "payload": {
+          "messageId": "message_e2e_f01_1",
+          "actor": "user",
+          "content": "Reply with exactly CHAT_OK. Do not load a skill or call a tool."
+        }
+      },
+      {
+        "position": 2,
+        "type": "run.status_changed",
+        "visibility": "user",
+        "payload": {
+          "previous": "queued",
+          "current": "running"
+        }
+      },
+      {
+        "position": 3,
+        "type": "message.completed",
+        "visibility": "user",
+        "payload": {
+          "messageId": "message_e2e_f01_12",
+          "actor": "ai",
+          "content": "CHAT_OK"
+        }
+      },
+      {
+        "position": 4,
+        "type": "run.status_changed",
+        "visibility": "user",
+        "payload": {
+          "previous": "running",
+          "current": "completed"
+        }
+      }
+    ]
+  },
+  "schemaVersion": 2,
+  "provenance": {
+    "source": "postgresql_projection_capture",
+    "capturedRunId": "run_e2e_f01_4",
+    "processId": 80347,
+    "observationDigest": "830a7c530a0466e0de26972f3e6f757a823698e0cc706f9fae783f7211fab7d0"
+  },
+  "observedApprovalJobEvents": [],
+  "result": "PASS",
+  "failureDetails": null,
+  "evidenceLinks": [
+    "acceptance/simple_loop/F01/P01.json"
+  ]
+}

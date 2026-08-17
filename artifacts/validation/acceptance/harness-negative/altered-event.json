@@ -1,0 +1,5 @@
+{
+  "result": "PASS",
+  "injectedMutation": "actual normalized event",
+  "acceptanceFailure": "Normalized acceptance trace mismatch\n+ actual - expected\n... Skipped lines\n\n  {\n    events: [\n      {\n        payload: {\n          actor: 'user',\n...\n          actor: 'ai',\n+         content: 'ALTERED',\n-         content: 'CHAT_OK',\n          messageId: 'message_ai_actual'\n        },\n        position: 3,\n        type: 'message.completed',\n        visibility: 'user'\n"
+}
