@@ -1,0 +1,413 @@
+{
+  "metadata": {
+    "runtime": "state_workflow",
+    "testId": "F04",
+    "promptId": "P04",
+    "fixtureNamespace": "f04",
+    "testFile": "/Users/riegan/Project/ruangguru/new-agentic-chat-v2/packages/testkit/e2e/state-workflow.spec.ts",
+    "testTitle": "F04 typed calculator failure still completes with final text",
+    "runtimeDiagnostics": [
+      {
+        "providerInvocations": 3,
+        "advanceAttempts": 1
+      }
+    ],
+    "executionOutcome": {
+      "workflowId": "agent-run/run_f04_4",
+      "runId": "run_f04_4",
+      "status": "completed",
+      "historyPosition": 2,
+      "wait": null
+    }
+  },
+  "runId": "run_f04_4",
+  "actors": [
+    {
+      "actor": "ai",
+      "action": "final_response"
+    },
+    {
+      "actor": "mvp_user",
+      "action": "message"
+    }
+  ],
+  "stableIds": {
+    "runId": "run_f04_4",
+    "callIds": [
+      "call_calculator_f04"
+    ],
+    "jobIds": [],
+    "approvalIds": [],
+    "commandIds": []
+  },
+  "observedSkill": {
+    "skillId": "calculator_assistant",
+    "version": "1",
+    "allowedTools": [
+      "calculator.evaluate"
+    ]
+  },
+  "observedToolCalls": [
+    {
+      "callId": "call_calculator_f04",
+      "toolName": "calculator.evaluate",
+      "status": "failed",
+      "arguments": {
+        "expression": "10 / 0"
+      },
+      "result": null,
+      "error": {
+        "code": "DIVISION_BY_ZERO",
+        "message": "Division by zero is undefined"
+      }
+    }
+  ],
+  "observedApprovals": [],
+  "observedJobs": [],
+  "finalResponse": "The calculation is undefined because division by zero is not allowed.",
+  "finalStatus": "completed",
+  "projections": {
+    "user": {
+      "viewer": "user",
+      "run": {
+        "runId": "run_f04_4",
+        "conversationId": "conversation_f04",
+        "runtime": "state_workflow",
+        "status": "completed",
+        "version": 6,
+        "consumedSteps": 3,
+        "selectedSkill": {
+          "skillId": "calculator_assistant",
+          "version": "1",
+          "instructions": "Always use calculator.evaluate for arithmetic requested by the user.",
+          "allowedTools": [
+            "calculator.evaluate"
+          ]
+        },
+        "cursor": {
+          "runId": "run_f04_4",
+          "sequence": 7
+        }
+      },
+      "events": [
+        {
+          "eventId": "event_f04_2",
+          "runId": "run_f04_4",
+          "sequence": 1,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_f04_5",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_f04_1",
+            "actor": "user",
+            "content": "Use calculator_assistant version 1 and calculate 10 / 0."
+          }
+        },
+        {
+          "eventId": "event_b723c50bb48f8b1cb75bd614dfaee64ed6a6582e0bc4396578077be04ad66eb6",
+          "runId": "run_f04_4",
+          "sequence": 2,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_b723c50bb48f8b1cb75bd614dfaee64ed6a6582e0bc4396578077be04ad66eb6",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "queued",
+            "current": "running"
+          }
+        },
+        {
+          "eventId": "event_001131e23c16ce967a74935d4c9abe0196add71998a737c4862b45f67f0acc2a",
+          "runId": "run_f04_4",
+          "sequence": 3,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_001131e23c16ce967a74935d4c9abe0196add71998a737c4862b45f67f0acc2a",
+          "type": "skill.loaded",
+          "visibility": "user",
+          "payload": {
+            "skillId": "calculator_assistant",
+            "version": "1",
+            "instructions": "Always use calculator.evaluate for arithmetic requested by the user.",
+            "allowedTools": [
+              "calculator.evaluate"
+            ]
+          }
+        },
+        {
+          "eventId": "event_593239029145a2470cc9d09706a554b272ff08174aa7161294cd90056ebc5b2e",
+          "runId": "run_f04_4",
+          "sequence": 4,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_2af247d636e5a48e2801fdc8b9a33b8841501d2a6ca0cb1743e681bf69937ef4",
+          "type": "tool.call.started",
+          "visibility": "user",
+          "payload": {
+            "callId": "call_calculator_f04",
+            "toolName": "calculator.evaluate"
+          }
+        },
+        {
+          "eventId": "event_207494dd1c3b306f5ef9c2b2af0c68fcdf489ea9b6643bba469a6b03ff05b418",
+          "runId": "run_f04_4",
+          "sequence": 5,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_2af247d636e5a48e2801fdc8b9a33b8841501d2a6ca0cb1743e681bf69937ef4",
+          "type": "tool.call.failed",
+          "visibility": "user",
+          "payload": {
+            "callId": "call_calculator_f04",
+            "toolName": "calculator.evaluate",
+            "error": {
+              "message": "Division by zero is undefined",
+              "code": "DIVISION_BY_ZERO"
+            }
+          }
+        },
+        {
+          "eventId": "event_545548d2f91a43b0ef73fa5efdfa6a321a30e86b9d8880d5a31abac9d2e36eee",
+          "runId": "run_f04_4",
+          "sequence": 6,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_545548d2f91a43b0ef73fa5efdfa6a321a30e86b9d8880d5a31abac9d2e36eee",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_173d520527f67cd2d25dfbe8a009ae2288bfffcad446808abca161c45a976835",
+            "actor": "ai",
+            "content": "The calculation is undefined because division by zero is not allowed."
+          }
+        },
+        {
+          "eventId": "event_c3f17a81472f3c8dbec68ba28d68cecce98661f06a7ee023f2674b6253f1e0e0",
+          "runId": "run_f04_4",
+          "sequence": 7,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_c3f17a81472f3c8dbec68ba28d68cecce98661f06a7ee023f2674b6253f1e0e0",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "completed"
+          }
+        }
+      ]
+    },
+    "admin": {
+      "viewer": "admin",
+      "run": {
+        "runId": "run_f04_4",
+        "conversationId": "conversation_f04",
+        "runtime": "state_workflow",
+        "status": "completed",
+        "version": 6,
+        "consumedSteps": 3,
+        "selectedSkill": {
+          "skillId": "calculator_assistant",
+          "version": "1",
+          "instructions": "Always use calculator.evaluate for arithmetic requested by the user.",
+          "allowedTools": [
+            "calculator.evaluate"
+          ]
+        },
+        "cursor": {
+          "runId": "run_f04_4",
+          "sequence": 7
+        }
+      },
+      "events": [
+        {
+          "eventId": "event_f04_2",
+          "runId": "run_f04_4",
+          "sequence": 1,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_f04_5",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_f04_1",
+            "actor": "user",
+            "content": "Use calculator_assistant version 1 and calculate 10 / 0."
+          }
+        },
+        {
+          "eventId": "event_b723c50bb48f8b1cb75bd614dfaee64ed6a6582e0bc4396578077be04ad66eb6",
+          "runId": "run_f04_4",
+          "sequence": 2,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_b723c50bb48f8b1cb75bd614dfaee64ed6a6582e0bc4396578077be04ad66eb6",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "queued",
+            "current": "running"
+          }
+        },
+        {
+          "eventId": "event_001131e23c16ce967a74935d4c9abe0196add71998a737c4862b45f67f0acc2a",
+          "runId": "run_f04_4",
+          "sequence": 3,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_001131e23c16ce967a74935d4c9abe0196add71998a737c4862b45f67f0acc2a",
+          "type": "skill.loaded",
+          "visibility": "user",
+          "payload": {
+            "skillId": "calculator_assistant",
+            "version": "1",
+            "instructions": "Always use calculator.evaluate for arithmetic requested by the user.",
+            "allowedTools": [
+              "calculator.evaluate"
+            ]
+          }
+        },
+        {
+          "eventId": "event_593239029145a2470cc9d09706a554b272ff08174aa7161294cd90056ebc5b2e",
+          "runId": "run_f04_4",
+          "sequence": 4,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_2af247d636e5a48e2801fdc8b9a33b8841501d2a6ca0cb1743e681bf69937ef4",
+          "type": "tool.call.started",
+          "visibility": "user",
+          "payload": {
+            "callId": "call_calculator_f04",
+            "toolName": "calculator.evaluate"
+          }
+        },
+        {
+          "eventId": "event_207494dd1c3b306f5ef9c2b2af0c68fcdf489ea9b6643bba469a6b03ff05b418",
+          "runId": "run_f04_4",
+          "sequence": 5,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_2af247d636e5a48e2801fdc8b9a33b8841501d2a6ca0cb1743e681bf69937ef4",
+          "type": "tool.call.failed",
+          "visibility": "user",
+          "payload": {
+            "callId": "call_calculator_f04",
+            "toolName": "calculator.evaluate",
+            "error": {
+              "message": "Division by zero is undefined",
+              "code": "DIVISION_BY_ZERO"
+            }
+          }
+        },
+        {
+          "eventId": "event_545548d2f91a43b0ef73fa5efdfa6a321a30e86b9d8880d5a31abac9d2e36eee",
+          "runId": "run_f04_4",
+          "sequence": 6,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_545548d2f91a43b0ef73fa5efdfa6a321a30e86b9d8880d5a31abac9d2e36eee",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_173d520527f67cd2d25dfbe8a009ae2288bfffcad446808abca161c45a976835",
+            "actor": "ai",
+            "content": "The calculation is undefined because division by zero is not allowed."
+          }
+        },
+        {
+          "eventId": "event_c3f17a81472f3c8dbec68ba28d68cecce98661f06a7ee023f2674b6253f1e0e0",
+          "runId": "run_f04_4",
+          "sequence": 7,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_c3f17a81472f3c8dbec68ba28d68cecce98661f06a7ee023f2674b6253f1e0e0",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "completed"
+          }
+        }
+      ]
+    }
+  },
+  "normalizedEventTrace": {
+    "events": [
+      {
+        "position": 1,
+        "type": "message.completed",
+        "visibility": "user",
+        "payload": {
+          "messageId": "message_f04_1",
+          "actor": "user",
+          "content": "Use calculator_assistant version 1 and calculate 10 / 0."
+        }
+      },
+      {
+        "position": 2,
+        "type": "run.status_changed",
+        "visibility": "user",
+        "payload": {
+          "previous": "queued",
+          "current": "running"
+        }
+      },
+      {
+        "position": 3,
+        "type": "skill.loaded",
+        "visibility": "user",
+        "payload": {
+          "skillId": "calculator_assistant",
+          "version": "1",
+          "instructions": "Always use calculator.evaluate for arithmetic requested by the user.",
+          "allowedTools": [
+            "calculator.evaluate"
+          ]
+        }
+      },
+      {
+        "position": 4,
+        "type": "tool.call.started",
+        "visibility": "user",
+        "payload": {
+          "callId": "call_calculator_f04",
+          "toolName": "calculator.evaluate"
+        }
+      },
+      {
+        "position": 5,
+        "type": "tool.call.failed",
+        "visibility": "user",
+        "payload": {
+          "callId": "call_calculator_f04",
+          "toolName": "calculator.evaluate",
+          "error": {
+            "message": "Division by zero is undefined",
+            "code": "DIVISION_BY_ZERO"
+          }
+        }
+      },
+      {
+        "position": 6,
+        "type": "message.completed",
+        "visibility": "user",
+        "payload": {
+          "messageId": "message_173d520527f67cd2d25dfbe8a009ae2288bfffcad446808abca161c45a976835",
+          "actor": "ai",
+          "content": "The calculation is undefined because division by zero is not allowed."
+        }
+      },
+      {
+        "position": 7,
+        "type": "run.status_changed",
+        "visibility": "user",
+        "payload": {
+          "previous": "running",
+          "current": "completed"
+        }
+      }
+    ]
+  },
+  "schemaVersion": 2,
+  "provenance": {
+    "source": "postgresql_projection_capture",
+    "capturedRunId": "run_f04_4",
+    "processId": 82190,
+    "observationDigest": "d96816301d82fc6d6b8ac50a635db40dc736bdb2f9d1acb3ccc37108190b4314"
+  },
+  "observedApprovalJobEvents": [],
+  "result": "PASS",
+  "failureDetails": null,
+  "evidenceLinks": [
+    "acceptance/state_workflow/F04/P04.json"
+  ]
+}

@@ -1,0 +1,413 @@
+{
+  "metadata": {
+    "runtime": "state_workflow",
+    "testId": "F03",
+    "promptId": "P03",
+    "fixtureNamespace": "f03",
+    "testFile": "/Users/riegan/Project/ruangguru/new-agentic-chat-v2/packages/testkit/e2e/state-workflow.spec.ts",
+    "testTitle": "F03 calculator succeeds through real Temporal Activities",
+    "runtimeDiagnostics": [
+      {
+        "providerInvocations": 3,
+        "advanceAttempts": 1
+      }
+    ],
+    "executionOutcome": {
+      "workflowId": "agent-run/run_f03_4",
+      "runId": "run_f03_4",
+      "status": "completed",
+      "historyPosition": 2,
+      "wait": null
+    }
+  },
+  "runId": "run_f03_4",
+  "actors": [
+    {
+      "actor": "ai",
+      "action": "final_response"
+    },
+    {
+      "actor": "mvp_user",
+      "action": "message"
+    }
+  ],
+  "stableIds": {
+    "runId": "run_f03_4",
+    "callIds": [
+      "call_calculator_f03"
+    ],
+    "jobIds": [],
+    "approvalIds": [],
+    "commandIds": []
+  },
+  "observedSkill": {
+    "skillId": "calculator_assistant",
+    "version": "1",
+    "allowedTools": [
+      "calculator.evaluate"
+    ]
+  },
+  "observedToolCalls": [
+    {
+      "callId": "call_calculator_f03",
+      "toolName": "calculator.evaluate",
+      "status": "completed",
+      "arguments": {
+        "expression": "(125 * 8) + 40"
+      },
+      "result": {
+        "value": 1040,
+        "toolName": "calculator.evaluate"
+      },
+      "error": null
+    }
+  ],
+  "observedApprovals": [],
+  "observedJobs": [],
+  "finalResponse": "1040",
+  "finalStatus": "completed",
+  "projections": {
+    "user": {
+      "viewer": "user",
+      "run": {
+        "runId": "run_f03_4",
+        "conversationId": "conversation_f03",
+        "runtime": "state_workflow",
+        "status": "completed",
+        "version": 6,
+        "consumedSteps": 3,
+        "selectedSkill": {
+          "skillId": "calculator_assistant",
+          "version": "1",
+          "instructions": "Always use calculator.evaluate for arithmetic requested by the user.",
+          "allowedTools": [
+            "calculator.evaluate"
+          ]
+        },
+        "cursor": {
+          "runId": "run_f03_4",
+          "sequence": 7
+        }
+      },
+      "events": [
+        {
+          "eventId": "event_f03_2",
+          "runId": "run_f03_4",
+          "sequence": 1,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_f03_5",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_f03_1",
+            "actor": "user",
+            "content": "Use calculator_assistant version 1 to calculate (125 * 8) + 40."
+          }
+        },
+        {
+          "eventId": "event_991b9e87bc7a37b1670c9796ca32a077b5258b8bf51cc7c6439b6f8263aa52c3",
+          "runId": "run_f03_4",
+          "sequence": 2,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_991b9e87bc7a37b1670c9796ca32a077b5258b8bf51cc7c6439b6f8263aa52c3",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "queued",
+            "current": "running"
+          }
+        },
+        {
+          "eventId": "event_87ee7fa45cb9833e81a428b8330f1ed2aec6216cb8cdfbf0c7b466d034e8b3c1",
+          "runId": "run_f03_4",
+          "sequence": 3,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_87ee7fa45cb9833e81a428b8330f1ed2aec6216cb8cdfbf0c7b466d034e8b3c1",
+          "type": "skill.loaded",
+          "visibility": "user",
+          "payload": {
+            "skillId": "calculator_assistant",
+            "version": "1",
+            "instructions": "Always use calculator.evaluate for arithmetic requested by the user.",
+            "allowedTools": [
+              "calculator.evaluate"
+            ]
+          }
+        },
+        {
+          "eventId": "event_e57778a3d6159de20e0d3b5890b5473e0a2764906c8ba5a85abda75e59b43dec",
+          "runId": "run_f03_4",
+          "sequence": 4,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_08f301a0af3bb350283439905dd9d54483651e78ce145027c26e0c45a03819f5",
+          "type": "tool.call.started",
+          "visibility": "user",
+          "payload": {
+            "callId": "call_calculator_f03",
+            "toolName": "calculator.evaluate"
+          }
+        },
+        {
+          "eventId": "event_23944cde0668ebbe3e7d65b95a4bfb35b0424469c1f179969ff47caf02bc1064",
+          "runId": "run_f03_4",
+          "sequence": 5,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_08f301a0af3bb350283439905dd9d54483651e78ce145027c26e0c45a03819f5",
+          "type": "tool.call.completed",
+          "visibility": "user",
+          "payload": {
+            "callId": "call_calculator_f03",
+            "toolName": "calculator.evaluate",
+            "result": {
+              "toolName": "calculator.evaluate",
+              "value": 1040
+            }
+          }
+        },
+        {
+          "eventId": "event_e48ac7bc76dcf4f6501ffd88080068cc9effc9110dae1a65ad9190bd73cb90d9",
+          "runId": "run_f03_4",
+          "sequence": 6,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_e48ac7bc76dcf4f6501ffd88080068cc9effc9110dae1a65ad9190bd73cb90d9",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_43acc9c3a7ebabc35c9e930b7ac5a260bbc8d2df2477bdb7d740ea7071a4fcbe",
+            "actor": "ai",
+            "content": "1040"
+          }
+        },
+        {
+          "eventId": "event_baa42617337f06b724a84f00b54fdbcaa7e1c3d0b52d0066167249a2e498f4e3",
+          "runId": "run_f03_4",
+          "sequence": 7,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_baa42617337f06b724a84f00b54fdbcaa7e1c3d0b52d0066167249a2e498f4e3",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "completed"
+          }
+        }
+      ]
+    },
+    "admin": {
+      "viewer": "admin",
+      "run": {
+        "runId": "run_f03_4",
+        "conversationId": "conversation_f03",
+        "runtime": "state_workflow",
+        "status": "completed",
+        "version": 6,
+        "consumedSteps": 3,
+        "selectedSkill": {
+          "skillId": "calculator_assistant",
+          "version": "1",
+          "instructions": "Always use calculator.evaluate for arithmetic requested by the user.",
+          "allowedTools": [
+            "calculator.evaluate"
+          ]
+        },
+        "cursor": {
+          "runId": "run_f03_4",
+          "sequence": 7
+        }
+      },
+      "events": [
+        {
+          "eventId": "event_f03_2",
+          "runId": "run_f03_4",
+          "sequence": 1,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_f03_5",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_f03_1",
+            "actor": "user",
+            "content": "Use calculator_assistant version 1 to calculate (125 * 8) + 40."
+          }
+        },
+        {
+          "eventId": "event_991b9e87bc7a37b1670c9796ca32a077b5258b8bf51cc7c6439b6f8263aa52c3",
+          "runId": "run_f03_4",
+          "sequence": 2,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_991b9e87bc7a37b1670c9796ca32a077b5258b8bf51cc7c6439b6f8263aa52c3",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "queued",
+            "current": "running"
+          }
+        },
+        {
+          "eventId": "event_87ee7fa45cb9833e81a428b8330f1ed2aec6216cb8cdfbf0c7b466d034e8b3c1",
+          "runId": "run_f03_4",
+          "sequence": 3,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_87ee7fa45cb9833e81a428b8330f1ed2aec6216cb8cdfbf0c7b466d034e8b3c1",
+          "type": "skill.loaded",
+          "visibility": "user",
+          "payload": {
+            "skillId": "calculator_assistant",
+            "version": "1",
+            "instructions": "Always use calculator.evaluate for arithmetic requested by the user.",
+            "allowedTools": [
+              "calculator.evaluate"
+            ]
+          }
+        },
+        {
+          "eventId": "event_e57778a3d6159de20e0d3b5890b5473e0a2764906c8ba5a85abda75e59b43dec",
+          "runId": "run_f03_4",
+          "sequence": 4,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_08f301a0af3bb350283439905dd9d54483651e78ce145027c26e0c45a03819f5",
+          "type": "tool.call.started",
+          "visibility": "user",
+          "payload": {
+            "callId": "call_calculator_f03",
+            "toolName": "calculator.evaluate"
+          }
+        },
+        {
+          "eventId": "event_23944cde0668ebbe3e7d65b95a4bfb35b0424469c1f179969ff47caf02bc1064",
+          "runId": "run_f03_4",
+          "sequence": 5,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_08f301a0af3bb350283439905dd9d54483651e78ce145027c26e0c45a03819f5",
+          "type": "tool.call.completed",
+          "visibility": "user",
+          "payload": {
+            "callId": "call_calculator_f03",
+            "toolName": "calculator.evaluate",
+            "result": {
+              "toolName": "calculator.evaluate",
+              "value": 1040
+            }
+          }
+        },
+        {
+          "eventId": "event_e48ac7bc76dcf4f6501ffd88080068cc9effc9110dae1a65ad9190bd73cb90d9",
+          "runId": "run_f03_4",
+          "sequence": 6,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_e48ac7bc76dcf4f6501ffd88080068cc9effc9110dae1a65ad9190bd73cb90d9",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_43acc9c3a7ebabc35c9e930b7ac5a260bbc8d2df2477bdb7d740ea7071a4fcbe",
+            "actor": "ai",
+            "content": "1040"
+          }
+        },
+        {
+          "eventId": "event_baa42617337f06b724a84f00b54fdbcaa7e1c3d0b52d0066167249a2e498f4e3",
+          "runId": "run_f03_4",
+          "sequence": 7,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_baa42617337f06b724a84f00b54fdbcaa7e1c3d0b52d0066167249a2e498f4e3",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "completed"
+          }
+        }
+      ]
+    }
+  },
+  "normalizedEventTrace": {
+    "events": [
+      {
+        "position": 1,
+        "type": "message.completed",
+        "visibility": "user",
+        "payload": {
+          "messageId": "message_f03_1",
+          "actor": "user",
+          "content": "Use calculator_assistant version 1 to calculate (125 * 8) + 40."
+        }
+      },
+      {
+        "position": 2,
+        "type": "run.status_changed",
+        "visibility": "user",
+        "payload": {
+          "previous": "queued",
+          "current": "running"
+        }
+      },
+      {
+        "position": 3,
+        "type": "skill.loaded",
+        "visibility": "user",
+        "payload": {
+          "skillId": "calculator_assistant",
+          "version": "1",
+          "instructions": "Always use calculator.evaluate for arithmetic requested by the user.",
+          "allowedTools": [
+            "calculator.evaluate"
+          ]
+        }
+      },
+      {
+        "position": 4,
+        "type": "tool.call.started",
+        "visibility": "user",
+        "payload": {
+          "callId": "call_calculator_f03",
+          "toolName": "calculator.evaluate"
+        }
+      },
+      {
+        "position": 5,
+        "type": "tool.call.completed",
+        "visibility": "user",
+        "payload": {
+          "callId": "call_calculator_f03",
+          "toolName": "calculator.evaluate",
+          "result": {
+            "toolName": "calculator.evaluate",
+            "value": 1040
+          }
+        }
+      },
+      {
+        "position": 6,
+        "type": "message.completed",
+        "visibility": "user",
+        "payload": {
+          "messageId": "message_43acc9c3a7ebabc35c9e930b7ac5a260bbc8d2df2477bdb7d740ea7071a4fcbe",
+          "actor": "ai",
+          "content": "1040"
+        }
+      },
+      {
+        "position": 7,
+        "type": "run.status_changed",
+        "visibility": "user",
+        "payload": {
+          "previous": "running",
+          "current": "completed"
+        }
+      }
+    ]
+  },
+  "schemaVersion": 2,
+  "provenance": {
+    "source": "postgresql_projection_capture",
+    "capturedRunId": "run_f03_4",
+    "processId": 82190,
+    "observationDigest": "6f8ab9abff852c7f9198bf029e9135e13c660e566dd8508081d3b369723bfad7"
+  },
+  "observedApprovalJobEvents": [],
+  "result": "PASS",
+  "failureDetails": null,
+  "evidenceLinks": [
+    "acceptance/state_workflow/F03/P03.json"
+  ]
+}

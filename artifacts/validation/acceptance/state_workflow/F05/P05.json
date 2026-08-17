@@ -1,0 +1,246 @@
+{
+  "metadata": {
+    "runtime": "state_workflow",
+    "testId": "F05",
+    "promptId": "P05",
+    "fixtureNamespace": "f05_missing",
+    "testFile": "/Users/riegan/Project/ruangguru/new-agentic-chat-v2/packages/testkit/e2e/state-workflow.spec.ts",
+    "testTitle": "F05 missing and prohibited requests invoke no prohibited fixture",
+    "runtimeDiagnostics": [
+      {
+        "providerInvocations": 2,
+        "advanceAttempts": 1
+      }
+    ],
+    "executionOutcome": {
+      "workflowId": "agent-run/run_f05_missing_4",
+      "runId": "run_f05_missing_4",
+      "status": "failed",
+      "historyPosition": 2,
+      "wait": null
+    }
+  },
+  "runId": "run_f05_missing_4",
+  "actors": [
+    {
+      "actor": "ai",
+      "action": "final_response"
+    },
+    {
+      "actor": "mvp_user",
+      "action": "message"
+    }
+  ],
+  "stableIds": {
+    "runId": "run_f05_missing_4",
+    "callIds": [],
+    "jobIds": [],
+    "approvalIds": [],
+    "commandIds": []
+  },
+  "observedSkill": null,
+  "observedToolCalls": [],
+  "observedApprovals": [],
+  "observedJobs": [],
+  "finalResponse": "The requested skill was not found.",
+  "finalStatus": "failed",
+  "projections": {
+    "user": {
+      "viewer": "user",
+      "run": {
+        "runId": "run_f05_missing_4",
+        "conversationId": "conversation_f05_missing",
+        "runtime": "state_workflow",
+        "status": "failed",
+        "version": 3,
+        "consumedSteps": 2,
+        "cursor": {
+          "runId": "run_f05_missing_4",
+          "sequence": 4
+        }
+      },
+      "events": [
+        {
+          "eventId": "event_f05_missing_2",
+          "runId": "run_f05_missing_4",
+          "sequence": 1,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_f05_missing_5",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_f05_missing_1",
+            "actor": "user",
+            "content": "Load missing_skill version 1 and use it."
+          }
+        },
+        {
+          "eventId": "event_cd3f02eabe2b04ede6184c4304f17b29a7e147688ff5775c0927f316feee50a0",
+          "runId": "run_f05_missing_4",
+          "sequence": 2,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_cd3f02eabe2b04ede6184c4304f17b29a7e147688ff5775c0927f316feee50a0",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "queued",
+            "current": "running"
+          }
+        },
+        {
+          "eventId": "event_0bcd39c7364ea68fe3a7188f3d1234072ef89065057e689c44308fb6f117c1bd",
+          "runId": "run_f05_missing_4",
+          "sequence": 3,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_0bcd39c7364ea68fe3a7188f3d1234072ef89065057e689c44308fb6f117c1bd",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_42ea481f6c48d40378806cc5f7c83ab79a09ae9885dc98cc6d619ca00bd858b7",
+            "actor": "ai",
+            "content": "The requested skill was not found."
+          }
+        },
+        {
+          "eventId": "event_e264d2e4f350cb4eb1337393cdfc8fc98fe95a312ea578c9234aeaa26fc9c6c0",
+          "runId": "run_f05_missing_4",
+          "sequence": 4,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_e264d2e4f350cb4eb1337393cdfc8fc98fe95a312ea578c9234aeaa26fc9c6c0",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "failed"
+          }
+        }
+      ]
+    },
+    "admin": {
+      "viewer": "admin",
+      "run": {
+        "runId": "run_f05_missing_4",
+        "conversationId": "conversation_f05_missing",
+        "runtime": "state_workflow",
+        "status": "failed",
+        "version": 3,
+        "consumedSteps": 2,
+        "cursor": {
+          "runId": "run_f05_missing_4",
+          "sequence": 4
+        }
+      },
+      "events": [
+        {
+          "eventId": "event_f05_missing_2",
+          "runId": "run_f05_missing_4",
+          "sequence": 1,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_f05_missing_5",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_f05_missing_1",
+            "actor": "user",
+            "content": "Load missing_skill version 1 and use it."
+          }
+        },
+        {
+          "eventId": "event_cd3f02eabe2b04ede6184c4304f17b29a7e147688ff5775c0927f316feee50a0",
+          "runId": "run_f05_missing_4",
+          "sequence": 2,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_cd3f02eabe2b04ede6184c4304f17b29a7e147688ff5775c0927f316feee50a0",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "queued",
+            "current": "running"
+          }
+        },
+        {
+          "eventId": "event_0bcd39c7364ea68fe3a7188f3d1234072ef89065057e689c44308fb6f117c1bd",
+          "runId": "run_f05_missing_4",
+          "sequence": 3,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_0bcd39c7364ea68fe3a7188f3d1234072ef89065057e689c44308fb6f117c1bd",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_42ea481f6c48d40378806cc5f7c83ab79a09ae9885dc98cc6d619ca00bd858b7",
+            "actor": "ai",
+            "content": "The requested skill was not found."
+          }
+        },
+        {
+          "eventId": "event_e264d2e4f350cb4eb1337393cdfc8fc98fe95a312ea578c9234aeaa26fc9c6c0",
+          "runId": "run_f05_missing_4",
+          "sequence": 4,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_e264d2e4f350cb4eb1337393cdfc8fc98fe95a312ea578c9234aeaa26fc9c6c0",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "failed"
+          }
+        }
+      ]
+    }
+  },
+  "normalizedEventTrace": {
+    "events": [
+      {
+        "position": 1,
+        "type": "message.completed",
+        "visibility": "user",
+        "payload": {
+          "messageId": "message_f05_missing_1",
+          "actor": "user",
+          "content": "Load missing_skill version 1 and use it."
+        }
+      },
+      {
+        "position": 2,
+        "type": "run.status_changed",
+        "visibility": "user",
+        "payload": {
+          "previous": "queued",
+          "current": "running"
+        }
+      },
+      {
+        "position": 3,
+        "type": "message.completed",
+        "visibility": "user",
+        "payload": {
+          "messageId": "message_42ea481f6c48d40378806cc5f7c83ab79a09ae9885dc98cc6d619ca00bd858b7",
+          "actor": "ai",
+          "content": "The requested skill was not found."
+        }
+      },
+      {
+        "position": 4,
+        "type": "run.status_changed",
+        "visibility": "user",
+        "payload": {
+          "previous": "running",
+          "current": "failed"
+        }
+      }
+    ]
+  },
+  "schemaVersion": 2,
+  "provenance": {
+    "source": "postgresql_projection_capture",
+    "capturedRunId": "run_f05_missing_4",
+    "processId": 82190,
+    "observationDigest": "7047833da4b27e38237c909e9cb24c59bf406c4ef78f395ba692f3075c8f09ec"
+  },
+  "observedApprovalJobEvents": [],
+  "result": "PASS",
+  "failureDetails": null,
+  "evidenceLinks": [
+    "acceptance/state_workflow/F05/P05.json"
+  ]
+}
