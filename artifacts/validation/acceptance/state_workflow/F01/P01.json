@@ -1,0 +1,246 @@
+{
+  "metadata": {
+    "runtime": "state_workflow",
+    "testId": "F01",
+    "promptId": "P01",
+    "fixtureNamespace": "f01",
+    "testFile": "/Users/riegan/Project/ruangguru/new-agentic-chat-v2/packages/testkit/e2e/state-workflow.spec.ts",
+    "testTitle": "F01 direct answer is atomically visible",
+    "runtimeDiagnostics": [
+      {
+        "providerInvocations": 1,
+        "advanceAttempts": 1
+      }
+    ],
+    "executionOutcome": {
+      "workflowId": "agent-run/run_f01_4",
+      "runId": "run_f01_4",
+      "status": "completed",
+      "historyPosition": 2,
+      "wait": null
+    }
+  },
+  "runId": "run_f01_4",
+  "actors": [
+    {
+      "actor": "ai",
+      "action": "final_response"
+    },
+    {
+      "actor": "mvp_user",
+      "action": "message"
+    }
+  ],
+  "stableIds": {
+    "runId": "run_f01_4",
+    "callIds": [],
+    "jobIds": [],
+    "approvalIds": [],
+    "commandIds": []
+  },
+  "observedSkill": null,
+  "observedToolCalls": [],
+  "observedApprovals": [],
+  "observedJobs": [],
+  "finalResponse": "CHAT_OK",
+  "finalStatus": "completed",
+  "projections": {
+    "user": {
+      "viewer": "user",
+      "run": {
+        "runId": "run_f01_4",
+        "conversationId": "conversation_f01",
+        "runtime": "state_workflow",
+        "status": "completed",
+        "version": 2,
+        "consumedSteps": 1,
+        "cursor": {
+          "runId": "run_f01_4",
+          "sequence": 4
+        }
+      },
+      "events": [
+        {
+          "eventId": "event_f01_2",
+          "runId": "run_f01_4",
+          "sequence": 1,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_f01_5",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_f01_1",
+            "actor": "user",
+            "content": "Reply with exactly CHAT_OK. Do not load a skill or call a tool."
+          }
+        },
+        {
+          "eventId": "event_6fbe3f94212400e17c62fb017bdce07d4a9e17c5ad535f7e20b28f5706f9552b",
+          "runId": "run_f01_4",
+          "sequence": 2,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_6fbe3f94212400e17c62fb017bdce07d4a9e17c5ad535f7e20b28f5706f9552b",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "queued",
+            "current": "running"
+          }
+        },
+        {
+          "eventId": "event_c247ce5263a9d853ed92369dc3a21abb67d45d8443732449458fa13727bcbe7c",
+          "runId": "run_f01_4",
+          "sequence": 3,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_c247ce5263a9d853ed92369dc3a21abb67d45d8443732449458fa13727bcbe7c",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_57d6973f79294f8635b2dcaf9eb072b6f2cbbe68ac33f785a3204dfe051a8699",
+            "actor": "ai",
+            "content": "CHAT_OK"
+          }
+        },
+        {
+          "eventId": "event_a013b7c4d090102c4d27667d95976da80439576b214c1d27b5417b8e62255a20",
+          "runId": "run_f01_4",
+          "sequence": 4,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_a013b7c4d090102c4d27667d95976da80439576b214c1d27b5417b8e62255a20",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "completed"
+          }
+        }
+      ]
+    },
+    "admin": {
+      "viewer": "admin",
+      "run": {
+        "runId": "run_f01_4",
+        "conversationId": "conversation_f01",
+        "runtime": "state_workflow",
+        "status": "completed",
+        "version": 2,
+        "consumedSteps": 1,
+        "cursor": {
+          "runId": "run_f01_4",
+          "sequence": 4
+        }
+      },
+      "events": [
+        {
+          "eventId": "event_f01_2",
+          "runId": "run_f01_4",
+          "sequence": 1,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_f01_5",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_f01_1",
+            "actor": "user",
+            "content": "Reply with exactly CHAT_OK. Do not load a skill or call a tool."
+          }
+        },
+        {
+          "eventId": "event_6fbe3f94212400e17c62fb017bdce07d4a9e17c5ad535f7e20b28f5706f9552b",
+          "runId": "run_f01_4",
+          "sequence": 2,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_6fbe3f94212400e17c62fb017bdce07d4a9e17c5ad535f7e20b28f5706f9552b",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "queued",
+            "current": "running"
+          }
+        },
+        {
+          "eventId": "event_c247ce5263a9d853ed92369dc3a21abb67d45d8443732449458fa13727bcbe7c",
+          "runId": "run_f01_4",
+          "sequence": 3,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_c247ce5263a9d853ed92369dc3a21abb67d45d8443732449458fa13727bcbe7c",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_57d6973f79294f8635b2dcaf9eb072b6f2cbbe68ac33f785a3204dfe051a8699",
+            "actor": "ai",
+            "content": "CHAT_OK"
+          }
+        },
+        {
+          "eventId": "event_a013b7c4d090102c4d27667d95976da80439576b214c1d27b5417b8e62255a20",
+          "runId": "run_f01_4",
+          "sequence": 4,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_a013b7c4d090102c4d27667d95976da80439576b214c1d27b5417b8e62255a20",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "completed"
+          }
+        }
+      ]
+    }
+  },
+  "normalizedEventTrace": {
+    "events": [
+      {
+        "position": 1,
+        "type": "message.completed",
+        "visibility": "user",
+        "payload": {
+          "messageId": "message_f01_1",
+          "actor": "user",
+          "content": "Reply with exactly CHAT_OK. Do not load a skill or call a tool."
+        }
+      },
+      {
+        "position": 2,
+        "type": "run.status_changed",
+        "visibility": "user",
+        "payload": {
+          "previous": "queued",
+          "current": "running"
+        }
+      },
+      {
+        "position": 3,
+        "type": "message.completed",
+        "visibility": "user",
+        "payload": {
+          "messageId": "message_57d6973f79294f8635b2dcaf9eb072b6f2cbbe68ac33f785a3204dfe051a8699",
+          "actor": "ai",
+          "content": "CHAT_OK"
+        }
+      },
+      {
+        "position": 4,
+        "type": "run.status_changed",
+        "visibility": "user",
+        "payload": {
+          "previous": "running",
+          "current": "completed"
+        }
+      }
+    ]
+  },
+  "schemaVersion": 2,
+  "provenance": {
+    "source": "postgresql_projection_capture",
+    "capturedRunId": "run_f01_4",
+    "processId": 82190,
+    "observationDigest": "4d66d24034f935615d452bf4467238edecf9d5ffc93c689385f7262dd4b5ae27"
+  },
+  "observedApprovalJobEvents": [],
+  "result": "PASS",
+  "failureDetails": null,
+  "evidenceLinks": [
+    "acceptance/state_workflow/F01/P01.json"
+  ]
+}

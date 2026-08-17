@@ -1,0 +1,315 @@
+{
+  "metadata": {
+    "runtime": "state_workflow",
+    "testId": "F02",
+    "promptId": "P02",
+    "fixtureNamespace": "f02",
+    "testFile": "/Users/riegan/Project/ruangguru/new-agentic-chat-v2/packages/testkit/e2e/state-workflow.spec.ts",
+    "testTitle": "F02 skill load remains a control operation",
+    "runtimeDiagnostics": [
+      {
+        "providerInvocations": 2,
+        "advanceAttempts": 1
+      }
+    ],
+    "executionOutcome": {
+      "workflowId": "agent-run/run_f02_4",
+      "runId": "run_f02_4",
+      "status": "completed",
+      "historyPosition": 2,
+      "wait": null
+    }
+  },
+  "runId": "run_f02_4",
+  "actors": [
+    {
+      "actor": "ai",
+      "action": "final_response"
+    },
+    {
+      "actor": "mvp_user",
+      "action": "message"
+    }
+  ],
+  "stableIds": {
+    "runId": "run_f02_4",
+    "callIds": [],
+    "jobIds": [],
+    "approvalIds": [],
+    "commandIds": []
+  },
+  "observedSkill": {
+    "skillId": "calculator_assistant",
+    "version": "1",
+    "allowedTools": [
+      "calculator.evaluate"
+    ]
+  },
+  "observedToolCalls": [],
+  "observedApprovals": [],
+  "observedJobs": [],
+  "finalResponse": "calculator_assistant@1",
+  "finalStatus": "completed",
+  "projections": {
+    "user": {
+      "viewer": "user",
+      "run": {
+        "runId": "run_f02_4",
+        "conversationId": "conversation_f02",
+        "runtime": "state_workflow",
+        "status": "completed",
+        "version": 4,
+        "consumedSteps": 2,
+        "selectedSkill": {
+          "skillId": "calculator_assistant",
+          "version": "1",
+          "instructions": "Always use calculator.evaluate for arithmetic requested by the user.",
+          "allowedTools": [
+            "calculator.evaluate"
+          ]
+        },
+        "cursor": {
+          "runId": "run_f02_4",
+          "sequence": 5
+        }
+      },
+      "events": [
+        {
+          "eventId": "event_f02_2",
+          "runId": "run_f02_4",
+          "sequence": 1,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_f02_5",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_f02_1",
+            "actor": "user",
+            "content": "Load calculator_assistant version 1."
+          }
+        },
+        {
+          "eventId": "event_b3d3af0aac3cafd40191be05aa28d8173c7464f8e05cf486c7422536226b0361",
+          "runId": "run_f02_4",
+          "sequence": 2,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_b3d3af0aac3cafd40191be05aa28d8173c7464f8e05cf486c7422536226b0361",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "queued",
+            "current": "running"
+          }
+        },
+        {
+          "eventId": "event_471279a1dbd955824775f8fe6ca00cf9032cb247b5478ea53683d9d020c32c06",
+          "runId": "run_f02_4",
+          "sequence": 3,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_471279a1dbd955824775f8fe6ca00cf9032cb247b5478ea53683d9d020c32c06",
+          "type": "skill.loaded",
+          "visibility": "user",
+          "payload": {
+            "skillId": "calculator_assistant",
+            "version": "1",
+            "instructions": "Always use calculator.evaluate for arithmetic requested by the user.",
+            "allowedTools": [
+              "calculator.evaluate"
+            ]
+          }
+        },
+        {
+          "eventId": "event_3fc440a849ae50a55086a27daa9b96c77101141bc949ba6a9f7d3d7efe7da985",
+          "runId": "run_f02_4",
+          "sequence": 4,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_3fc440a849ae50a55086a27daa9b96c77101141bc949ba6a9f7d3d7efe7da985",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_3a9fa623efe0085cc9a6cddb050a266e8a15786d8ad0ab1b5665e343fb36fc47",
+            "actor": "ai",
+            "content": "calculator_assistant@1"
+          }
+        },
+        {
+          "eventId": "event_13c5ea89681cc1e2557f1ef6f216acc7554fc4d984418a5d1884872d672201c1",
+          "runId": "run_f02_4",
+          "sequence": 5,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_13c5ea89681cc1e2557f1ef6f216acc7554fc4d984418a5d1884872d672201c1",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "completed"
+          }
+        }
+      ]
+    },
+    "admin": {
+      "viewer": "admin",
+      "run": {
+        "runId": "run_f02_4",
+        "conversationId": "conversation_f02",
+        "runtime": "state_workflow",
+        "status": "completed",
+        "version": 4,
+        "consumedSteps": 2,
+        "selectedSkill": {
+          "skillId": "calculator_assistant",
+          "version": "1",
+          "instructions": "Always use calculator.evaluate for arithmetic requested by the user.",
+          "allowedTools": [
+            "calculator.evaluate"
+          ]
+        },
+        "cursor": {
+          "runId": "run_f02_4",
+          "sequence": 5
+        }
+      },
+      "events": [
+        {
+          "eventId": "event_f02_2",
+          "runId": "run_f02_4",
+          "sequence": 1,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_f02_5",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_f02_1",
+            "actor": "user",
+            "content": "Load calculator_assistant version 1."
+          }
+        },
+        {
+          "eventId": "event_b3d3af0aac3cafd40191be05aa28d8173c7464f8e05cf486c7422536226b0361",
+          "runId": "run_f02_4",
+          "sequence": 2,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_b3d3af0aac3cafd40191be05aa28d8173c7464f8e05cf486c7422536226b0361",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "queued",
+            "current": "running"
+          }
+        },
+        {
+          "eventId": "event_471279a1dbd955824775f8fe6ca00cf9032cb247b5478ea53683d9d020c32c06",
+          "runId": "run_f02_4",
+          "sequence": 3,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_471279a1dbd955824775f8fe6ca00cf9032cb247b5478ea53683d9d020c32c06",
+          "type": "skill.loaded",
+          "visibility": "user",
+          "payload": {
+            "skillId": "calculator_assistant",
+            "version": "1",
+            "instructions": "Always use calculator.evaluate for arithmetic requested by the user.",
+            "allowedTools": [
+              "calculator.evaluate"
+            ]
+          }
+        },
+        {
+          "eventId": "event_3fc440a849ae50a55086a27daa9b96c77101141bc949ba6a9f7d3d7efe7da985",
+          "runId": "run_f02_4",
+          "sequence": 4,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_3fc440a849ae50a55086a27daa9b96c77101141bc949ba6a9f7d3d7efe7da985",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_3a9fa623efe0085cc9a6cddb050a266e8a15786d8ad0ab1b5665e343fb36fc47",
+            "actor": "ai",
+            "content": "calculator_assistant@1"
+          }
+        },
+        {
+          "eventId": "event_13c5ea89681cc1e2557f1ef6f216acc7554fc4d984418a5d1884872d672201c1",
+          "runId": "run_f02_4",
+          "sequence": 5,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_13c5ea89681cc1e2557f1ef6f216acc7554fc4d984418a5d1884872d672201c1",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "completed"
+          }
+        }
+      ]
+    }
+  },
+  "normalizedEventTrace": {
+    "events": [
+      {
+        "position": 1,
+        "type": "message.completed",
+        "visibility": "user",
+        "payload": {
+          "messageId": "message_f02_1",
+          "actor": "user",
+          "content": "Load calculator_assistant version 1."
+        }
+      },
+      {
+        "position": 2,
+        "type": "run.status_changed",
+        "visibility": "user",
+        "payload": {
+          "previous": "queued",
+          "current": "running"
+        }
+      },
+      {
+        "position": 3,
+        "type": "skill.loaded",
+        "visibility": "user",
+        "payload": {
+          "skillId": "calculator_assistant",
+          "version": "1",
+          "instructions": "Always use calculator.evaluate for arithmetic requested by the user.",
+          "allowedTools": [
+            "calculator.evaluate"
+          ]
+        }
+      },
+      {
+        "position": 4,
+        "type": "message.completed",
+        "visibility": "user",
+        "payload": {
+          "messageId": "message_3a9fa623efe0085cc9a6cddb050a266e8a15786d8ad0ab1b5665e343fb36fc47",
+          "actor": "ai",
+          "content": "calculator_assistant@1"
+        }
+      },
+      {
+        "position": 5,
+        "type": "run.status_changed",
+        "visibility": "user",
+        "payload": {
+          "previous": "running",
+          "current": "completed"
+        }
+      }
+    ]
+  },
+  "schemaVersion": 2,
+  "provenance": {
+    "source": "postgresql_projection_capture",
+    "capturedRunId": "run_f02_4",
+    "processId": 82190,
+    "observationDigest": "f03da96c8d4ba1e45dad4d001bfcec2a499a1597b9738607421871faac99de6b"
+  },
+  "observedApprovalJobEvents": [],
+  "result": "PASS",
+  "failureDetails": null,
+  "evidenceLinks": [
+    "acceptance/state_workflow/F02/P02.json"
+  ]
+}
