@@ -387,35 +387,35 @@ Run this matrix from a clean checkout state after T01 to T06 are individually ve
 
 | Gate | Command | PASS criteria | Status |
 | --- | --- | --- | --- |
-| Clean install | `corepack pnpm install --frozen-lockfile` | Exit 0 with the locked dependency graph unchanged. | [ ] NOT RUN |
-| Lint | `pnpm lint` | Exit 0 with no Biome error. | [ ] NOT RUN |
-| Typecheck | `pnpm typecheck` | Exit 0 for every workspace package. | [ ] NOT RUN |
-| Build | `pnpm build` | Exit 0; web, API, contracts, DB, runtime, tools, and testkit build targets complete. | [ ] NOT RUN |
-| Compose model | `docker compose config --quiet` | Exit 0; no unresolved variable or invalid service model. | [ ] NOT RUN |
-| Clean Compose start | `docker compose down --volumes --remove-orphans && docker compose up --build --wait` | Exit 0; PostgreSQL, Redis, Temporal, migration, web, real API, three workers are ready. | [ ] NOT RUN |
-| Contracts | `pnpm test:contracts` | P01 to P11 payloads parse; illegal transitions, malformed arguments, runtime mutation, and visibility mismatch fail with typed errors. | [ ] NOT RUN |
-| Database | `pnpm test:db` | Migration and seeds succeed; transaction, uniqueness, idempotency, approval, and race constraints hold. | [ ] NOT RUN |
-| Integration | `pnpm test:integration` | Provider, tools, jobs, approvals, Admin commands, admission, projections, tRPC, and SSE suites pass. | [ ] NOT RUN |
-| Temporal replay | `pnpm test:temporal-replay` | Legal histories replay with no external I/O; illegal transitions and forbidden imports are detected. | [ ] NOT RUN |
-| F01 to F10 Simple Loop | `pnpm test:e2e --runtime=simple_loop` | All ten flows, including separate P05 and P06 records, are `PASS`; no `BLOCKED` or `NOT RUN`. | [ ] NOT RUN |
-| F01 to F10 State Workflow | `pnpm test:e2e --runtime=state_workflow` | All ten flows, including separate P05 and P06 records, are `PASS`; no `BLOCKED` or `NOT RUN`. | [ ] NOT RUN |
-| Harness negative | `pnpm test:acceptance:harness-negative` | The deliberately altered expected event makes the harness fail its comparison as designed. | [ ] NOT RUN |
-| Restart Simple Loop | `pnpm test:restart --runtime=simple_loop` | Stable run, call, job, and approval IDs; one resume; other worker stays healthy and never claims the run. | [ ] NOT RUN |
-| Restart State Workflow | `pnpm test:restart --runtime=state_workflow` | Stable workflow, run, call, job, and approval IDs; one resume; other worker stays healthy. | [ ] NOT RUN |
-| Parity | `pnpm test:parity` | Normalized shared traces and final outcomes match across runtimes; runtime diagnostics remain separate. | [ ] NOT RUN |
-| UI happy | `pnpm test:e2e --project=ui-happy` | Fixture UI suite remains green for direct, async, approval, rejection, and hidden-command paths. | [ ] NOT RUN |
+| Clean install | `corepack pnpm install --frozen-lockfile` | Exit 0 with the locked dependency graph unchanged. | [x] PASS |
+| Lint | `pnpm lint` | Exit 0 with no Biome error. | [x] PASS |
+| Typecheck | `pnpm typecheck` | Exit 0 for every workspace package. | [x] PASS |
+| Build | `pnpm build` | Exit 0; web, API, contracts, DB, runtime, tools, and testkit build targets complete. | [x] PASS |
+| Compose model | `docker compose config --quiet` | Exit 0; no unresolved variable or invalid service model. | [x] PASS |
+| Clean Compose start | `docker compose down --volumes --remove-orphans && docker compose up --build --wait` | Exit 0; PostgreSQL, Redis, Temporal, migration, web, real API, three workers are ready. | [x] PASS |
+| Contracts | `pnpm test:contracts` | P01 to P11 payloads parse; illegal transitions, malformed arguments, runtime mutation, and visibility mismatch fail with typed errors. | [x] PASS |
+| Database | `pnpm test:db` | Migration and seeds succeed; transaction, uniqueness, idempotency, approval, and race constraints hold. | [x] PASS |
+| Integration | `pnpm test:integration` | Provider, tools, jobs, approvals, Admin commands, admission, projections, tRPC, and SSE suites pass. | [x] PASS |
+| Temporal replay | `pnpm test:temporal-replay` | Legal histories replay with no external I/O; illegal transitions and forbidden imports are detected. | [x] PASS |
+| F01 to F10 Simple Loop | `pnpm test:e2e --runtime=simple_loop` | All ten flows, including separate P05 and P06 records, are `PASS`; no `BLOCKED` or `NOT RUN`. | [x] PASS |
+| F01 to F10 State Workflow | `pnpm test:e2e --runtime=state_workflow` | All ten flows, including separate P05 and P06 records, are `PASS`; no `BLOCKED` or `NOT RUN`. | [x] PASS |
+| Harness negative | `pnpm test:acceptance:harness-negative` | The deliberately altered expected event makes the harness fail its comparison as designed. | [x] PASS |
+| Restart Simple Loop | `pnpm test:restart --runtime=simple_loop` | Stable run, call, job, and approval IDs; one resume; other worker stays healthy and never claims the run. | [x] PASS |
+| Restart State Workflow | `pnpm test:restart --runtime=state_workflow` | Stable workflow, run, call, job, and approval IDs; one resume; other worker stays healthy. | [x] PASS |
+| Parity | `pnpm test:parity` | Normalized shared traces and final outcomes match across runtimes; runtime diagnostics remain separate. | [x] PASS |
+| UI happy | `pnpm test:e2e --project=ui-happy` | Fixture UI suite remains green for direct, async, approval, rejection, and hidden-command paths. | [x] PASS |
 | UI adversarial | `pnpm test:e2e --project=ui-adversarial` | Reconnect, keyboard, race, duplicate suppression, privacy, and atomic-message checks pass. | [x] PASS |
 | Real Compose browser, Simple Loop | `pnpm test:compose-browser --runtime=simple_loop` | User and Admin BrowserMCP rows for Simple Loop pass through real services. | [x] PASS |
 | Real Compose browser, State Workflow | `pnpm test:compose-browser --runtime=state_workflow` | User and Admin BrowserMCP rows for State Workflow pass through real services. | [x] PASS |
-| Health | `docker compose ps && curl --fail-with-body http://127.0.0.1:3000/healthz && curl --fail-with-body http://127.0.0.1:4173/` | Every required service is healthy; API readiness is application-owned; web is reachable. | [ ] NOT RUN |
-| Privacy | `pnpm test:integration -- projections trpc-sse && pnpm test:e2e --project=ui-adversarial` | User projections and DOM contain no raw Admin command, Admin decision metadata, provider secret, or `message.delta`. | [ ] NOT RUN |
-| Duplicate safety | `pnpm test:integration -- async-job approvals admin-commands` | Duplicate command, event, job completion, signal, approval race, and simulated send produce one logical result. | [ ] NOT RUN |
-| Approval behavior | `pnpm test:integration -- approvals admin-commands` | Exact approve executes once; reject, tamper, expiry, wrong run, wrong actor, and race execute zero prohibited sends. | [ ] NOT RUN |
-| SSE reconnect | `pnpm test:integration -- trpc-sse && pnpm test:compose-browser --grep reconnect` | Catch-up and live sequencing have no gap or duplicate; canonical state refetch works after cursor invalidation. | [ ] NOT RUN |
-| Migration gate | `docker compose -f compose.yaml -f infra/tests/compose-migration-blocked.yaml up --build` | App services remain unready while migration readiness is blocked; no schema error is presented as healthy. | [ ] NOT RUN |
+| Health | `docker compose ps && curl --fail-with-body http://127.0.0.1:3000/healthz && curl --fail-with-body http://127.0.0.1:4173/` | Every required service is healthy; API readiness is application-owned; web is reachable. | [x] PASS |
+| Privacy | `pnpm test:integration -- projections trpc-sse && pnpm test:e2e --project=ui-adversarial` | User projections and DOM contain no raw Admin command, Admin decision metadata, provider secret, or `message.delta`. | [x] PASS |
+| Duplicate safety | `pnpm test:integration -- async-job approvals admin-commands` | Duplicate command, event, job completion, signal, approval race, and simulated send produce one logical result. | [x] PASS |
+| Approval behavior | `pnpm test:integration -- approvals admin-commands` | Exact approve executes once; reject, tamper, expiry, wrong run, wrong actor, and race execute zero prohibited sends. | [x] PASS |
+| SSE reconnect | `pnpm test:integration -- trpc-sse && pnpm test:compose-browser --grep reconnect` | Catch-up and live sequencing have no gap or duplicate; canonical state refetch works after cursor invalidation. | [x] PASS |
+| Migration gate | `docker compose -f compose.yaml -f infra/tests/compose-migration-blocked.yaml up --build` | App services remain unready while migration readiness is blocked; no schema error is presented as healthy. | [x] PASS |
 | Base provider mode | `node infra/tests/compose-provider-mode.mjs && docker compose config --quiet` | Both model workers use deterministic mock mode; no live credential enters the model or fixture workers. | [x] PASS |
 | Optional live override structure | `docker compose -f compose.yaml -f compose.live.yaml --env-file .env.local config --quiet` | With local credentials present, override validates and affects both model workers only. No values are retained in evidence. | [x] PASS |
-| Cleanup | `docker compose down --volumes --remove-orphans` | Containers, networks, and named test volumes for this project are removed; no test process remains. | [ ] NOT RUN |
+| Cleanup | `docker compose down --volumes --remove-orphans` | Containers, networks, and named test volumes for this project are removed; no test process remains. | [x] PASS |
 
 ## F01 to F10 acceptance record
 
@@ -423,16 +423,16 @@ Each cell must link to actor, run ID, call IDs, approval or job events, final re
 
 | Flow | Simple Loop | State Workflow | Mandatory PASS criteria |
 | --- | --- | --- | --- |
-| F01 Direct chat | [ ] NOT RUN | [ ] NOT RUN | `CHAT_OK` once, no skill or tool, atomic final message, one completed run. |
-| F02 Load skill | [ ] NOT RUN | [ ] NOT RUN | Exactly `calculator_assistant@1`, one allowed tool, no tool invocation. |
-| F03 Sync success | [ ] NOT RUN | [ ] NOT RUN | One calculator call with exact arguments, result `1040`, final response uses it. |
-| F04 Sync failure | [ ] NOT RUN | [ ] NOT RUN | Typed `DIVISION_BY_ZERO`, no invented value, User-visible terminal explanation. |
-| F05 Authorization | [ ] NOT RUN | [ ] NOT RUN | P05 and P06 separate; missing skill and disallowed tools create zero prohibited calls or approvals. |
-| F06 Async success | [ ] NOT RUN | [ ] NOT RUN | One job and call, 50 percent progress, same-run resume, final `report_001`. |
+| F01 Direct chat | [x] PASS | [x] PASS | `CHAT_OK` once, no skill or tool, atomic final message, one completed run. |
+| F02 Load skill | [x] PASS | [x] PASS | Exactly `calculator_assistant@1`, one allowed tool, no tool invocation. |
+| F03 Sync success | [x] PASS | [x] PASS | One calculator call with exact arguments, result `1040`, final response uses it. |
+| F04 Sync failure | [x] PASS | [x] PASS | Typed `DIVISION_BY_ZERO`, no invented value, User-visible terminal explanation. |
+| F05 Authorization | [x] PASS | [x] PASS | P05 and P06 separate; missing skill and disallowed tools create zero prohibited calls or approvals. |
+| F06 Async success | [x] PASS | [x] PASS | One job and call, 50 percent progress, same-run resume, final `report_001`. |
 | F07 HITL approve | [x] PASS | [x] PASS | Exact Admin approval, zero sends before approval, one send after, one final response. |
 | F08 HITL reject | [x] PASS | [x] PASS | Exact Admin rejection, zero sends, same-run resume, clear not-sent result. |
-| F09 Admin command | [ ] NOT RUN | [ ] NOT RUN | Authorized command applies once, exact `ADMIN_GUIDANCE_OK`, raw command absent from User projection. |
-| F10 Restart resume | [ ] NOT RUN | [ ] NOT RUN | Stable IDs, one job, one tool result, one resume, other runtime worker never claims the run. |
+| F09 Admin command | [x] PASS | [x] PASS | Authorized command applies once, exact `ADMIN_GUIDANCE_OK`, raw command absent from User projection. |
+| F10 Restart resume | [x] PASS | [x] PASS | Stable IDs, one job, one tool result, one resume, other runtime worker never claims the run. |
 
 ## Evidence ledger
 
@@ -449,7 +449,7 @@ Add rows as commands run. Preserve failures as evidence. Never rewrite a failed 
 | E-007 | T06 | `pnpm test:compose-browser --runtime=simple_loop` | Real-Compose User and Admin paths pass for Simple Loop. | 2026-08-18 final independent rerun: PASS, 2/2 tests, zero skips in 9.637 seconds. Ports 4310/4311 were unused and no fixture server process existed. | `artifacts/validation/compose-browser/simple_loop/simple_loop-msxp695k-cff355ad/` | [x] PASS |
 | E-008 | T06 | `pnpm test:compose-browser --runtime=state_workflow` | Real-Compose User and Admin paths pass for State Workflow. | 2026-08-18: FAIL preserved. Report passed; exact rejection completed with zero sends but User received false sent copy. See CMP-OUTCOME-09. | `artifacts/validation/compose-browser/debug-workflow-01/` | [ ] FAIL |
 | E-023 | T06 harness negatives | invalid runtime; `--grep=NO_COMPOSE_TEST_MATCHES`; Playwright `--list` | Invalid runtime and zero tests fail closed; list discovers exactly two specs. | PASS: invalid runtime exited 1 before Docker, zero-test selection exited 1, and both runtime list checks found 2 tests in 2 files. | No retained stdout; assertions are covered by `compose-browser-runner.test.ts`. | [x] PASS |
-| E-009 | Final | Full previous-plan regression matrix | Every mandatory row is `PASS`. | Not run. | `artifacts/validation/compose-remediation/final/` | [ ] NOT RUN |
+| E-009 | Final | Full previous-plan regression matrix | Every mandatory row is `PASS`. | 2026-08-18: PASS. Install, lint, typecheck, build, Compose model/start, contracts 75/75, database 21/21, runtime integration 59/59, API integration 21/21, Temporal replay 10/10, both F01-F10 matrices 10/10, harness negatives, both restart gates, parity 25/25, UI happy 3/3, UI adversarial 12/12, real-Compose browser, health, privacy, duplicate safety, approval behavior, reconnect, provider structure, migration blocking, and cleanup all passed. Heavyweight Temporal suites were serialized after a concurrent diagnostic run caused resource contention; the quiet unchanged integration rerun passed completely. | No retained generated artifact; command evidence is summarized here. | [x] PASS |
 | E-010 | T01 | `docker build --no-cache --tag agentic-chat-secret-boundary:test --file infra/docker/Dockerfile .`; `docker run --rm --entrypoint sh agentic-chat-secret-boundary:test -c 'test ! -e /workspace/.env && test ! -e /workspace/.env.local && test -e /workspace/.env.example'`; sanitized image-history scan; `docker image rm agentic-chat-secret-boundary:test` | Fresh image omits `.env` and `.env.local`, retains `.env.example`, contains no secret markers in history, and is removed after inspection. | 2026-08-17: Fresh build passed; existence-only inspection found `/workspace/.env` and `/workspace/.env.local` absent and `/workspace/.env.example` present; sanitized image-history scan found no `.env.local` or `OPENAI_API_KEY` markers; disposable image and temporary build log were removed. No secret value was printed or persisted. | `artifacts/validation/compose-remediation/T01/` | [x] PASS |
 | E-011 | T03 | Initial `docker compose up --build --wait postgres migration api` after replacing the scaffold | Rebuilt API becomes healthy through its application-owned probe. | 2026-08-17: FAIL preserved. The compiled API returned ready to `GET /healthz`, but Compose used `wget --spider`, sent `HEAD`, received 404, and marked the container unhealthy. | `artifacts/validation/compose-remediation/T03/` | [ ] FAIL |
 | E-012 | T03 | `pnpm --filter @agentic-chat/api build`; `pnpm --filter @agentic-chat/api test:integration`; `node infra/tests/compose-api-boot.mjs`; `docker compose up --wait --force-recreate api`; live health, tRPC, 404, PID 1, and SIGTERM probes | Compiled Node API is healthy, database-aware, routable, fail-closed, and shuts down within five seconds. | 2026-08-17: PASS. Build exited 0; API integration passed 21/21; Compose API became healthy; health returned application/database ready JSON; fixed-User `skills.get` returned the seeded typed skill; `/unknown` returned 404; `/proc/1/cmdline` named compiled `compose-main.js`; stop completed in 0.309 seconds with exit 0 and no OOM. | `artifacts/validation/compose-remediation/T03/` | [x] PASS |
