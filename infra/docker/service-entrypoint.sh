@@ -36,7 +36,7 @@ case "$service_kind" in
     [ "${SERVICE_KIND:-}" = "$expected_kind" ] || { echo "SERVICE_KIND does not match worker role" >&2; exit 64; }
     mkdir -p /run/agentic-chat
     rm -f /run/agentic-chat/worker-ready
-    exec node --conditions=production --enable-source-maps /workspace/packages/runtime/dist/compose-worker.js "$worker_role"
+    exec node --max-old-space-size=128 --conditions=production --enable-source-maps /workspace/packages/runtime/dist/compose-worker.js "$worker_role"
     ;;
   *)
     echo "unsupported service kind: $service_kind" >&2
