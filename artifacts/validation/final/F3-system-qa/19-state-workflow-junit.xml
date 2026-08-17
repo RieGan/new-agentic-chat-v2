@@ -1,0 +1,422 @@
+<testsuites id="" name="" tests="20" failures="0" skipped="10" errors="0" time="42.886096">
+<testsuite name="simple-loop-durable.spec.ts" timestamp="2026-08-17T10:49:33.428Z" hostname="runtime" tests="5" failures="0" skipped="5" time="0" errors="0">
+<testcase name="Simple Loop F06-F10 durable recovery › F06 report resumes once from canonical completion" classname="simple-loop-durable.spec.ts">
+<properties>
+<property name="skip" value="Simple Loop F06-F10 was not selected">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Simple Loop F06-F10 durable recovery › F07 @restart pending approval executes exactly one simulated send" classname="simple-loop-durable.spec.ts">
+<properties>
+<property name="skip" value="Simple Loop F06-F10 was not selected">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Simple Loop F06-F10 durable recovery › F08 @restart pending approval rejection preserves the binding" classname="simple-loop-durable.spec.ts">
+<properties>
+<property name="skip" value="Simple Loop F06-F10 was not selected">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Simple Loop F06-F10 durable recovery › F09 hidden Admin guidance resumes the same User-waiting run" classname="simple-loop-durable.spec.ts">
+<properties>
+<property name="skip" value="Simple Loop F06-F10 was not selected">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Simple Loop F06-F10 durable recovery › F10 @restart worker-only recovery preserves report identities" classname="simple-loop-durable.spec.ts">
+<properties>
+<property name="skip" value="Simple Loop F06-F10 was not selected">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="simple-loop.spec.ts" timestamp="2026-08-17T10:49:33.428Z" hostname="runtime" tests="5" failures="0" skipped="5" time="0" errors="0">
+<testcase name="Simple Loop F01-F05 › F01 direct answer is atomically visible" classname="simple-loop.spec.ts">
+<properties>
+<property name="skip" value="Simple Loop F01-F05 was not selected">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Simple Loop F01-F05 › F02 skill load remains a control operation" classname="simple-loop.spec.ts">
+<properties>
+<property name="skip" value="Simple Loop F01-F05 was not selected">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Simple Loop F01-F05 › F03 calculator succeeds through the bounded agent" classname="simple-loop.spec.ts">
+<properties>
+<property name="skip" value="Simple Loop F01-F05 was not selected">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Simple Loop F01-F05 › F04 typed calculator failure still yields a complete explanation" classname="simple-loop.spec.ts">
+<properties>
+<property name="skip" value="Simple Loop F01-F05 was not selected">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Simple Loop F01-F05 › F05 missing and prohibited requests remain side-effect free" classname="simple-loop.spec.ts">
+<properties>
+<property name="skip" value="Simple Loop F01-F05 was not selected">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="state-workflow-durable.spec.ts" timestamp="2026-08-17T10:49:33.428Z" hostname="runtime" tests="5" failures="0" skipped="0" time="33.385" errors="0">
+<testcase name="State Workflow F06-F10 durable recovery › F06 report resumes once from canonical completion" classname="state-workflow-durable.spec.ts" time="6.287">
+</testcase>
+<testcase name="State Workflow F06-F10 durable recovery › F07 @restart pending approval executes exactly one simulated send" classname="state-workflow-durable.spec.ts" time="7.337">
+</testcase>
+<testcase name="State Workflow F06-F10 durable recovery › F08 @restart pending approval preserves rejection binding" classname="state-workflow-durable.spec.ts" time="7.365">
+</testcase>
+<testcase name="State Workflow F06-F10 durable recovery › F09 same-run continuation applies hidden guidance once" classname="state-workflow-durable.spec.ts" time="5.96">
+</testcase>
+<testcase name="State Workflow F06-F10 durable recovery › F10 @restart Temporal worker recovers accepted report" classname="state-workflow-durable.spec.ts" time="6.436">
+</testcase>
+</testsuite>
+<testsuite name="state-workflow.spec.ts" timestamp="2026-08-17T10:49:33.428Z" hostname="runtime" tests="5" failures="0" skipped="0" time="2.735" errors="0">
+<testcase name="State Workflow F01-F05 › F01 direct answer is atomically visible" classname="state-workflow.spec.ts" time="0.852">
+<system-out>
+<![CDATA[Temporal CLI 1.8.2 (Server 1.31.2, UI 2.50.1)
+
+Temporal Server:      localhost:53920
+Temporal Persistence: in-memory
+Temporal Metrics:     http://localhost:53923/metrics
+]]>
+</system-out>
+<system-err>
+<![CDATA[time=2026-08-17T17:50:08.149 level=WARN msg="Cluster Id in Cluster Metadata config is not a valid uuid. Generating a new Cluster Id" component=metadata-initializer
+[35m2026-08-17T10:50:10.725Z[39m [INFO] asset workflow-bundle-e33f49a5e1102123636e.js 1.52 MiB [emitted] [immutable] (name: main)
+runtime modules 1.34 KiB 4 modules
+modules by path ../../node_modules/.pnpm/ 438 KiB
+  modules by path ../../node_modules/.pnpm/@temporalio+common@1.22.0/node_modules/@temporal...(truncated) 161 KiB 35 modules
+  modules by path ../../node_modules/.pnpm/@temporalio+workflow@1.22.0/node_modules/@tempor...(truncated) 202 KiB 26 modules
+  modules by path ../../node_modules/.pnpm/nexus-rpc@0.0.2/node_modules/nexus-rpc/lib/ 22.3 KiB 13 modules
+  ../../node_modules/.pnpm/long@5.3.2/node_modules/long/umd/index.js 49.8 KiB [built] [code generated]
+  ../../node_modules/.pnpm/ms@3.0.0-canary.1/node_modules/ms/dist/index.cjs 3.41 KiB [built] [code generated]
+modules by path ../runtime/src/state-workflow/ 10.8 KiB
+  ../runtime/src/state-workflow/workflows-autogenerated-entrypoint.cjs 543 bytes [built] [code generated]
+  ../runtime/src/state-workflow/workflows.ts 2.68 KiB [built] [code generated]
+  ../runtime/src/state-workflow/activity-options.ts 371 bytes [built] [code generated]
+  ../runtime/src/state-workflow/state-machine.ts 7.22 KiB [built] [code generated]
+optional modules 30 bytes [optional]
+  __temporal_custom_payload_converter (ignored) 15 bytes [optional] [built] [code generated]
+  __temporal_custom_failure_converter (ignored) 15 bytes [optional] [built] [code generated]
+webpack 5.109.2 compiled successfully in 331 ms { sdkComponent: [32m'worker'[39m, taskQueue: [32m'state-workflow-f01'[39m }
+[35m2026-08-17T10:50:10.727Z[39m [INFO] Workflow bundle created {
+  sdkComponent: [32m'worker'[39m,
+  taskQueue: [32m'state-workflow-f01'[39m,
+  size: [32m'1.52MB'[39m
+}
+[35m2026-08-17T10:50:10.865Z[39m [INFO] Worker state changed {
+  sdkComponent: [32m'worker'[39m,
+  taskQueue: [32m'state-workflow-f01'[39m,
+  state: [32m'RUNNING'[39m
+}
+[35m2026-08-17T10:50:10.866Z[39m [INFO] No Nexus services registered, not polling for Nexus tasks { sdkComponent: [32m'worker'[39m, taskQueue: [32m'state-workflow-f01'[39m }
+[35m2026-08-17T10:50:10.982Z[39m [INFO] Worker state changed {
+  sdkComponent: [32m'worker'[39m,
+  taskQueue: [32m'state-workflow-f01'[39m,
+  state: [32m'STOPPING'[39m
+}
+[35m2026-08-17T10:50:10.982Z[39m [INFO] Worker state changed {
+  sdkComponent: [32m'worker'[39m,
+  taskQueue: [32m'state-workflow-f01'[39m,
+  state: [32m'DRAINING'[39m
+}
+[35m2026-08-17T10:50:10.983Z[39m [INFO] Worker state changed {
+  sdkComponent: [32m'worker'[39m,
+  taskQueue: [32m'state-workflow-f01'[39m,
+  state: [32m'DRAINED'[39m
+}
+[35m2026-08-17T10:50:10.983Z[39m [INFO] Worker state changed {
+  sdkComponent: [32m'worker'[39m,
+  taskQueue: [32m'state-workflow-f01'[39m,
+  state: [32m'STOPPED'[39m
+}
+]]>
+</system-err>
+</testcase>
+<testcase name="State Workflow F01-F05 › F02 skill load remains a control operation" classname="state-workflow.spec.ts" time="0.439">
+<system-err>
+<![CDATA[[35m2026-08-17T10:50:11.211Z[39m [INFO] asset workflow-bundle-e33f49a5e1102123636e.js 1.52 MiB [emitted] [immutable] (name: main)
+runtime modules 1.34 KiB 4 modules
+modules by path ../../node_modules/.pnpm/ 438 KiB
+  modules by path ../../node_modules/.pnpm/@temporalio+common@1.22.0/node_modules/@temporal...(truncated) 161 KiB 35 modules
+  modules by path ../../node_modules/.pnpm/@temporalio+workflow@1.22.0/node_modules/@tempor...(truncated) 202 KiB 26 modules
+  modules by path ../../node_modules/.pnpm/nexus-rpc@0.0.2/node_modules/nexus-rpc/lib/ 22.3 KiB 13 modules
+  ../../node_modules/.pnpm/long@5.3.2/node_modules/long/umd/index.js 49.8 KiB [built] [code generated]
+  ../../node_modules/.pnpm/ms@3.0.0-canary.1/node_modules/ms/dist/index.cjs 3.41 KiB [built] [code generated]
+modules by path ../runtime/src/state-workflow/ 10.8 KiB
+  ../runtime/src/state-workflow/workflows-autogenerated-entrypoint.cjs 543 bytes [built] [code generated]
+  ../runtime/src/state-workflow/workflows.ts 2.68 KiB [built] [code generated]
+  ../runtime/src/state-workflow/activity-options.ts 371 bytes [built] [code generated]
+  ../runtime/src/state-workflow/state-machine.ts 7.22 KiB [built] [code generated]
+optional modules 30 bytes [optional]
+  __temporal_custom_payload_converter (ignored) 15 bytes [optional] [built] [code generated]
+  __temporal_custom_failure_converter (ignored) 15 bytes [optional] [built] [code generated]
+webpack 5.109.2 compiled successfully in 168 ms { sdkComponent: [32m'worker'[39m, taskQueue: [32m'state-workflow-f02'[39m }
+[35m2026-08-17T10:50:11.213Z[39m [INFO] Workflow bundle created {
+  sdkComponent: [32m'worker'[39m,
+  taskQueue: [32m'state-workflow-f02'[39m,
+  size: [32m'1.52MB'[39m
+}
+[35m2026-08-17T10:50:11.346Z[39m [INFO] Worker state changed {
+  sdkComponent: [32m'worker'[39m,
+  taskQueue: [32m'state-workflow-f02'[39m,
+  state: [32m'RUNNING'[39m
+}
+[35m2026-08-17T10:50:11.346Z[39m [INFO] No Nexus services registered, not polling for Nexus tasks { sdkComponent: [32m'worker'[39m, taskQueue: [32m'state-workflow-f02'[39m }
+[35m2026-08-17T10:50:11.447Z[39m [INFO] Worker state changed {
+  sdkComponent: [32m'worker'[39m,
+  taskQueue: [32m'state-workflow-f02'[39m,
+  state: [32m'STOPPING'[39m
+}
+[35m2026-08-17T10:50:11.447Z[39m [INFO] Worker state changed {
+  sdkComponent: [32m'worker'[39m,
+  taskQueue: [32m'state-workflow-f02'[39m,
+  state: [32m'DRAINING'[39m
+}
+[35m2026-08-17T10:50:11.448Z[39m [INFO] Worker state changed {
+  sdkComponent: [32m'worker'[39m,
+  taskQueue: [32m'state-workflow-f02'[39m,
+  state: [32m'DRAINED'[39m
+}
+[35m2026-08-17T10:50:11.448Z[39m [INFO] Worker state changed {
+  sdkComponent: [32m'worker'[39m,
+  taskQueue: [32m'state-workflow-f02'[39m,
+  state: [32m'STOPPED'[39m
+}
+]]>
+</system-err>
+</testcase>
+<testcase name="State Workflow F01-F05 › F03 calculator succeeds through real Temporal Activities" classname="state-workflow.spec.ts" time="0.423">
+<system-err>
+<![CDATA[[35m2026-08-17T10:50:11.633Z[39m [INFO] asset workflow-bundle-e33f49a5e1102123636e.js 1.52 MiB [emitted] [immutable] (name: main)
+runtime modules 1.34 KiB 4 modules
+modules by path ../../node_modules/.pnpm/ 438 KiB
+  modules by path ../../node_modules/.pnpm/@temporalio+common@1.22.0/node_modules/@temporal...(truncated) 161 KiB 35 modules
+  modules by path ../../node_modules/.pnpm/@temporalio+workflow@1.22.0/node_modules/@tempor...(truncated) 202 KiB 26 modules
+  modules by path ../../node_modules/.pnpm/nexus-rpc@0.0.2/node_modules/nexus-rpc/lib/ 22.3 KiB 13 modules
+  ../../node_modules/.pnpm/long@5.3.2/node_modules/long/umd/index.js 49.8 KiB [built] [code generated]
+  ../../node_modules/.pnpm/ms@3.0.0-canary.1/node_modules/ms/dist/index.cjs 3.41 KiB [built] [code generated]
+modules by path ../runtime/src/state-workflow/ 10.8 KiB
+  ../runtime/src/state-workflow/workflows-autogenerated-entrypoint.cjs 543 bytes [built] [code generated]
+  ../runtime/src/state-workflow/workflows.ts 2.68 KiB [built] [code generated]
+  ../runtime/src/state-workflow/activity-options.ts 371 bytes [built] [code generated]
+  ../runtime/src/state-workflow/state-machine.ts 7.22 KiB [built] [code generated]
+optional modules 30 bytes [optional]
+  __temporal_custom_payload_converter (ignored) 15 bytes [optional] [built] [code generated]
+  __temporal_custom_failure_converter (ignored) 15 bytes [optional] [built] [code generated]
+webpack 5.109.2 compiled successfully in 152 ms { sdkComponent: [32m'worker'[39m, taskQueue: [32m'state-workflow-f03'[39m }
+[35m2026-08-17T10:50:11.634Z[39m [INFO] Workflow bundle created {
+  sdkComponent: [32m'worker'[39m,
+  taskQueue: [32m'state-workflow-f03'[39m,
+  size: [32m'1.52MB'[39m
+}
+[35m2026-08-17T10:50:11.765Z[39m [INFO] Worker state changed {
+  sdkComponent: [32m'worker'[39m,
+  taskQueue: [32m'state-workflow-f03'[39m,
+  state: [32m'RUNNING'[39m
+}
+[35m2026-08-17T10:50:11.765Z[39m [INFO] No Nexus services registered, not polling for Nexus tasks { sdkComponent: [32m'worker'[39m, taskQueue: [32m'state-workflow-f03'[39m }
+[35m2026-08-17T10:50:11.875Z[39m [INFO] Worker state changed {
+  sdkComponent: [32m'worker'[39m,
+  taskQueue: [32m'state-workflow-f03'[39m,
+  state: [32m'STOPPING'[39m
+}
+[35m2026-08-17T10:50:11.876Z[39m [INFO] Worker state changed {
+  sdkComponent: [32m'worker'[39m,
+  taskQueue: [32m'state-workflow-f03'[39m,
+  state: [32m'DRAINING'[39m
+}
+[35m2026-08-17T10:50:11.877Z[39m [INFO] Worker state changed {
+  sdkComponent: [32m'worker'[39m,
+  taskQueue: [32m'state-workflow-f03'[39m,
+  state: [32m'DRAINED'[39m
+}
+[35m2026-08-17T10:50:11.878Z[39m [INFO] Worker state changed {
+  sdkComponent: [32m'worker'[39m,
+  taskQueue: [32m'state-workflow-f03'[39m,
+  state: [32m'STOPPED'[39m
+}
+]]>
+</system-err>
+</testcase>
+<testcase name="State Workflow F01-F05 › F04 typed calculator failure still completes with final text" classname="state-workflow.spec.ts" time="0.411">
+<system-err>
+<![CDATA[[35m2026-08-17T10:50:12.052Z[39m [INFO] asset workflow-bundle-e33f49a5e1102123636e.js 1.52 MiB [emitted] [immutable] (name: main)
+runtime modules 1.34 KiB 4 modules
+modules by path ../../node_modules/.pnpm/ 438 KiB
+  modules by path ../../node_modules/.pnpm/@temporalio+common@1.22.0/node_modules/@temporal...(truncated) 161 KiB 35 modules
+  modules by path ../../node_modules/.pnpm/@temporalio+workflow@1.22.0/node_modules/@tempor...(truncated) 202 KiB 26 modules
+  modules by path ../../node_modules/.pnpm/nexus-rpc@0.0.2/node_modules/nexus-rpc/lib/ 22.3 KiB 13 modules
+  ../../node_modules/.pnpm/long@5.3.2/node_modules/long/umd/index.js 49.8 KiB [built] [code generated]
+  ../../node_modules/.pnpm/ms@3.0.0-canary.1/node_modules/ms/dist/index.cjs 3.41 KiB [built] [code generated]
+modules by path ../runtime/src/state-workflow/ 10.8 KiB
+  ../runtime/src/state-workflow/workflows-autogenerated-entrypoint.cjs 543 bytes [built] [code generated]
+  ../runtime/src/state-workflow/workflows.ts 2.68 KiB [built] [code generated]
+  ../runtime/src/state-workflow/activity-options.ts 371 bytes [built] [code generated]
+  ../runtime/src/state-workflow/state-machine.ts 7.22 KiB [built] [code generated]
+optional modules 30 bytes [optional]
+  __temporal_custom_payload_converter (ignored) 15 bytes [optional] [built] [code generated]
+  __temporal_custom_failure_converter (ignored) 15 bytes [optional] [built] [code generated]
+webpack 5.109.2 compiled successfully in 140 ms { sdkComponent: [32m'worker'[39m, taskQueue: [32m'state-workflow-f04'[39m }
+[35m2026-08-17T10:50:12.053Z[39m [INFO] Workflow bundle created {
+  sdkComponent: [32m'worker'[39m,
+  taskQueue: [32m'state-workflow-f04'[39m,
+  size: [32m'1.52MB'[39m
+}
+[35m2026-08-17T10:50:12.190Z[39m [INFO] Worker state changed {
+  sdkComponent: [32m'worker'[39m,
+  taskQueue: [32m'state-workflow-f04'[39m,
+  state: [32m'RUNNING'[39m
+}
+[35m2026-08-17T10:50:12.190Z[39m [INFO] No Nexus services registered, not polling for Nexus tasks { sdkComponent: [32m'worker'[39m, taskQueue: [32m'state-workflow-f04'[39m }
+[35m2026-08-17T10:50:12.292Z[39m [INFO] Worker state changed {
+  sdkComponent: [32m'worker'[39m,
+  taskQueue: [32m'state-workflow-f04'[39m,
+  state: [32m'STOPPING'[39m
+}
+[35m2026-08-17T10:50:12.292Z[39m [INFO] Worker state changed {
+  sdkComponent: [32m'worker'[39m,
+  taskQueue: [32m'state-workflow-f04'[39m,
+  state: [32m'DRAINING'[39m
+}
+[35m2026-08-17T10:50:12.293Z[39m [INFO] Worker state changed {
+  sdkComponent: [32m'worker'[39m,
+  taskQueue: [32m'state-workflow-f04'[39m,
+  state: [32m'DRAINED'[39m
+}
+[35m2026-08-17T10:50:12.293Z[39m [INFO] Worker state changed {
+  sdkComponent: [32m'worker'[39m,
+  taskQueue: [32m'state-workflow-f04'[39m,
+  state: [32m'STOPPED'[39m
+}
+]]>
+</system-err>
+</testcase>
+<testcase name="State Workflow F01-F05 › F05 missing and prohibited requests invoke no prohibited fixture" classname="state-workflow.spec.ts" time="0.61">
+<system-err>
+<![CDATA[[35m2026-08-17T10:50:12.570Z[39m [INFO] asset workflow-bundle-e33f49a5e1102123636e.js 1.52 MiB [emitted] [immutable] (name: main)
+runtime modules 1.34 KiB 4 modules
+modules by path ../../node_modules/.pnpm/ 438 KiB
+  modules by path ../../node_modules/.pnpm/@temporalio+common@1.22.0/node_modules/@temporal...(truncated) 161 KiB 35 modules
+  modules by path ../../node_modules/.pnpm/@temporalio+workflow@1.22.0/node_modules/@tempor...(truncated) 202 KiB 26 modules
+  modules by path ../../node_modules/.pnpm/nexus-rpc@0.0.2/node_modules/nexus-rpc/lib/ 22.3 KiB 13 modules
+  ../../node_modules/.pnpm/long@5.3.2/node_modules/long/umd/index.js 49.8 KiB [built] [code generated]
+  ../../node_modules/.pnpm/ms@3.0.0-canary.1/node_modules/ms/dist/index.cjs 3.41 KiB [built] [code generated]
+modules by path ../runtime/src/state-workflow/ 10.8 KiB
+  ../runtime/src/state-workflow/workflows-autogenerated-entrypoint.cjs 543 bytes [built] [code generated]
+  ../runtime/src/state-workflow/workflows.ts 2.68 KiB [built] [code generated]
+  ../runtime/src/state-workflow/activity-options.ts 371 bytes [built] [code generated]
+  ../runtime/src/state-workflow/state-machine.ts 7.22 KiB [built] [code generated]
+optional modules 30 bytes [optional]
+  __temporal_custom_payload_converter (ignored) 15 bytes [optional] [built] [code generated]
+  __temporal_custom_failure_converter (ignored) 15 bytes [optional] [built] [code generated]
+webpack 5.109.2 compiled successfully in 243 ms { sdkComponent: [32m'worker'[39m, taskQueue: [32m'state-workflow-f05_missing'[39m }
+[35m2026-08-17T10:50:12.571Z[39m [INFO] Workflow bundle created {
+  sdkComponent: [32m'worker'[39m,
+  taskQueue: [32m'state-workflow-f05_missing'[39m,
+  size: [32m'1.52MB'[39m
+}
+[35m2026-08-17T10:50:12.659Z[39m [INFO] asset workflow-bundle-e33f49a5e1102123636e.js 1.52 MiB [emitted] [immutable] (name: main)
+runtime modules 1.34 KiB 4 modules
+modules by path ../../node_modules/.pnpm/ 438 KiB
+  modules by path ../../node_modules/.pnpm/@temporalio+common@1.22.0/node_modules/@temporal...(truncated) 161 KiB 35 modules
+  modules by path ../../node_modules/.pnpm/@temporalio+workflow@1.22.0/node_modules/@tempor...(truncated) 202 KiB 26 modules
+  modules by path ../../node_modules/.pnpm/nexus-rpc@0.0.2/node_modules/nexus-rpc/lib/ 22.3 KiB 13 modules
+  ../../node_modules/.pnpm/long@5.3.2/node_modules/long/umd/index.js 49.8 KiB [built] [code generated]
+  ../../node_modules/.pnpm/ms@3.0.0-canary.1/node_modules/ms/dist/index.cjs 3.41 KiB [built] [code generated]
+modules by path ../runtime/src/state-workflow/ 10.8 KiB
+  ../runtime/src/state-workflow/workflows-autogenerated-entrypoint.cjs 543 bytes [built] [code generated]
+  ../runtime/src/state-workflow/workflows.ts 2.68 KiB [built] [code generated]
+  ../runtime/src/state-workflow/activity-options.ts 371 bytes [built] [code generated]
+  ../runtime/src/state-workflow/state-machine.ts 7.22 KiB [built] [code generated]
+optional modules 30 bytes [optional]
+  __temporal_custom_payload_converter (ignored) 15 bytes [optional] [built] [code generated]
+  __temporal_custom_failure_converter (ignored) 15 bytes [optional] [built] [code generated]
+webpack 5.109.2 compiled successfully in 314 ms { sdkComponent: [32m'worker'[39m, taskQueue: [32m'state-workflow-f05_disallowed'[39m }
+[35m2026-08-17T10:50:12.663Z[39m [INFO] Workflow bundle created {
+  sdkComponent: [32m'worker'[39m,
+  taskQueue: [32m'state-workflow-f05_disallowed'[39m,
+  size: [32m'1.52MB'[39m
+}
+[35m2026-08-17T10:50:12.748Z[39m [INFO] Worker state changed {
+  sdkComponent: [32m'worker'[39m,
+  taskQueue: [32m'state-workflow-f05_missing'[39m,
+  state: [32m'RUNNING'[39m
+}
+[35m2026-08-17T10:50:12.748Z[39m [INFO] No Nexus services registered, not polling for Nexus tasks { sdkComponent: [32m'worker'[39m, taskQueue: [32m'state-workflow-f05_missing'[39m }
+[35m2026-08-17T10:50:12.804Z[39m [INFO] Worker state changed {
+  sdkComponent: [32m'worker'[39m,
+  taskQueue: [32m'state-workflow-f05_disallowed'[39m,
+  state: [32m'RUNNING'[39m
+}
+[35m2026-08-17T10:50:12.804Z[39m [INFO] No Nexus services registered, not polling for Nexus tasks { sdkComponent: [32m'worker'[39m, taskQueue: [32m'state-workflow-f05_disallowed'[39m }
+[35m2026-08-17T10:50:12.862Z[39m [INFO] Worker state changed {
+  sdkComponent: [32m'worker'[39m,
+  taskQueue: [32m'state-workflow-f05_missing'[39m,
+  state: [32m'STOPPING'[39m
+}
+[35m2026-08-17T10:50:12.862Z[39m [INFO] Worker state changed {
+  sdkComponent: [32m'worker'[39m,
+  taskQueue: [32m'state-workflow-f05_missing'[39m,
+  state: [32m'DRAINING'[39m
+}
+[35m2026-08-17T10:50:12.863Z[39m [INFO] Worker state changed {
+  sdkComponent: [32m'worker'[39m,
+  taskQueue: [32m'state-workflow-f05_missing'[39m,
+  state: [32m'DRAINED'[39m
+}
+[35m2026-08-17T10:50:12.864Z[39m [INFO] Worker state changed {
+  sdkComponent: [32m'worker'[39m,
+  taskQueue: [32m'state-workflow-f05_missing'[39m,
+  state: [32m'STOPPED'[39m
+}
+[35m2026-08-17T10:50:12.901Z[39m [INFO] Worker state changed {
+  sdkComponent: [32m'worker'[39m,
+  taskQueue: [32m'state-workflow-f05_disallowed'[39m,
+  state: [32m'STOPPING'[39m
+}
+[35m2026-08-17T10:50:12.901Z[39m [INFO] Worker state changed {
+  sdkComponent: [32m'worker'[39m,
+  taskQueue: [32m'state-workflow-f05_disallowed'[39m,
+  state: [32m'DRAINING'[39m
+}
+[35m2026-08-17T10:50:12.902Z[39m [INFO] Worker state changed {
+  sdkComponent: [32m'worker'[39m,
+  taskQueue: [32m'state-workflow-f05_disallowed'[39m,
+  state: [32m'DRAINED'[39m
+}
+[35m2026-08-17T10:50:12.902Z[39m [INFO] Worker state changed {
+  sdkComponent: [32m'worker'[39m,
+  taskQueue: [32m'state-workflow-f05_disallowed'[39m,
+  state: [32m'STOPPED'[39m
+}
+]]>
+</system-err>
+</testcase>
+</testsuite>
+</testsuites>
