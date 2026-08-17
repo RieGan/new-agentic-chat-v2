@@ -56,6 +56,10 @@ assert.equal(services.migration.depends_on.postgres.condition, "service_healthy"
 assert.match(services.postgres.healthcheck.test.join(" "), /pg_isready -h 127\.0\.0\.1/)
 assert.match(services.migration.healthcheck.test.join(" "), /migrations-complete/)
 
+const webApiTarget = services.web.environment.VITE_API_TARGET
+assert.equal(webApiTarget, "http://api:3000", "web must route tRPC through Docker DNS api")
+assert.doesNotMatch(webApiTarget, /127\.0\.0\.1|localhost|0\.0\.0\.0/, "web must not target container loopback")
+
 const postgresMount = services.postgres.volumes.find(
   (volume) => volume.target === "/var/lib/postgresql/data",
 )

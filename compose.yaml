@@ -105,6 +105,7 @@ services:
     environment:
       <<: *runtime-environment
       SERVICE_KIND: web
+      VITE_API_TARGET: http://api:3000
     depends_on: *runtime-dependencies
     ports:
       - "127.0.0.1:4173:4173"
