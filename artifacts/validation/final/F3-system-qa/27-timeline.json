@@ -1,0 +1,75 @@
+{
+  "waveStartedAt": "2026-08-17T10:37:52Z",
+  "artifacts": [
+    {
+      "name": "01-clean-down.log",
+      "completedAt": "2026-08-17T10:37:57.503Z",
+      "bytes": 0
+    },
+    {
+      "name": "02-compose-up.log",
+      "completedAt": "2026-08-17T10:39:22.857Z",
+      "bytes": 15416
+    },
+    {
+      "name": "08-acceptance-simple-loop.log",
+      "completedAt": "2026-08-17T10:40:27.162Z",
+      "bytes": 3330
+    },
+    {
+      "name": "09-acceptance-state-workflow.log",
+      "completedAt": "2026-08-17T10:41:19.525Z",
+      "bytes": 18791
+    },
+    {
+      "name": "10-ui-combined.log",
+      "completedAt": "2026-08-17T10:41:52.496Z",
+      "bytes": 1912
+    },
+    {
+      "name": "12-restart.log",
+      "completedAt": "2026-08-17T10:43:08.892Z",
+      "bytes": 85
+    },
+    {
+      "name": "13-parity.log",
+      "completedAt": "2026-08-17T10:46:15.218Z",
+      "bytes": 15786
+    },
+    {
+      "name": "14-temporal-replay.log",
+      "completedAt": "2026-08-17T10:46:25.792Z",
+      "bytes": 7985
+    },
+    {
+      "name": "18-simple-loop-junit.xml",
+      "completedAt": "2026-08-17T10:49:22.011Z",
+      "bytes": 5373
+    },
+    {
+      "name": "19-state-workflow-junit.xml",
+      "completedAt": "2026-08-17T10:50:13.468Z",
+      "bytes": 22463
+    },
+    {
+      "name": "20-ui-junit.xml",
+      "completedAt": "2026-08-17T10:50:35.276Z",
+      "bytes": 6414
+    },
+    {
+      "name": "22-compose-services.log",
+      "completedAt": "2026-08-17T10:51:44.074Z",
+      "bytes": 14643
+    },
+    {
+      "name": "24-final-down.log",
+      "completedAt": "2026-08-17T10:51:56.623Z",
+      "bytes": 2074
+    },
+    {
+      "name": "25-final-cleanup-receipt.json",
+      "completedAt": "2026-08-17T10:52:15.730Z",
+      "bytes": 1300
+    }
+  ]
+}

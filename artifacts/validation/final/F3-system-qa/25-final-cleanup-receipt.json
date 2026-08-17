@@ -1,0 +1,59 @@
+{
+  "result": "PASS",
+  "checkedAt": "2026-08-17T10:52:15.726Z",
+  "containers": {
+    "command": "docker compose ps -aq",
+    "status": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "volumes": {
+    "command": "docker volume ls --filter label=com.docker.compose.project=new-agentic-chat-v2 --format {{.Name}}",
+    "status": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "networks": {
+    "command": "docker network ls --filter label=com.docker.compose.project=new-agentic-chat-v2 --format {{.Name}}",
+    "status": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "listeners": [
+    {
+      "port": 3000,
+      "command": "lsof -nP -iTCP:3000 -sTCP:LISTEN",
+      "status": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "port": 4173,
+      "command": "lsof -nP -iTCP:4173 -sTCP:LISTEN",
+      "status": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "port": 7233,
+      "command": "lsof -nP -iTCP:7233 -sTCP:LISTEN",
+      "status": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "port": 4310,
+      "command": "lsof -nP -iTCP:4310 -sTCP:LISTEN",
+      "status": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "port": 4311,
+      "command": "lsof -nP -iTCP:4311 -sTCP:LISTEN",
+      "status": 1,
+      "stdout": "",
+      "stderr": ""
+    }
+  ]
+}
