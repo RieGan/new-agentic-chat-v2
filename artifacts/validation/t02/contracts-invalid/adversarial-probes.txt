@@ -1,0 +1,8 @@
+PASS malformed input: missing identifiers, wrong runtime enum, malformed tool arguments, negative sequence, and empty sections were rejected.
+PASS illegal state: terminal run/tool/approval/job/Admin-command transitions were rejected with IllegalTransitionError.
+PASS stale state: runtime mutation, stale version, and stale lease checks returned their exact typed errors.
+PASS visibility: a User-visible admin.command.accepted event and hidden events embedded in UserProjectionSchema were rejected.
+PASS prompt injection: hostile User/Admin text remained inert string data and could not add or alter visibility/discriminant fields.
+PASS cancel/resume contract: continue_run requires the active waiting_for_user boundary and same-run correlation; runtime_restart preserves run/call/job IDs.
+PASS event parity: runtime.diagnostic events were removed while canonical event order was reindexed deterministically.
+PASS forbidden imports: AST inspection found only zod and local contract imports in packages/contracts/src.

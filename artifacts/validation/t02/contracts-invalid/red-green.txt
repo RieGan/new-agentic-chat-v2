@@ -1,0 +1,11 @@
+RED
+Command: pnpm test:contracts
+Exit code: 1
+Observed: 4 real test files, 62 tests, 51 failures and 11 passes.
+Reason: the planned schemas, transitions, envelopes, errors, projections, and parity exports did not exist.
+
+GREEN
+Command: pnpm test:contracts
+Exit code: 0
+Observed: 5 real test files, 75 tests passed.
+Coverage: P01-P11 inputs/actions, F05 P05/P06 distinction, state transitions, malformed payloads, projection privacy, event ordering, parity normalization, loop budget, and typed errors.

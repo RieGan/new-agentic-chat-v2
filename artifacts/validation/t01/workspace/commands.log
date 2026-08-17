@@ -1,0 +1,108 @@
+Task 01 workspace validation
+Date: 2026-08-16
+
+Baseline
+- Root entries before implementation: .codegraph/, .omo/, docs/
+- Root package.json, pnpm-workspace.yaml, and pnpm-lock.yaml were absent.
+- The directory is not a Git repository, so no Git worktree status was available.
+
+TDD red
+Command: corepack pnpm --filter @agentic-chat/runtime test -- environment
+Exit: 1
+Result: 1 failed suite; environment.test.ts could not resolve ../src/environment.js.
+
+TDD green run 1
+Command: corepack pnpm --filter @agentic-chat/runtime test -- environment
+Exit: 0
+Result: 1 test file passed; 7 tests passed.
+
+TDD green run 2
+Command: corepack pnpm --filter @agentic-chat/runtime test -- environment
+Exit: 0
+Result: 1 test file passed; 7 tests passed.
+
+Install
+Command: corepack pnpm install --frozen-lockfile
+Exit: 0
+Result: all 9 projects already up to date under pnpm 11.21.0.
+
+Lint
+Command: corepack pnpm lint
+Exit: 0
+Result: Biome checked 37 files with no fixes or diagnostics.
+
+Typecheck
+Command: corepack pnpm typecheck
+Exit: 0
+Result: all 8 workspace members completed tsc --noEmit.
+
+Build
+Command: corepack pnpm build
+Exit: 0
+Result: runtime tsc build and Vite 8.2.1 production build completed.
+
+Future-suite policy probes
+- test:contracts, test:db, test:integration, test:temporal-replay, and test:parity: exit 0 with Vitest explicitly reporting no test files.
+- test:e2e --runtime=simple_loop and test:restart --runtime=simple_loop: exit 1 with Playwright reporting no tests found.
+
+Scope probe
+- Exactly packages/contracts, packages/db, packages/runtime, packages/tools, packages/testkit, apps/api, apps/web, and apps/worker have workspace manifests.
+- No Next.js, AI SDK UI, SMTP, or nodemailer package reference was found in package manifests or pnpm-lock.yaml.
+
+Cleanup receipt
+- No development server or watch process was started.
+- Production build output is ignored under dist/; Playwright's generated test-results/.last-run.json receipt was removed.
+- No temporary fixture data was created.
+
+Task 01 verification correction
+Date: 2026-08-16
+
+Scope correction
+- Removed react-doctor, react-grab, react-scan, and vite-plugin-react-scan from apps/web/package.json.
+- Removed the react:doctor script, reactScan() Vite plugin, and development-only dynamic imports.
+- Search across package.json, pnpm-lock.yaml, TypeScript, and TSX files found zero remaining references to the four package names.
+
+Lockfile regeneration
+Command: corepack pnpm install
+Exit: 0
+Result: pnpm removed 223 packages and updated the workspace installation/lockfile.
+
+Frozen install
+Command: corepack pnpm install --frozen-lockfile
+Exit: 0
+Result: all 9 projects already up to date under pnpm 11.21.0.
+
+Lint
+Command: corepack pnpm lint
+Exit: 0
+Result: Biome checked 37 files with no fixes or diagnostics.
+
+Typecheck
+Command: corepack pnpm typecheck
+Exit: 0
+Result: all 8 workspace members completed tsc --noEmit.
+
+Build
+Command: corepack pnpm build
+Exit: 0
+Result: runtime TypeScript build and Vite 8.2.1 production build completed; web transformed 15 modules.
+
+Environment tests run 1
+Command: corepack pnpm --filter @agentic-chat/runtime test -- environment
+Exit: 0
+Result: 1 test file passed; 7 tests passed.
+
+Environment tests run 2
+Command: corepack pnpm --filter @agentic-chat/runtime test -- environment
+Exit: 0
+Result: 1 test file passed; 7 tests passed.
+
+Static diagnostics
+- LSP diagnostics for apps/web/vite.config.ts: 0 diagnostics.
+- LSP diagnostics for apps/web/src/main.tsx: 0 diagnostics.
+- TypeScript no-excuse audit: 2 files checked, 0 violations.
+- Pure LOC: vite.config.ts 6; main.tsx 8.
+
+Cleanup receipt
+- No development server or watch process was started.
+- No temporary test data or Playwright receipt was created by this correction.
