@@ -1,0 +1,16 @@
+node_modules/
+.codegraph
+.omo/run-continuation/
+.omo/start-work/
+dist/
+coverage/
+artifacts/*
+!artifacts/validation/
+!artifacts/validation/**
+.env
+.env.*
+!.env.example
+playwright-report/
+test-results/
+*.tsbuildinfo
+.DS_Store

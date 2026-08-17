@@ -1,0 +1,8 @@
+.git
+.codegraph
+.omo
+artifacts
+node_modules
+test-results
+**/dist
+**/node_modules
