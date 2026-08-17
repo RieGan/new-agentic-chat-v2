@@ -1,0 +1,27 @@
+{
+  "name": "@agentic-chat/testkit",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@agentic-chat/contracts": "workspace:*",
+    "@agentic-chat/db": "workspace:*",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@trpc/client": "11.18.0",
+    "vite": "8.2.1"
+  },
+  "scripts": {
+    "test:integration": "vitest run tests/integration --passWithNoTests",
+    "test:e2e": "node scripts/run-playwright.mjs",
+    "test:acceptance:harness-negative": "vitest run tests/acceptance/harness.test.ts -t altered",
+    "test:acceptance:baseline": "vitest run tests/acceptance/baseline-characterization.test.ts",
+    "test:parity": "node scripts/task18-parity.mjs",
+    "test:restart": "node scripts/task18-restart.mjs",
+    "typecheck": "tsc --noEmit"
+  }
+}
