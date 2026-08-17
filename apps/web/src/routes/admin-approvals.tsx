@@ -27,25 +27,31 @@ export const AdminApprovalsRoute = () => {
             {state.error}
           </p>
         )}
-        {state.approvals.length === 0 ? (
-          <div className="panel">
-            <EmptyState>
-              No pending approvals. New exact snapshots appear without a page refresh.
-            </EmptyState>
+        {state.initialized ? (
+          state.approvals.length === 0 ? (
+            <div className="panel">
+              <EmptyState>
+                No pending approvals. New exact snapshots appear without a page refresh.
+              </EmptyState>
+            </div>
+          ) : (
+            <div className="approval-grid" data-testid="approval-grid">
+              {state.approvals.map((approval) => (
+                <ApprovalCard
+                  key={approval.approvalId}
+                  approval={approval}
+                  busy={state.decidingId === approval.approvalId}
+                  onApprove={state.approve}
+                  onReject={state.reject}
+                />
+              ))}
+            </div>
+          )
+        ) : state.error === undefined ? (
+          <div className="panel" data-testid="approvals-loading">
+            <EmptyState>Loading pending approvals...</EmptyState>
           </div>
-        ) : (
-          <div className="approval-grid" data-testid="approval-grid">
-            {state.approvals.map((approval) => (
-              <ApprovalCard
-                key={approval.approvalId}
-                approval={approval}
-                busy={state.decidingId === approval.approvalId}
-                onApprove={state.approve}
-                onReject={state.reject}
-              />
-            ))}
-          </div>
-        )}
+        ) : null}
       </div>
     </AppShell>
   )

@@ -6,6 +6,7 @@ type Approval = Awaited<ReturnType<(typeof adminApi)["approvals"]>>[number]
 
 export type ApprovalsState = {
   readonly approvals: readonly Approval[]
+  readonly initialized: boolean
   readonly connection: ConnectionState
   readonly error: string | undefined
   readonly decidingId: string | undefined
@@ -15,6 +16,7 @@ export type ApprovalsState = {
 
 export const useApprovals = (): ApprovalsState => {
   const [approvals, setApprovals] = useState<readonly Approval[]>([])
+  const [initialized, setInitialized] = useState(false)
   const [connection, setConnection] = useState<ConnectionState>("disconnected")
   const [error, setError] = useState<string>()
   const [decidingId, setDecidingId] = useState<string>()
@@ -41,11 +43,11 @@ export const useApprovals = (): ApprovalsState => {
     )
   }, [])
 
-  const load = useCallback(async () => {
+  const load = useCallback(async (): Promise<boolean> => {
     const version = refreshVersion.current + 1
     refreshVersion.current = version
     const pending = await adminApi.approvals({})
-    if (!mounted.current || version !== refreshVersion.current) return
+    if (!mounted.current || version !== refreshVersion.current) return false
     setApprovals((current) => {
       const pendingIds = new Set(pending.map((approval) => approval.approvalId))
       const retained = current.filter(
@@ -53,8 +55,19 @@ export const useApprovals = (): ApprovalsState => {
           !pendingIds.has(approval.approvalId) &&
           (approval.status !== "pending" || approval.approvalId === decidingIdRef.current),
       )
-      return [...pending, ...retained]
+      const next = [...pending, ...retained]
+      const unchanged = next.every((approval, index) => {
+        const previous = current[index]
+        return (
+          previous !== undefined &&
+          previous.approvalId === approval.approvalId &&
+          previous.status === approval.status &&
+          previous.version === approval.version
+        )
+      })
+      return next.length === current.length && unchanged ? current : next
     })
+    return true
   }, [])
 
   const reconcileSubscriptions = useCallback(async () => {
@@ -100,7 +113,12 @@ export const useApprovals = (): ApprovalsState => {
   useEffect(() => {
     mounted.current = true
     refreshRef.current = refresh
-    refresh()
+    void Promise.all([load(), reconcileSubscriptions()])
+      .then(() => load())
+      .then((reconciled) => {
+        if (reconciled) setInitialized(true)
+      })
+      .catch(() => setError("Pending approvals are unavailable."))
     return () => {
       mounted.current = false
       refreshVersion.current += 1
@@ -108,7 +126,7 @@ export const useApprovals = (): ApprovalsState => {
       subscriptions.current.clear()
       connectionByRun.current.clear()
     }
-  }, [refresh])
+  }, [load, reconcileSubscriptions, refresh])
 
   const upsert = useCallback((next: Approval) => {
     setApprovals((current) => {
@@ -173,5 +191,5 @@ export const useApprovals = (): ApprovalsState => {
     [upsert],
   )
 
-  return { approvals, connection, error, decidingId, approve, reject }
+  return { approvals, initialized, connection, error, decidingId, approve, reject }
 }
