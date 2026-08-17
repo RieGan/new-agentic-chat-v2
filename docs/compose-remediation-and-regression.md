@@ -66,7 +66,7 @@ After remediation, the first `curl` must return application-owned readiness and 
 | ID | Severity | Status | Observable evidence | Root cause |
 | --- | --- | --- | --- | --- |
 | CMP-SEC-01 | Critical | [x] Closed | `.dockerignore` excludes `.env` and `.env.*`, retains `!.env.example`, and the fresh image contains only the example file. | The build context now denies local environment files before `COPY . .`. |
-| CMP-ROUTE-02 | High | [ ] Open | `apps/web/vite.config.ts` defaults `VITE_API_TARGET` to `http://127.0.0.1:3000`; `compose.yaml` does not override it. | Container loopback is process-local. The web container must use Docker DNS `http://api:3000`. |
+| CMP-ROUTE-02 | High | [x] Closed | Compose web resolves `VITE_API_TARGET` to `http://api:3000`; the host-local Vite fallback remains `http://127.0.0.1:3000`. | Container loopback is process-local. The web container now uses Docker DNS `http://api:3000`. |
 | CMP-API-03 | Critical | [x] Closed | The rebuilt API runs compiled `compose-main.js` as PID 1; `GET /healthz` reports database-aware application readiness, fixed-User `skills.get` responds through tRPC, unknown routes remain 404, and SIGTERM exits 0 within the five-second grace period. | The API Compose command never started `createApiHttpServer` or bound application services to PostgreSQL. |
 | CMP-PROVIDER-04 | High | [ ] Open | `packages/runtime/src/compose-worker.ts` calls `createComposeDeterministicProvider()` in both model workers. | Worker startup ignores `parseEnvironment()` and never constructs the configured mock or OpenAI Responses adapter. |
 | CMP-MEM-05 | High | [ ] Open | Worker command runs `node` under a 256 MB limit; Temporal warns that the default heap is unsafe. | The worker entrypoint does not set `--max-old-space-size=48`. |
@@ -99,7 +99,7 @@ docker image rm agentic-chat-secret-boundary:test
 
 **PASS:** the test exits 0, neither environment file exists in the container, `.env.example` remains available as documentation, and image history contains no sentinel value. Record only a redacted history review result.
 
-### [ ] T02: Route Vite tRPC traffic to the API service
+### [x] T02: Route Vite tRPC traffic to the API service
 
 **Issue:** CMP-ROUTE-02  
 **Fix files:** `compose.yaml`, `infra/tests/compose-topology.mjs`  
@@ -107,9 +107,9 @@ docker image rm agentic-chat-secret-boundary:test
 
 Tasks:
 
-- [ ] Set the web service `VITE_API_TARGET` to `http://api:3000` in base Compose.
-- [ ] Extend the topology test to require Docker DNS and reject a loopback API target for the web service.
-- [ ] Keep host development fallback behavior in `apps/web/vite.config.ts` unchanged.
+- [x] Set the web service `VITE_API_TARGET` to `http://api:3000` in base Compose.
+- [x] Extend the topology test to require Docker DNS and reject a loopback API target for the web service.
+- [x] Keep host development fallback behavior in `apps/web/vite.config.ts` unchanged.
 
 Focused verification:
 
@@ -118,7 +118,7 @@ docker compose config --quiet
 node infra/tests/compose-topology.mjs
 docker compose up --build --wait web api
 docker compose exec web wget --server-response --output-document=- http://api:3000/healthz
-curl --fail-with-body --show-error http://127.0.0.1:4173/trpc/user/catalog.skills
+curl --fail-with-body --show-error --get --data-urlencode 'input={"skillId":"calculator_assistant","version":"1"}' http://127.0.0.1:4173/trpc/user/skills.get
 ```
 
 **PASS:** the resolved web target is `http://api:3000`; the web container reaches API readiness by service name; the browser-facing `/trpc` request returns a tRPC response with no connection refusal, `502`, or Vite HTML fallback.
@@ -343,7 +343,7 @@ Add rows as commands run. Preserve failures as evidence. Never rewrite a failed 
 | --- | --- | --- | --- | --- | --- | --- |
 | E-001 | Baseline | `docker compose up --build --wait` | Real API and all dependencies become ready. | Current stack reports false API health; remediation not run. | `artifacts/validation/compose-remediation/baseline/` | [ ] FAIL |
 | E-002 | T01 | `node infra/tests/compose-build-context.mjs` | Environment files are excluded and `.env.example` remains allowed. | Test passed; no environment file contents were loaded or printed. | `artifacts/validation/compose-remediation/T01/` | [x] PASS |
-| E-003 | T02 | `node infra/tests/compose-topology.mjs` | Web target is `http://api:3000`; loopback is rejected. | Not run. | `artifacts/validation/compose-remediation/T02/` | [ ] NOT RUN |
+| E-003 | T02 | `node infra/tests/compose-topology.mjs` | Web target is `http://api:3000`; loopback is rejected. | Not run before the T02 assertion was added. | `artifacts/validation/compose-remediation/T02/` | [ ] NOT RUN |
 | E-004 | T03 | `node infra/tests/compose-api-boot.mjs` | Entrypoint starts compiled API and real readiness. | 2026-08-17: PASS; the static guard rejects BusyBox/scaffold startup, requires the compiled API build/entrypoint, and requires the canonical GET health probe. | `artifacts/validation/compose-remediation/T03/` | [x] PASS |
 | E-005 | T04 | `node infra/tests/compose-provider-mode.mjs` | Base and override provider rules are enforced without exposing values. | Not run. | `artifacts/validation/compose-remediation/T04/` | [ ] NOT RUN |
 | E-006 | T05 | `node infra/tests/compose-worker-boot.mjs` | Every worker starts with a 48 MB old-space cap. | Not run. | `artifacts/validation/compose-remediation/T05/` | [ ] NOT RUN |
@@ -353,6 +353,8 @@ Add rows as commands run. Preserve failures as evidence. Never rewrite a failed 
 | E-010 | T01 | `docker build --no-cache --tag agentic-chat-secret-boundary:test --file infra/docker/Dockerfile .`; `docker run --rm --entrypoint sh agentic-chat-secret-boundary:test -c 'test ! -e /workspace/.env && test ! -e /workspace/.env.local && test -e /workspace/.env.example'`; sanitized image-history scan; `docker image rm agentic-chat-secret-boundary:test` | Fresh image omits `.env` and `.env.local`, retains `.env.example`, contains no secret markers in history, and is removed after inspection. | 2026-08-17: Fresh build passed; existence-only inspection found `/workspace/.env` and `/workspace/.env.local` absent and `/workspace/.env.example` present; sanitized image-history scan found no `.env.local` or `OPENAI_API_KEY` markers; disposable image and temporary build log were removed. No secret value was printed or persisted. | `artifacts/validation/compose-remediation/T01/` | [x] PASS |
 | E-011 | T03 | Initial `docker compose up --build --wait postgres migration api` after replacing the scaffold | Rebuilt API becomes healthy through its application-owned probe. | 2026-08-17: FAIL preserved. The compiled API returned ready to `GET /healthz`, but Compose used `wget --spider`, sent `HEAD`, received 404, and marked the container unhealthy. | `artifacts/validation/compose-remediation/T03/` | [ ] FAIL |
 | E-012 | T03 | `pnpm --filter @agentic-chat/api build`; `pnpm --filter @agentic-chat/api test:integration`; `node infra/tests/compose-api-boot.mjs`; `docker compose up --wait --force-recreate api`; live health, tRPC, 404, PID 1, and SIGTERM probes | Compiled Node API is healthy, database-aware, routable, fail-closed, and shuts down within five seconds. | 2026-08-17: PASS. Build exited 0; API integration passed 21/21; Compose API became healthy; health returned application/database ready JSON; fixed-User `skills.get` returned the seeded typed skill; `/unknown` returned 404; `/proc/1/cmdline` named compiled `compose-main.js`; stop completed in 0.309 seconds with exit 0 and no OOM. | `artifacts/validation/compose-remediation/T03/` | [x] PASS |
+| E-013 | T02 | `docker compose config --quiet`; `node infra/tests/compose-topology.mjs`; `docker compose up --build --wait web api` | Resolved web target is exact Docker DNS and rebuilt web/API pair is healthy. | 2026-08-18: PASS. The pre-fix topology assertion failed with `actual: undefined`; after the Compose-only override, config validation passed, topology passed, and rebuilt web/API services became healthy. | `artifacts/validation/compose-remediation/T02/` | [x] PASS |
+| E-014 | T02 | `docker compose exec -T web sh -c 'wget --server-response --output-document=- http://api:3000/healthz'`; `curl --fail-with-body --show-error --get --data-urlencode 'input={"skillId":"calculator_assistant","version":"1"}' http://127.0.0.1:4173/trpc/user/skills.get`; scoped web log review | Web container reaches API by service name; through-web typed tRPC query returns the seeded response with no proxy refusal, 502, or HTML fallback. | 2026-08-18: PASS, independently rerun by parent. Container health probe resolved `api` to Docker IP and returned HTTP 200 application readiness; through-web `skills.get` returned `calculator_assistant` version `1`, typed instructions, and `calculator.evaluate`; web logs from the rerun had no proxy error, `ECONNREFUSED`, 502, or bad gateway. | `artifacts/validation/compose-remediation/T02/` | [x] PASS |
 
 ## Commit boundaries
 
