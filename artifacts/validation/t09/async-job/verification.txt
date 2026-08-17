@@ -1,0 +1,17 @@
+Task 9 async job verification
+Date: 2026-08-17
+
+- corepack pnpm test:integration -- async-job
+  Exit: 0
+  Result: 9 files, 33 tests passed.
+- corepack pnpm test:db
+  Exit: 0
+  Result: 4 files, 18 PostgreSQL tests passed.
+- corepack pnpm --filter @agentic-chat/db db:generate
+  Exit: 0
+  Result: 20 tables, no schema changes.
+- corepack pnpm lint && corepack pnpm typecheck && corepack pnpm build
+  Exit: 0
+  Result: Biome checked 141 files; all workspace typechecks and builds passed.
+
+Observed lifecycle: durable job_001 queued at 0%, running at 50%, completed at 100% with report_001. job.get_status returned the completed PostgreSQL state without consuming a BullMQ completion event.

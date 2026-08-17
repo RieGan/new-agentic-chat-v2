@@ -1,0 +1,11 @@
+Task 9 redelivery verification
+Date: 2026-08-17
+
+- Real Redis 8.2 and BullMQ 6.1.2 worker execution passed.
+- A test-only injected crash after durable 50% progress retried and completed on BullMQ attempt 2.
+- Duplicate processor completion produced three lifecycle records total: accepted, progress, completed.
+- Re-adding the deterministic completed BullMQ job ID retained one transport job.
+- A failed first enqueue left one pending PostgreSQL dispatch intent; dispatch reconciliation reused the identical payload and marked the intent once.
+- Corrupted stored report JSON was rejected by strict schema parsing.
+- Test constructors rejected NODE_ENV=production and are absent from the normal runtime root export.
+- All PostgreSQL/Redis test containers were removed after execution.
