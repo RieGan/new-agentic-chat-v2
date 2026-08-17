@@ -1,0 +1,110 @@
+<testsuites id="" name="" tests="10" failures="0" skipped="0" errors="0" time="12.513848">
+<testsuite name="ui-happy.spec.ts" timestamp="2026-08-17T11:35:29.429Z" hostname="ui-happy" tests="3" failures="0" skipped="0" time="3.066" errors="0">
+<testcase name="Task 16 accessible UI happy paths › User completes direct and async flows in both runtimes" classname="ui-happy.spec.ts" time="1.754">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../t16/playwright/ui-happy-Task-16-accessibl-ec5e3-sync-flows-in-both-runtimes-ui-happy/attachments/user-chat-desktop-cc64fbb9261bcd90ca865f3a9f06c006d5b7e96b.png]]
+
+[[ATTACHMENT|../../t16/playwright/ui-happy-Task-16-accessibl-ec5e3-sync-flows-in-both-runtimes-ui-happy/test-finished-1.png]]
+
+[[ATTACHMENT|../../t16/playwright/ui-happy-Task-16-accessibl-ec5e3-sync-flows-in-both-runtimes-ui-happy/trace.zip]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Task 16 accessible UI happy paths › Admin inspects a run and sends a model-only hidden command" classname="ui-happy.spec.ts" time="0.647">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../t16/playwright/ui-happy-Task-16-accessibl-6b250-a-model-only-hidden-command-ui-happy/attachments/admin-inspector-desktop-efcb0e7c4b3be3357ec04e773fb25b9d06886db0.png]]
+
+[[ATTACHMENT|../../t16/playwright/ui-happy-Task-16-accessibl-6b250-a-model-only-hidden-command-ui-happy/test-finished-1.png]]
+
+[[ATTACHMENT|../../t16/playwright/ui-happy-Task-16-accessibl-6b250-a-model-only-hidden-command-ui-happy/trace.zip]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Task 16 accessible UI happy paths › Admin approves and rejects exact prepared snapshots" classname="ui-happy.spec.ts" time="0.665">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../t16/playwright/ui-happy-Task-16-accessibl-f11ce-ts-exact-prepared-snapshots-ui-happy/attachments/admin-approvals-desktop-b15f7eea9852104d684ad0ce56d99d5eab5dc737.png]]
+
+[[ATTACHMENT|../../t16/playwright/ui-happy-Task-16-accessibl-f11ce-ts-exact-prepared-snapshots-ui-happy/test-finished-1.png]]
+
+[[ATTACHMENT|../../t16/playwright/ui-happy-Task-16-accessibl-f11ce-ts-exact-prepared-snapshots-ui-happy/trace.zip]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="ui-adversarial.spec.ts" timestamp="2026-08-17T11:35:29.429Z" hostname="ui-adversarial" tests="4" failures="0" skipped="0" time="3.4" errors="0">
+<testcase name="Task 16 adversarial UI boundaries › Desktop header stays sticky and approval headers remain compact" classname="ui-adversarial.spec.ts" time="0.983">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../t16/playwright/ui-adversarial-Task-16-adv-fc983-oval-headers-remain-compact-ui-adversarial/attachments/admin-approvals-scrolled-desktop-f216dd5bfab67c8d9b48cedd9466328e0e3ed429.png]]
+
+[[ATTACHMENT|../../t16/playwright/ui-adversarial-Task-16-adv-fc983-oval-headers-remain-compact-ui-adversarial/test-finished-1.png]]
+
+[[ATTACHMENT|../../t16/playwright/ui-adversarial-Task-16-adv-fc983-oval-headers-remain-compact-ui-adversarial/trace.zip]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Task 16 adversarial UI boundaries › User DOM excludes Admin content and partial-message paths" classname="ui-adversarial.spec.ts" time="1.109">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../t16/playwright/ui-adversarial-Task-16-adv-21a17-t-and-partial-message-paths-ui-adversarial/attachments/user-privacy-wait-75d31dba113aca041a0ad7c93f4ae6a6fa35bbdf.png]]
+
+[[ATTACHMENT|../../t16/playwright/ui-adversarial-Task-16-adv-21a17-t-and-partial-message-paths-ui-adversarial/test-finished-1.png]]
+
+[[ATTACHMENT|../../t16/playwright/ui-adversarial-Task-16-adv-21a17-t-and-partial-message-paths-ui-adversarial/trace.zip]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Task 16 adversarial UI boundaries › Invalid cursor recovery refetches canonically and suppresses duplicates" classname="ui-adversarial.spec.ts" time="0.586">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../t16/playwright/ui-adversarial-Task-16-adv-de0f9-y-and-suppresses-duplicates-ui-adversarial/test-finished-1.png]]
+
+[[ATTACHMENT|../../t16/playwright/ui-adversarial-Task-16-adv-de0f9-y-and-suppresses-duplicates-ui-adversarial/trace.zip]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Task 16 adversarial UI boundaries › Keyboard validation, not-found routing, and mobile reflow remain usable" classname="ui-adversarial.spec.ts" time="0.722">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../t16/playwright/ui-adversarial-Task-16-adv-25af5-mobile-reflow-remain-usable-ui-adversarial/attachments/user-chat-mobile-5784e5ff50421fbe462826799e0300b82b14275b.png]]
+
+[[ATTACHMENT|../../t16/playwright/ui-adversarial-Task-16-adv-25af5-mobile-reflow-remain-usable-ui-adversarial/test-finished-1.png]]
+
+[[ATTACHMENT|../../t16/playwright/ui-adversarial-Task-16-adv-25af5-mobile-reflow-remain-usable-ui-adversarial/trace.zip]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="ui-races.spec.ts" timestamp="2026-08-17T11:35:29.429Z" hostname="ui-adversarial" tests="3" failures="0" skipped="0" time="2.318" errors="0">
+<testcase name="Task 16 deterministic UI races › Empty initial approvals discover a request on an already eligible run" classname="ui-races.spec.ts" time="0.891">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../t16/playwright/ui-races-Task-16-determini-1946f--on-an-already-eligible-run-ui-adversarial/test-finished-1.png]]
+
+[[ATTACHMENT|../../t16/playwright/ui-races-Task-16-determini-1946f--on-an-already-eligible-run-ui-adversarial/trace.zip]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Task 16 deterministic UI races › Rapid run selection ignores the late projection response" classname="ui-races.spec.ts" time="0.658">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../t16/playwright/ui-races-Task-16-determini-3b5e4-he-late-projection-response-ui-adversarial/test-finished-1.png]]
+
+[[ATTACHMENT|../../t16/playwright/ui-races-Task-16-determini-3b5e4-he-late-projection-response-ui-adversarial/trace.zip]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Task 16 deterministic UI races › Hidden command completion cannot overwrite a newly selected run" classname="ui-races.spec.ts" time="0.769">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|../../t16/playwright/ui-races-Task-16-determini-45657-rwrite-a-newly-selected-run-ui-adversarial/test-finished-1.png]]
+
+[[ATTACHMENT|../../t16/playwright/ui-races-Task-16-determini-45657-rwrite-a-newly-selected-run-ui-adversarial/trace.zip]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+</testsuites>

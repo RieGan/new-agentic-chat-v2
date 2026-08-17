@@ -1,0 +1,169 @@
+{
+  "traces": 10,
+  "pngs": 22,
+  "allNonEmpty": true,
+  "oldest": "2026-08-17T11:35:31.780Z",
+  "newest": "2026-08-17T11:35:39.864Z",
+  "files": [
+    {
+      "path": "artifacts/validation/t16/playwright/ui-adversarial-Task-16-adv-21a17-t-and-partial-message-paths-ui-adversarial/trace.zip",
+      "size": 994612,
+      "mtime": "2026-08-17T11:35:36.038Z"
+    },
+    {
+      "path": "artifacts/validation/t16/playwright/ui-adversarial-Task-16-adv-25af5-mobile-reflow-remain-usable-ui-adversarial/trace.zip",
+      "size": 270562,
+      "mtime": "2026-08-17T11:35:37.401Z"
+    },
+    {
+      "path": "artifacts/validation/t16/playwright/ui-adversarial-Task-16-adv-de0f9-y-and-suppresses-duplicates-ui-adversarial/trace.zip",
+      "size": 371119,
+      "mtime": "2026-08-17T11:35:36.658Z"
+    },
+    {
+      "path": "artifacts/validation/t16/playwright/ui-adversarial-Task-16-adv-fc983-oval-headers-remain-compact-ui-adversarial/trace.zip",
+      "size": 466959,
+      "mtime": "2026-08-17T11:35:34.862Z"
+    },
+    {
+      "path": "artifacts/validation/t16/playwright/ui-happy-Task-16-accessibl-6b250-a-model-only-hidden-command-ui-happy/trace.zip",
+      "size": 740353,
+      "mtime": "2026-08-17T11:35:32.662Z"
+    },
+    {
+      "path": "artifacts/validation/t16/playwright/ui-happy-Task-16-accessibl-ec5e3-sync-flows-in-both-runtimes-ui-happy/trace.zip",
+      "size": 1469826,
+      "mtime": "2026-08-17T11:35:31.966Z"
+    },
+    {
+      "path": "artifacts/validation/t16/playwright/ui-happy-Task-16-accessibl-f11ce-ts-exact-prepared-snapshots-ui-happy/trace.zip",
+      "size": 626852,
+      "mtime": "2026-08-17T11:35:33.370Z"
+    },
+    {
+      "path": "artifacts/validation/t16/playwright/ui-races-Task-16-determini-1946f--on-an-already-eligible-run-ui-adversarial/trace.zip",
+      "size": 457241,
+      "mtime": "2026-08-17T11:35:38.349Z"
+    },
+    {
+      "path": "artifacts/validation/t16/playwright/ui-races-Task-16-determini-3b5e4-he-late-projection-response-ui-adversarial/trace.zip",
+      "size": 409257,
+      "mtime": "2026-08-17T11:35:39.051Z"
+    },
+    {
+      "path": "artifacts/validation/t16/playwright/ui-races-Task-16-determini-45657-rwrite-a-newly-selected-run-ui-adversarial/trace.zip",
+      "size": 529094,
+      "mtime": "2026-08-17T11:35:39.864Z"
+    },
+    {
+      "path": "artifacts/validation/t16/playwright/ui-adversarial-Task-16-adv-21a17-t-and-partial-message-paths-ui-adversarial/attachments/user-privacy-wait-75d31dba113aca041a0ad7c93f4ae6a6fa35bbdf.png",
+      "size": 183472,
+      "mtime": "2026-08-17T11:35:35.888Z"
+    },
+    {
+      "path": "artifacts/validation/t16/playwright/ui-adversarial-Task-16-adv-21a17-t-and-partial-message-paths-ui-adversarial/test-finished-1.png",
+      "size": 103916,
+      "mtime": "2026-08-17T11:35:35.922Z"
+    },
+    {
+      "path": "artifacts/validation/t16/playwright/ui-adversarial-Task-16-adv-21a17-t-and-partial-message-paths-ui-adversarial/user-privacy-wait.png",
+      "size": 183472,
+      "mtime": "2026-08-17T11:35:35.887Z"
+    },
+    {
+      "path": "artifacts/validation/t16/playwright/ui-adversarial-Task-16-adv-25af5-mobile-reflow-remain-usable-ui-adversarial/attachments/user-chat-mobile-5784e5ff50421fbe462826799e0300b82b14275b.png",
+      "size": 80079,
+      "mtime": "2026-08-17T11:35:37.109Z"
+    },
+    {
+      "path": "artifacts/validation/t16/playwright/ui-adversarial-Task-16-adv-25af5-mobile-reflow-remain-usable-ui-adversarial/test-finished-1.png",
+      "size": 27279,
+      "mtime": "2026-08-17T11:35:37.366Z"
+    },
+    {
+      "path": "artifacts/validation/t16/playwright/ui-adversarial-Task-16-adv-25af5-mobile-reflow-remain-usable-ui-adversarial/user-chat-mobile.png",
+      "size": 80079,
+      "mtime": "2026-08-17T11:35:37.094Z"
+    },
+    {
+      "path": "artifacts/validation/t16/playwright/ui-adversarial-Task-16-adv-de0f9-y-and-suppresses-duplicates-ui-adversarial/test-finished-1.png",
+      "size": 49392,
+      "mtime": "2026-08-17T11:35:36.592Z"
+    },
+    {
+      "path": "artifacts/validation/t16/playwright/ui-adversarial-Task-16-adv-fc983-oval-headers-remain-compact-ui-adversarial/admin-approvals-scrolled-desktop.png",
+      "size": 29531,
+      "mtime": "2026-08-17T11:35:34.753Z"
+    },
+    {
+      "path": "artifacts/validation/t16/playwright/ui-adversarial-Task-16-adv-fc983-oval-headers-remain-compact-ui-adversarial/attachments/admin-approvals-scrolled-desktop-f216dd5bfab67c8d9b48cedd9466328e0e3ed429.png",
+      "size": 29531,
+      "mtime": "2026-08-17T11:35:34.754Z"
+    },
+    {
+      "path": "artifacts/validation/t16/playwright/ui-adversarial-Task-16-adv-fc983-oval-headers-remain-compact-ui-adversarial/test-finished-1.png",
+      "size": 29531,
+      "mtime": "2026-08-17T11:35:34.787Z"
+    },
+    {
+      "path": "artifacts/validation/t16/playwright/ui-happy-Task-16-accessibl-6b250-a-model-only-hidden-command-ui-happy/admin-inspector-desktop.png",
+      "size": 191585,
+      "mtime": "2026-08-17T11:35:32.547Z"
+    },
+    {
+      "path": "artifacts/validation/t16/playwright/ui-happy-Task-16-accessibl-6b250-a-model-only-hidden-command-ui-happy/attachments/admin-inspector-desktop-efcb0e7c4b3be3357ec04e773fb25b9d06886db0.png",
+      "size": 191585,
+      "mtime": "2026-08-17T11:35:32.548Z"
+    },
+    {
+      "path": "artifacts/validation/t16/playwright/ui-happy-Task-16-accessibl-6b250-a-model-only-hidden-command-ui-happy/test-finished-1.png",
+      "size": 109548,
+      "mtime": "2026-08-17T11:35:32.584Z"
+    },
+    {
+      "path": "artifacts/validation/t16/playwright/ui-happy-Task-16-accessibl-ec5e3-sync-flows-in-both-runtimes-ui-happy/attachments/user-chat-desktop-cc64fbb9261bcd90ca865f3a9f06c006d5b7e96b.png",
+      "size": 195756,
+      "mtime": "2026-08-17T11:35:31.781Z"
+    },
+    {
+      "path": "artifacts/validation/t16/playwright/ui-happy-Task-16-accessibl-ec5e3-sync-flows-in-both-runtimes-ui-happy/test-finished-1.png",
+      "size": 101758,
+      "mtime": "2026-08-17T11:35:31.831Z"
+    },
+    {
+      "path": "artifacts/validation/t16/playwright/ui-happy-Task-16-accessibl-ec5e3-sync-flows-in-both-runtimes-ui-happy/user-chat-desktop.png",
+      "size": 195756,
+      "mtime": "2026-08-17T11:35:31.780Z"
+    },
+    {
+      "path": "artifacts/validation/t16/playwright/ui-happy-Task-16-accessibl-f11ce-ts-exact-prepared-snapshots-ui-happy/admin-approvals-desktop.png",
+      "size": 97312,
+      "mtime": "2026-08-17T11:35:33.241Z"
+    },
+    {
+      "path": "artifacts/validation/t16/playwright/ui-happy-Task-16-accessibl-f11ce-ts-exact-prepared-snapshots-ui-happy/attachments/admin-approvals-desktop-b15f7eea9852104d684ad0ce56d99d5eab5dc737.png",
+      "size": 97312,
+      "mtime": "2026-08-17T11:35:33.243Z"
+    },
+    {
+      "path": "artifacts/validation/t16/playwright/ui-happy-Task-16-accessibl-f11ce-ts-exact-prepared-snapshots-ui-happy/test-finished-1.png",
+      "size": 95920,
+      "mtime": "2026-08-17T11:35:33.299Z"
+    },
+    {
+      "path": "artifacts/validation/t16/playwright/ui-races-Task-16-determini-1946f--on-an-already-eligible-run-ui-adversarial/test-finished-1.png",
+      "size": 83004,
+      "mtime": "2026-08-17T11:35:38.282Z"
+    },
+    {
+      "path": "artifacts/validation/t16/playwright/ui-races-Task-16-determini-3b5e4-he-late-projection-response-ui-adversarial/test-finished-1.png",
+      "size": 111440,
+      "mtime": "2026-08-17T11:35:38.986Z"
+    },
+    {
+      "path": "artifacts/validation/t16/playwright/ui-races-Task-16-determini-45657-rwrite-a-newly-selected-run-ui-adversarial/test-finished-1.png",
+      "size": 116310,
+      "mtime": "2026-08-17T11:35:39.804Z"
+    }
+  ]
+}
