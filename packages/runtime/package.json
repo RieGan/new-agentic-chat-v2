@@ -1,0 +1,38 @@
+{
+  "name": "@agentic-chat/runtime",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./environment": "./src/environment.ts",
+    "./state-workflow": "./src/state-workflow/index.ts",
+    "./testing": "./src/testing/index.ts"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "env:check": "pnpm build && node dist/check-environment.js",
+    "test": "vitest run",
+    "test:integration": "vitest run tests/*.integration.test.ts",
+    "test:temporal-replay": "node scripts/task18-temporal-replay.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@agentic-chat/contracts": "workspace:*",
+    "@agentic-chat/db": "workspace:*",
+    "@agentic-chat/tools": "workspace:*",
+    "@ai-sdk/openai": "4.0.42",
+    "@temporalio/client": "1.22.0",
+    "@temporalio/common": "1.22.0",
+    "@temporalio/worker": "1.22.0",
+    "@temporalio/workflow": "1.22.0",
+    "ai": "7.0.66",
+    "bullmq": "6.1.2",
+    "ioredis": "6.0.0",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@agentic-chat/testkit": "workspace:*",
+    "@temporalio/testing": "1.22.0"
+  }
+}
