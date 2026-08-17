@@ -1,0 +1,33 @@
+Manual QA: isolated PostgreSQL on 127.0.0.1:55439
+Image/server: postgres:17-alpine / PostgreSQL 17.11 aarch64
+
+Commands:
+1. DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:55439/agentic_chat_manual pnpm --filter @agentic-chat/db db:migrate
+2. pnpm --filter @agentic-chat/db build
+3. DATABASE_URL=... pnpm --filter @agentic-chat/db db:seed
+4. DATABASE_URL=... pnpm --filter @agentic-chat/db db:migrate
+5. docker exec agentic-chat-t03-manual psql ... (literal queries below)
+
+Observed migration/seed results:
+- First migrate: migrations applied successfully.
+- Seed: node dist/seed-cli.js exited 0.
+- Second migrate: migrations applied successfully with migration ledger still at one row.
+
+Literal psql observations:
+- PostgreSQL 17.11 on aarch64-unknown-linux-musl.
+- users=2; ids=mvp_admin,mvp_user.
+- skills=3; ids=calculator_assistant,communication_assistant,report_assistant.
+- tools=6; ids=calculator.evaluate,job.get_status,notification.preview,
+  notification.send_email,report.generate,skill.load.
+- run_manual runtime=simple_loop, status=queued, version=0, fencing_version=0.
+- drizzle.__drizzle_migrations rows=1.
+- Required sampled indexes=4 and required sampled constraints=4.
+
+Committed client disconnect/reconnect probe:
+- Transaction updated run_manual and inserted event_manual_1 plus dispatch_manual_1, then COMMIT.
+- A new psql client observed status=running, version=1, events=1, intents=1.
+
+Injected failure/rollback probe:
+- A transaction updated run_manual then attempted duplicate (run_id, sequence)=(run_manual,1).
+- PostgreSQL raised run_events_run_sequence_unique; client disconnected in aborted transaction.
+- A new psql client still observed status=running, version=1, events=1, intents=1.

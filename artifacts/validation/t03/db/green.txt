@@ -1,0 +1,27 @@
+Task 03 automated verification
+Date: 2026-08-16
+
+Command: pnpm test:db
+Exit: 0
+Result: 3 test files passed; 15 tests passed; PostgreSQL 17 containers used by every suite.
+
+Command: pnpm typecheck
+Exit: 0
+Result: all eight workspace packages with typecheck scripts passed, including packages/db.
+
+Command: pnpm lint
+Exit: 0
+Result: Biome checked 85 files; no fixes applied.
+
+Command: pnpm --filter @agentic-chat/db build
+Exit: 0
+Result: tsc -p tsconfig.build.json completed successfully. Generated dist was removed after QA.
+
+Command: pnpm --filter @agentic-chat/db db:generate
+Exit: 0
+Result: Drizzle inspected 20 tables and reported "No schema changes, nothing to migrate".
+
+Red-to-green approval gate:
+- Before fix: pending recordSimulatedSend resolved and the test failed with
+  "promise resolved ... instead of rejecting".
+- After fix: control-records.integration.test.ts passed 4/4 against PostgreSQL 17.

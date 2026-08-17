@@ -1,0 +1,11 @@
+Cleanup commands:
+- docker rm --force --volumes agentic-chat-t03-manual
+- rm -rf packages/db/dist
+- test suites stop every UUID-named PostgreSQL container with force/removeVolumes semantics
+
+Cleanup receipt:
+docker ps --all filtered for agentic-chat-t03-manual, agentic-chat-db-test-, and
+agentic-chat-db-debug-readiness returned no rows.
+
+No fixed host ports, Task 03 PostgreSQL containers, anonymous test resources, or temporary build
+output remain.
