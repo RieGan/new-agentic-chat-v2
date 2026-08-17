@@ -71,6 +71,7 @@ After remediation, the first `curl` must return application-owned readiness and 
 | CMP-PROVIDER-04 | High | [x] Closed | Both model workers parse provider environment before entering their run loop and select through `createComposeProvider()`; the fixture worker remains provider-independent. | Worker startup now selects the Task 18 deterministic provider for parsed mock mode and the OpenAI Responses adapter for parsed live mode. |
 | CMP-MEM-05 | High | [x] Closed | Workers run with a 128 MB V8 old-space cap under a 256 MiB hard limit, with no cgroup reservation; all workers stay healthy without OOM events and fresh logs contain no Temporal unsafe-memory warning. | Temporal SDK 1.22 selects `memory.low`/`memory.min` before `memory.max`; the former 64 MiB reservation made its 75% recommendation 48 MiB even though the hard limit was 256 MiB. |
 | CMP-E2E-06 | Critical | [ ] Open | `playwright.config.ts` starts `packages/testkit/e2e/ui-fixture-server.ts`; UI suites do not traverse Compose services. | Browser tests replace the Vite, API, database, and worker path with fixture services. |
+| CMP-APPROVAL-07 | High | [x] Closed | Deterministic barriers now show an explicit loading state, never false empty, while run discovery is held; subscribe-then-reconcile then renders exactly one card with one target-run subscription. Browser instrumentation also proves that target subscription closes exactly once on route teardown and cannot update the old route afterward. Fresh 375x667 mobile and keyboard-focus captures passed overflow, reachability, and 2px `:focus-visible` assertions. | Approval bootstrap originally had neither a post-subscription canonical reconciliation nor explicit readiness, so the route could first miss an approval and later misrepresent an uninitialized snapshot as empty. |
 
 ## Atomic remediation tasks
 
@@ -205,6 +206,44 @@ docker compose logs worker-workflow
 
 **PASS:** the boot and topology tests exit 0; the worker Node child includes exactly `--max-old-space-size=128`; cgroup `memory.low` and `memory.min` are zero while `memory.max` remains 268435456; the reported V8 heap limit is 131 MiB; all workers stay healthy through two startups and both runtime restart scenarios; OOM events remain zero; and fresh worker logs contain no unsafe-memory warning or V8 fatal marker.
 
+### [x] T07: Reconcile approval bootstrap after subscriptions
+
+**Issue:** CMP-APPROVAL-07
+**Fix files:** `apps/web/src/state/use-approvals.ts`, `apps/web/src/routes/admin-approvals.tsx`, `packages/testkit/e2e/ui-approval-support.ts`, `packages/testkit/e2e/ui-approvals.spec.ts`, `packages/testkit/e2e/ui-races.spec.ts`, `playwright.config.ts`, `docs/compose-remediation-and-regression.md`
+**Commit:** `fix(web): reconcile approval bootstrap gap`
+
+Tasks:
+
+- [x] Add deterministic request barriers around the empty pending snapshots and held run discovery.
+- [x] Prove the old concurrent ordering misses an approval created before run subscriptions register.
+- [x] Reconcile canonical pending approvals once after all discovered-run subscriptions register.
+- [x] Preserve event refreshes, cursor behavior, Admin-only routing, approval focus, and one keyed subscription per run.
+- [x] Suppress no-op approval state commits when IDs, statuses, and versions are unchanged.
+- [x] Expose strict bootstrap readiness only after the post-subscription canonical load commits successfully.
+- [x] Show textual loading before readiness, initialized empty only after readiness, and the existing error without permanent loading.
+- [x] Split approval races into a focused spec/support boundary so every source and test file remains below 250 pure LOC.
+- [x] Capture 375x667 mobile reflow and keyboard `:focus-visible` evidence with overflow and control-reachability assertions.
+- [x] Instrument the real target-run `EventSource` before navigation and prove exactly one open, one teardown close, and no post-unmount route update.
+
+Focused verification:
+
+```sh
+corepack pnpm exec playwright test packages/testkit/e2e/ui-approvals.spec.ts --config=playwright.config.ts --project=ui-adversarial --grep="Approval bootstrap" --workers=1
+corepack pnpm exec playwright test packages/testkit/e2e/ui-approvals.spec.ts --config=playwright.config.ts --project=ui-adversarial --grep="Approval subscription closes once" --workers=1
+corepack pnpm exec playwright test packages/testkit/e2e/ui-approvals.spec.ts --config=playwright.config.ts --project=ui-adversarial --workers=1
+corepack pnpm exec playwright test --config=playwright.config.ts --project=ui-happy --project=ui-adversarial --workers=1
+corepack pnpm --filter @agentic-chat/web typecheck
+corepack pnpm --filter @agentic-chat/web build
+corepack pnpm exec biome check apps/web/src/state/use-approvals.ts apps/web/src/routes/admin-approvals.tsx packages/testkit/e2e/ui-approval-support.ts packages/testkit/e2e/ui-approvals.spec.ts packages/testkit/e2e/ui-races.spec.ts playwright.config.ts
+```
+
+**PASS:** the focused readiness test first failed because `approvals-loading` did not exist while run discovery was held. After the explicit readiness fix and teardown coverage, focused approval coverage passed 6/6 and the full one-worker UI run passed 15/15 with zero unexpected browser console or page errors. The instrumented target-run `EventSource` opened once, closed once on route teardown, and remained closed after a new approval mutation while the old route stayed absent. The mobile full-page capture is 375x1117 from a 375x667 viewport; the keyboard-focus capture is 1280x720. Web typecheck, production build, changed-TypeScript-file Biome/no-excuse, pure-LOC, and changed-file TypeScript diagnostics passed.
+
+Visual QA history:
+
+- **REVISE:** the first independent review found a false-empty bootstrap surface plus missing mobile approval and keyboard-focus captures.
+- **PASS candidate:** two fresh independent read-only reviews found no product or evidence blockers in the current mobile/focus captures; downstream independent review remains the final acceptance gate.
+
 ### [ ] T06: Add real-Compose BrowserMCP coverage
 
 **Issue:** CMP-E2E-06  
@@ -307,7 +346,7 @@ Run this matrix from a clean checkout state after T01 to T06 are individually ve
 | Restart State Workflow | `pnpm test:restart --runtime=state_workflow` | Stable workflow, run, call, job, and approval IDs; one resume; other worker stays healthy. | [ ] NOT RUN |
 | Parity | `pnpm test:parity` | Normalized shared traces and final outcomes match across runtimes; runtime diagnostics remain separate. | [ ] NOT RUN |
 | UI happy | `pnpm test:e2e --project=ui-happy` | Fixture UI suite remains green for direct, async, approval, rejection, and hidden-command paths. | [ ] NOT RUN |
-| UI adversarial | `pnpm test:e2e --project=ui-adversarial` | Reconnect, keyboard, race, duplicate suppression, privacy, and atomic-message checks pass. | [ ] NOT RUN |
+| UI adversarial | `pnpm test:e2e --project=ui-adversarial` | Reconnect, keyboard, race, duplicate suppression, privacy, and atomic-message checks pass. | [x] PASS |
 | Real Compose browser, Simple Loop | `pnpm test:compose-browser --runtime=simple_loop` | User and Admin BrowserMCP rows for Simple Loop pass through real services. | [ ] NOT RUN |
 | Real Compose browser, State Workflow | `pnpm test:compose-browser --runtime=state_workflow` | User and Admin BrowserMCP rows for State Workflow pass through real services. | [ ] NOT RUN |
 | Health | `docker compose ps && curl --fail-with-body http://127.0.0.1:3000/healthz && curl --fail-with-body http://127.0.0.1:4173/` | Every required service is healthy; API readiness is application-owned; web is reachable. | [ ] NOT RUN |
@@ -360,6 +399,10 @@ Add rows as commands run. Preserve failures as evidence. Never rewrite a failed 
 | E-015 | T05 | Clean rebuilt workers with `node --max-old-space-size=48` under the 256 MiB worker limit | Workers should boot without V8 fatal errors. | 2026-08-17: FAIL preserved. All three roles repeatedly reached roughly 45-48 MiB heap usage and emitted V8 `FATAL ERROR` / `heap out of memory` before readiness. | `artifacts/validation/compose-remediation/T05/` | [ ] FAIL |
 | E-016 | T05 | Clean rebuilt workers with `node --max-old-space-size=128` while the 64 MiB worker reservation remained | Workers should boot without the Temporal unsafe-memory warning. | 2026-08-17: FAIL preserved. All workers became healthy with 131 MiB V8 limits and `OOMKilled=false`, but fresh workflow logs emitted `high probability` and recommended `--max-old-space-size=48`; cgroup reservation precedence selected 64 MiB. | `artifacts/validation/compose-remediation/T05/` | [ ] FAIL |
 | E-017 | T05 | Remove worker reservation; clean rebuild/startup twice; numeric cgroup probes; PID/heap/OOM/memory probes; `node packages/testkit/scripts/task18-restart.mjs`; fresh log scan | No nonzero reservation, 256 MiB hard limit retained, bounded 128 MB workers healthy through repeated startup and Simple Loop/State Workflow restart recovery, no OOM events, and no unsafe/fatal log markers. | 2026-08-17: PASS. Installed Temporal SDK 1.22 source showed `memory.low ?? memory.min ?? soft_limit` selected before `memory.high ?? memory.max`, then 75% recommendation. Workflow cgroup values were `memory.low=0`, `memory.min=0`, `memory.max=268435456`, `memory.events` all zero; child commands had exactly `--max-old-space-size=128`; V8 limit was 131 MiB; startup memory stayed below 256 MiB; all workers emitted `worker.ready` on both startups; restart gate passed both runtime recovery scenarios and cleanup; fresh logs matched neither unsafe warning nor `heap out of memory`/`FATAL ERROR`. | `artifacts/validation/compose-remediation/T05/`, `artifacts/validation/final-runtime-evidence/` | [x] PASS |
+| E-018 | T07 | Focused approval-bootstrap Playwright red/green; full `ui-happy` plus `ui-adversarial`; web typecheck/build; changed-TypeScript-file Biome and LSP diagnostics | An approval created between the empty snapshot and advanced run cursor appears exactly once without reload or duplicate target subscription; all existing UI regressions remain green. | 2026-08-18: PASS. The old ordering failed the focused barrier at one expected card versus zero after connection. Subscribe-then-reconcile passed the same test in 0.962 seconds; the full one-worker browser run passed 11/11 in 13.2 seconds, including all four race scenarios. Every suite-level console/page-error assertion remained empty; web typecheck and production build exited 0; changed-TypeScript-file Biome and LSP diagnostics were clean. | `artifacts/validation/t16/playwright/` | [x] PASS |
+| E-019 | T07 Visual QA revision | Independent approval visual review after E-018 | Bootstrap must not render false empty; mobile approval and keyboard-focus evidence must exist. | 2026-08-18: REVISE preserved. Before post-subscription canonical load completed, the route rendered `No pending approvals.` because approval state had no explicit readiness. The evidence set also lacked a 375x667 pending-card capture and a keyboard-focused approval-action capture. | `artifacts/validation/t16/playwright/` | [ ] FAIL |
+| E-020 | T07 Visual QA PASS candidate | Focused readiness red/green; focused approval 5/5; full UI 14/14; mobile/focus captures; two independent read-only reviews | Loading replaces false empty until successful reconciliation; exact one card/subscription remains; mobile has no horizontal overflow and both actions are reachable; keyboard focus ring is visible. | 2026-08-18: PASS candidate. The pre-fix focused test failed on missing `approvals-loading`; green passed in 0.914 seconds. Final focused approval passed 5/5; final one-worker UI passed 14/14 in 14.0 seconds with zero unexpected console/page errors. Mobile document/card `scrollWidth <= clientWidth`; approve/reject were visible and enabled. Keyboard tab reached Approve, `:focus-visible` was true, and computed outline width was at least 2px. Captures were valid PNGs at 375x1117 (full page from 375x667) and 1280x720. Both independent read-only reviewers returned PASS with no blockers. | `artifacts/validation/t16/playwright/ui-approvals-Approval-UI-r-84456-rizontal-overflow-on-mobile-ui-adversarial/admin-approvals-mobile-375x667.png`; `artifacts/validation/t16/playwright/ui-approvals-Approval-UI-r-c804b--approval-action-focus-ring-ui-adversarial/admin-approvals-keyboard-focus.png` | [x] PASS |
+| E-021 | T07 subscription cleanup PASS | Browser-native target `EventSource` constructor/close instrumentation installed before navigation; focused teardown regression; focused approval 6/6; full UI 15/15 | The `run_race_fast` approval stream opens once, closes once when the route tears down, and cannot update its old route after a later approval mutation. | 2026-08-18: PASS. The focused cleanup test passed in 1.0 seconds with counters `{ opened: 1, closed: 0 }` before navigation and `{ opened: 1, closed: 1 }` after teardown. A subsequent fixture approval left the old route and approval cards absent, retained the exact counters, and emitted no console/page error. Focused approval passed 6/6 in 6.1 seconds; the full one-worker UI suite passed 15/15 in 14.6 seconds. Web typecheck/build, changed-file Biome/no-excuse, pure-LOC, and changed-file diagnostics passed. | `artifacts/validation/t16/playwright/` | [x] PASS |
 
 ## Commit boundaries
 
@@ -370,7 +413,8 @@ Add rows as commands run. Preserve failures as evidence. Never rewrite a failed 
 | 3 | T03 | `fix(api): run real trpc server in compose` | API startup, readiness, image build, Compose wiring, and focused tests together. | [ ] |
 | 4 | T04 | `fix(runtime): honor compose provider configuration` | Provider factory, worker wiring, base and override rules, and provider tests together. | [ ] |
 | 5 | T05 | `fix(worker): cap node heap for compose workers` | Worker Node flags, cgroup boundary, and focused topology/boot assertions only. | [ ] |
-| 6 | T06 | `test(compose): cover real browser application flows` | Real-Compose browser harness, scripts, matrix tests, and package scripts together. | [ ] |
+| 6 | T07 | `fix(web): reconcile approval bootstrap gap` | Approval hook bootstrap ordering, deterministic UI race regression, and CMP-APPROVAL-07 tracker evidence only. | [ ] |
+| 7 | T06 | `test(compose): cover real browser application flows` | Real-Compose browser harness, scripts, matrix tests, and package scripts together. | [ ] |
 
 Do not squash these boundaries. Do not mix generated evidence or local environment files into any commit. If a task needs a migration or contract change, keep that change and its tests in the same task commit and record the scope change here before implementation.
 
@@ -378,8 +422,8 @@ Do not squash these boundaries. Do not mix generated evidence or local environme
 
 The remediation is complete only when every item below is checked:
 
-- [ ] CMP-SEC-01 through CMP-E2E-06 are closed with focused `PASS` evidence.
-- [ ] T01 through T06 each have exactly one atomic conventional commit using the listed message.
+- [ ] CMP-SEC-01 through CMP-E2E-06 and CMP-APPROVAL-07 are closed with focused `PASS` evidence.
+- [ ] T01 through T07 each have exactly one atomic conventional commit using the listed message.
 - [ ] The security rules are satisfied, including image inspection and secret-redaction checks.
 - [ ] Base Compose is deterministic and requires no provider credential.
 - [ ] Optional live-provider override is explicit, isolated, redacted, and non-gating.
