@@ -11,7 +11,19 @@ import type { ApiServices } from "./services.js"
 export type ApiServerOptions = {
   readonly services: ApiServices
   readonly events: RunEventSource
+  readonly readiness: () => Promise<boolean>
 }
+
+const READY_RESPONSE = JSON.stringify({
+  service: "api",
+  status: "ready",
+  dependencies: { database: "ready" },
+})
+const NOT_READY_RESPONSE = JSON.stringify({
+  service: "api",
+  status: "not_ready",
+  dependencies: { database: "unavailable" },
+})
 
 export const createApiHttpServer = (options: ApiServerOptions): Server => {
   const userHandler = createHTTPHandler({
@@ -25,6 +37,14 @@ export const createApiHttpServer = (options: ApiServerOptions): Server => {
     createContext: () => createApiContext(FIXED_ACTORS.ADMIN, options.services, options.events),
   })
   return createServer((request, response) => {
+    if (request.method === "GET" && request.url === "/healthz") {
+      void options.readiness().then((ready) => {
+        response.statusCode = ready ? 200 : 503
+        response.setHeader("content-type", "application/json")
+        response.end(ready ? READY_RESPONSE : NOT_READY_RESPONSE)
+      })
+      return
+    }
     if (request.url?.startsWith("/trpc/user/")) {
       void userHandler(request, response)
       return

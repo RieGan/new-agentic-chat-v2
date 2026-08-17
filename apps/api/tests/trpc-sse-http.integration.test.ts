@@ -42,7 +42,7 @@ describe("tRPC HTTP and SSE transport", () => {
       ids: createTestIds("http_sse"),
       tools: createToolRegistry(),
     })
-    const server = createApiHttpServer({ services, events })
+    const server = createApiHttpServer({ services, events, readiness: async () => true })
     await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", resolve))
     const address = server.address()
     if (address === null || typeof address === "string") throw new TypeError("Expected TCP address")
@@ -119,7 +119,7 @@ describe("tRPC HTTP and SSE transport", () => {
       ids: createTestIds("http_stale"),
       tools: createToolRegistry(),
     })
-    const server = createApiHttpServer({ services, events })
+    const server = createApiHttpServer({ services, events, readiness: async () => true })
     await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", resolve))
     const address = server.address()
     if (address === null || typeof address === "string") throw new TypeError("Expected TCP address")
