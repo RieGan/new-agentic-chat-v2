@@ -1,0 +1,29 @@
+$ pnpm --filter @agentic-chat/testkit test:e2e --runtime=simple_loop
+$ node scripts/run-playwright.mjs --runtime=simple_loop
+
+Running 20 tests using 1 worker
+
+  ✓   1 [runtime] › e2e/simple-loop-durable.spec.ts:56:3 › Simple Loop F06-F10 durable recovery › F06 report resumes once from canonical completion (4.7s)
+  ✓   2 [runtime] › e2e/simple-loop-durable.spec.ts:68:3 › Simple Loop F06-F10 durable recovery › F07 @restart pending approval executes exactly one simulated send (4.8s)
+  ✓   3 [runtime] › e2e/simple-loop-durable.spec.ts:80:3 › Simple Loop F06-F10 durable recovery › F08 @restart pending approval rejection preserves the binding (4.9s)
+  ✓   4 [runtime] › e2e/simple-loop-durable.spec.ts:92:3 › Simple Loop F06-F10 durable recovery › F09 hidden Admin guidance resumes the same User-waiting run (4.7s)
+  ✓   5 [runtime] › e2e/simple-loop-durable.spec.ts:104:3 › Simple Loop F06-F10 durable recovery › F10 @restart worker-only recovery preserves report identities (4.8s)
+  ✓   6 [runtime] › e2e/simple-loop.spec.ts:30:3 › Simple Loop F01-F05 › F01 direct answer is atomically visible (150ms)
+  ✓   7 [runtime] › e2e/simple-loop.spec.ts:59:3 › Simple Loop F01-F05 › F02 skill load remains a control operation (75ms)
+  ✓   8 [runtime] › e2e/simple-loop.spec.ts:95:3 › Simple Loop F01-F05 › F03 calculator succeeds through the bounded agent (90ms)
+  ✓   9 [runtime] › e2e/simple-loop.spec.ts:141:3 › Simple Loop F01-F05 › F04 typed calculator failure still yields a complete explanation (74ms)
+  ✓  10 [runtime] › e2e/simple-loop.spec.ts:190:3 › Simple Loop F01-F05 › F05 missing and prohibited requests remain side-effect free (110ms)
+  -  11 [runtime] › e2e/state-workflow-durable.spec.ts:56:3 › State Workflow F06-F10 durable recovery › F06 report resumes once from canonical completion
+  -  12 [runtime] › e2e/state-workflow-durable.spec.ts:63:3 › State Workflow F06-F10 durable recovery › F07 @restart pending approval executes exactly one simulated send
+  -  13 [runtime] › e2e/state-workflow-durable.spec.ts:75:3 › State Workflow F06-F10 durable recovery › F08 @restart pending approval preserves rejection binding
+  -  14 [runtime] › e2e/state-workflow-durable.spec.ts:87:3 › State Workflow F06-F10 durable recovery › F09 same-run continuation applies hidden guidance once
+  -  15 [runtime] › e2e/state-workflow-durable.spec.ts:94:3 › State Workflow F06-F10 durable recovery › F10 @restart Temporal worker recovers accepted report
+  -  16 [runtime] › e2e/state-workflow.spec.ts:39:3 › State Workflow F01-F05 › F01 direct answer is atomically visible
+  -  17 [runtime] › e2e/state-workflow.spec.ts:71:3 › State Workflow F01-F05 › F02 skill load remains a control operation
+  -  18 [runtime] › e2e/state-workflow.spec.ts:104:3 › State Workflow F01-F05 › F03 calculator succeeds through real Temporal Activities
+  -  19 [runtime] › e2e/state-workflow.spec.ts:141:3 › State Workflow F01-F05 › F04 typed calculator failure still completes with final text
+  -  20 [runtime] › e2e/state-workflow.spec.ts:174:3 › State Workflow F01-F05 › F05 missing and prohibited requests invoke no prohibited fixture
+
+  10 skipped
+  10 passed (32.1s)
+Acceptance matrix simple_loop: 10/10 PASS
