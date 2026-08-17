@@ -1,0 +1,26 @@
+Task: 02 shared Zod contracts
+Date: 2026-08-16
+
+Dependency
+- pnpm --filter @agentic-chat/contracts add zod@4.4.3: exit 0
+- packages/contracts/package.json and pnpm-lock.yaml updated once by pnpm
+
+Contract tests, final repeated runs
+- pnpm test:contracts: exit 0, 5 files passed, 75 tests passed
+- pnpm test:contracts: exit 0, 5 files passed, 75 tests passed
+- Results and counts were identical; --passWithNoTests is absent
+
+Workspace quality
+- corepack pnpm lint: exit 0, Biome checked 54 files with no fixes required
+- pnpm typecheck: exit 0 across 8 workspace projects
+- LSP diagnostics: 18 contracts TypeScript files scanned, 0 files with errors, 0 diagnostics
+- TypeScript no-excuse audit: 18 files, no violations
+- Pure LOC audit: all source/test files <=250; events.ts 227 and errors.ts 232 are in the warning band
+
+Boundary audit
+- AST import scan: contracts source imports only zod and local contract modules
+- Forbidden import/text scan: no AI SDK, Temporal, BullMQ, Drizzle, React, app-module, message.delta, loose z.record(z.unknown()), any, assertion escape, or passWithNoTests match
+- Workspace has no Git repository metadata, so git status was unavailable; changes were limited to packages/contracts, package lock metadata, Task 02 evidence, and append-only notepads
+
+Manual QA
+- See manual-qa.txt and cleanup.txt

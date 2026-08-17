@@ -1,0 +1,12 @@
+Command repeated three times:
+pnpm --filter @agentic-chat/db exec vitest run --fileParallelism=false tests/races.integration.test.ts
+
+Run 1: 1 file passed, 4 tests passed, 0 failed.
+Run 2: 1 file passed, 4 tests passed, 0 failed.
+Run 3: 1 file passed, 4 tests passed, 0 failed.
+
+Each run created a unique PostgreSQL 17 container on an ephemeral bound port and verified:
+- exactly one terminal approval decision;
+- one simulated send by call_id under concurrent insert;
+- one run event per (run_id, sequence) under concurrent append;
+- stale aggregate version and stale lease fencing rejection.
