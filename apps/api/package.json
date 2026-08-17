@@ -1,0 +1,23 @@
+{
+  "name": "@agentic-chat/api",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test:integration": "vitest run tests/trpc-sse*.integration.test.ts --fileParallelism=false",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@agentic-chat/contracts": "workspace:*",
+    "@agentic-chat/db": "workspace:*",
+    "@agentic-chat/runtime": "workspace:*",
+    "@agentic-chat/tools": "workspace:*",
+    "@trpc/server": "11.18.0",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@trpc/client": "11.18.0",
+    "eventsource": "5.1.0"
+  }
+}
