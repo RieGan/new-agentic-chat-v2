@@ -1,0 +1,16 @@
+{
+  "gates": {
+    "restart": "PASS",
+    "parity": "PASS",
+    "temporalReplay": "PASS"
+  },
+  "measurements": {
+    "gate": false,
+    "thresholds": null,
+    "parityDurationMs": 8783,
+    "complexity": {
+      "simpleLoopSourceLines": 1222,
+      "stateWorkflowSourceLines": 1334
+    }
+  }
+}
