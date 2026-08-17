@@ -1,0 +1,13 @@
+Command: pnpm test:db
+Exit: 1
+
+Vitest discovered 2 integration files and 11 database tests. Two isolated PostgreSQL 17
+containers reached healthy state. Both suites then failed at the intended missing production
+seam:
+
+TypeError: createDatabase is not a function
+  at startTestContext (tests/support.ts)
+
+The tests were skipped only because suite setup could not construct the unimplemented database
+client. Both temporary containers were force-removed with their anonymous volumes immediately
+after the red run.
