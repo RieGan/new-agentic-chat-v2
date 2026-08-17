@@ -1,0 +1,409 @@
+{
+  "metadata": {
+    "runtime": "simple_loop",
+    "testId": "F05",
+    "promptId": "P06",
+    "fixtureNamespace": "e2e_f05_prohibited",
+    "testFile": "/Users/riegan/Project/ruangguru/new-agentic-chat-v2/packages/testkit/e2e/simple-loop.spec.ts",
+    "testTitle": "F05 missing and prohibited requests remain side-effect free",
+    "runtimeDiagnostics": [
+      {
+        "providerInvocations": 2,
+        "prohibitedExecutions": 0
+      }
+    ],
+    "executionOutcome": {
+      "runId": "run_e2e_f05_prohibited_4",
+      "status": "failed",
+      "text": "The selected skill cannot perform the requested action.",
+      "consumedSteps": 2,
+      "error": {
+        "code": "TOOL_NOT_ALLOWED",
+        "message": "Tool notification.send_email is not allowed by skill calculator_assistant@1",
+        "skill": "calculator_assistant@1",
+        "tool": "notification.send_email"
+      }
+    }
+  },
+  "runId": "run_e2e_f05_prohibited_4",
+  "actors": [
+    {
+      "actor": "mvp_user",
+      "action": "message"
+    },
+    {
+      "actor": "ai",
+      "action": "final_response"
+    }
+  ],
+  "stableIds": {
+    "runId": "run_e2e_f05_prohibited_4",
+    "callIds": [
+      "call_e2e_f05_prohibited_15"
+    ],
+    "jobIds": [],
+    "approvalIds": [],
+    "commandIds": []
+  },
+  "observedSkill": {
+    "skillId": "calculator_assistant",
+    "version": "1",
+    "allowedTools": [
+      "calculator.evaluate"
+    ]
+  },
+  "observedToolCalls": [
+    {
+      "callId": "call_e2e_f05_prohibited_15",
+      "toolName": "notification.send_email",
+      "status": "rejected",
+      "arguments": {},
+      "result": null,
+      "error": {
+        "code": "TOOL_NOT_ALLOWED",
+        "tool": "notification.send_email",
+        "skill": "calculator_assistant@1",
+        "message": "Tool notification.send_email is not allowed by skill calculator_assistant@1"
+      }
+    }
+  ],
+  "observedApprovals": [],
+  "observedJobs": [],
+  "finalResponse": "The selected skill cannot perform the requested action.",
+  "finalStatus": "failed",
+  "projections": {
+    "user": {
+      "viewer": "user",
+      "run": {
+        "runId": "run_e2e_f05_prohibited_4",
+        "conversationId": "conversation_e2e_f05_prohibited",
+        "runtime": "simple_loop",
+        "status": "failed",
+        "version": 6,
+        "consumedSteps": 2,
+        "selectedSkill": {
+          "skillId": "calculator_assistant",
+          "version": "1",
+          "instructions": "Always use calculator.evaluate for arithmetic requested by the user.",
+          "allowedTools": [
+            "calculator.evaluate"
+          ]
+        },
+        "cursor": {
+          "runId": "run_e2e_f05_prohibited_4",
+          "sequence": 7
+        }
+      },
+      "events": [
+        {
+          "eventId": "event_e2e_f05_prohibited_2",
+          "runId": "run_e2e_f05_prohibited_4",
+          "sequence": 1,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_e2e_f05_prohibited_5",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_e2e_f05_prohibited_1",
+            "actor": "user",
+            "content": "Load calculator_assistant version 1, then send an email."
+          }
+        },
+        {
+          "eventId": "event_e2e_f05_prohibited_6",
+          "runId": "run_e2e_f05_prohibited_4",
+          "sequence": 2,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_e2e_f05_prohibited_7",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "queued",
+            "current": "running"
+          }
+        },
+        {
+          "eventId": "event_e2e_f05_prohibited_8",
+          "runId": "run_e2e_f05_prohibited_4",
+          "sequence": 3,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_e2e_f05_prohibited_9",
+          "type": "skill.loaded",
+          "visibility": "user",
+          "payload": {
+            "skillId": "calculator_assistant",
+            "version": "1",
+            "instructions": "Always use calculator.evaluate for arithmetic requested by the user.",
+            "allowedTools": [
+              "calculator.evaluate"
+            ]
+          }
+        },
+        {
+          "eventId": "event_e2e_f05_prohibited_12",
+          "runId": "run_e2e_f05_prohibited_4",
+          "sequence": 4,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_e2e_f05_prohibited_14",
+          "type": "tool.call.started",
+          "visibility": "user",
+          "payload": {
+            "callId": "call_e2e_f05_prohibited_15",
+            "toolName": "notification.send_email"
+          }
+        },
+        {
+          "eventId": "event_e2e_f05_prohibited_13",
+          "runId": "run_e2e_f05_prohibited_4",
+          "sequence": 5,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_e2e_f05_prohibited_14",
+          "type": "tool.call.rejected",
+          "visibility": "user",
+          "payload": {
+            "callId": "call_e2e_f05_prohibited_15",
+            "toolName": "notification.send_email",
+            "reason": "Tool notification.send_email is not allowed by skill calculator_assistant@1"
+          }
+        },
+        {
+          "eventId": "event_e2e_f05_prohibited_16",
+          "runId": "run_e2e_f05_prohibited_4",
+          "sequence": 6,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_e2e_f05_prohibited_17",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_e2e_f05_prohibited_20",
+            "actor": "ai",
+            "content": "The selected skill cannot perform the requested action."
+          }
+        },
+        {
+          "eventId": "event_e2e_f05_prohibited_18",
+          "runId": "run_e2e_f05_prohibited_4",
+          "sequence": 7,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_e2e_f05_prohibited_19",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "failed"
+          }
+        }
+      ]
+    },
+    "admin": {
+      "viewer": "admin",
+      "run": {
+        "runId": "run_e2e_f05_prohibited_4",
+        "conversationId": "conversation_e2e_f05_prohibited",
+        "runtime": "simple_loop",
+        "status": "failed",
+        "version": 6,
+        "consumedSteps": 2,
+        "selectedSkill": {
+          "skillId": "calculator_assistant",
+          "version": "1",
+          "instructions": "Always use calculator.evaluate for arithmetic requested by the user.",
+          "allowedTools": [
+            "calculator.evaluate"
+          ]
+        },
+        "cursor": {
+          "runId": "run_e2e_f05_prohibited_4",
+          "sequence": 7
+        }
+      },
+      "events": [
+        {
+          "eventId": "event_e2e_f05_prohibited_2",
+          "runId": "run_e2e_f05_prohibited_4",
+          "sequence": 1,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_e2e_f05_prohibited_5",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_e2e_f05_prohibited_1",
+            "actor": "user",
+            "content": "Load calculator_assistant version 1, then send an email."
+          }
+        },
+        {
+          "eventId": "event_e2e_f05_prohibited_6",
+          "runId": "run_e2e_f05_prohibited_4",
+          "sequence": 2,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_e2e_f05_prohibited_7",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "queued",
+            "current": "running"
+          }
+        },
+        {
+          "eventId": "event_e2e_f05_prohibited_8",
+          "runId": "run_e2e_f05_prohibited_4",
+          "sequence": 3,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_e2e_f05_prohibited_9",
+          "type": "skill.loaded",
+          "visibility": "user",
+          "payload": {
+            "skillId": "calculator_assistant",
+            "version": "1",
+            "instructions": "Always use calculator.evaluate for arithmetic requested by the user.",
+            "allowedTools": [
+              "calculator.evaluate"
+            ]
+          }
+        },
+        {
+          "eventId": "event_e2e_f05_prohibited_12",
+          "runId": "run_e2e_f05_prohibited_4",
+          "sequence": 4,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_e2e_f05_prohibited_14",
+          "type": "tool.call.started",
+          "visibility": "user",
+          "payload": {
+            "callId": "call_e2e_f05_prohibited_15",
+            "toolName": "notification.send_email"
+          }
+        },
+        {
+          "eventId": "event_e2e_f05_prohibited_13",
+          "runId": "run_e2e_f05_prohibited_4",
+          "sequence": 5,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_e2e_f05_prohibited_14",
+          "type": "tool.call.rejected",
+          "visibility": "user",
+          "payload": {
+            "callId": "call_e2e_f05_prohibited_15",
+            "toolName": "notification.send_email",
+            "reason": "Tool notification.send_email is not allowed by skill calculator_assistant@1"
+          }
+        },
+        {
+          "eventId": "event_e2e_f05_prohibited_16",
+          "runId": "run_e2e_f05_prohibited_4",
+          "sequence": 6,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_e2e_f05_prohibited_17",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_e2e_f05_prohibited_20",
+            "actor": "ai",
+            "content": "The selected skill cannot perform the requested action."
+          }
+        },
+        {
+          "eventId": "event_e2e_f05_prohibited_18",
+          "runId": "run_e2e_f05_prohibited_4",
+          "sequence": 7,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_e2e_f05_prohibited_19",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "failed"
+          }
+        }
+      ]
+    }
+  },
+  "normalizedEventTrace": {
+    "events": [
+      {
+        "position": 1,
+        "type": "message.completed",
+        "visibility": "user",
+        "payload": {
+          "messageId": "message_e2e_f05_prohibited_1",
+          "actor": "user",
+          "content": "Load calculator_assistant version 1, then send an email."
+        }
+      },
+      {
+        "position": 2,
+        "type": "run.status_changed",
+        "visibility": "user",
+        "payload": {
+          "previous": "queued",
+          "current": "running"
+        }
+      },
+      {
+        "position": 3,
+        "type": "skill.loaded",
+        "visibility": "user",
+        "payload": {
+          "skillId": "calculator_assistant",
+          "version": "1",
+          "instructions": "Always use calculator.evaluate for arithmetic requested by the user.",
+          "allowedTools": [
+            "calculator.evaluate"
+          ]
+        }
+      },
+      {
+        "position": 4,
+        "type": "tool.call.started",
+        "visibility": "user",
+        "payload": {
+          "callId": "call_e2e_f05_prohibited_15",
+          "toolName": "notification.send_email"
+        }
+      },
+      {
+        "position": 5,
+        "type": "tool.call.rejected",
+        "visibility": "user",
+        "payload": {
+          "callId": "call_e2e_f05_prohibited_15",
+          "toolName": "notification.send_email",
+          "reason": "Tool notification.send_email is not allowed by skill calculator_assistant@1"
+        }
+      },
+      {
+        "position": 6,
+        "type": "message.completed",
+        "visibility": "user",
+        "payload": {
+          "messageId": "message_e2e_f05_prohibited_20",
+          "actor": "ai",
+          "content": "The selected skill cannot perform the requested action."
+        }
+      },
+      {
+        "position": 7,
+        "type": "run.status_changed",
+        "visibility": "user",
+        "payload": {
+          "previous": "running",
+          "current": "failed"
+        }
+      }
+    ]
+  },
+  "schemaVersion": 2,
+  "provenance": {
+    "source": "postgresql_projection_capture",
+    "capturedRunId": "run_e2e_f05_prohibited_4",
+    "processId": 80347,
+    "observationDigest": "71b90a6698d5e0ed42d6b9114b32dd4df6395f941c5bde29baf884e2376accf3"
+  },
+  "observedApprovalJobEvents": [],
+  "result": "PASS",
+  "failureDetails": null,
+  "evidenceLinks": [
+    "acceptance/simple_loop/F05/P06.json"
+  ]
+}

@@ -1,0 +1,642 @@
+{
+  "metadata": {
+    "runtime": "simple_loop",
+    "testId": "F06",
+    "promptId": "P07",
+    "fixtureNamespace": "wait-f06",
+    "testFile": "/Users/riegan/Project/ruangguru/new-agentic-chat-v2/packages/testkit/e2e/simple-loop-durable.spec.ts",
+    "testTitle": "F06 report resumes once from canonical completion",
+    "runtimeDiagnostics": [
+      {
+        "waiting": {
+          "runId": "run_wait-f06_4",
+          "consumedSteps": 2,
+          "wait": {
+            "status": "waiting_for_tool",
+            "callId": "call_report_wait_f06",
+            "jobId": "job_001"
+          },
+          "status": "waiting_for_tool"
+        },
+        "firstWorker": {
+          "runtime": "simple_loop",
+          "claims": 1
+        },
+        "restartedWorker": {
+          "runtime": "simple_loop",
+          "claims": 1
+        }
+      }
+    ],
+    "executionOutcome": {
+      "runId": "run_wait-f06_4",
+      "status": "completed",
+      "text": "Report report_001 is complete.",
+      "consumedSteps": 3
+    }
+  },
+  "runId": "run_wait-f06_4",
+  "actors": [
+    {
+      "actor": "mvp_user",
+      "action": "message"
+    },
+    {
+      "actor": "ai",
+      "action": "final_response"
+    }
+  ],
+  "stableIds": {
+    "runId": "run_wait-f06_4",
+    "callIds": [
+      "call_report_wait_f06"
+    ],
+    "jobIds": [
+      "job_001"
+    ],
+    "approvalIds": [],
+    "commandIds": []
+  },
+  "observedSkill": {
+    "skillId": "report_assistant",
+    "version": "1",
+    "allowedTools": [
+      "report.generate"
+    ]
+  },
+  "observedToolCalls": [
+    {
+      "callId": "call_report_wait_f06",
+      "toolName": "report.generate",
+      "status": "completed",
+      "arguments": {
+        "topic": "quarterly",
+        "sections": [
+          "summary"
+        ]
+      },
+      "result": {
+        "jobId": "job_001",
+        "status": "completed",
+        "reportId": "report_001",
+        "toolName": "report.generate"
+      },
+      "error": null
+    }
+  ],
+  "observedApprovals": [],
+  "observedJobs": [
+    {
+      "jobId": "job_001",
+      "callId": "call_report_wait_f06",
+      "status": "completed",
+      "percent": 100,
+      "result": {
+        "jobId": "job_001",
+        "status": "completed",
+        "reportId": "report_001",
+        "toolName": "report.generate"
+      }
+    }
+  ],
+  "finalResponse": "Report report_001 is complete.",
+  "finalStatus": "completed",
+  "projections": {
+    "user": {
+      "viewer": "user",
+      "run": {
+        "runId": "run_wait-f06_4",
+        "conversationId": "conversation_wait_f06",
+        "runtime": "simple_loop",
+        "status": "completed",
+        "version": 9,
+        "consumedSteps": 3,
+        "selectedSkill": {
+          "skillId": "report_assistant",
+          "version": "1",
+          "instructions": "Use report.generate for report requests and wait for its final result.",
+          "allowedTools": [
+            "report.generate"
+          ]
+        },
+        "cursor": {
+          "runId": "run_wait-f06_4",
+          "sequence": 11
+        }
+      },
+      "events": [
+        {
+          "eventId": "event_wait-f06_2",
+          "runId": "run_wait-f06_4",
+          "sequence": 1,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait-f06_5",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_wait-f06_1",
+            "actor": "user",
+            "content": "Generate the quarterly report."
+          }
+        },
+        {
+          "eventId": "event_wait-f06_6",
+          "runId": "run_wait-f06_4",
+          "sequence": 2,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait-f06_7",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "queued",
+            "current": "running"
+          }
+        },
+        {
+          "eventId": "event_wait-f06_8",
+          "runId": "run_wait-f06_4",
+          "sequence": 3,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait-f06_9",
+          "type": "skill.loaded",
+          "visibility": "user",
+          "payload": {
+            "skillId": "report_assistant",
+            "version": "1",
+            "instructions": "Use report.generate for report requests and wait for its final result.",
+            "allowedTools": [
+              "report.generate"
+            ]
+          }
+        },
+        {
+          "eventId": "report-f3bcd369849e65b33f9eef35-run-accepted",
+          "runId": "run_wait-f06_4",
+          "sequence": 4,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "call_report_wait_f06",
+          "type": "job.accepted",
+          "visibility": "user",
+          "payload": {
+            "jobId": "job_001",
+            "callId": "call_report_wait_f06",
+            "status": "queued"
+          }
+        },
+        {
+          "eventId": "event_wait-f06_13",
+          "runId": "run_wait-f06_4",
+          "sequence": 5,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait-f06_14",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "waiting_for_tool"
+          }
+        },
+        {
+          "eventId": "run_event_progress_wait_f06",
+          "runId": "run_wait-f06_4",
+          "sequence": 6,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "call_report_wait_f06",
+          "type": "job.progress",
+          "visibility": "user",
+          "payload": {
+            "jobId": "job_001",
+            "callId": "call_report_wait_f06",
+            "status": "running",
+            "percent": 50
+          }
+        },
+        {
+          "eventId": "run_event_complete_wait_f06",
+          "runId": "run_wait-f06_4",
+          "sequence": 7,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "call_report_wait_f06",
+          "type": "job.completed",
+          "visibility": "user",
+          "payload": {
+            "jobId": "job_001",
+            "callId": "call_report_wait_f06",
+            "status": "completed",
+            "reportId": "report_001"
+          }
+        },
+        {
+          "eventId": "event_wait-f06_15",
+          "runId": "run_wait-f06_4",
+          "sequence": 8,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait-f06_17",
+          "type": "tool.call.completed",
+          "visibility": "user",
+          "payload": {
+            "callId": "call_report_wait_f06",
+            "toolName": "report.generate",
+            "result": {
+              "toolName": "report.generate",
+              "jobId": "job_001",
+              "reportId": "report_001",
+              "status": "completed"
+            }
+          }
+        },
+        {
+          "eventId": "event_wait-f06_16",
+          "runId": "run_wait-f06_4",
+          "sequence": 9,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait-f06_17",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "waiting_for_tool",
+            "current": "running"
+          }
+        },
+        {
+          "eventId": "event_wait-f06_20",
+          "runId": "run_wait-f06_4",
+          "sequence": 10,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait-f06_21",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_wait-f06_24",
+            "actor": "ai",
+            "content": "Report report_001 is complete."
+          }
+        },
+        {
+          "eventId": "event_wait-f06_22",
+          "runId": "run_wait-f06_4",
+          "sequence": 11,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait-f06_23",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "completed"
+          }
+        }
+      ]
+    },
+    "admin": {
+      "viewer": "admin",
+      "run": {
+        "runId": "run_wait-f06_4",
+        "conversationId": "conversation_wait_f06",
+        "runtime": "simple_loop",
+        "status": "completed",
+        "version": 9,
+        "consumedSteps": 3,
+        "selectedSkill": {
+          "skillId": "report_assistant",
+          "version": "1",
+          "instructions": "Use report.generate for report requests and wait for its final result.",
+          "allowedTools": [
+            "report.generate"
+          ]
+        },
+        "cursor": {
+          "runId": "run_wait-f06_4",
+          "sequence": 11
+        }
+      },
+      "events": [
+        {
+          "eventId": "event_wait-f06_2",
+          "runId": "run_wait-f06_4",
+          "sequence": 1,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait-f06_5",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_wait-f06_1",
+            "actor": "user",
+            "content": "Generate the quarterly report."
+          }
+        },
+        {
+          "eventId": "event_wait-f06_6",
+          "runId": "run_wait-f06_4",
+          "sequence": 2,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait-f06_7",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "queued",
+            "current": "running"
+          }
+        },
+        {
+          "eventId": "event_wait-f06_8",
+          "runId": "run_wait-f06_4",
+          "sequence": 3,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait-f06_9",
+          "type": "skill.loaded",
+          "visibility": "user",
+          "payload": {
+            "skillId": "report_assistant",
+            "version": "1",
+            "instructions": "Use report.generate for report requests and wait for its final result.",
+            "allowedTools": [
+              "report.generate"
+            ]
+          }
+        },
+        {
+          "eventId": "report-f3bcd369849e65b33f9eef35-run-accepted",
+          "runId": "run_wait-f06_4",
+          "sequence": 4,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "call_report_wait_f06",
+          "type": "job.accepted",
+          "visibility": "user",
+          "payload": {
+            "jobId": "job_001",
+            "callId": "call_report_wait_f06",
+            "status": "queued"
+          }
+        },
+        {
+          "eventId": "event_wait-f06_13",
+          "runId": "run_wait-f06_4",
+          "sequence": 5,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait-f06_14",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "waiting_for_tool"
+          }
+        },
+        {
+          "eventId": "run_event_progress_wait_f06",
+          "runId": "run_wait-f06_4",
+          "sequence": 6,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "call_report_wait_f06",
+          "type": "job.progress",
+          "visibility": "user",
+          "payload": {
+            "jobId": "job_001",
+            "callId": "call_report_wait_f06",
+            "status": "running",
+            "percent": 50
+          }
+        },
+        {
+          "eventId": "run_event_complete_wait_f06",
+          "runId": "run_wait-f06_4",
+          "sequence": 7,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "call_report_wait_f06",
+          "type": "job.completed",
+          "visibility": "user",
+          "payload": {
+            "jobId": "job_001",
+            "callId": "call_report_wait_f06",
+            "status": "completed",
+            "reportId": "report_001"
+          }
+        },
+        {
+          "eventId": "event_wait-f06_15",
+          "runId": "run_wait-f06_4",
+          "sequence": 8,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait-f06_17",
+          "type": "tool.call.completed",
+          "visibility": "user",
+          "payload": {
+            "callId": "call_report_wait_f06",
+            "toolName": "report.generate",
+            "result": {
+              "toolName": "report.generate",
+              "jobId": "job_001",
+              "reportId": "report_001",
+              "status": "completed"
+            }
+          }
+        },
+        {
+          "eventId": "event_wait-f06_16",
+          "runId": "run_wait-f06_4",
+          "sequence": 9,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait-f06_17",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "waiting_for_tool",
+            "current": "running"
+          }
+        },
+        {
+          "eventId": "event_wait-f06_20",
+          "runId": "run_wait-f06_4",
+          "sequence": 10,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait-f06_21",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_wait-f06_24",
+            "actor": "ai",
+            "content": "Report report_001 is complete."
+          }
+        },
+        {
+          "eventId": "event_wait-f06_22",
+          "runId": "run_wait-f06_4",
+          "sequence": 11,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_wait-f06_23",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "completed"
+          }
+        }
+      ]
+    }
+  },
+  "normalizedEventTrace": {
+    "events": [
+      {
+        "position": 1,
+        "type": "message.completed",
+        "visibility": "user",
+        "payload": {
+          "messageId": "message_wait-f06_1",
+          "actor": "user",
+          "content": "Generate the quarterly report."
+        }
+      },
+      {
+        "position": 2,
+        "type": "run.status_changed",
+        "visibility": "user",
+        "payload": {
+          "previous": "queued",
+          "current": "running"
+        }
+      },
+      {
+        "position": 3,
+        "type": "skill.loaded",
+        "visibility": "user",
+        "payload": {
+          "skillId": "report_assistant",
+          "version": "1",
+          "instructions": "Use report.generate for report requests and wait for its final result.",
+          "allowedTools": [
+            "report.generate"
+          ]
+        }
+      },
+      {
+        "position": 4,
+        "type": "job.accepted",
+        "visibility": "user",
+        "payload": {
+          "jobId": "job_001",
+          "callId": "call_report_wait_f06",
+          "status": "queued"
+        }
+      },
+      {
+        "position": 5,
+        "type": "run.status_changed",
+        "visibility": "user",
+        "payload": {
+          "previous": "running",
+          "current": "waiting_for_tool"
+        }
+      },
+      {
+        "position": 6,
+        "type": "job.progress",
+        "visibility": "user",
+        "payload": {
+          "jobId": "job_001",
+          "callId": "call_report_wait_f06",
+          "status": "running",
+          "percent": 50
+        }
+      },
+      {
+        "position": 7,
+        "type": "job.completed",
+        "visibility": "user",
+        "payload": {
+          "jobId": "job_001",
+          "callId": "call_report_wait_f06",
+          "status": "completed",
+          "reportId": "report_001"
+        }
+      },
+      {
+        "position": 8,
+        "type": "tool.call.completed",
+        "visibility": "user",
+        "payload": {
+          "callId": "call_report_wait_f06",
+          "toolName": "report.generate",
+          "result": {
+            "toolName": "report.generate",
+            "jobId": "job_001",
+            "reportId": "report_001",
+            "status": "completed"
+          }
+        }
+      },
+      {
+        "position": 9,
+        "type": "run.status_changed",
+        "visibility": "user",
+        "payload": {
+          "previous": "waiting_for_tool",
+          "current": "running"
+        }
+      },
+      {
+        "position": 10,
+        "type": "message.completed",
+        "visibility": "user",
+        "payload": {
+          "messageId": "message_wait-f06_24",
+          "actor": "ai",
+          "content": "Report report_001 is complete."
+        }
+      },
+      {
+        "position": 11,
+        "type": "run.status_changed",
+        "visibility": "user",
+        "payload": {
+          "previous": "running",
+          "current": "completed"
+        }
+      }
+    ]
+  },
+  "schemaVersion": 2,
+  "provenance": {
+    "source": "postgresql_projection_capture",
+    "capturedRunId": "run_wait-f06_4",
+    "processId": 80365,
+    "observationDigest": "7580faebba5aedddeb5ceff91eb0a4c523e64f753bfb4df73e088758058affc5"
+  },
+  "observedApprovalJobEvents": [
+    {
+      "position": 4,
+      "type": "job.accepted",
+      "visibility": "user",
+      "payload": {
+        "jobId": "job_001",
+        "callId": "call_report_wait_f06",
+        "status": "queued"
+      }
+    },
+    {
+      "position": 6,
+      "type": "job.progress",
+      "visibility": "user",
+      "payload": {
+        "jobId": "job_001",
+        "callId": "call_report_wait_f06",
+        "status": "running",
+        "percent": 50
+      }
+    },
+    {
+      "position": 7,
+      "type": "job.completed",
+      "visibility": "user",
+      "payload": {
+        "jobId": "job_001",
+        "callId": "call_report_wait_f06",
+        "status": "completed",
+        "reportId": "report_001"
+      }
+    }
+  ],
+  "result": "PASS",
+  "failureDetails": null,
+  "evidenceLinks": [
+    "acceptance/simple_loop/F06/P07.json"
+  ]
+}
