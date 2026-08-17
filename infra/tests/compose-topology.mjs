@@ -27,6 +27,10 @@ assert.deepEqual(Object.keys(services).sort(), expectedServices)
 const workerNames = ["worker-simple", "worker-workflow", "fixture-worker"]
 const workerImages = workerNames.map((name) => services[name].image)
 assert.equal(new Set(workerImages).size, 1, "all workers must use one image")
+for (const workerName of workerNames) {
+  assert.equal(services[workerName].deploy?.resources?.limits?.memory, "268435456")
+  assert.equal(services[workerName].deploy?.resources?.reservations, undefined)
+}
 assert.deepEqual(
   workerNames.map((name) => services[name].deploy?.resources),
   Array.from({ length: workerNames.length }, () => services[workerNames[0]].deploy?.resources),

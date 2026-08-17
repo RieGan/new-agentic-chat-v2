@@ -32,8 +32,6 @@ x-worker: &worker
       limits:
         cpus: "0.50"
         memory: 256M
-      reservations:
-        memory: 64M
   restart: unless-stopped
   stop_grace_period: 5s
 
