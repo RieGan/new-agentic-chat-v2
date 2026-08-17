@@ -1,0 +1,413 @@
+{
+  "schema_version": 2,
+  "active_work_id": "agentic-chat-mvp-vercel-ai-sdk-b0afb42b",
+  "works": {
+    "agentic-chat-mvp-vercel-ai-sdk-b0afb42b": {
+      "work_id": "agentic-chat-mvp-vercel-ai-sdk-b0afb42b",
+      "active_plan": "/Users/riegan/Project/ruangguru/new-agentic-chat-v2/.omo/plans/agentic-chat-mvp-vercel-ai-sdk.md",
+      "plan_name": "agentic-chat-mvp-vercel-ai-sdk",
+      "status": "completed",
+      "started_at": "2026-08-16T03:14:36.909Z",
+      "updated_at": "2026-08-17T11:48:11.300Z",
+      "ended_at": "2026-08-17T11:48:11.300Z",
+      "elapsed_ms": 117214391,
+      "session_ids": [
+        "opencode:ses_ff788fc06ffegJlNeDUcclNzIU"
+      ],
+      "session_origins": {
+        "opencode:ses_ff788fc06ffegJlNeDUcclNzIU": "direct"
+      },
+      "agent": "atlas",
+      "task_sessions": {
+        "todo:1": {
+          "task_key": "todo:1",
+          "task_label": "1",
+          "task_title": "Scaffold the strict workspace and quality/test commands",
+          "session_id": "opencode:ses_ff76e287cffedBi3qGaR4rFo4s",
+          "agent": "Sisyphus-Junior",
+          "started_at": "2026-08-16T03:30:39.773Z",
+          "status": "running",
+          "updated_at": "2026-08-16T03:37:15.212Z"
+        },
+        "todo:2": {
+          "task_key": "todo:2",
+          "task_label": "2",
+          "task_title": "Freeze shared Zod contracts, states, errors, and normalized events",
+          "session_id": "opencode:ses_ff5a03fa9ffeyZkvXXwkg5ka0v",
+          "agent": "Sisyphus-Junior",
+          "category": "ultrabrain",
+          "updated_at": "2026-08-16T12:06:14.885Z",
+          "started_at": "2026-08-16T12:06:14.885Z",
+          "status": "running"
+        },
+        "todo:3": {
+          "task_key": "todo:3",
+          "task_label": "3",
+          "task_title": "Implement Drizzle schema, reviewed migration, seeds, and repository tests",
+          "session_id": "opencode:ses_ff584ad26ffeY0On4UyCG1nhrr",
+          "agent": "Sisyphus-Junior",
+          "category": "ultrabrain",
+          "updated_at": "2026-08-16T12:41:56.352Z",
+          "started_at": "2026-08-16T12:41:56.352Z",
+          "status": "running"
+        },
+        "todo:4": {
+          "task_key": "todo:4",
+          "task_label": "4",
+          "task_title": "Build the health-gated Docker Compose environment",
+          "session_id": "opencode:ses_ff563f286ffet402ZWytbVXq5S",
+          "agent": "Sisyphus-Junior",
+          "category": "deep",
+          "updated_at": "2026-08-16T13:08:50.899Z",
+          "started_at": "2026-08-16T13:08:50.899Z",
+          "status": "running"
+        },
+        "todo:5": {
+          "task_key": "todo:5",
+          "task_label": "5",
+          "task_title": "Implement durable admission, event ledger, claims, projections, and reconciliation",
+          "session_id": "opencode:ses_ff563f1e3ffel5HuRDjtmOFgxl",
+          "agent": "Sisyphus-Junior",
+          "started_at": "2026-08-16T13:54:48.997Z",
+          "status": "running",
+          "updated_at": "2026-08-16T14:34:26.049Z"
+        },
+        "todo:6": {
+          "task_key": "todo:6",
+          "task_label": "6",
+          "task_title": "Add the AI SDK OpenAI Responses adapter and deterministic model harness",
+          "session_id": "opencode:ses_ff4f812b9fferCl2fKPFiq8J7c",
+          "agent": "Sisyphus-Junior",
+          "started_at": "2026-08-16T15:28:45.704Z",
+          "status": "running",
+          "updated_at": "2026-08-16T15:44:43.265Z"
+        },
+        "todo:8": {
+          "task_key": "todo:8",
+          "task_label": "8",
+          "task_title": "Implement exact approval and hidden Admin-command services",
+          "session_id": "opencode:ses_ff4be6f59ffeRvqyi8VpoRyUdT",
+          "agent": "Sisyphus-Junior",
+          "started_at": "2026-08-16T16:47:58.487Z",
+          "status": "running",
+          "updated_at": "2026-08-16T16:51:02.254Z"
+        },
+        "todo:9": {
+          "task_key": "todo:9",
+          "task_label": "9",
+          "task_title": "Implement BullMQ report fixture, durable job ledger, and test barriers",
+          "session_id": "opencode:ses_ff4821a3fffeI0qG71ny966IZ0",
+          "agent": "Sisyphus-Junior",
+          "started_at": "2026-08-16T18:02:16.140Z",
+          "status": "running",
+          "updated_at": "2026-08-16T18:05:32.744Z"
+        },
+        "todo:10": {
+          "task_key": "todo:10",
+          "task_label": "10",
+          "task_title": "Implement Simple Loop direct, skill, and synchronous flows F01-F05",
+          "session_id": "opencode:ses_ff43cd75bffehm7YEJYIe2fIrK",
+          "agent": "Sisyphus-Junior",
+          "started_at": "2026-08-16T18:33:01.745Z",
+          "status": "running",
+          "updated_at": "2026-08-16T19:04:34.655Z"
+        },
+        "todo:11": {
+          "task_key": "todo:11",
+          "task_label": "11",
+          "task_title": "Add Simple Loop durable waits, resume, Admin flow, and restart recovery F06-F10",
+          "session_id": "opencode:ses_ff4067c65ffeBCEezXNHNe6V83",
+          "agent": "Sisyphus-Junior",
+          "started_at": "2026-08-16T19:40:46.136Z",
+          "status": "running",
+          "updated_at": "2026-08-16T20:10:26.897Z"
+        },
+        "todo:12": {
+          "task_key": "todo:12",
+          "task_label": "12",
+          "task_title": "Build the deterministic Temporal workflow, Activities, signals, and replay harness",
+          "session_id": "opencode:ses_ff3c9a2a9ffe44qF0sPiNEC6hC",
+          "agent": "Sisyphus-Junior",
+          "category": "ultrabrain",
+          "updated_at": "2026-08-16T20:31:12.530Z",
+          "started_at": "2026-08-16T20:31:12.530Z",
+          "status": "running"
+        },
+        "todo:13": {
+          "task_key": "todo:13",
+          "task_label": "13",
+          "task_title": "Implement State Workflow direct, skill, and synchronous flows F01-F05",
+          "session_id": "opencode:ses_ff3b77dfbffeEjGzUdojLaTkOK",
+          "agent": "Sisyphus-Junior",
+          "category": "ultrabrain",
+          "updated_at": "2026-08-16T20:56:45.509Z",
+          "started_at": "2026-08-16T20:56:45.509Z",
+          "status": "running"
+        },
+        "todo:14": {
+          "task_key": "todo:14",
+          "task_label": "14",
+          "task_title": "Implement State Workflow durable waits, signals, and recovery F06-F10",
+          "session_id": "opencode:ses_ff3a0252bffeID04Ft55Z32F3a",
+          "agent": "Sisyphus-Junior",
+          "category": "ultrabrain",
+          "updated_at": "2026-08-16T21:27:10.218Z",
+          "started_at": "2026-08-16T21:27:10.218Z",
+          "status": "running"
+        },
+        "todo:15": {
+          "task_key": "todo:15",
+          "task_label": "15",
+          "task_title": "Expose thin fixed-actor tRPC procedures and tracked SSE",
+          "session_id": "opencode:ses_ff383576fffeBBX243TzIQschN",
+          "agent": "Sisyphus-Junior",
+          "category": "ultrabrain",
+          "updated_at": "2026-08-16T22:03:36.457Z",
+          "started_at": "2026-08-16T22:03:36.457Z",
+          "status": "running"
+        },
+        "todo:16": {
+          "task_key": "todo:16",
+          "task_label": "16",
+          "task_title": "Build accessible User and Admin React routes",
+          "session_id": "opencode:ses_ff3629752ffeK2Xn7XNszQbCgj",
+          "agent": "Sisyphus-Junior",
+          "started_at": "2026-08-16T22:41:12.699Z",
+          "status": "running",
+          "updated_at": "2026-08-17T07:45:32.769Z"
+        },
+        "todo:17": {
+          "task_key": "todo:17",
+          "task_label": "17",
+          "task_title": "Complete the dual-runtime F01-F10 deterministic acceptance suite",
+          "session_id": "opencode:ses_ff14de764ffeD1Ohf7m3w1H0Uq",
+          "started_at": "2026-08-17T08:14:24.349Z",
+          "status": "running",
+          "updated_at": "2026-08-17T09:03:06.605Z"
+        },
+        "todo:18": {
+          "task_key": "todo:18",
+          "task_label": "18",
+          "task_title": "Prove isolated restart, duplicate safety, parity, and comparison outputs",
+          "session_id": "opencode:ses_ff1067e19ffeE3f2zZgZcGkR9E",
+          "agent": "Sisyphus-Junior",
+          "started_at": "2026-08-17T09:41:56.112Z",
+          "status": "running",
+          "updated_at": "2026-08-17T10:23:13.846Z"
+        },
+        "final-wave:f1": {
+          "task_key": "final-wave:f1",
+          "task_label": "F1",
+          "task_title": "Plan compliance audit",
+          "session_id": "opencode:ses_ff0beeffaffenHIJsk9hKeugwi",
+          "agent": "Sisyphus-Junior",
+          "started_at": "2026-08-17T10:38:10.224Z",
+          "status": "running",
+          "updated_at": "2026-08-17T11:45:39.520Z"
+        }
+      }
+    }
+  },
+  "active_plan": "/Users/riegan/Project/ruangguru/new-agentic-chat-v2/.omo/plans/agentic-chat-mvp-vercel-ai-sdk.md",
+  "started_at": "2026-08-16T03:14:36.909Z",
+  "status": "completed",
+  "updated_at": "2026-08-17T11:48:11.300Z",
+  "ended_at": "2026-08-17T11:48:11.300Z",
+  "elapsed_ms": 117214391,
+  "session_ids": [
+    "opencode:ses_ff788fc06ffegJlNeDUcclNzIU"
+  ],
+  "session_origins": {
+    "opencode:ses_ff788fc06ffegJlNeDUcclNzIU": "direct"
+  },
+  "plan_name": "agentic-chat-mvp-vercel-ai-sdk",
+  "task_sessions": {
+    "todo:1": {
+      "task_key": "todo:1",
+      "task_label": "1",
+      "task_title": "Scaffold the strict workspace and quality/test commands",
+      "session_id": "opencode:ses_ff76e287cffedBi3qGaR4rFo4s",
+      "agent": "Sisyphus-Junior",
+      "started_at": "2026-08-16T03:30:39.773Z",
+      "status": "running",
+      "updated_at": "2026-08-16T03:37:15.212Z"
+    },
+    "todo:2": {
+      "task_key": "todo:2",
+      "task_label": "2",
+      "task_title": "Freeze shared Zod contracts, states, errors, and normalized events",
+      "session_id": "opencode:ses_ff5a03fa9ffeyZkvXXwkg5ka0v",
+      "agent": "Sisyphus-Junior",
+      "category": "ultrabrain",
+      "updated_at": "2026-08-16T12:06:14.885Z",
+      "started_at": "2026-08-16T12:06:14.885Z",
+      "status": "running"
+    },
+    "todo:3": {
+      "task_key": "todo:3",
+      "task_label": "3",
+      "task_title": "Implement Drizzle schema, reviewed migration, seeds, and repository tests",
+      "session_id": "opencode:ses_ff584ad26ffeY0On4UyCG1nhrr",
+      "agent": "Sisyphus-Junior",
+      "category": "ultrabrain",
+      "updated_at": "2026-08-16T12:41:56.352Z",
+      "started_at": "2026-08-16T12:41:56.352Z",
+      "status": "running"
+    },
+    "todo:4": {
+      "task_key": "todo:4",
+      "task_label": "4",
+      "task_title": "Build the health-gated Docker Compose environment",
+      "session_id": "opencode:ses_ff563f286ffet402ZWytbVXq5S",
+      "agent": "Sisyphus-Junior",
+      "category": "deep",
+      "updated_at": "2026-08-16T13:08:50.899Z",
+      "started_at": "2026-08-16T13:08:50.899Z",
+      "status": "running"
+    },
+    "todo:5": {
+      "task_key": "todo:5",
+      "task_label": "5",
+      "task_title": "Implement durable admission, event ledger, claims, projections, and reconciliation",
+      "session_id": "opencode:ses_ff563f1e3ffel5HuRDjtmOFgxl",
+      "agent": "Sisyphus-Junior",
+      "started_at": "2026-08-16T13:54:48.997Z",
+      "status": "running",
+      "updated_at": "2026-08-16T14:34:26.049Z"
+    },
+    "todo:6": {
+      "task_key": "todo:6",
+      "task_label": "6",
+      "task_title": "Add the AI SDK OpenAI Responses adapter and deterministic model harness",
+      "session_id": "opencode:ses_ff4f812b9fferCl2fKPFiq8J7c",
+      "agent": "Sisyphus-Junior",
+      "started_at": "2026-08-16T15:28:45.704Z",
+      "status": "running",
+      "updated_at": "2026-08-16T15:44:43.265Z"
+    },
+    "todo:8": {
+      "task_key": "todo:8",
+      "task_label": "8",
+      "task_title": "Implement exact approval and hidden Admin-command services",
+      "session_id": "opencode:ses_ff4be6f59ffeRvqyi8VpoRyUdT",
+      "agent": "Sisyphus-Junior",
+      "started_at": "2026-08-16T16:47:58.487Z",
+      "status": "running",
+      "updated_at": "2026-08-16T16:51:02.254Z"
+    },
+    "todo:9": {
+      "task_key": "todo:9",
+      "task_label": "9",
+      "task_title": "Implement BullMQ report fixture, durable job ledger, and test barriers",
+      "session_id": "opencode:ses_ff4821a3fffeI0qG71ny966IZ0",
+      "agent": "Sisyphus-Junior",
+      "started_at": "2026-08-16T18:02:16.140Z",
+      "status": "running",
+      "updated_at": "2026-08-16T18:05:32.744Z"
+    },
+    "todo:10": {
+      "task_key": "todo:10",
+      "task_label": "10",
+      "task_title": "Implement Simple Loop direct, skill, and synchronous flows F01-F05",
+      "session_id": "opencode:ses_ff43cd75bffehm7YEJYIe2fIrK",
+      "agent": "Sisyphus-Junior",
+      "started_at": "2026-08-16T18:33:01.745Z",
+      "status": "running",
+      "updated_at": "2026-08-16T19:04:34.655Z"
+    },
+    "todo:11": {
+      "task_key": "todo:11",
+      "task_label": "11",
+      "task_title": "Add Simple Loop durable waits, resume, Admin flow, and restart recovery F06-F10",
+      "session_id": "opencode:ses_ff4067c65ffeBCEezXNHNe6V83",
+      "agent": "Sisyphus-Junior",
+      "started_at": "2026-08-16T19:40:46.136Z",
+      "status": "running",
+      "updated_at": "2026-08-16T20:10:26.897Z"
+    },
+    "todo:12": {
+      "task_key": "todo:12",
+      "task_label": "12",
+      "task_title": "Build the deterministic Temporal workflow, Activities, signals, and replay harness",
+      "session_id": "opencode:ses_ff3c9a2a9ffe44qF0sPiNEC6hC",
+      "agent": "Sisyphus-Junior",
+      "category": "ultrabrain",
+      "updated_at": "2026-08-16T20:31:12.530Z",
+      "started_at": "2026-08-16T20:31:12.530Z",
+      "status": "running"
+    },
+    "todo:13": {
+      "task_key": "todo:13",
+      "task_label": "13",
+      "task_title": "Implement State Workflow direct, skill, and synchronous flows F01-F05",
+      "session_id": "opencode:ses_ff3b77dfbffeEjGzUdojLaTkOK",
+      "agent": "Sisyphus-Junior",
+      "category": "ultrabrain",
+      "updated_at": "2026-08-16T20:56:45.509Z",
+      "started_at": "2026-08-16T20:56:45.509Z",
+      "status": "running"
+    },
+    "todo:14": {
+      "task_key": "todo:14",
+      "task_label": "14",
+      "task_title": "Implement State Workflow durable waits, signals, and recovery F06-F10",
+      "session_id": "opencode:ses_ff3a0252bffeID04Ft55Z32F3a",
+      "agent": "Sisyphus-Junior",
+      "category": "ultrabrain",
+      "updated_at": "2026-08-16T21:27:10.218Z",
+      "started_at": "2026-08-16T21:27:10.218Z",
+      "status": "running"
+    },
+    "todo:15": {
+      "task_key": "todo:15",
+      "task_label": "15",
+      "task_title": "Expose thin fixed-actor tRPC procedures and tracked SSE",
+      "session_id": "opencode:ses_ff383576fffeBBX243TzIQschN",
+      "agent": "Sisyphus-Junior",
+      "category": "ultrabrain",
+      "updated_at": "2026-08-16T22:03:36.457Z",
+      "started_at": "2026-08-16T22:03:36.457Z",
+      "status": "running"
+    },
+    "todo:16": {
+      "task_key": "todo:16",
+      "task_label": "16",
+      "task_title": "Build accessible User and Admin React routes",
+      "session_id": "opencode:ses_ff3629752ffeK2Xn7XNszQbCgj",
+      "agent": "Sisyphus-Junior",
+      "started_at": "2026-08-16T22:41:12.699Z",
+      "status": "running",
+      "updated_at": "2026-08-17T07:45:32.769Z"
+    },
+    "todo:17": {
+      "task_key": "todo:17",
+      "task_label": "17",
+      "task_title": "Complete the dual-runtime F01-F10 deterministic acceptance suite",
+      "session_id": "opencode:ses_ff14de764ffeD1Ohf7m3w1H0Uq",
+      "started_at": "2026-08-17T08:14:24.349Z",
+      "status": "running",
+      "updated_at": "2026-08-17T09:03:06.605Z"
+    },
+    "todo:18": {
+      "task_key": "todo:18",
+      "task_label": "18",
+      "task_title": "Prove isolated restart, duplicate safety, parity, and comparison outputs",
+      "session_id": "opencode:ses_ff1067e19ffeE3f2zZgZcGkR9E",
+      "agent": "Sisyphus-Junior",
+      "started_at": "2026-08-17T09:41:56.112Z",
+      "status": "running",
+      "updated_at": "2026-08-17T10:23:13.846Z"
+    },
+    "final-wave:f1": {
+      "task_key": "final-wave:f1",
+      "task_label": "F1",
+      "task_title": "Plan compliance audit",
+      "session_id": "opencode:ses_ff0beeffaffenHIJsk9hKeugwi",
+      "agent": "Sisyphus-Junior",
+      "started_at": "2026-08-17T10:38:10.224Z",
+      "status": "running",
+      "updated_at": "2026-08-17T11:45:39.520Z"
+    }
+  },
+  "agent": "atlas"
+}
