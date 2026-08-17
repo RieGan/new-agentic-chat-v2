@@ -1,0 +1,110 @@
+<testsuites id="" name="" tests="20" failures="0" skipped="10" errors="0" time="33.323374">
+<testsuite name="simple-loop-durable.spec.ts" timestamp="2026-08-17T11:33:39.476Z" hostname="runtime" tests="5" failures="0" skipped="0" time="25.605" errors="0">
+<testcase name="Simple Loop F06-F10 durable recovery › F06 report resumes once from canonical completion" classname="simple-loop-durable.spec.ts" time="5.394">
+</testcase>
+<testcase name="Simple Loop F06-F10 durable recovery › F07 @restart pending approval executes exactly one simulated send" classname="simple-loop-durable.spec.ts" time="5.293">
+</testcase>
+<testcase name="Simple Loop F06-F10 durable recovery › F08 @restart pending approval rejection preserves the binding" classname="simple-loop-durable.spec.ts" time="5.515">
+</testcase>
+<testcase name="Simple Loop F06-F10 durable recovery › F09 hidden Admin guidance resumes the same User-waiting run" classname="simple-loop-durable.spec.ts" time="4.719">
+</testcase>
+<testcase name="Simple Loop F06-F10 durable recovery › F10 @restart worker-only recovery preserves report identities" classname="simple-loop-durable.spec.ts" time="4.684">
+</testcase>
+</testsuite>
+<testsuite name="simple-loop.spec.ts" timestamp="2026-08-17T11:33:39.476Z" hostname="runtime" tests="5" failures="0" skipped="0" time="0.458" errors="0">
+<testcase name="Simple Loop F01-F05 › F01 direct answer is atomically visible" classname="simple-loop.spec.ts" time="0.088">
+</testcase>
+<testcase name="Simple Loop F01-F05 › F02 skill load remains a control operation" classname="simple-loop.spec.ts" time="0.064">
+</testcase>
+<testcase name="Simple Loop F01-F05 › F03 calculator succeeds through the bounded agent" classname="simple-loop.spec.ts" time="0.09">
+</testcase>
+<testcase name="Simple Loop F01-F05 › F04 typed calculator failure still yields a complete explanation" classname="simple-loop.spec.ts" time="0.101">
+</testcase>
+<testcase name="Simple Loop F01-F05 › F05 missing and prohibited requests remain side-effect free" classname="simple-loop.spec.ts" time="0.115">
+</testcase>
+</testsuite>
+<testsuite name="state-workflow-durable.spec.ts" timestamp="2026-08-17T11:33:39.476Z" hostname="runtime" tests="5" failures="0" skipped="5" time="0" errors="0">
+<testcase name="State Workflow F06-F10 durable recovery › F06 report resumes once from canonical completion" classname="state-workflow-durable.spec.ts">
+<properties>
+<property name="skip" value="State Workflow F06-F10 was not selected">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="State Workflow F06-F10 durable recovery › F07 @restart pending approval executes exactly one simulated send" classname="state-workflow-durable.spec.ts">
+<properties>
+<property name="skip" value="State Workflow F06-F10 was not selected">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="State Workflow F06-F10 durable recovery › F08 @restart pending approval preserves rejection binding" classname="state-workflow-durable.spec.ts">
+<properties>
+<property name="skip" value="State Workflow F06-F10 was not selected">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="State Workflow F06-F10 durable recovery › F09 same-run continuation applies hidden guidance once" classname="state-workflow-durable.spec.ts">
+<properties>
+<property name="skip" value="State Workflow F06-F10 was not selected">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="State Workflow F06-F10 durable recovery › F10 @restart Temporal worker recovers accepted report" classname="state-workflow-durable.spec.ts">
+<properties>
+<property name="skip" value="State Workflow F06-F10 was not selected">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="state-workflow.spec.ts" timestamp="2026-08-17T11:33:39.476Z" hostname="runtime" tests="5" failures="0" skipped="5" time="0" errors="0">
+<testcase name="State Workflow F01-F05 › F01 direct answer is atomically visible" classname="state-workflow.spec.ts">
+<properties>
+<property name="skip" value="State Workflow F01-F05 was not selected">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="State Workflow F01-F05 › F02 skill load remains a control operation" classname="state-workflow.spec.ts">
+<properties>
+<property name="skip" value="State Workflow F01-F05 was not selected">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="State Workflow F01-F05 › F03 calculator succeeds through real Temporal Activities" classname="state-workflow.spec.ts">
+<properties>
+<property name="skip" value="State Workflow F01-F05 was not selected">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="State Workflow F01-F05 › F04 typed calculator failure still completes with final text" classname="state-workflow.spec.ts">
+<properties>
+<property name="skip" value="State Workflow F01-F05 was not selected">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="State Workflow F01-F05 › F05 missing and prohibited requests invoke no prohibited fixture" classname="state-workflow.spec.ts">
+<properties>
+<property name="skip" value="State Workflow F01-F05 was not selected">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+</testsuites>
