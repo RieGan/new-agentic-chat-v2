@@ -1,0 +1,638 @@
+{
+  "metadata": {
+    "runtime": "state_workflow",
+    "testId": "F10",
+    "promptId": "P11",
+    "fixtureNamespace": "state_durable_report",
+    "testFile": "/Users/riegan/Project/ruangguru/new-agentic-chat-v2/packages/testkit/e2e/state-workflow-durable.spec.ts",
+    "testTitle": "F10 @restart Temporal worker recovers accepted report",
+    "runtimeDiagnostics": [
+      {
+        "waitingState": {
+          "workflowId": "agent-run/run_state_durable_report_4",
+          "runId": "run_state_durable_report_4",
+          "status": "waiting_for_tool",
+          "historyPosition": 2,
+          "wait": {
+            "kind": "job",
+            "callId": "call_report_state_durable_report",
+            "jobId": "job_001"
+          }
+        },
+        "taskQueue": "state-durable-report",
+        "queuePayloads": 1
+      }
+    ],
+    "executionOutcome": {
+      "workflowId": "agent-run/run_state_durable_report_4",
+      "runId": "run_state_durable_report_4",
+      "status": "completed",
+      "historyPosition": 4,
+      "wait": null
+    }
+  },
+  "runId": "run_state_durable_report_4",
+  "actors": [
+    {
+      "actor": "ai",
+      "action": "final_response"
+    },
+    {
+      "actor": "mvp_user",
+      "action": "message"
+    }
+  ],
+  "stableIds": {
+    "runId": "run_state_durable_report_4",
+    "callIds": [
+      "call_report_state_durable_report"
+    ],
+    "jobIds": [
+      "job_001"
+    ],
+    "approvalIds": [],
+    "commandIds": []
+  },
+  "observedSkill": {
+    "skillId": "report_assistant",
+    "version": "1",
+    "allowedTools": [
+      "report.generate"
+    ]
+  },
+  "observedToolCalls": [
+    {
+      "callId": "call_report_state_durable_report",
+      "toolName": "report.generate",
+      "status": "completed",
+      "arguments": {
+        "topic": "quarterly",
+        "sections": [
+          "summary"
+        ]
+      },
+      "result": {
+        "jobId": "job_001",
+        "status": "completed",
+        "reportId": "report_001",
+        "toolName": "report.generate"
+      },
+      "error": null
+    }
+  ],
+  "observedApprovals": [],
+  "observedJobs": [
+    {
+      "jobId": "job_001",
+      "callId": "call_report_state_durable_report",
+      "status": "completed",
+      "percent": 100,
+      "result": {
+        "jobId": "job_001",
+        "status": "completed",
+        "reportId": "report_001",
+        "toolName": "report.generate"
+      }
+    }
+  ],
+  "finalResponse": "Report report_001 is complete.",
+  "finalStatus": "completed",
+  "projections": {
+    "user": {
+      "viewer": "user",
+      "run": {
+        "runId": "run_state_durable_report_4",
+        "conversationId": "conversation_state_durable_report",
+        "runtime": "state_workflow",
+        "status": "completed",
+        "version": 7,
+        "consumedSteps": 3,
+        "selectedSkill": {
+          "skillId": "report_assistant",
+          "version": "1",
+          "instructions": "Use report.generate for report requests and wait for its final result.",
+          "allowedTools": [
+            "report.generate"
+          ]
+        },
+        "cursor": {
+          "runId": "run_state_durable_report_4",
+          "sequence": 11
+        }
+      },
+      "events": [
+        {
+          "eventId": "event_state_durable_report_2",
+          "runId": "run_state_durable_report_4",
+          "sequence": 1,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_state_durable_report_5",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_state_durable_report_1",
+            "actor": "user",
+            "content": "Generate the quarterly report."
+          }
+        },
+        {
+          "eventId": "event_1a355de1c5537a3ec41cb53affe1f285a8be76987bedcf976a3b1e1293dde30d",
+          "runId": "run_state_durable_report_4",
+          "sequence": 2,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_1a355de1c5537a3ec41cb53affe1f285a8be76987bedcf976a3b1e1293dde30d",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "queued",
+            "current": "running"
+          }
+        },
+        {
+          "eventId": "event_4d302c1784da533e0662575b396b31da8eaa0c03eee30759e9e94f3779a22a85",
+          "runId": "run_state_durable_report_4",
+          "sequence": 3,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_4d302c1784da533e0662575b396b31da8eaa0c03eee30759e9e94f3779a22a85",
+          "type": "skill.loaded",
+          "visibility": "user",
+          "payload": {
+            "skillId": "report_assistant",
+            "version": "1",
+            "instructions": "Use report.generate for report requests and wait for its final result.",
+            "allowedTools": [
+              "report.generate"
+            ]
+          }
+        },
+        {
+          "eventId": "report-a885652b2545b58a3c93a9a1-run-accepted",
+          "runId": "run_state_durable_report_4",
+          "sequence": 4,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "call_report_state_durable_report",
+          "type": "job.accepted",
+          "visibility": "user",
+          "payload": {
+            "jobId": "job_001",
+            "callId": "call_report_state_durable_report",
+            "status": "queued"
+          }
+        },
+        {
+          "eventId": "event_de6d83aa2be67ae6f7e94b3cbecf787bfb83b10e264f869d40bc2f3888c70f8c",
+          "runId": "run_state_durable_report_4",
+          "sequence": 5,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "call_report_state_durable_report",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "waiting_for_tool"
+          }
+        },
+        {
+          "eventId": "run_event_state_durable_progress",
+          "runId": "run_state_durable_report_4",
+          "sequence": 6,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "call_report_state_durable_report",
+          "type": "job.progress",
+          "visibility": "user",
+          "payload": {
+            "jobId": "job_001",
+            "callId": "call_report_state_durable_report",
+            "status": "running",
+            "percent": 50
+          }
+        },
+        {
+          "eventId": "run_event_state_durable_complete",
+          "runId": "run_state_durable_report_4",
+          "sequence": 7,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "call_report_state_durable_report",
+          "type": "job.completed",
+          "visibility": "user",
+          "payload": {
+            "jobId": "job_001",
+            "callId": "call_report_state_durable_report",
+            "status": "completed",
+            "reportId": "report_001"
+          }
+        },
+        {
+          "eventId": "event_b20c79f571fbedfbd4902d44fae10b88eae20efa53e31556d6e260a8bd923993",
+          "runId": "run_state_durable_report_4",
+          "sequence": 8,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_335454c1f1f34eef9ca244448d4de1dda73438eb15f98b1a61dc39bab5bf3041",
+          "type": "tool.call.completed",
+          "visibility": "user",
+          "payload": {
+            "callId": "call_report_state_durable_report",
+            "toolName": "report.generate",
+            "result": {
+              "toolName": "report.generate",
+              "jobId": "job_001",
+              "reportId": "report_001",
+              "status": "completed"
+            }
+          }
+        },
+        {
+          "eventId": "event_130dbc99c8f3b071c527e359f27bee11b26528fbd8c29af4544c516d29d7a7a6",
+          "runId": "run_state_durable_report_4",
+          "sequence": 9,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_335454c1f1f34eef9ca244448d4de1dda73438eb15f98b1a61dc39bab5bf3041",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "waiting_for_tool",
+            "current": "running"
+          }
+        },
+        {
+          "eventId": "event_0a1a415dc63ebb3b215ab05ababd8a65381410d14df3edb04e83619403361f40",
+          "runId": "run_state_durable_report_4",
+          "sequence": 10,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_0a1a415dc63ebb3b215ab05ababd8a65381410d14df3edb04e83619403361f40",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_eddb885c13ade2f760e5a3559bc450b5611a6102f20afff43e48cb2e1e1a75f8",
+            "actor": "ai",
+            "content": "Report report_001 is complete."
+          }
+        },
+        {
+          "eventId": "event_8d8136d4c4af435e37ffd04752434589afe6777d72866b77c85483da1441a446",
+          "runId": "run_state_durable_report_4",
+          "sequence": 11,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_8d8136d4c4af435e37ffd04752434589afe6777d72866b77c85483da1441a446",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "completed"
+          }
+        }
+      ]
+    },
+    "admin": {
+      "viewer": "admin",
+      "run": {
+        "runId": "run_state_durable_report_4",
+        "conversationId": "conversation_state_durable_report",
+        "runtime": "state_workflow",
+        "status": "completed",
+        "version": 7,
+        "consumedSteps": 3,
+        "selectedSkill": {
+          "skillId": "report_assistant",
+          "version": "1",
+          "instructions": "Use report.generate for report requests and wait for its final result.",
+          "allowedTools": [
+            "report.generate"
+          ]
+        },
+        "cursor": {
+          "runId": "run_state_durable_report_4",
+          "sequence": 11
+        }
+      },
+      "events": [
+        {
+          "eventId": "event_state_durable_report_2",
+          "runId": "run_state_durable_report_4",
+          "sequence": 1,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_state_durable_report_5",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_state_durable_report_1",
+            "actor": "user",
+            "content": "Generate the quarterly report."
+          }
+        },
+        {
+          "eventId": "event_1a355de1c5537a3ec41cb53affe1f285a8be76987bedcf976a3b1e1293dde30d",
+          "runId": "run_state_durable_report_4",
+          "sequence": 2,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_1a355de1c5537a3ec41cb53affe1f285a8be76987bedcf976a3b1e1293dde30d",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "queued",
+            "current": "running"
+          }
+        },
+        {
+          "eventId": "event_4d302c1784da533e0662575b396b31da8eaa0c03eee30759e9e94f3779a22a85",
+          "runId": "run_state_durable_report_4",
+          "sequence": 3,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_4d302c1784da533e0662575b396b31da8eaa0c03eee30759e9e94f3779a22a85",
+          "type": "skill.loaded",
+          "visibility": "user",
+          "payload": {
+            "skillId": "report_assistant",
+            "version": "1",
+            "instructions": "Use report.generate for report requests and wait for its final result.",
+            "allowedTools": [
+              "report.generate"
+            ]
+          }
+        },
+        {
+          "eventId": "report-a885652b2545b58a3c93a9a1-run-accepted",
+          "runId": "run_state_durable_report_4",
+          "sequence": 4,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "call_report_state_durable_report",
+          "type": "job.accepted",
+          "visibility": "user",
+          "payload": {
+            "jobId": "job_001",
+            "callId": "call_report_state_durable_report",
+            "status": "queued"
+          }
+        },
+        {
+          "eventId": "event_de6d83aa2be67ae6f7e94b3cbecf787bfb83b10e264f869d40bc2f3888c70f8c",
+          "runId": "run_state_durable_report_4",
+          "sequence": 5,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "call_report_state_durable_report",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "waiting_for_tool"
+          }
+        },
+        {
+          "eventId": "run_event_state_durable_progress",
+          "runId": "run_state_durable_report_4",
+          "sequence": 6,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "call_report_state_durable_report",
+          "type": "job.progress",
+          "visibility": "user",
+          "payload": {
+            "jobId": "job_001",
+            "callId": "call_report_state_durable_report",
+            "status": "running",
+            "percent": 50
+          }
+        },
+        {
+          "eventId": "run_event_state_durable_complete",
+          "runId": "run_state_durable_report_4",
+          "sequence": 7,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "call_report_state_durable_report",
+          "type": "job.completed",
+          "visibility": "user",
+          "payload": {
+            "jobId": "job_001",
+            "callId": "call_report_state_durable_report",
+            "status": "completed",
+            "reportId": "report_001"
+          }
+        },
+        {
+          "eventId": "event_b20c79f571fbedfbd4902d44fae10b88eae20efa53e31556d6e260a8bd923993",
+          "runId": "run_state_durable_report_4",
+          "sequence": 8,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_335454c1f1f34eef9ca244448d4de1dda73438eb15f98b1a61dc39bab5bf3041",
+          "type": "tool.call.completed",
+          "visibility": "user",
+          "payload": {
+            "callId": "call_report_state_durable_report",
+            "toolName": "report.generate",
+            "result": {
+              "toolName": "report.generate",
+              "jobId": "job_001",
+              "reportId": "report_001",
+              "status": "completed"
+            }
+          }
+        },
+        {
+          "eventId": "event_130dbc99c8f3b071c527e359f27bee11b26528fbd8c29af4544c516d29d7a7a6",
+          "runId": "run_state_durable_report_4",
+          "sequence": 9,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_335454c1f1f34eef9ca244448d4de1dda73438eb15f98b1a61dc39bab5bf3041",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "waiting_for_tool",
+            "current": "running"
+          }
+        },
+        {
+          "eventId": "event_0a1a415dc63ebb3b215ab05ababd8a65381410d14df3edb04e83619403361f40",
+          "runId": "run_state_durable_report_4",
+          "sequence": 10,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_0a1a415dc63ebb3b215ab05ababd8a65381410d14df3edb04e83619403361f40",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_eddb885c13ade2f760e5a3559bc450b5611a6102f20afff43e48cb2e1e1a75f8",
+            "actor": "ai",
+            "content": "Report report_001 is complete."
+          }
+        },
+        {
+          "eventId": "event_8d8136d4c4af435e37ffd04752434589afe6777d72866b77c85483da1441a446",
+          "runId": "run_state_durable_report_4",
+          "sequence": 11,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_8d8136d4c4af435e37ffd04752434589afe6777d72866b77c85483da1441a446",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "completed"
+          }
+        }
+      ]
+    }
+  },
+  "normalizedEventTrace": {
+    "events": [
+      {
+        "position": 1,
+        "type": "message.completed",
+        "visibility": "user",
+        "payload": {
+          "messageId": "message_state_durable_report_1",
+          "actor": "user",
+          "content": "Generate the quarterly report."
+        }
+      },
+      {
+        "position": 2,
+        "type": "run.status_changed",
+        "visibility": "user",
+        "payload": {
+          "previous": "queued",
+          "current": "running"
+        }
+      },
+      {
+        "position": 3,
+        "type": "skill.loaded",
+        "visibility": "user",
+        "payload": {
+          "skillId": "report_assistant",
+          "version": "1",
+          "instructions": "Use report.generate for report requests and wait for its final result.",
+          "allowedTools": [
+            "report.generate"
+          ]
+        }
+      },
+      {
+        "position": 4,
+        "type": "job.accepted",
+        "visibility": "user",
+        "payload": {
+          "jobId": "job_001",
+          "callId": "call_report_state_durable_report",
+          "status": "queued"
+        }
+      },
+      {
+        "position": 5,
+        "type": "run.status_changed",
+        "visibility": "user",
+        "payload": {
+          "previous": "running",
+          "current": "waiting_for_tool"
+        }
+      },
+      {
+        "position": 6,
+        "type": "job.progress",
+        "visibility": "user",
+        "payload": {
+          "jobId": "job_001",
+          "callId": "call_report_state_durable_report",
+          "status": "running",
+          "percent": 50
+        }
+      },
+      {
+        "position": 7,
+        "type": "job.completed",
+        "visibility": "user",
+        "payload": {
+          "jobId": "job_001",
+          "callId": "call_report_state_durable_report",
+          "status": "completed",
+          "reportId": "report_001"
+        }
+      },
+      {
+        "position": 8,
+        "type": "tool.call.completed",
+        "visibility": "user",
+        "payload": {
+          "callId": "call_report_state_durable_report",
+          "toolName": "report.generate",
+          "result": {
+            "toolName": "report.generate",
+            "jobId": "job_001",
+            "reportId": "report_001",
+            "status": "completed"
+          }
+        }
+      },
+      {
+        "position": 9,
+        "type": "run.status_changed",
+        "visibility": "user",
+        "payload": {
+          "previous": "waiting_for_tool",
+          "current": "running"
+        }
+      },
+      {
+        "position": 10,
+        "type": "message.completed",
+        "visibility": "user",
+        "payload": {
+          "messageId": "message_eddb885c13ade2f760e5a3559bc450b5611a6102f20afff43e48cb2e1e1a75f8",
+          "actor": "ai",
+          "content": "Report report_001 is complete."
+        }
+      },
+      {
+        "position": 11,
+        "type": "run.status_changed",
+        "visibility": "user",
+        "payload": {
+          "previous": "running",
+          "current": "completed"
+        }
+      }
+    ]
+  },
+  "schemaVersion": 2,
+  "provenance": {
+    "source": "postgresql_projection_capture",
+    "capturedRunId": "run_state_durable_report_4",
+    "processId": 83377,
+    "observationDigest": "aa0680376fef25145b48784e9835dc683ec9d7ab2643dbd3d6fe120edfa96ac2"
+  },
+  "observedApprovalJobEvents": [
+    {
+      "position": 4,
+      "type": "job.accepted",
+      "visibility": "user",
+      "payload": {
+        "jobId": "job_001",
+        "callId": "call_report_state_durable_report",
+        "status": "queued"
+      }
+    },
+    {
+      "position": 6,
+      "type": "job.progress",
+      "visibility": "user",
+      "payload": {
+        "jobId": "job_001",
+        "callId": "call_report_state_durable_report",
+        "status": "running",
+        "percent": 50
+      }
+    },
+    {
+      "position": 7,
+      "type": "job.completed",
+      "visibility": "user",
+      "payload": {
+        "jobId": "job_001",
+        "callId": "call_report_state_durable_report",
+        "status": "completed",
+        "reportId": "report_001"
+      }
+    }
+  ],
+  "result": "PASS",
+  "failureDetails": null,
+  "evidenceLinks": [
+    "acceptance/state_workflow/F10/P11.json"
+  ]
+}

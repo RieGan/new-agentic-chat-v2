@@ -1,0 +1,392 @@
+{
+  "metadata": {
+    "runtime": "state_workflow",
+    "testId": "F09",
+    "promptId": "P10",
+    "fixtureNamespace": "state_durable_user",
+    "testFile": "/Users/riegan/Project/ruangguru/new-agentic-chat-v2/packages/testkit/e2e/state-workflow-durable.spec.ts",
+    "testTitle": "F09 same-run continuation applies hidden guidance once",
+    "runtimeDiagnostics": [
+      {
+        "workflowId": "agent-run/run_state_durable_user_4",
+        "providerMessageCount": 3
+      }
+    ],
+    "executionOutcome": {
+      "workflowId": "agent-run/run_state_durable_user_4",
+      "runId": "run_state_durable_user_4",
+      "status": "completed",
+      "historyPosition": 4,
+      "wait": null
+    }
+  },
+  "runId": "run_state_durable_user_4",
+  "actors": [
+    {
+      "actor": "ai",
+      "action": "final_response"
+    },
+    {
+      "actor": "mvp_user",
+      "action": "message"
+    },
+    {
+      "actor": "mvp_user",
+      "action": "message"
+    },
+    {
+      "actor": "mvp_admin",
+      "action": "applied"
+    }
+  ],
+  "stableIds": {
+    "runId": "run_state_durable_user_4",
+    "callIds": [],
+    "jobIds": [],
+    "approvalIds": [],
+    "commandIds": [
+      "admin_command_state_durable_user_6"
+    ]
+  },
+  "observedSkill": null,
+  "observedToolCalls": [],
+  "observedApprovals": [],
+  "observedJobs": [],
+  "finalResponse": "ADMIN_GUIDANCE_OK",
+  "finalStatus": "completed",
+  "projections": {
+    "user": {
+      "viewer": "user",
+      "run": {
+        "runId": "run_state_durable_user_4",
+        "conversationId": "conversation_state_durable_user",
+        "runtime": "state_workflow",
+        "status": "completed",
+        "version": 6,
+        "consumedSteps": 2,
+        "cursor": {
+          "runId": "run_state_durable_user_4",
+          "sequence": 8
+        }
+      },
+      "events": [
+        {
+          "eventId": "event_state_durable_user_2",
+          "runId": "run_state_durable_user_4",
+          "sequence": 1,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_state_durable_user_5",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_state_durable_user_1",
+            "actor": "user",
+            "content": "Wait for guidance."
+          }
+        },
+        {
+          "eventId": "event_state_durable_user_running",
+          "runId": "run_state_durable_user_4",
+          "sequence": 2,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_state_durable_user",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "queued",
+            "current": "running"
+          }
+        },
+        {
+          "eventId": "event_state_durable_user_status",
+          "runId": "run_state_durable_user_4",
+          "sequence": 3,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_state_durable_user",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "waiting_for_user"
+          }
+        },
+        {
+          "eventId": "event_state_durable_user_10",
+          "runId": "run_state_durable_user_4",
+          "sequence": 5,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_state_durable_user",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_state_durable_user_9",
+            "actor": "user",
+            "content": "Respond now."
+          }
+        },
+        {
+          "eventId": "event_9423c0636798c5f8b65726db966107f7309e36b7f131dd5390e982d0a600e29d",
+          "runId": "run_state_durable_user_4",
+          "sequence": 7,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_9423c0636798c5f8b65726db966107f7309e36b7f131dd5390e982d0a600e29d",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_d5cad118f250dde89cda7d7ce9d7e418e663864dd4f2bb52972ec8acd4c09be1",
+            "actor": "ai",
+            "content": "ADMIN_GUIDANCE_OK"
+          }
+        },
+        {
+          "eventId": "event_8dee2c9319a58359c5ffda2efaaf689bd71be01bcbcd049da8e34fe35bf264bd",
+          "runId": "run_state_durable_user_4",
+          "sequence": 8,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_8dee2c9319a58359c5ffda2efaaf689bd71be01bcbcd049da8e34fe35bf264bd",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "completed"
+          }
+        }
+      ]
+    },
+    "admin": {
+      "viewer": "admin",
+      "run": {
+        "runId": "run_state_durable_user_4",
+        "conversationId": "conversation_state_durable_user",
+        "runtime": "state_workflow",
+        "status": "completed",
+        "version": 6,
+        "consumedSteps": 2,
+        "cursor": {
+          "runId": "run_state_durable_user_4",
+          "sequence": 8
+        }
+      },
+      "events": [
+        {
+          "eventId": "event_state_durable_user_2",
+          "runId": "run_state_durable_user_4",
+          "sequence": 1,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_state_durable_user_5",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_state_durable_user_1",
+            "actor": "user",
+            "content": "Wait for guidance."
+          }
+        },
+        {
+          "eventId": "event_state_durable_user_running",
+          "runId": "run_state_durable_user_4",
+          "sequence": 2,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_state_durable_user",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "queued",
+            "current": "running"
+          }
+        },
+        {
+          "eventId": "event_state_durable_user_status",
+          "runId": "run_state_durable_user_4",
+          "sequence": 3,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_state_durable_user",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "waiting_for_user"
+          }
+        },
+        {
+          "eventId": "event_state_durable_user_7",
+          "runId": "run_state_durable_user_4",
+          "sequence": 4,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_state_durable_user_8",
+          "type": "admin.command.accepted",
+          "visibility": "model_only",
+          "payload": {
+            "commandId": "admin_command_state_durable_user_6",
+            "status": "accepted"
+          }
+        },
+        {
+          "eventId": "event_state_durable_user_10",
+          "runId": "run_state_durable_user_4",
+          "sequence": 5,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_state_durable_user",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_state_durable_user_9",
+            "actor": "user",
+            "content": "Respond now."
+          }
+        },
+        {
+          "eventId": "event_b00d676e9c22cca0a99168325ce4349d552e710a22fe7a819038d3d3644cfcba",
+          "runId": "run_state_durable_user_4",
+          "sequence": 6,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "event_dd98f383e82d47e990cce362f59e1e0efefc64f5955699a8c203bc2af1fd4047",
+          "type": "admin.command.applied",
+          "visibility": "model_only",
+          "payload": {
+            "commandId": "admin_command_state_durable_user_6",
+            "status": "applied"
+          }
+        },
+        {
+          "eventId": "event_9423c0636798c5f8b65726db966107f7309e36b7f131dd5390e982d0a600e29d",
+          "runId": "run_state_durable_user_4",
+          "sequence": 7,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_9423c0636798c5f8b65726db966107f7309e36b7f131dd5390e982d0a600e29d",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_d5cad118f250dde89cda7d7ce9d7e418e663864dd4f2bb52972ec8acd4c09be1",
+            "actor": "ai",
+            "content": "ADMIN_GUIDANCE_OK"
+          }
+        },
+        {
+          "eventId": "event_8dee2c9319a58359c5ffda2efaaf689bd71be01bcbcd049da8e34fe35bf264bd",
+          "runId": "run_state_durable_user_4",
+          "sequence": 8,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_8dee2c9319a58359c5ffda2efaaf689bd71be01bcbcd049da8e34fe35bf264bd",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "completed"
+          }
+        }
+      ]
+    }
+  },
+  "normalizedEventTrace": {
+    "events": [
+      {
+        "position": 1,
+        "type": "message.completed",
+        "visibility": "user",
+        "payload": {
+          "messageId": "message_state_durable_user_1",
+          "actor": "user",
+          "content": "Wait for guidance."
+        }
+      },
+      {
+        "position": 2,
+        "type": "run.status_changed",
+        "visibility": "user",
+        "payload": {
+          "previous": "queued",
+          "current": "running"
+        }
+      },
+      {
+        "position": 3,
+        "type": "run.status_changed",
+        "visibility": "user",
+        "payload": {
+          "previous": "running",
+          "current": "waiting_for_user"
+        }
+      },
+      {
+        "position": 4,
+        "type": "admin.command.accepted",
+        "visibility": "model_only",
+        "payload": {
+          "commandId": "admin_command_state_durable_user_6",
+          "status": "accepted"
+        }
+      },
+      {
+        "position": 5,
+        "type": "message.completed",
+        "visibility": "user",
+        "payload": {
+          "messageId": "message_state_durable_user_9",
+          "actor": "user",
+          "content": "Respond now."
+        }
+      },
+      {
+        "position": 6,
+        "type": "admin.command.applied",
+        "visibility": "model_only",
+        "payload": {
+          "commandId": "admin_command_state_durable_user_6",
+          "status": "applied"
+        }
+      },
+      {
+        "position": 7,
+        "type": "message.completed",
+        "visibility": "user",
+        "payload": {
+          "messageId": "message_d5cad118f250dde89cda7d7ce9d7e418e663864dd4f2bb52972ec8acd4c09be1",
+          "actor": "ai",
+          "content": "ADMIN_GUIDANCE_OK"
+        }
+      },
+      {
+        "position": 8,
+        "type": "run.status_changed",
+        "visibility": "user",
+        "payload": {
+          "previous": "running",
+          "current": "completed"
+        }
+      }
+    ]
+  },
+  "schemaVersion": 2,
+  "provenance": {
+    "source": "postgresql_projection_capture",
+    "capturedRunId": "run_state_durable_user_4",
+    "processId": 83085,
+    "observationDigest": "2c610b195b2486256b1e4d10019268f538f953d74c2deed591ef7889126b1d91"
+  },
+  "observedApprovalJobEvents": [
+    {
+      "position": 4,
+      "type": "admin.command.accepted",
+      "visibility": "model_only",
+      "payload": {
+        "commandId": "admin_command_state_durable_user_6",
+        "status": "accepted"
+      }
+    },
+    {
+      "position": 6,
+      "type": "admin.command.applied",
+      "visibility": "model_only",
+      "payload": {
+        "commandId": "admin_command_state_durable_user_6",
+        "status": "applied"
+      }
+    }
+  ],
+  "result": "PASS",
+  "failureDetails": null,
+  "evidenceLinks": [
+    "acceptance/state_workflow/F09/P10.json"
+  ]
+}

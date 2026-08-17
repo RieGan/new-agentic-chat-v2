@@ -1,0 +1,666 @@
+{
+  "metadata": {
+    "runtime": "state_workflow",
+    "testId": "F08",
+    "promptId": "P09",
+    "fixtureNamespace": "state_durable_reject",
+    "testFile": "/Users/riegan/Project/ruangguru/new-agentic-chat-v2/packages/testkit/e2e/state-workflow-durable.spec.ts",
+    "testTitle": "F08 @restart pending approval preserves rejection binding",
+    "runtimeDiagnostics": [
+      {
+        "waiting": {
+          "workflowId": "agent-run/run_state_durable_reject_4",
+          "runId": "run_state_durable_reject_4",
+          "status": "waiting_for_admin",
+          "historyPosition": 2,
+          "wait": {
+            "kind": "admin",
+            "callId": "call_send_state_durable_reject",
+            "approvalId": "approval_c37d4d3c2b4e9d0aadc9cbaf31a77ad57ee436d732b17702d80cd58a55c0adde"
+          }
+        },
+        "decision": "reject",
+        "simulatedSends": 0
+      }
+    ],
+    "executionOutcome": {
+      "workflowId": "agent-run/run_state_durable_reject_4",
+      "runId": "run_state_durable_reject_4",
+      "status": "completed",
+      "historyPosition": 4,
+      "wait": null
+    }
+  },
+  "runId": "run_state_durable_reject_4",
+  "actors": [
+    {
+      "actor": "ai",
+      "action": "final_response"
+    },
+    {
+      "actor": "mvp_user",
+      "action": "message"
+    },
+    {
+      "actor": "mvp_admin",
+      "action": "rejected"
+    }
+  ],
+  "stableIds": {
+    "runId": "run_state_durable_reject_4",
+    "callIds": [
+      "call_preview_state_durable_reject",
+      "call_send_state_durable_reject"
+    ],
+    "jobIds": [],
+    "approvalIds": [
+      "approval_c37d4d3c2b4e9d0aadc9cbaf31a77ad57ee436d732b17702d80cd58a55c0adde"
+    ],
+    "commandIds": []
+  },
+  "observedSkill": {
+    "skillId": "communication_assistant",
+    "version": "1",
+    "allowedTools": [
+      "notification.preview",
+      "notification.send_email"
+    ]
+  },
+  "observedToolCalls": [
+    {
+      "callId": "call_preview_state_durable_reject",
+      "toolName": "notification.preview",
+      "status": "completed",
+      "arguments": {
+        "body": "Approval",
+        "subject": "MVP",
+        "recipient": "qa@example.com"
+      },
+      "result": {
+        "toolName": "notification.preview",
+        "previewId": "preview_021dfc23575efbf2e3e9af27",
+        "normalizedMessage": {
+          "body": "Approval",
+          "subject": "MVP",
+          "recipient": "qa@example.com"
+        }
+      },
+      "error": null
+    },
+    {
+      "callId": "call_send_state_durable_reject",
+      "toolName": "notification.send_email",
+      "status": "rejected",
+      "arguments": {
+        "previewId": "preview_call_preview_state_durable_reject"
+      },
+      "result": {
+        "status": "not_sent",
+        "toolName": "notification.send_email"
+      },
+      "error": null
+    }
+  ],
+  "observedApprovals": [
+    {
+      "approvalId": "approval_c37d4d3c2b4e9d0aadc9cbaf31a77ad57ee436d732b17702d80cd58a55c0adde",
+      "callId": "call_send_state_durable_reject",
+      "status": "rejected",
+      "actorId": "mvp_admin",
+      "decision": "rejected"
+    }
+  ],
+  "observedJobs": [],
+  "finalResponse": "The message was not sent.",
+  "finalStatus": "completed",
+  "projections": {
+    "user": {
+      "viewer": "user",
+      "run": {
+        "runId": "run_state_durable_reject_4",
+        "conversationId": "conversation_state_durable_reject",
+        "runtime": "state_workflow",
+        "status": "completed",
+        "version": 9,
+        "consumedSteps": 4,
+        "selectedSkill": {
+          "skillId": "communication_assistant",
+          "version": "1",
+          "instructions": "Preview a message before requesting permission to send it.",
+          "allowedTools": [
+            "notification.preview",
+            "notification.send_email"
+          ]
+        },
+        "cursor": {
+          "runId": "run_state_durable_reject_4",
+          "sequence": 12
+        }
+      },
+      "events": [
+        {
+          "eventId": "event_state_durable_reject_2",
+          "runId": "run_state_durable_reject_4",
+          "sequence": 1,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_state_durable_reject_5",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_state_durable_reject_1",
+            "actor": "user",
+            "content": "Preview and send the notification."
+          }
+        },
+        {
+          "eventId": "event_8fcb3a9cdd8f8e069795179bed336c61d765d88343066b64661b4dd149f2bdd2",
+          "runId": "run_state_durable_reject_4",
+          "sequence": 2,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_8fcb3a9cdd8f8e069795179bed336c61d765d88343066b64661b4dd149f2bdd2",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "queued",
+            "current": "running"
+          }
+        },
+        {
+          "eventId": "event_b3fa8e94a6f82767edbd5da6fdf97e5d84ecb569dee879d3338788b095b50c97",
+          "runId": "run_state_durable_reject_4",
+          "sequence": 3,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_b3fa8e94a6f82767edbd5da6fdf97e5d84ecb569dee879d3338788b095b50c97",
+          "type": "skill.loaded",
+          "visibility": "user",
+          "payload": {
+            "skillId": "communication_assistant",
+            "version": "1",
+            "instructions": "Preview a message before requesting permission to send it.",
+            "allowedTools": [
+              "notification.preview",
+              "notification.send_email"
+            ]
+          }
+        },
+        {
+          "eventId": "event_00927274c3ec3702218a60d97c8fc188f026843d21adc72ef050e34eec0928d4",
+          "runId": "run_state_durable_reject_4",
+          "sequence": 4,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_71ab68f804f14c8638262c32bbaf68b3da3784c00335e58dbe4e0f1893bc3b69",
+          "type": "tool.call.started",
+          "visibility": "user",
+          "payload": {
+            "callId": "call_preview_state_durable_reject",
+            "toolName": "notification.preview"
+          }
+        },
+        {
+          "eventId": "event_17d55c59f92dbbb4d5da42f7e35d6442d67879c04fc22d4875aa8fe2c16f030c",
+          "runId": "run_state_durable_reject_4",
+          "sequence": 5,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_71ab68f804f14c8638262c32bbaf68b3da3784c00335e58dbe4e0f1893bc3b69",
+          "type": "tool.call.completed",
+          "visibility": "user",
+          "payload": {
+            "callId": "call_preview_state_durable_reject",
+            "toolName": "notification.preview",
+            "result": {
+              "toolName": "notification.preview",
+              "previewId": "preview_021dfc23575efbf2e3e9af27",
+              "normalizedMessage": {
+                "recipient": "qa@example.com",
+                "subject": "MVP",
+                "body": "Approval"
+              }
+            }
+          }
+        },
+        {
+          "eventId": "event_55c4b202042b87328f747316a704793ac73d2c2cb40a89d2d5d8e4a3f857729c",
+          "runId": "run_state_durable_reject_4",
+          "sequence": 7,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "call_send_state_durable_reject",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "waiting_for_admin"
+          }
+        },
+        {
+          "eventId": "event_3b339c35d8600ac4f3c99843d50bbbc6dc6a872527ae11b9363fdbb2f49c5b3e",
+          "runId": "run_state_durable_reject_4",
+          "sequence": 9,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_cc5470298936f4c09e11cb0fd720e8d99194caf724b2b80c25a1bea3505cbf52",
+          "type": "tool.call.rejected",
+          "visibility": "user",
+          "payload": {
+            "callId": "call_send_state_durable_reject",
+            "toolName": "notification.send_email",
+            "reason": "not sent"
+          }
+        },
+        {
+          "eventId": "event_1e4b5d0308a91b0f7ae48592f9770cfb2b34f533f52b72f496cc4fa43b5cca6e",
+          "runId": "run_state_durable_reject_4",
+          "sequence": 10,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_cc5470298936f4c09e11cb0fd720e8d99194caf724b2b80c25a1bea3505cbf52",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "waiting_for_admin",
+            "current": "running"
+          }
+        },
+        {
+          "eventId": "event_ad180cafa1ba97a2ad4e2f9637bf4418ed1074930e446406505a38f13b8e0a99",
+          "runId": "run_state_durable_reject_4",
+          "sequence": 11,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_ad180cafa1ba97a2ad4e2f9637bf4418ed1074930e446406505a38f13b8e0a99",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_148ea78dbd8a2601d6d3b0aa8cb586b0d9e6700c2da4355712b93c5ad5c7b226",
+            "actor": "ai",
+            "content": "The message was not sent."
+          }
+        },
+        {
+          "eventId": "event_d3fcbd1d1292c1e9ddc38474cb363ea74b742e25644252e78b80601e37878013",
+          "runId": "run_state_durable_reject_4",
+          "sequence": 12,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_d3fcbd1d1292c1e9ddc38474cb363ea74b742e25644252e78b80601e37878013",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "completed"
+          }
+        }
+      ]
+    },
+    "admin": {
+      "viewer": "admin",
+      "run": {
+        "runId": "run_state_durable_reject_4",
+        "conversationId": "conversation_state_durable_reject",
+        "runtime": "state_workflow",
+        "status": "completed",
+        "version": 9,
+        "consumedSteps": 4,
+        "selectedSkill": {
+          "skillId": "communication_assistant",
+          "version": "1",
+          "instructions": "Preview a message before requesting permission to send it.",
+          "allowedTools": [
+            "notification.preview",
+            "notification.send_email"
+          ]
+        },
+        "cursor": {
+          "runId": "run_state_durable_reject_4",
+          "sequence": 12
+        }
+      },
+      "events": [
+        {
+          "eventId": "event_state_durable_reject_2",
+          "runId": "run_state_durable_reject_4",
+          "sequence": 1,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_state_durable_reject_5",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_state_durable_reject_1",
+            "actor": "user",
+            "content": "Preview and send the notification."
+          }
+        },
+        {
+          "eventId": "event_8fcb3a9cdd8f8e069795179bed336c61d765d88343066b64661b4dd149f2bdd2",
+          "runId": "run_state_durable_reject_4",
+          "sequence": 2,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_8fcb3a9cdd8f8e069795179bed336c61d765d88343066b64661b4dd149f2bdd2",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "queued",
+            "current": "running"
+          }
+        },
+        {
+          "eventId": "event_b3fa8e94a6f82767edbd5da6fdf97e5d84ecb569dee879d3338788b095b50c97",
+          "runId": "run_state_durable_reject_4",
+          "sequence": 3,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_b3fa8e94a6f82767edbd5da6fdf97e5d84ecb569dee879d3338788b095b50c97",
+          "type": "skill.loaded",
+          "visibility": "user",
+          "payload": {
+            "skillId": "communication_assistant",
+            "version": "1",
+            "instructions": "Preview a message before requesting permission to send it.",
+            "allowedTools": [
+              "notification.preview",
+              "notification.send_email"
+            ]
+          }
+        },
+        {
+          "eventId": "event_00927274c3ec3702218a60d97c8fc188f026843d21adc72ef050e34eec0928d4",
+          "runId": "run_state_durable_reject_4",
+          "sequence": 4,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_71ab68f804f14c8638262c32bbaf68b3da3784c00335e58dbe4e0f1893bc3b69",
+          "type": "tool.call.started",
+          "visibility": "user",
+          "payload": {
+            "callId": "call_preview_state_durable_reject",
+            "toolName": "notification.preview"
+          }
+        },
+        {
+          "eventId": "event_17d55c59f92dbbb4d5da42f7e35d6442d67879c04fc22d4875aa8fe2c16f030c",
+          "runId": "run_state_durable_reject_4",
+          "sequence": 5,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_71ab68f804f14c8638262c32bbaf68b3da3784c00335e58dbe4e0f1893bc3b69",
+          "type": "tool.call.completed",
+          "visibility": "user",
+          "payload": {
+            "callId": "call_preview_state_durable_reject",
+            "toolName": "notification.preview",
+            "result": {
+              "toolName": "notification.preview",
+              "previewId": "preview_021dfc23575efbf2e3e9af27",
+              "normalizedMessage": {
+                "recipient": "qa@example.com",
+                "subject": "MVP",
+                "body": "Approval"
+              }
+            }
+          }
+        },
+        {
+          "eventId": "event_fdcd2a9835445c9ec53bc1afb67306a439c13492ce09d4610c5e459f794cc68d",
+          "runId": "run_state_durable_reject_4",
+          "sequence": 6,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "call_send_state_durable_reject",
+          "type": "approval.requested",
+          "visibility": "admin",
+          "payload": {
+            "approvalId": "approval_c37d4d3c2b4e9d0aadc9cbaf31a77ad57ee436d732b17702d80cd58a55c0adde",
+            "callId": "call_send_state_durable_reject",
+            "toolName": "notification.send_email",
+            "argumentsHash": "a1a0463760fccff379ed20ded9b507fe831caa6c1e1263c7f05d002d902dd880",
+            "expiresAt": "2026-08-16T12:05:00.000Z"
+          }
+        },
+        {
+          "eventId": "event_55c4b202042b87328f747316a704793ac73d2c2cb40a89d2d5d8e4a3f857729c",
+          "runId": "run_state_durable_reject_4",
+          "sequence": 7,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "call_send_state_durable_reject",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "waiting_for_admin"
+          }
+        },
+        {
+          "eventId": "approval_action_state_durable_reject_6-event",
+          "runId": "run_state_durable_reject_4",
+          "sequence": 8,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "call_send_state_durable_reject",
+          "type": "approval.rejected",
+          "visibility": "admin",
+          "payload": {
+            "approvalId": "approval_c37d4d3c2b4e9d0aadc9cbaf31a77ad57ee436d732b17702d80cd58a55c0adde",
+            "callId": "call_send_state_durable_reject",
+            "actorId": "mvp_admin",
+            "reason": "MVP rejection test"
+          }
+        },
+        {
+          "eventId": "event_3b339c35d8600ac4f3c99843d50bbbc6dc6a872527ae11b9363fdbb2f49c5b3e",
+          "runId": "run_state_durable_reject_4",
+          "sequence": 9,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_cc5470298936f4c09e11cb0fd720e8d99194caf724b2b80c25a1bea3505cbf52",
+          "type": "tool.call.rejected",
+          "visibility": "user",
+          "payload": {
+            "callId": "call_send_state_durable_reject",
+            "toolName": "notification.send_email",
+            "reason": "not sent"
+          }
+        },
+        {
+          "eventId": "event_1e4b5d0308a91b0f7ae48592f9770cfb2b34f533f52b72f496cc4fa43b5cca6e",
+          "runId": "run_state_durable_reject_4",
+          "sequence": 10,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_cc5470298936f4c09e11cb0fd720e8d99194caf724b2b80c25a1bea3505cbf52",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "waiting_for_admin",
+            "current": "running"
+          }
+        },
+        {
+          "eventId": "event_ad180cafa1ba97a2ad4e2f9637bf4418ed1074930e446406505a38f13b8e0a99",
+          "runId": "run_state_durable_reject_4",
+          "sequence": 11,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_ad180cafa1ba97a2ad4e2f9637bf4418ed1074930e446406505a38f13b8e0a99",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_148ea78dbd8a2601d6d3b0aa8cb586b0d9e6700c2da4355712b93c5ad5c7b226",
+            "actor": "ai",
+            "content": "The message was not sent."
+          }
+        },
+        {
+          "eventId": "event_d3fcbd1d1292c1e9ddc38474cb363ea74b742e25644252e78b80601e37878013",
+          "runId": "run_state_durable_reject_4",
+          "sequence": 12,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_d3fcbd1d1292c1e9ddc38474cb363ea74b742e25644252e78b80601e37878013",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "completed"
+          }
+        }
+      ]
+    }
+  },
+  "normalizedEventTrace": {
+    "events": [
+      {
+        "position": 1,
+        "type": "message.completed",
+        "visibility": "user",
+        "payload": {
+          "messageId": "message_state_durable_reject_1",
+          "actor": "user",
+          "content": "Preview and send the notification."
+        }
+      },
+      {
+        "position": 2,
+        "type": "run.status_changed",
+        "visibility": "user",
+        "payload": {
+          "previous": "queued",
+          "current": "running"
+        }
+      },
+      {
+        "position": 3,
+        "type": "skill.loaded",
+        "visibility": "user",
+        "payload": {
+          "skillId": "communication_assistant",
+          "version": "1",
+          "instructions": "Preview a message before requesting permission to send it.",
+          "allowedTools": [
+            "notification.preview",
+            "notification.send_email"
+          ]
+        }
+      },
+      {
+        "position": 4,
+        "type": "tool.call.started",
+        "visibility": "user",
+        "payload": {
+          "callId": "call_preview_state_durable_reject",
+          "toolName": "notification.preview"
+        }
+      },
+      {
+        "position": 5,
+        "type": "tool.call.completed",
+        "visibility": "user",
+        "payload": {
+          "callId": "call_preview_state_durable_reject",
+          "toolName": "notification.preview",
+          "result": {
+            "toolName": "notification.preview",
+            "previewId": "preview_021dfc23575efbf2e3e9af27",
+            "normalizedMessage": {
+              "recipient": "qa@example.com",
+              "subject": "MVP",
+              "body": "Approval"
+            }
+          }
+        }
+      },
+      {
+        "position": 6,
+        "type": "approval.requested",
+        "visibility": "admin",
+        "payload": {
+          "approvalId": "approval_c37d4d3c2b4e9d0aadc9cbaf31a77ad57ee436d732b17702d80cd58a55c0adde",
+          "callId": "call_send_state_durable_reject",
+          "toolName": "notification.send_email",
+          "argumentsHash": "a1a0463760fccff379ed20ded9b507fe831caa6c1e1263c7f05d002d902dd880",
+          "expiresAt": "2026-08-16T12:05:00.000Z"
+        }
+      },
+      {
+        "position": 7,
+        "type": "run.status_changed",
+        "visibility": "user",
+        "payload": {
+          "previous": "running",
+          "current": "waiting_for_admin"
+        }
+      },
+      {
+        "position": 8,
+        "type": "approval.rejected",
+        "visibility": "admin",
+        "payload": {
+          "approvalId": "approval_c37d4d3c2b4e9d0aadc9cbaf31a77ad57ee436d732b17702d80cd58a55c0adde",
+          "callId": "call_send_state_durable_reject",
+          "actorId": "mvp_admin",
+          "reason": "MVP rejection test"
+        }
+      },
+      {
+        "position": 9,
+        "type": "tool.call.rejected",
+        "visibility": "user",
+        "payload": {
+          "callId": "call_send_state_durable_reject",
+          "toolName": "notification.send_email",
+          "reason": "not sent"
+        }
+      },
+      {
+        "position": 10,
+        "type": "run.status_changed",
+        "visibility": "user",
+        "payload": {
+          "previous": "waiting_for_admin",
+          "current": "running"
+        }
+      },
+      {
+        "position": 11,
+        "type": "message.completed",
+        "visibility": "user",
+        "payload": {
+          "messageId": "message_148ea78dbd8a2601d6d3b0aa8cb586b0d9e6700c2da4355712b93c5ad5c7b226",
+          "actor": "ai",
+          "content": "The message was not sent."
+        }
+      },
+      {
+        "position": 12,
+        "type": "run.status_changed",
+        "visibility": "user",
+        "payload": {
+          "previous": "running",
+          "current": "completed"
+        }
+      }
+    ]
+  },
+  "schemaVersion": 2,
+  "provenance": {
+    "source": "postgresql_projection_capture",
+    "capturedRunId": "run_state_durable_reject_4",
+    "processId": 82793,
+    "observationDigest": "1c94a40f922c661cb26299f8fb38c28852d816628ba57f825e781ae7a2dd5f8e"
+  },
+  "observedApprovalJobEvents": [
+    {
+      "position": 6,
+      "type": "approval.requested",
+      "visibility": "admin",
+      "payload": {
+        "approvalId": "approval_c37d4d3c2b4e9d0aadc9cbaf31a77ad57ee436d732b17702d80cd58a55c0adde",
+        "callId": "call_send_state_durable_reject",
+        "toolName": "notification.send_email",
+        "argumentsHash": "a1a0463760fccff379ed20ded9b507fe831caa6c1e1263c7f05d002d902dd880",
+        "expiresAt": "2026-08-16T12:05:00.000Z"
+      }
+    },
+    {
+      "position": 8,
+      "type": "approval.rejected",
+      "visibility": "admin",
+      "payload": {
+        "approvalId": "approval_c37d4d3c2b4e9d0aadc9cbaf31a77ad57ee436d732b17702d80cd58a55c0adde",
+        "callId": "call_send_state_durable_reject",
+        "actorId": "mvp_admin",
+        "reason": "MVP rejection test"
+      }
+    }
+  ],
+  "result": "PASS",
+  "failureDetails": null,
+  "evidenceLinks": [
+    "acceptance/state_workflow/F08/P09.json"
+  ]
+}
