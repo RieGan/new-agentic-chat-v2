@@ -1,0 +1,25 @@
+{
+  "name": "@agentic-chat/tools",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "production": "./dist/index.js",
+      "default": "./src/index.ts"
+    },
+    "./approval-internal": {
+      "production": "./dist/approval-internal.js",
+      "default": "./src/approval-internal.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@agentic-chat/contracts": "workspace:*",
+    "zod": "4.4.3"
+  }
+}
