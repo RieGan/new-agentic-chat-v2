@@ -1,0 +1,405 @@
+{
+  "metadata": {
+    "runtime": "state_workflow",
+    "testId": "F05",
+    "promptId": "P06",
+    "fixtureNamespace": "f05_disallowed",
+    "testFile": "/Users/riegan/Project/ruangguru/new-agentic-chat-v2/packages/testkit/e2e/state-workflow.spec.ts",
+    "testTitle": "F05 missing and prohibited requests invoke no prohibited fixture",
+    "runtimeDiagnostics": [
+      {
+        "providerInvocations": 2,
+        "advanceAttempts": 1,
+        "prohibitedExecutions": 0
+      }
+    ],
+    "executionOutcome": {
+      "workflowId": "agent-run/run_f05_disallowed_4",
+      "runId": "run_f05_disallowed_4",
+      "status": "failed",
+      "historyPosition": 2,
+      "wait": null
+    }
+  },
+  "runId": "run_f05_disallowed_4",
+  "actors": [
+    {
+      "actor": "ai",
+      "action": "final_response"
+    },
+    {
+      "actor": "mvp_user",
+      "action": "message"
+    }
+  ],
+  "stableIds": {
+    "runId": "run_f05_disallowed_4",
+    "callIds": [
+      "call_d192b14b219280d2415b682448acee3224e8c0bb504936ba0896204a576f9e9b"
+    ],
+    "jobIds": [],
+    "approvalIds": [],
+    "commandIds": []
+  },
+  "observedSkill": {
+    "skillId": "calculator_assistant",
+    "version": "1",
+    "allowedTools": [
+      "calculator.evaluate"
+    ]
+  },
+  "observedToolCalls": [
+    {
+      "callId": "call_d192b14b219280d2415b682448acee3224e8c0bb504936ba0896204a576f9e9b",
+      "toolName": "notification.send_email",
+      "status": "rejected",
+      "arguments": {},
+      "result": null,
+      "error": {
+        "code": "TOOL_NOT_ALLOWED",
+        "tool": "notification.send_email",
+        "skill": "calculator_assistant@1",
+        "message": "Tool notification.send_email is not allowed by skill calculator_assistant@1"
+      }
+    }
+  ],
+  "observedApprovals": [],
+  "observedJobs": [],
+  "finalResponse": "The selected skill cannot perform the requested action.",
+  "finalStatus": "failed",
+  "projections": {
+    "user": {
+      "viewer": "user",
+      "run": {
+        "runId": "run_f05_disallowed_4",
+        "conversationId": "conversation_f05_disallowed",
+        "runtime": "state_workflow",
+        "status": "failed",
+        "version": 5,
+        "consumedSteps": 2,
+        "selectedSkill": {
+          "skillId": "calculator_assistant",
+          "version": "1",
+          "instructions": "Always use calculator.evaluate for arithmetic requested by the user.",
+          "allowedTools": [
+            "calculator.evaluate"
+          ]
+        },
+        "cursor": {
+          "runId": "run_f05_disallowed_4",
+          "sequence": 7
+        }
+      },
+      "events": [
+        {
+          "eventId": "event_f05_disallowed_2",
+          "runId": "run_f05_disallowed_4",
+          "sequence": 1,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_f05_disallowed_5",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_f05_disallowed_1",
+            "actor": "user",
+            "content": "Load calculator_assistant version 1, then send an email."
+          }
+        },
+        {
+          "eventId": "event_5885bf3d7bb6110e221f981c1e5d2c386a7fa5a601a6635810335236ebc5dda9",
+          "runId": "run_f05_disallowed_4",
+          "sequence": 2,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_5885bf3d7bb6110e221f981c1e5d2c386a7fa5a601a6635810335236ebc5dda9",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "queued",
+            "current": "running"
+          }
+        },
+        {
+          "eventId": "event_c3d7162e2752cb8ebf8a7c2fc2fa6afcd5d3afa2f873a76d76cdf4154f9c49e2",
+          "runId": "run_f05_disallowed_4",
+          "sequence": 3,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_c3d7162e2752cb8ebf8a7c2fc2fa6afcd5d3afa2f873a76d76cdf4154f9c49e2",
+          "type": "skill.loaded",
+          "visibility": "user",
+          "payload": {
+            "skillId": "calculator_assistant",
+            "version": "1",
+            "instructions": "Always use calculator.evaluate for arithmetic requested by the user.",
+            "allowedTools": [
+              "calculator.evaluate"
+            ]
+          }
+        },
+        {
+          "eventId": "event_222f11cd00ff5f23f6fabc0f9d5641efe293e8a0513654a30fdc46213eeeda17",
+          "runId": "run_f05_disallowed_4",
+          "sequence": 4,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_220eca9f26c00695bd48c685d8eedaa7f7434224df8b24333ab1b262ef350b53",
+          "type": "tool.call.started",
+          "visibility": "user",
+          "payload": {
+            "callId": "call_d192b14b219280d2415b682448acee3224e8c0bb504936ba0896204a576f9e9b",
+            "toolName": "notification.send_email"
+          }
+        },
+        {
+          "eventId": "event_a5aa7bd54b2aa1e438bfa47b7cb0e6543f81c1a0b59d09ae0ae7f91ca945c2e2",
+          "runId": "run_f05_disallowed_4",
+          "sequence": 5,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_220eca9f26c00695bd48c685d8eedaa7f7434224df8b24333ab1b262ef350b53",
+          "type": "tool.call.rejected",
+          "visibility": "user",
+          "payload": {
+            "callId": "call_d192b14b219280d2415b682448acee3224e8c0bb504936ba0896204a576f9e9b",
+            "toolName": "notification.send_email",
+            "reason": "Tool notification.send_email is not allowed by skill calculator_assistant@1"
+          }
+        },
+        {
+          "eventId": "event_9122c5d7ae32af1cc8285c2e8e01d04e774ae94353d25ef30f685d34e8eb85e7",
+          "runId": "run_f05_disallowed_4",
+          "sequence": 6,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_9122c5d7ae32af1cc8285c2e8e01d04e774ae94353d25ef30f685d34e8eb85e7",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_c05145ac152ef2203ee56e70fc203bec456a9f1c1dd4d9793849dace6b07fec5",
+            "actor": "ai",
+            "content": "The selected skill cannot perform the requested action."
+          }
+        },
+        {
+          "eventId": "event_1bc3f2bdaad81bba88a7cc02de824083108feb460a37d1a800ca604c98e8a6b5",
+          "runId": "run_f05_disallowed_4",
+          "sequence": 7,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_1bc3f2bdaad81bba88a7cc02de824083108feb460a37d1a800ca604c98e8a6b5",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "failed"
+          }
+        }
+      ]
+    },
+    "admin": {
+      "viewer": "admin",
+      "run": {
+        "runId": "run_f05_disallowed_4",
+        "conversationId": "conversation_f05_disallowed",
+        "runtime": "state_workflow",
+        "status": "failed",
+        "version": 5,
+        "consumedSteps": 2,
+        "selectedSkill": {
+          "skillId": "calculator_assistant",
+          "version": "1",
+          "instructions": "Always use calculator.evaluate for arithmetic requested by the user.",
+          "allowedTools": [
+            "calculator.evaluate"
+          ]
+        },
+        "cursor": {
+          "runId": "run_f05_disallowed_4",
+          "sequence": 7
+        }
+      },
+      "events": [
+        {
+          "eventId": "event_f05_disallowed_2",
+          "runId": "run_f05_disallowed_4",
+          "sequence": 1,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_f05_disallowed_5",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_f05_disallowed_1",
+            "actor": "user",
+            "content": "Load calculator_assistant version 1, then send an email."
+          }
+        },
+        {
+          "eventId": "event_5885bf3d7bb6110e221f981c1e5d2c386a7fa5a601a6635810335236ebc5dda9",
+          "runId": "run_f05_disallowed_4",
+          "sequence": 2,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_5885bf3d7bb6110e221f981c1e5d2c386a7fa5a601a6635810335236ebc5dda9",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "queued",
+            "current": "running"
+          }
+        },
+        {
+          "eventId": "event_c3d7162e2752cb8ebf8a7c2fc2fa6afcd5d3afa2f873a76d76cdf4154f9c49e2",
+          "runId": "run_f05_disallowed_4",
+          "sequence": 3,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_c3d7162e2752cb8ebf8a7c2fc2fa6afcd5d3afa2f873a76d76cdf4154f9c49e2",
+          "type": "skill.loaded",
+          "visibility": "user",
+          "payload": {
+            "skillId": "calculator_assistant",
+            "version": "1",
+            "instructions": "Always use calculator.evaluate for arithmetic requested by the user.",
+            "allowedTools": [
+              "calculator.evaluate"
+            ]
+          }
+        },
+        {
+          "eventId": "event_222f11cd00ff5f23f6fabc0f9d5641efe293e8a0513654a30fdc46213eeeda17",
+          "runId": "run_f05_disallowed_4",
+          "sequence": 4,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_220eca9f26c00695bd48c685d8eedaa7f7434224df8b24333ab1b262ef350b53",
+          "type": "tool.call.started",
+          "visibility": "user",
+          "payload": {
+            "callId": "call_d192b14b219280d2415b682448acee3224e8c0bb504936ba0896204a576f9e9b",
+            "toolName": "notification.send_email"
+          }
+        },
+        {
+          "eventId": "event_a5aa7bd54b2aa1e438bfa47b7cb0e6543f81c1a0b59d09ae0ae7f91ca945c2e2",
+          "runId": "run_f05_disallowed_4",
+          "sequence": 5,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_220eca9f26c00695bd48c685d8eedaa7f7434224df8b24333ab1b262ef350b53",
+          "type": "tool.call.rejected",
+          "visibility": "user",
+          "payload": {
+            "callId": "call_d192b14b219280d2415b682448acee3224e8c0bb504936ba0896204a576f9e9b",
+            "toolName": "notification.send_email",
+            "reason": "Tool notification.send_email is not allowed by skill calculator_assistant@1"
+          }
+        },
+        {
+          "eventId": "event_9122c5d7ae32af1cc8285c2e8e01d04e774ae94353d25ef30f685d34e8eb85e7",
+          "runId": "run_f05_disallowed_4",
+          "sequence": 6,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_9122c5d7ae32af1cc8285c2e8e01d04e774ae94353d25ef30f685d34e8eb85e7",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_c05145ac152ef2203ee56e70fc203bec456a9f1c1dd4d9793849dace6b07fec5",
+            "actor": "ai",
+            "content": "The selected skill cannot perform the requested action."
+          }
+        },
+        {
+          "eventId": "event_1bc3f2bdaad81bba88a7cc02de824083108feb460a37d1a800ca604c98e8a6b5",
+          "runId": "run_f05_disallowed_4",
+          "sequence": 7,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_1bc3f2bdaad81bba88a7cc02de824083108feb460a37d1a800ca604c98e8a6b5",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "failed"
+          }
+        }
+      ]
+    }
+  },
+  "normalizedEventTrace": {
+    "events": [
+      {
+        "position": 1,
+        "type": "message.completed",
+        "visibility": "user",
+        "payload": {
+          "messageId": "message_f05_disallowed_1",
+          "actor": "user",
+          "content": "Load calculator_assistant version 1, then send an email."
+        }
+      },
+      {
+        "position": 2,
+        "type": "run.status_changed",
+        "visibility": "user",
+        "payload": {
+          "previous": "queued",
+          "current": "running"
+        }
+      },
+      {
+        "position": 3,
+        "type": "skill.loaded",
+        "visibility": "user",
+        "payload": {
+          "skillId": "calculator_assistant",
+          "version": "1",
+          "instructions": "Always use calculator.evaluate for arithmetic requested by the user.",
+          "allowedTools": [
+            "calculator.evaluate"
+          ]
+        }
+      },
+      {
+        "position": 4,
+        "type": "tool.call.started",
+        "visibility": "user",
+        "payload": {
+          "callId": "call_d192b14b219280d2415b682448acee3224e8c0bb504936ba0896204a576f9e9b",
+          "toolName": "notification.send_email"
+        }
+      },
+      {
+        "position": 5,
+        "type": "tool.call.rejected",
+        "visibility": "user",
+        "payload": {
+          "callId": "call_d192b14b219280d2415b682448acee3224e8c0bb504936ba0896204a576f9e9b",
+          "toolName": "notification.send_email",
+          "reason": "Tool notification.send_email is not allowed by skill calculator_assistant@1"
+        }
+      },
+      {
+        "position": 6,
+        "type": "message.completed",
+        "visibility": "user",
+        "payload": {
+          "messageId": "message_c05145ac152ef2203ee56e70fc203bec456a9f1c1dd4d9793849dace6b07fec5",
+          "actor": "ai",
+          "content": "The selected skill cannot perform the requested action."
+        }
+      },
+      {
+        "position": 7,
+        "type": "run.status_changed",
+        "visibility": "user",
+        "payload": {
+          "previous": "running",
+          "current": "failed"
+        }
+      }
+    ]
+  },
+  "schemaVersion": 2,
+  "provenance": {
+    "source": "postgresql_projection_capture",
+    "capturedRunId": "run_f05_disallowed_4",
+    "processId": 82190,
+    "observationDigest": "c14eb54b6fd3e59f3949f235e4154c3db2fc7e97a4aba585532ff515dcd6569d"
+  },
+  "observedApprovalJobEvents": [],
+  "result": "PASS",
+  "failureDetails": null,
+  "evidenceLinks": [
+    "acceptance/state_workflow/F05/P06.json"
+  ]
+}

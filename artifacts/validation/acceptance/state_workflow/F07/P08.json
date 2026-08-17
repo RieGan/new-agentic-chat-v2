@@ -1,0 +1,676 @@
+{
+  "metadata": {
+    "runtime": "state_workflow",
+    "testId": "F07",
+    "promptId": "P08",
+    "fixtureNamespace": "state_durable_approve",
+    "testFile": "/Users/riegan/Project/ruangguru/new-agentic-chat-v2/packages/testkit/e2e/state-workflow-durable.spec.ts",
+    "testTitle": "F07 @restart pending approval executes exactly one simulated send",
+    "runtimeDiagnostics": [
+      {
+        "waiting": {
+          "workflowId": "agent-run/run_state_durable_approve_4",
+          "runId": "run_state_durable_approve_4",
+          "status": "waiting_for_admin",
+          "historyPosition": 2,
+          "wait": {
+            "kind": "admin",
+            "callId": "call_send_state_durable_approve",
+            "approvalId": "approval_e1df6a45149e942aa5d5a58252472139d556fe9db0b45c71511b7690c51e8107"
+          }
+        },
+        "decision": "approve",
+        "simulatedSends": 1
+      }
+    ],
+    "executionOutcome": {
+      "workflowId": "agent-run/run_state_durable_approve_4",
+      "runId": "run_state_durable_approve_4",
+      "status": "completed",
+      "historyPosition": 4,
+      "wait": null
+    }
+  },
+  "runId": "run_state_durable_approve_4",
+  "actors": [
+    {
+      "actor": "ai",
+      "action": "final_response"
+    },
+    {
+      "actor": "mvp_user",
+      "action": "message"
+    },
+    {
+      "actor": "mvp_admin",
+      "action": "approved"
+    }
+  ],
+  "stableIds": {
+    "runId": "run_state_durable_approve_4",
+    "callIds": [
+      "call_preview_state_durable_approve",
+      "call_send_state_durable_approve"
+    ],
+    "jobIds": [],
+    "approvalIds": [
+      "approval_e1df6a45149e942aa5d5a58252472139d556fe9db0b45c71511b7690c51e8107"
+    ],
+    "commandIds": []
+  },
+  "observedSkill": {
+    "skillId": "communication_assistant",
+    "version": "1",
+    "allowedTools": [
+      "notification.preview",
+      "notification.send_email"
+    ]
+  },
+  "observedToolCalls": [
+    {
+      "callId": "call_preview_state_durable_approve",
+      "toolName": "notification.preview",
+      "status": "completed",
+      "arguments": {
+        "body": "Approval",
+        "subject": "MVP",
+        "recipient": "qa@example.com"
+      },
+      "result": {
+        "toolName": "notification.preview",
+        "previewId": "preview_021dfc23575efbf2e3e9af27",
+        "normalizedMessage": {
+          "body": "Approval",
+          "subject": "MVP",
+          "recipient": "qa@example.com"
+        }
+      },
+      "error": null
+    },
+    {
+      "callId": "call_send_state_durable_approve",
+      "toolName": "notification.send_email",
+      "status": "completed",
+      "arguments": {
+        "previewId": "preview_call_preview_state_durable_approve"
+      },
+      "result": {
+        "status": "sent",
+        "toolName": "notification.send_email",
+        "messageId": "message_a0d1c91f1215b60ef7d0cae0"
+      },
+      "error": null
+    }
+  ],
+  "observedApprovals": [
+    {
+      "approvalId": "approval_e1df6a45149e942aa5d5a58252472139d556fe9db0b45c71511b7690c51e8107",
+      "callId": "call_send_state_durable_approve",
+      "status": "approved",
+      "actorId": "mvp_admin",
+      "decision": "approved"
+    }
+  ],
+  "observedJobs": [],
+  "finalResponse": "Message sent.",
+  "finalStatus": "completed",
+  "projections": {
+    "user": {
+      "viewer": "user",
+      "run": {
+        "runId": "run_state_durable_approve_4",
+        "conversationId": "conversation_state_durable_approve",
+        "runtime": "state_workflow",
+        "status": "completed",
+        "version": 9,
+        "consumedSteps": 4,
+        "selectedSkill": {
+          "skillId": "communication_assistant",
+          "version": "1",
+          "instructions": "Preview a message before requesting permission to send it.",
+          "allowedTools": [
+            "notification.preview",
+            "notification.send_email"
+          ]
+        },
+        "cursor": {
+          "runId": "run_state_durable_approve_4",
+          "sequence": 12
+        }
+      },
+      "events": [
+        {
+          "eventId": "event_state_durable_approve_2",
+          "runId": "run_state_durable_approve_4",
+          "sequence": 1,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_state_durable_approve_5",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_state_durable_approve_1",
+            "actor": "user",
+            "content": "Preview and send the notification."
+          }
+        },
+        {
+          "eventId": "event_16b8730d78841a15c598c0f5f711524b53038d55e2129f07557fabc785269dd5",
+          "runId": "run_state_durable_approve_4",
+          "sequence": 2,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_16b8730d78841a15c598c0f5f711524b53038d55e2129f07557fabc785269dd5",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "queued",
+            "current": "running"
+          }
+        },
+        {
+          "eventId": "event_c6387d021b87b79a5542b6272363fcb6ce5da40aaf4238ee5be604a86a8e451d",
+          "runId": "run_state_durable_approve_4",
+          "sequence": 3,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_c6387d021b87b79a5542b6272363fcb6ce5da40aaf4238ee5be604a86a8e451d",
+          "type": "skill.loaded",
+          "visibility": "user",
+          "payload": {
+            "skillId": "communication_assistant",
+            "version": "1",
+            "instructions": "Preview a message before requesting permission to send it.",
+            "allowedTools": [
+              "notification.preview",
+              "notification.send_email"
+            ]
+          }
+        },
+        {
+          "eventId": "event_d313c2d27777d91efec740c5b93e6d42ed06d01c445914071612a9332e21cb08",
+          "runId": "run_state_durable_approve_4",
+          "sequence": 4,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_9159c55964f3eb783eb7108581741a97052d94fa31644a10a75684ac7a128d09",
+          "type": "tool.call.started",
+          "visibility": "user",
+          "payload": {
+            "callId": "call_preview_state_durable_approve",
+            "toolName": "notification.preview"
+          }
+        },
+        {
+          "eventId": "event_27a479a08285f805e7a85d627d73b70f3f3ec78ddec311d6b758ce8f815c8c85",
+          "runId": "run_state_durable_approve_4",
+          "sequence": 5,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_9159c55964f3eb783eb7108581741a97052d94fa31644a10a75684ac7a128d09",
+          "type": "tool.call.completed",
+          "visibility": "user",
+          "payload": {
+            "callId": "call_preview_state_durable_approve",
+            "toolName": "notification.preview",
+            "result": {
+              "toolName": "notification.preview",
+              "previewId": "preview_021dfc23575efbf2e3e9af27",
+              "normalizedMessage": {
+                "recipient": "qa@example.com",
+                "subject": "MVP",
+                "body": "Approval"
+              }
+            }
+          }
+        },
+        {
+          "eventId": "event_68782a98af090f789feb4f789d2289f7254493defd0beab4f2d476c88bfa1304",
+          "runId": "run_state_durable_approve_4",
+          "sequence": 7,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "call_send_state_durable_approve",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "waiting_for_admin"
+          }
+        },
+        {
+          "eventId": "event_3731aa0cc431e822b4226a215e4dbbfdb6e5ae5d9ea48f644210b84703a44acb",
+          "runId": "run_state_durable_approve_4",
+          "sequence": 9,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_c573091589fd3966cb8c7dbaa22b82ef8b89c2d1210976d17110b9540de65ae2",
+          "type": "tool.call.completed",
+          "visibility": "user",
+          "payload": {
+            "callId": "call_send_state_durable_approve",
+            "toolName": "notification.send_email",
+            "result": {
+              "toolName": "notification.send_email",
+              "messageId": "message_a0d1c91f1215b60ef7d0cae0",
+              "status": "sent"
+            }
+          }
+        },
+        {
+          "eventId": "event_75428e6d322a7dd37564b84ead8004822aa84655ea97c949eecbbc2f33271e67",
+          "runId": "run_state_durable_approve_4",
+          "sequence": 10,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_c573091589fd3966cb8c7dbaa22b82ef8b89c2d1210976d17110b9540de65ae2",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "waiting_for_admin",
+            "current": "running"
+          }
+        },
+        {
+          "eventId": "event_0da1743e58af327c1cb4691963fdeb44f34ed1157e7065ad50ba4b5ebc7c5e86",
+          "runId": "run_state_durable_approve_4",
+          "sequence": 11,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_0da1743e58af327c1cb4691963fdeb44f34ed1157e7065ad50ba4b5ebc7c5e86",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_b19a09e90d29b1df7658dea4ef47c5aaaec6c7eb571b58656d59eebf12aec374",
+            "actor": "ai",
+            "content": "Message sent."
+          }
+        },
+        {
+          "eventId": "event_033adcaa3ee827c7d46470643edc3947846d52a3e9c55dbf09b9757ab3d1f251",
+          "runId": "run_state_durable_approve_4",
+          "sequence": 12,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_033adcaa3ee827c7d46470643edc3947846d52a3e9c55dbf09b9757ab3d1f251",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "completed"
+          }
+        }
+      ]
+    },
+    "admin": {
+      "viewer": "admin",
+      "run": {
+        "runId": "run_state_durable_approve_4",
+        "conversationId": "conversation_state_durable_approve",
+        "runtime": "state_workflow",
+        "status": "completed",
+        "version": 9,
+        "consumedSteps": 4,
+        "selectedSkill": {
+          "skillId": "communication_assistant",
+          "version": "1",
+          "instructions": "Preview a message before requesting permission to send it.",
+          "allowedTools": [
+            "notification.preview",
+            "notification.send_email"
+          ]
+        },
+        "cursor": {
+          "runId": "run_state_durable_approve_4",
+          "sequence": 12
+        }
+      },
+      "events": [
+        {
+          "eventId": "event_state_durable_approve_2",
+          "runId": "run_state_durable_approve_4",
+          "sequence": 1,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_state_durable_approve_5",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_state_durable_approve_1",
+            "actor": "user",
+            "content": "Preview and send the notification."
+          }
+        },
+        {
+          "eventId": "event_16b8730d78841a15c598c0f5f711524b53038d55e2129f07557fabc785269dd5",
+          "runId": "run_state_durable_approve_4",
+          "sequence": 2,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_16b8730d78841a15c598c0f5f711524b53038d55e2129f07557fabc785269dd5",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "queued",
+            "current": "running"
+          }
+        },
+        {
+          "eventId": "event_c6387d021b87b79a5542b6272363fcb6ce5da40aaf4238ee5be604a86a8e451d",
+          "runId": "run_state_durable_approve_4",
+          "sequence": 3,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_c6387d021b87b79a5542b6272363fcb6ce5da40aaf4238ee5be604a86a8e451d",
+          "type": "skill.loaded",
+          "visibility": "user",
+          "payload": {
+            "skillId": "communication_assistant",
+            "version": "1",
+            "instructions": "Preview a message before requesting permission to send it.",
+            "allowedTools": [
+              "notification.preview",
+              "notification.send_email"
+            ]
+          }
+        },
+        {
+          "eventId": "event_d313c2d27777d91efec740c5b93e6d42ed06d01c445914071612a9332e21cb08",
+          "runId": "run_state_durable_approve_4",
+          "sequence": 4,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_9159c55964f3eb783eb7108581741a97052d94fa31644a10a75684ac7a128d09",
+          "type": "tool.call.started",
+          "visibility": "user",
+          "payload": {
+            "callId": "call_preview_state_durable_approve",
+            "toolName": "notification.preview"
+          }
+        },
+        {
+          "eventId": "event_27a479a08285f805e7a85d627d73b70f3f3ec78ddec311d6b758ce8f815c8c85",
+          "runId": "run_state_durable_approve_4",
+          "sequence": 5,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_9159c55964f3eb783eb7108581741a97052d94fa31644a10a75684ac7a128d09",
+          "type": "tool.call.completed",
+          "visibility": "user",
+          "payload": {
+            "callId": "call_preview_state_durable_approve",
+            "toolName": "notification.preview",
+            "result": {
+              "toolName": "notification.preview",
+              "previewId": "preview_021dfc23575efbf2e3e9af27",
+              "normalizedMessage": {
+                "recipient": "qa@example.com",
+                "subject": "MVP",
+                "body": "Approval"
+              }
+            }
+          }
+        },
+        {
+          "eventId": "event_10550512805904bca523257ab3db8f44f5c3dae81934a80da781eb6cb227157a",
+          "runId": "run_state_durable_approve_4",
+          "sequence": 6,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "call_send_state_durable_approve",
+          "type": "approval.requested",
+          "visibility": "admin",
+          "payload": {
+            "approvalId": "approval_e1df6a45149e942aa5d5a58252472139d556fe9db0b45c71511b7690c51e8107",
+            "callId": "call_send_state_durable_approve",
+            "toolName": "notification.send_email",
+            "argumentsHash": "423c6bc89154a40e5e9341bb85e619f995b4fb3c27d2e3ee09178fc31769ca23",
+            "expiresAt": "2026-08-16T12:05:00.000Z"
+          }
+        },
+        {
+          "eventId": "event_68782a98af090f789feb4f789d2289f7254493defd0beab4f2d476c88bfa1304",
+          "runId": "run_state_durable_approve_4",
+          "sequence": 7,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "call_send_state_durable_approve",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "waiting_for_admin"
+          }
+        },
+        {
+          "eventId": "approval_action_state_durable_approve_6-event",
+          "runId": "run_state_durable_approve_4",
+          "sequence": 8,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "call_send_state_durable_approve",
+          "type": "approval.approved",
+          "visibility": "admin",
+          "payload": {
+            "approvalId": "approval_e1df6a45149e942aa5d5a58252472139d556fe9db0b45c71511b7690c51e8107",
+            "callId": "call_send_state_durable_approve",
+            "actorId": "mvp_admin"
+          }
+        },
+        {
+          "eventId": "event_3731aa0cc431e822b4226a215e4dbbfdb6e5ae5d9ea48f644210b84703a44acb",
+          "runId": "run_state_durable_approve_4",
+          "sequence": 9,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_c573091589fd3966cb8c7dbaa22b82ef8b89c2d1210976d17110b9540de65ae2",
+          "type": "tool.call.completed",
+          "visibility": "user",
+          "payload": {
+            "callId": "call_send_state_durable_approve",
+            "toolName": "notification.send_email",
+            "result": {
+              "toolName": "notification.send_email",
+              "messageId": "message_a0d1c91f1215b60ef7d0cae0",
+              "status": "sent"
+            }
+          }
+        },
+        {
+          "eventId": "event_75428e6d322a7dd37564b84ead8004822aa84655ea97c949eecbbc2f33271e67",
+          "runId": "run_state_durable_approve_4",
+          "sequence": 10,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_c573091589fd3966cb8c7dbaa22b82ef8b89c2d1210976d17110b9540de65ae2",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "waiting_for_admin",
+            "current": "running"
+          }
+        },
+        {
+          "eventId": "event_0da1743e58af327c1cb4691963fdeb44f34ed1157e7065ad50ba4b5ebc7c5e86",
+          "runId": "run_state_durable_approve_4",
+          "sequence": 11,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_0da1743e58af327c1cb4691963fdeb44f34ed1157e7065ad50ba4b5ebc7c5e86",
+          "type": "message.completed",
+          "visibility": "user",
+          "payload": {
+            "messageId": "message_b19a09e90d29b1df7658dea4ef47c5aaaec6c7eb571b58656d59eebf12aec374",
+            "actor": "ai",
+            "content": "Message sent."
+          }
+        },
+        {
+          "eventId": "event_033adcaa3ee827c7d46470643edc3947846d52a3e9c55dbf09b9757ab3d1f251",
+          "runId": "run_state_durable_approve_4",
+          "sequence": 12,
+          "occurredAt": "2026-08-16T12:00:00.000Z",
+          "correlationId": "correlation_033adcaa3ee827c7d46470643edc3947846d52a3e9c55dbf09b9757ab3d1f251",
+          "type": "run.status_changed",
+          "visibility": "user",
+          "payload": {
+            "previous": "running",
+            "current": "completed"
+          }
+        }
+      ]
+    }
+  },
+  "normalizedEventTrace": {
+    "events": [
+      {
+        "position": 1,
+        "type": "message.completed",
+        "visibility": "user",
+        "payload": {
+          "messageId": "message_state_durable_approve_1",
+          "actor": "user",
+          "content": "Preview and send the notification."
+        }
+      },
+      {
+        "position": 2,
+        "type": "run.status_changed",
+        "visibility": "user",
+        "payload": {
+          "previous": "queued",
+          "current": "running"
+        }
+      },
+      {
+        "position": 3,
+        "type": "skill.loaded",
+        "visibility": "user",
+        "payload": {
+          "skillId": "communication_assistant",
+          "version": "1",
+          "instructions": "Preview a message before requesting permission to send it.",
+          "allowedTools": [
+            "notification.preview",
+            "notification.send_email"
+          ]
+        }
+      },
+      {
+        "position": 4,
+        "type": "tool.call.started",
+        "visibility": "user",
+        "payload": {
+          "callId": "call_preview_state_durable_approve",
+          "toolName": "notification.preview"
+        }
+      },
+      {
+        "position": 5,
+        "type": "tool.call.completed",
+        "visibility": "user",
+        "payload": {
+          "callId": "call_preview_state_durable_approve",
+          "toolName": "notification.preview",
+          "result": {
+            "toolName": "notification.preview",
+            "previewId": "preview_021dfc23575efbf2e3e9af27",
+            "normalizedMessage": {
+              "recipient": "qa@example.com",
+              "subject": "MVP",
+              "body": "Approval"
+            }
+          }
+        }
+      },
+      {
+        "position": 6,
+        "type": "approval.requested",
+        "visibility": "admin",
+        "payload": {
+          "approvalId": "approval_e1df6a45149e942aa5d5a58252472139d556fe9db0b45c71511b7690c51e8107",
+          "callId": "call_send_state_durable_approve",
+          "toolName": "notification.send_email",
+          "argumentsHash": "423c6bc89154a40e5e9341bb85e619f995b4fb3c27d2e3ee09178fc31769ca23",
+          "expiresAt": "2026-08-16T12:05:00.000Z"
+        }
+      },
+      {
+        "position": 7,
+        "type": "run.status_changed",
+        "visibility": "user",
+        "payload": {
+          "previous": "running",
+          "current": "waiting_for_admin"
+        }
+      },
+      {
+        "position": 8,
+        "type": "approval.approved",
+        "visibility": "admin",
+        "payload": {
+          "approvalId": "approval_e1df6a45149e942aa5d5a58252472139d556fe9db0b45c71511b7690c51e8107",
+          "callId": "call_send_state_durable_approve",
+          "actorId": "mvp_admin"
+        }
+      },
+      {
+        "position": 9,
+        "type": "tool.call.completed",
+        "visibility": "user",
+        "payload": {
+          "callId": "call_send_state_durable_approve",
+          "toolName": "notification.send_email",
+          "result": {
+            "toolName": "notification.send_email",
+            "messageId": "message_a0d1c91f1215b60ef7d0cae0",
+            "status": "sent"
+          }
+        }
+      },
+      {
+        "position": 10,
+        "type": "run.status_changed",
+        "visibility": "user",
+        "payload": {
+          "previous": "waiting_for_admin",
+          "current": "running"
+        }
+      },
+      {
+        "position": 11,
+        "type": "message.completed",
+        "visibility": "user",
+        "payload": {
+          "messageId": "message_b19a09e90d29b1df7658dea4ef47c5aaaec6c7eb571b58656d59eebf12aec374",
+          "actor": "ai",
+          "content": "Message sent."
+        }
+      },
+      {
+        "position": 12,
+        "type": "run.status_changed",
+        "visibility": "user",
+        "payload": {
+          "previous": "running",
+          "current": "completed"
+        }
+      }
+    ]
+  },
+  "schemaVersion": 2,
+  "provenance": {
+    "source": "postgresql_projection_capture",
+    "capturedRunId": "run_state_durable_approve_4",
+    "processId": 82502,
+    "observationDigest": "f4f1269deec2d17ae93991d6379c5c16d20acc2f546500ccba4b408a4a5671d3"
+  },
+  "observedApprovalJobEvents": [
+    {
+      "position": 6,
+      "type": "approval.requested",
+      "visibility": "admin",
+      "payload": {
+        "approvalId": "approval_e1df6a45149e942aa5d5a58252472139d556fe9db0b45c71511b7690c51e8107",
+        "callId": "call_send_state_durable_approve",
+        "toolName": "notification.send_email",
+        "argumentsHash": "423c6bc89154a40e5e9341bb85e619f995b4fb3c27d2e3ee09178fc31769ca23",
+        "expiresAt": "2026-08-16T12:05:00.000Z"
+      }
+    },
+    {
+      "position": 8,
+      "type": "approval.approved",
+      "visibility": "admin",
+      "payload": {
+        "approvalId": "approval_e1df6a45149e942aa5d5a58252472139d556fe9db0b45c71511b7690c51e8107",
+        "callId": "call_send_state_durable_approve",
+        "actorId": "mvp_admin"
+      }
+    }
+  ],
+  "result": "PASS",
+  "failureDetails": null,
+  "evidenceLinks": [
+    "acceptance/state_workflow/F07/P08.json"
+  ]
+}
