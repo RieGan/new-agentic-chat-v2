@@ -46,7 +46,7 @@ describe("PostgreSQL persistence", () => {
     const migrationCount = await context.database.pool.query<{ readonly count: string }>(
       'select count(*) from drizzle."__drizzle_migrations"',
     )
-    expect(migrationCount.rows[0]?.count).toBe("4")
+    expect(migrationCount.rows[0]?.count).toBe("5")
   })
 
   it("seeds exactly the MVP actors, skills, and registry tools", async () => {

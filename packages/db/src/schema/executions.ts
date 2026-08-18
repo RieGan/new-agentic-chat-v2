@@ -42,6 +42,7 @@ export const runs = pgTable(
   (table) => [
     index("runs_runtime_status_updated_idx").on(table.runtime, table.status, table.updatedAt),
     index("runs_conversation_id_idx").on(table.conversationId, table.createdAt),
+    unique("runs_conversation_id_id_unique").on(table.conversationId, table.id),
     check("runs_version_nonnegative", sql`${table.version} >= 0`),
     check("runs_consumed_steps_nonnegative", sql`${table.consumedSteps} >= 0`),
     check("runs_fencing_version_nonnegative", sql`${table.fencingVersion} >= 0`),

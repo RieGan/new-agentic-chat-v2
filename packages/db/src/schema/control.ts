@@ -1,5 +1,16 @@
 import { sql } from "drizzle-orm"
-import { check, index, integer, jsonb, pgTable, text, timestamp, unique } from "drizzle-orm/pg-core"
+import {
+  check,
+  foreignKey,
+  index,
+  integer,
+  jsonb,
+  pgTable,
+  text,
+  timestamp,
+  unique,
+  uniqueIndex,
+} from "drizzle-orm/pg-core"
 
 import {
   adminCommandStatusEnum,
@@ -7,6 +18,7 @@ import {
   type JsonValue,
   visibilityEnum,
 } from "./common.js"
+import { conversations } from "./conversations.js"
 import { runs } from "./executions.js"
 import { users } from "./identities.js"
 import { toolCalls } from "./tool-calls.js"
@@ -15,9 +27,11 @@ export const adminCommands = pgTable(
   "admin_commands",
   {
     id: text("id").primaryKey(),
-    runId: text("run_id")
+    conversationId: text("conversation_id")
       .notNull()
-      .references(() => runs.id, { onDelete: "cascade" }),
+      .references(() => conversations.id, { onDelete: "cascade" }),
+    appliedRunId: text("applied_run_id"),
+    boundaryKey: text("boundary_key"),
     actorId: text("actor_id")
       .notNull()
       .references(() => users.id, { onDelete: "restrict" }),
@@ -31,13 +45,40 @@ export const adminCommands = pgTable(
     createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   },
   (table) => [
-    index("admin_commands_run_status_idx").on(table.runId, table.status),
+    index("admin_commands_conversation_status_idx").on(
+      table.conversationId,
+      table.status,
+      table.createdAt,
+      table.id,
+    ),
+    uniqueIndex("admin_commands_conversation_boundary_unique")
+      .on(table.conversationId, table.boundaryKey)
+      .where(sql`${table.boundaryKey} is not null`),
+    foreignKey({
+      columns: [table.conversationId, table.appliedRunId],
+      foreignColumns: [runs.conversationId, runs.id],
+      name: "admin_commands_conversation_applied_run_fk",
+    }),
     check(
       "admin_commands_hidden_admin_only",
       sql`${table.actorId} = 'mvp_admin' and ${table.visibility} = 'model_only'`,
     ),
     check("admin_commands_instruction_not_empty", sql`length(${table.instruction}) > 0`),
     check("admin_commands_version_nonnegative", sql`${table.version} >= 0`),
+    check(
+      "admin_commands_application_consistent",
+      sql`(
+        ${table.status} = 'applied'
+        and ${table.appliedRunId} is not null
+        and ${table.boundaryKey} is not null
+        and ${table.appliedAt} is not null
+      ) or (
+        ${table.status} <> 'applied'
+        and ${table.appliedRunId} is null
+        and ${table.boundaryKey} is null
+        and ${table.appliedAt} is null
+      )`,
+    ),
   ],
 )
 

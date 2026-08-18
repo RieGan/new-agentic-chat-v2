@@ -12,5 +12,7 @@ export const conversations = pgTable(
     createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
     updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
   },
-  (table) => [index("conversations_user_id_idx").on(table.userId, table.updatedAt)],
+  (table) => [
+    index("conversations_user_id_idx").on(table.userId, table.updatedAt.desc(), table.id.desc()),
+  ],
 )
