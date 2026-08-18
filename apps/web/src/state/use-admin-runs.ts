@@ -9,8 +9,12 @@ import {
 
 type RunList = Awaited<ReturnType<(typeof adminApi)["runs"]>>
 type AdminRun = Awaited<ReturnType<(typeof adminApi)["run"]>>
+type ConversationList = Awaited<ReturnType<(typeof adminApi)["listConversations"]>>["conversations"]
 
 export type AdminRunsState = {
+  readonly conversations: ConversationList
+  readonly selectedConversationId: string | undefined
+  readonly selectConversation: (conversationId: string) => void
   readonly runs: RunList
   readonly selectedRunId: string | undefined
   readonly selectRun: (runId: string) => void
@@ -24,6 +28,8 @@ export type AdminRunsState = {
 }
 
 export const useAdminRuns = (): AdminRunsState => {
+  const [conversations, setConversations] = useState<ConversationList>([])
+  const [selectedConversationId, setSelectedConversationId] = useState<string>()
   const [runs, setRuns] = useState<RunList>([])
   const [selectedRunId, setSelectedRunId] = useState<string>()
   const [projection, setProjection] = useState<AdminRun>()
@@ -33,8 +39,14 @@ export const useAdminRuns = (): AdminRunsState => {
   const [error, setError] = useState<string>()
   const [sending, setSending] = useState(false)
   const receivedIds = useRef(new Set<string>())
+  const selectedConversationRef = useRef<string | undefined>(undefined)
   const selectedRunRef = useRef<string | undefined>(undefined)
   const projectionRequest = useRef(0)
+
+  const selectConversation = useCallback((conversationId: string) => {
+    selectedConversationRef.current = conversationId
+    setSelectedConversationId(conversationId)
+  }, [])
 
   const selectRun = useCallback((runId: string) => {
     if (selectedRunRef.current === runId) return
@@ -45,6 +57,16 @@ export const useAdminRuns = (): AdminRunsState => {
     setProjection(undefined)
     setEvents([])
   }, [])
+
+  const loadConversations = useCallback(async () => {
+    const loaded = (await adminApi.listConversations({})).conversations
+    setConversations(loaded)
+    const first = loaded[0]
+    if (selectedConversationRef.current === undefined && first !== undefined) {
+      selectConversation(first.conversationId)
+    }
+    return loaded
+  }, [selectConversation])
 
   const loadRuns = useCallback(async () => {
     const loaded = await adminApi.runs({})
@@ -65,12 +87,14 @@ export const useAdminRuns = (): AdminRunsState => {
   }, [])
 
   useEffect(() => {
-    void loadRuns()
-      .then((loaded) =>
-        setNotice(loaded.length === 0 ? "No runs available" : `${loaded.length} runs loaded`),
-      )
-      .catch(() => setError("Run list unavailable."))
-  }, [loadRuns])
+    void Promise.all([loadRuns(), loadConversations()])
+      .then(([loadedRuns, loadedConversations]) => {
+        setNotice(
+          `${loadedRuns.length} runs loaded · ${loadedConversations.length} sessions available`,
+        )
+      })
+      .catch(() => setError("Admin sessions and runs are unavailable."))
+  }, [loadConversations, loadRuns])
 
   useEffect(() => {
     if (selectedRunId === undefined) return
@@ -104,35 +128,34 @@ export const useAdminRuns = (): AdminRunsState => {
     return () => subscription.unsubscribe()
   }, [loadRun, loadRuns, projection, selectedRunId])
 
-  const sendHidden = useCallback(
-    async (instruction: string): Promise<boolean> => {
-      const runId = selectedRunRef.current
-      if (runId === undefined) return false
-      setSending(true)
-      setError(undefined)
-      try {
-        await adminApi.sendHidden({
-          runId,
-          instruction,
-          expiresAt: new Date(Date.now() + 5 * 60_000).toISOString(),
-          idempotencyKey: crypto.randomUUID(),
-        })
-        if (selectedRunRef.current === runId) {
-          setNotice("Hidden command accepted for the next model boundary")
-        }
-        await loadRun(runId)
-        return true
-      } catch {
-        setError("Hidden command was not accepted. Check the selected run state.")
-        return false
-      } finally {
-        setSending(false)
+  const sendHidden = useCallback(async (instruction: string): Promise<boolean> => {
+    const conversationId = selectedConversationRef.current
+    if (conversationId === undefined) return false
+    setSending(true)
+    setError(undefined)
+    try {
+      await adminApi.sendHidden({
+        conversationId,
+        instruction,
+        expiresAt: new Date(Date.now() + 5 * 60_000).toISOString(),
+        idempotencyKey: crypto.randomUUID(),
+      })
+      if (selectedConversationRef.current === conversationId) {
+        setNotice("Hidden command accepted for the next model boundary")
       }
-    },
-    [loadRun],
-  )
+      return true
+    } catch {
+      setError("Hidden command was not accepted. Check the selected session.")
+      return false
+    } finally {
+      setSending(false)
+    }
+  }, [])
 
   return {
+    conversations,
+    selectedConversationId,
+    selectConversation,
     runs,
     selectedRunId,
     selectRun,

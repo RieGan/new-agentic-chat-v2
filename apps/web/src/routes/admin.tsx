@@ -22,7 +22,7 @@ export const AdminRoute = () => {
     event.preventDefault()
     const command = instruction.trim()
     if (command.length === 0) {
-      setValidation("Enter guidance for the selected run.")
+      setValidation("Enter guidance for the selected session.")
       commandRef.current?.focus()
       return
     }
@@ -101,10 +101,27 @@ export const AdminRoute = () => {
             </Panel>
 
             <Panel
-              title="Hidden model command"
-              subtitle="Visible only in Admin. Applied once at before_model and never copied to User state."
+              title="Hidden session command"
+              subtitle="Visible only in Admin. Queued for this session and applied once at the next safe model boundary."
             >
               <form className="form-stack" onSubmit={submit}>
+                <div className="field">
+                  <label htmlFor="hidden-command-session">Session</label>
+                  <select
+                    id="hidden-command-session"
+                    className="select"
+                    data-testid="admin-conversation-selector"
+                    value={admin.selectedConversationId ?? ""}
+                    onChange={(event) => admin.selectConversation(event.currentTarget.value)}
+                    disabled={admin.conversations.length === 0}
+                  >
+                    {admin.conversations.map((conversation, index) => (
+                      <option key={conversation.conversationId} value={conversation.conversationId}>
+                        Session {admin.conversations.length - index} · {conversation.conversationId}
+                      </option>
+                    ))}
+                  </select>
+                </div>
                 <div className="field">
                   <label htmlFor="hidden-command">Instruction</label>
                   <textarea
@@ -116,10 +133,10 @@ export const AdminRoute = () => {
                     onChange={(event) => setInstruction(event.currentTarget.value)}
                     aria-describedby="hidden-help hidden-error"
                     aria-invalid={validation !== undefined}
-                    disabled={run === undefined || admin.sending}
+                    disabled={admin.selectedConversationId === undefined || admin.sending}
                   />
                   <small id="hidden-help">
-                    Expires after five minutes if no safe boundary is reached.
+                    The command targets this session directly and expires after five minutes.
                   </small>
                   <span id="hidden-error" className="field-help" role="alert">
                     {validation}
@@ -130,9 +147,9 @@ export const AdminRoute = () => {
                     className="button button--primary"
                     type="submit"
                     data-testid="send-hidden-command"
-                    disabled={run === undefined || admin.sending}
+                    disabled={admin.selectedConversationId === undefined || admin.sending}
                   >
-                    {admin.sending ? "Queueing..." : "Queue hidden command"}
+                    {admin.sending ? "Queueing..." : "Queue session command"}
                   </button>
                 </div>
               </form>
