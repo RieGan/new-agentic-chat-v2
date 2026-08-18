@@ -36,6 +36,19 @@ export class EnvironmentConfigError extends Error {
   }
 }
 
+export const providerRequestTimeoutMs = (configuration: EnvironmentConfig): number => {
+  switch (configuration.mode) {
+    case "mock":
+      return 5_000
+    case "openai_responses":
+      return 60_000
+    default: {
+      const exhaustiveConfiguration: never = configuration
+      return exhaustiveConfiguration
+    }
+  }
+}
+
 export const parseEnvironment = (environment: RuntimeEnvironment): EnvironmentConfig => {
   const providerModeResult = providerModeSchema.safeParse(environment["AI_PROVIDER_MODE"])
   if (!providerModeResult.success) {

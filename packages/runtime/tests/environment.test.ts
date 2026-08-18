@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest"
 import {
   EnvironmentConfigError,
   parseEnvironment,
+  providerRequestTimeoutMs,
   type RuntimeEnvironment,
 } from "../src/environment.js"
 
@@ -41,6 +42,11 @@ describe("parseEnvironment", () => {
       baseUrl: "https://api.example.test/v1",
       apiKey: "never-print-this-secret",
     })
+  })
+
+  it("allows live Responses tool calls to outlast the deterministic mock budget", () => {
+    expect(providerRequestTimeoutMs({ mode: "mock" })).toBe(5_000)
+    expect(providerRequestTimeoutMs(parseEnvironment(validOpenAiEnvironment))).toBe(60_000)
   })
 
   it.each(["OPENAI_MODEL_ID", "OPENAI_BASE_URL", "OPENAI_API_KEY"] as const)(

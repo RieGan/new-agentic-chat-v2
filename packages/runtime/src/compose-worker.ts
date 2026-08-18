@@ -9,7 +9,7 @@ import { z } from "zod"
 import { secureIds, systemClock } from "./application/dependencies.js"
 import { createReconciliationService } from "./application/reconciliation.js"
 import { handleSimpleLoopDispatch } from "./compose-simple-dispatch.js"
-import { parseEnvironment } from "./environment.js"
+import { parseEnvironment, providerRequestTimeoutMs } from "./environment.js"
 import { createBullReportQueue, createReportFixtureTestWorker } from "./jobs/report-queue.js"
 import type { ModelProvider } from "./provider/contracts.js"
 import { createComposeProvider } from "./provider/factory.js"
@@ -36,6 +36,7 @@ const delay = (): Promise<void> => new Promise((resolve) => setTimeout(resolve, 
 const runSimpleWorker = async (
   environment: z.infer<typeof environmentSchema>,
   provider: ModelProvider,
+  timeoutMs: number,
 ): Promise<void> => {
   const database = createDatabase(environment.DATABASE_URL)
   const reportQueue = createBullReportQueue({ redisUrl: environment.REDIS_URL })
@@ -45,7 +46,7 @@ const runSimpleWorker = async (
     ids: secureIds,
     provider,
     tools: createToolRegistry(),
-    timeoutMs: 5_000,
+    timeoutMs,
     durableWaits: { namespace: "task18-compose", reportQueue },
   })
   const owner = `compose-simple-${process.pid}-${Date.now()}`
@@ -90,6 +91,7 @@ const runSimpleWorker = async (
 const runWorkflowWorker = async (
   environment: z.infer<typeof environmentSchema>,
   provider: ModelProvider,
+  timeoutMs: number,
 ): Promise<void> => {
   const database = createDatabase(environment.DATABASE_URL)
   const reportQueue = createBullReportQueue({ redisUrl: environment.REDIS_URL })
@@ -101,7 +103,7 @@ const runWorkflowWorker = async (
     clock: systemClock,
     provider,
     tools: createToolRegistry(),
-    timeoutMs: 5_000,
+    timeoutMs,
     durableWaits: { namespace: "task18-compose", reportQueue },
   })
   const worker = await createStateWorkflowWorker({
@@ -180,13 +182,21 @@ switch (role) {
   case "simple_loop": {
     const providerConfiguration = parseEnvironment(process.env)
     if (providerConfiguration.mode === "mock") task18EnvironmentSchema.parse(process.env)
-    await runSimpleWorker(environment, createComposeProvider(providerConfiguration))
+    await runSimpleWorker(
+      environment,
+      createComposeProvider(providerConfiguration),
+      providerRequestTimeoutMs(providerConfiguration),
+    )
     break
   }
   case "state_workflow": {
     const providerConfiguration = parseEnvironment(process.env)
     if (providerConfiguration.mode === "mock") task18EnvironmentSchema.parse(process.env)
-    await runWorkflowWorker(environment, createComposeProvider(providerConfiguration))
+    await runWorkflowWorker(
+      environment,
+      createComposeProvider(providerConfiguration),
+      providerRequestTimeoutMs(providerConfiguration),
+    )
     break
   }
   case "fixture_jobs":
