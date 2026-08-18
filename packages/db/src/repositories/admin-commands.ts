@@ -4,71 +4,49 @@ import {
   InvalidAdminCommandError,
   parseContract,
 } from "@agentic-chat/contracts"
-import { and, eq, max, sql } from "drizzle-orm"
+import { and, asc, eq, lte, max, sql } from "drizzle-orm"
 
 import type { DatabaseClient } from "../database.js"
-import { adminCommands, runEvents, runs } from "../schema/index.js"
+import { adminCommands, conversations, runEvents, runs } from "../schema/index.js"
 
 export type StoredAdminCommand = typeof adminCommands.$inferSelect
-
-const adminCommandVisibility = {
-  accepted: "model_only",
-  applied: "model_only",
-  expired: "admin",
-} as const
+type Transaction = Parameters<Parameters<DatabaseClient["db"]["transaction"]>[0]>[0]
 
 type SubmitAdminCommandInput = {
   readonly commandId: string
-  readonly runId: string
+  readonly conversationId: string
   readonly instruction: string
   readonly expiresAt: Date
   readonly idempotencyKey: string
   readonly now: Date
-  readonly eventId: string
-  readonly correlationId: string
 }
 
-type ApplyAdminCommandInput = {
-  readonly commandId: string
+type ClaimAdminCommandInput = {
   readonly runId: string
-  readonly boundary: "before_model"
+  readonly boundaryKey: string
   readonly now: Date
   readonly eventId: string
   readonly correlationId: string
 }
 
-const nextSequence = async (
-  transaction: Parameters<Parameters<DatabaseClient["db"]["transaction"]>[0]>[0],
-  runId: string,
-): Promise<number> => {
-  const rows = await transaction
+const appendAppliedEvent = async (
+  transaction: Transaction,
+  input: ClaimAdminCommandInput & { readonly commandId: string },
+): Promise<void> => {
+  const sequenceRows = await transaction
     .select({ sequence: max(runEvents.sequence) })
     .from(runEvents)
-    .where(eq(runEvents.runId, runId))
-  return (rows[0]?.sequence ?? 0) + 1
-}
-
-const appendStatusEvent = async (
-  transaction: Parameters<Parameters<DatabaseClient["db"]["transaction"]>[0]>[0],
-  input: {
-    readonly commandId: string
-    readonly runId: string
-    readonly status: "accepted" | "applied" | "expired"
-    readonly eventId: string
-    readonly correlationId: string
-    readonly occurredAt: Date
-  },
-): Promise<void> => {
-  const sequence = await nextSequence(transaction, input.runId)
+    .where(eq(runEvents.runId, input.runId))
+  const sequence = (sequenceRows[0]?.sequence ?? 0) + 1
   const event = parseContract(CanonicalEventSchema, {
     eventId: input.eventId,
     runId: input.runId,
     sequence,
-    type: `admin.command.${input.status}`,
-    visibility: adminCommandVisibility[input.status],
-    payload: { commandId: input.commandId, status: input.status },
+    type: "admin.command.applied",
+    visibility: "model_only",
+    payload: { commandId: input.commandId, status: "applied" },
     correlationId: input.correlationId,
-    occurredAt: input.occurredAt.toISOString(),
+    occurredAt: input.now.toISOString(),
   })
   await transaction.insert(runEvents).values({
     id: input.eventId,
@@ -78,7 +56,7 @@ const appendStatusEvent = async (
     visibility: event.visibility,
     payload: event.payload,
     correlationId: input.correlationId,
-    occurredAt: input.occurredAt,
+    occurredAt: input.now,
   })
 }
 
@@ -87,26 +65,20 @@ export const submitAdminCommand = async (
   input: SubmitAdminCommandInput,
 ): Promise<StoredAdminCommand> =>
   database.db.transaction(async (transaction) => {
-    const runRows = await transaction
-      .select({ status: runs.status })
-      .from(runs)
-      .where(eq(runs.id, input.runId))
+    const owner = await transaction
+      .select({ id: conversations.id })
+      .from(conversations)
+      .where(and(eq(conversations.id, input.conversationId), eq(conversations.userId, "mvp_user")))
       .for("update")
       .limit(1)
-    const run = runRows[0]
-    if (
-      !run ||
-      run.status === "completed" ||
-      run.status === "failed" ||
-      input.expiresAt <= input.now
-    ) {
-      throw new InvalidAdminCommandError("target run is unavailable")
+    if (!owner[0] || input.expiresAt <= input.now) {
+      throw new InvalidAdminCommandError("target conversation is unavailable")
     }
-    const insertedRows = await transaction
+    const inserted = await transaction
       .insert(adminCommands)
       .values({
         id: input.commandId,
-        runId: input.runId,
+        conversationId: input.conversationId,
         actorId: "mvp_admin",
         instruction: input.instruction,
         visibility: "model_only",
@@ -117,122 +89,135 @@ export const submitAdminCommand = async (
       })
       .onConflictDoNothing({ target: adminCommands.idempotencyKey })
       .returning()
-    const inserted = insertedRows[0]
-    if (!inserted) {
-      const existingRows = await transaction
-        .select()
-        .from(adminCommands)
-        .where(eq(adminCommands.idempotencyKey, input.idempotencyKey))
-        .limit(1)
-      const existing = existingRows[0]
-      if (
-        !existing ||
-        existing.runId !== input.runId ||
-        existing.instruction !== input.instruction ||
-        existing.expiresAt.getTime() !== input.expiresAt.getTime()
-      ) {
-        throw new ConflictError(`Admin command idempotency key ${input.idempotencyKey}`)
-      }
-      return existing
+    if (inserted[0]) return inserted[0]
+
+    const existing = await transaction
+      .select()
+      .from(adminCommands)
+      .where(eq(adminCommands.idempotencyKey, input.idempotencyKey))
+      .limit(1)
+    const replay = existing[0]
+    if (
+      !replay ||
+      replay.conversationId !== input.conversationId ||
+      replay.instruction !== input.instruction ||
+      replay.expiresAt.getTime() !== input.expiresAt.getTime()
+    ) {
+      throw new ConflictError(`Admin command idempotency key ${input.idempotencyKey}`)
     }
-    await appendStatusEvent(transaction, {
-      commandId: inserted.id,
-      runId: inserted.runId,
-      status: "accepted",
-      eventId: input.eventId,
-      correlationId: input.correlationId,
-      occurredAt: input.now,
-    })
-    return inserted
+    return replay
   })
 
-const applyInsideTransaction = async (
+export const claimAdminCommandAtBoundary = async (
   database: DatabaseClient,
-  input: ApplyAdminCommandInput,
-): Promise<
-  { readonly kind: "applied"; readonly command: StoredAdminCommand } | { readonly kind: "expired" }
-> =>
+  input: ClaimAdminCommandInput,
+): Promise<StoredAdminCommand | null> =>
   database.db.transaction(async (transaction) => {
     const runRows = await transaction
-      .select({ status: runs.status })
+      .select({ conversationId: runs.conversationId, status: runs.status })
       .from(runs)
       .where(eq(runs.id, input.runId))
       .for("update")
       .limit(1)
-    const commandRows = await transaction
+    const run = runRows[0]
+    if (run === undefined || (run.status !== "queued" && run.status !== "running")) {
+      throw new InvalidAdminCommandError("run boundary is unavailable")
+    }
+    await transaction
+      .select({ id: conversations.id })
+      .from(conversations)
+      .where(eq(conversations.id, run.conversationId))
+      .for("update")
+
+    const replayRows = await transaction
       .select()
       .from(adminCommands)
-      .where(and(eq(adminCommands.id, input.commandId), eq(adminCommands.runId, input.runId)))
+      .where(
+        and(
+          eq(adminCommands.conversationId, run.conversationId),
+          eq(adminCommands.boundaryKey, input.boundaryKey),
+        ),
+      )
+      .limit(1)
+    const replay = replayRows[0]
+    if (replay) {
+      if (replay.appliedRunId !== input.runId) {
+        throw new InvalidAdminCommandError("boundary key belongs to another run")
+      }
+      return replay
+    }
+
+    await transaction
+      .update(adminCommands)
+      .set({ status: "expired", version: sql`${adminCommands.version} + 1` })
+      .where(
+        and(
+          eq(adminCommands.conversationId, run.conversationId),
+          eq(adminCommands.status, "accepted"),
+          lte(adminCommands.expiresAt, input.now),
+        ),
+      )
+
+    const pendingRows = await transaction
+      .select()
+      .from(adminCommands)
+      .where(
+        and(
+          eq(adminCommands.conversationId, run.conversationId),
+          eq(adminCommands.status, "accepted"),
+        ),
+      )
+      .orderBy(asc(adminCommands.createdAt), asc(adminCommands.id))
       .for("update")
       .limit(1)
-    const run = runRows[0]
-    const command = commandRows[0]
-    if (run?.status !== "running" || !command || command.status !== "accepted") {
-      throw new InvalidAdminCommandError("command is not applicable at this boundary")
-    }
-    if (command.expiresAt <= input.now) {
-      await transaction
-        .update(adminCommands)
-        .set({ status: "expired", version: sql`${adminCommands.version} + 1` })
-        .where(eq(adminCommands.id, command.id))
-      await appendStatusEvent(transaction, {
-        commandId: command.id,
-        runId: command.runId,
-        status: "expired",
-        eventId: input.eventId,
-        correlationId: input.correlationId,
-        occurredAt: input.now,
-      })
-      return { kind: "expired" }
-    }
-    const updatedRows = await transaction
-      .update(adminCommands)
-      .set({ status: "applied", appliedAt: input.now, version: sql`${adminCommands.version} + 1` })
-      .where(and(eq(adminCommands.id, command.id), eq(adminCommands.version, command.version)))
-      .returning()
-    const updated = updatedRows[0]
-    if (!updated) throw new InvalidAdminCommandError("command was already consumed")
-    await appendStatusEvent(transaction, {
-      commandId: command.id,
-      runId: command.runId,
-      status: "applied",
-      eventId: input.eventId,
-      correlationId: input.correlationId,
-      occurredAt: input.now,
-    })
-    return { kind: "applied", command: updated }
-  })
+    const pending = pendingRows[0]
+    if (!pending) return null
 
-export const applyAdminCommand = async (
-  database: DatabaseClient,
-  input: ApplyAdminCommandInput,
-): Promise<StoredAdminCommand> => {
-  const result = await applyInsideTransaction(database, input)
-  if (result.kind === "expired") throw new InvalidAdminCommandError("command expired")
-  return result.command
-}
+    const appliedRows = await transaction
+      .update(adminCommands)
+      .set({
+        status: "applied",
+        appliedRunId: input.runId,
+        boundaryKey: input.boundaryKey,
+        appliedAt: input.now,
+        version: sql`${adminCommands.version} + 1`,
+      })
+      .where(and(eq(adminCommands.id, pending.id), eq(adminCommands.status, "accepted")))
+      .returning()
+    const applied = appliedRows[0]
+    if (!applied) throw new InvalidAdminCommandError("command was already consumed")
+    await appendAppliedEvent(transaction, { ...input, commandId: applied.id })
+    return applied
+  })
 
 export const readPendingAdminCommand = async (
   database: DatabaseClient,
-  runId: string,
+  conversationId: string,
 ): Promise<StoredAdminCommand | null> => {
   const rows = await database.db
     .select()
     .from(adminCommands)
-    .where(and(eq(adminCommands.runId, runId), eq(adminCommands.status, "accepted")))
-    .orderBy(adminCommands.createdAt, adminCommands.id)
+    .where(
+      and(eq(adminCommands.conversationId, conversationId), eq(adminCommands.status, "accepted")),
+    )
+    .orderBy(asc(adminCommands.createdAt), asc(adminCommands.id))
     .limit(1)
   return rows[0] ?? null
 }
 
 export const readAdminCommand = async (
   database: DatabaseClient,
-  input: { readonly runId: string; readonly commandId: string },
+  input: { readonly conversationId: string; readonly commandId: string },
 ): Promise<StoredAdminCommand | null> => {
   const rows = await database.db
     .select()
     .from(adminCommands)
-    .where(and(eq(adminCommands.runId, input.runId), eq(adminCommands.id, input.commandId)))
+    .where(
+      and(
+        eq(adminCommands.conversationId, input.conversationId),
+        eq(adminCommands.id, input.commandId),
+      ),
+    )
     .limit(1)
   return rows[0] ?? null
 }
