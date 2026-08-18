@@ -9,6 +9,7 @@ import {
 } from "../src/application/index.js"
 import {
   type ApplicationTestContext,
+  createOwnedConversation,
   createTestIds,
   startApplicationTestContext,
   stopApplicationTestContext,
@@ -33,6 +34,10 @@ describe("runtime isolation and projections", () => {
       clock: testClock,
       ids: createTestIds("claim"),
     })
+    await Promise.all([
+      createOwnedConversation(context, "conversation_claim_simple"),
+      createOwnedConversation(context, "conversation_claim_workflow"),
+    ])
     const simple = await admission.admit({
       commandId: "command_claim_simple",
       createdAt: "2026-08-16T12:00:00.000Z",
@@ -117,6 +122,7 @@ describe("runtime isolation and projections", () => {
       clock: testClock,
       ids: createTestIds("reconcile"),
     })
+    await createOwnedConversation(context, "conversation_reconcile_workflow")
     await admission.admit({
       commandId: "command_reconcile_workflow",
       createdAt: "2026-08-16T12:00:00.000Z",
@@ -152,6 +158,7 @@ describe("runtime isolation and projections", () => {
       clock: testClock,
       ids: createTestIds("projection"),
     })
+    await createOwnedConversation(context, "conversation_projection")
     const receipt = await admission.admit({
       commandId: "command_projection",
       createdAt: "2026-08-16T12:00:00.000Z",

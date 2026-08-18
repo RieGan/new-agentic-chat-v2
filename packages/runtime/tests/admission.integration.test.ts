@@ -4,6 +4,7 @@ import { afterAll, beforeAll, describe, expect, it } from "vitest"
 import { createAdmissionService } from "../src/application/index.js"
 import {
   type ApplicationTestContext,
+  createOwnedConversation,
   createTestIds,
   startApplicationTestContext,
   stopApplicationTestContext,
@@ -23,6 +24,7 @@ describe("durable run admission", () => {
 
   it("returns the original receipt when a new-run command is replayed", async () => {
     // Given: a deterministic new-run command.
+    await createOwnedConversation(context, "conversation_admit_simple")
     const service = createAdmissionService({
       database: context.database,
       clock: testClock,
@@ -72,6 +74,7 @@ describe("durable run admission", () => {
 
   it("persists deterministic State Workflow identity and start intent", async () => {
     // Given: a State Workflow admission command.
+    await createOwnedConversation(context, "conversation_admit_workflow")
     const service = createAdmissionService({
       database: context.database,
       clock: testClock,
@@ -110,6 +113,7 @@ describe("durable run admission", () => {
 
   it("continues the same waiting run once and rejects stale correlation", async () => {
     // Given: a run waiting for the exact User correlation.
+    await createOwnedConversation(context, "conversation_waiting")
     const service = createAdmissionService({
       database: context.database,
       clock: testClock,

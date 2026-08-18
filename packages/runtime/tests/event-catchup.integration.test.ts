@@ -3,6 +3,7 @@ import { afterAll, beforeAll, describe, expect, it } from "vitest"
 import { createAdmissionService, createProjectionService } from "../src/application/index.js"
 import {
   type ApplicationTestContext,
+  createOwnedConversation,
   createTestIds,
   startApplicationTestContext,
   stopApplicationTestContext,
@@ -21,6 +22,7 @@ describe("viewer-aware event catch-up", () => {
   })
 
   const admitWithHiddenEvent = async (namespace: string) => {
+    await createOwnedConversation(context, `conversation_${namespace}`)
     const receipt = await createAdmissionService({
       database: context.database,
       clock: testClock,

@@ -2,7 +2,7 @@ import { execFile } from "node:child_process"
 import { randomUUID } from "node:crypto"
 import { promisify } from "node:util"
 
-import { createDatabase, migrateDatabase, seedDatabase } from "@agentic-chat/db"
+import { createConversation, createDatabase, migrateDatabase, seedDatabase } from "@agentic-chat/db"
 
 const execute = promisify(execFile)
 
@@ -69,6 +69,13 @@ export const stopApplicationTestContext = async (
 }
 
 export const testClock = { now: (): Date => new Date("2026-08-16T12:00:00.000Z") }
+
+export const createOwnedConversation = (context: ApplicationTestContext, conversationId: string) =>
+  createConversation(context.database, {
+    conversationId,
+    userId: "mvp_user",
+    now: testClock.now(),
+  })
 
 export const createTestIds = (namespace: string) => {
   let sequence = 0
