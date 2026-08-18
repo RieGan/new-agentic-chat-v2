@@ -5,19 +5,25 @@ import {
   CanonicalEventSchema,
   ChatSendMessageInputSchema,
   CommandAcceptedOutputSchema,
+  ConversationSummarySchema,
   type RunSnapshot,
   RunSnapshotSchema,
 } from "@agentic-chat/contracts"
 import type { ApiServices } from "../../../apps/api/src/services.js"
+import { scheduleFixtureOutcome } from "./ui-fixture-outcomes.js"
 
 export const FIXTURE_NOW = "2026-08-17T12:00:00.000Z"
+
+type ConversationSummary = ReturnType<(typeof ConversationSummarySchema)["parse"]>
 
 export class UiFixtureStore {
   readonly eventsByRun = new Map<string, CanonicalEvent[]>()
   readonly runs = new Map<string, RunSnapshot>()
+  readonly conversations = new Map<string, ConversationSummary>()
   readonly messages: Array<{
     readonly messageId: string
     readonly runId: string
+    readonly conversationId: string
     readonly actor: "user" | "ai"
     readonly content: string
     readonly createdAt: string
@@ -27,9 +33,11 @@ export class UiFixtureStore {
   private counter = 0
 
   constructor() {
-    this.seedRun("run_seed_admin")
-    this.seedRun("run_race_slow")
-    this.seedRun("run_race_fast")
+    this.seedRun("run_seed_admin", "conversation_admin_seed", "running")
+    this.seedRun("run_race_slow", "conversation_race_slow", "running")
+    this.seedRun("run_race_fast", "conversation_race_fast", "running")
+    this.seedRun("run_terminal", "conversation_terminal", "completed")
+    this.createConversation("conversation_admin_idle")
     for (const id of ["approval_fixture_approve", "approval_fixture_reject"]) {
       this.approvals.set(id, this.seedApproval(id, "run_seed_admin"))
     }
@@ -38,6 +46,16 @@ export class UiFixtureStore {
   nextId(prefix: string): string {
     this.counter += 1
     return `${prefix}_${this.counter}`
+  }
+
+  createConversation(conversationId: string): ConversationSummary {
+    const created = ConversationSummarySchema.parse({
+      conversationId,
+      createdAt: FIXTURE_NOW,
+      updatedAt: FIXTURE_NOW,
+    })
+    this.conversations.set(conversationId, created)
+    return created
   }
 
   append(runId: string, candidate: unknown): CanonicalEvent {
@@ -76,6 +94,7 @@ export class UiFixtureStore {
     this.messages.push({
       messageId: `message_ai_${runId}`,
       runId,
+      conversationId: run.conversationId,
       actor: "ai",
       content: text,
       createdAt: FIXTURE_NOW,
@@ -103,14 +122,15 @@ export class UiFixtureStore {
     })
   }
 
-  private seedRun(runId: string): void {
+  private seedRun(runId: string, conversationId: string, status: RunSnapshot["status"]): void {
+    this.createConversation(conversationId)
     this.runs.set(
       runId,
       RunSnapshotSchema.parse({
         runId,
-        conversationId: "conversation_ui_mvp",
+        conversationId,
         runtime: "simple_loop",
-        status: "running",
+        status,
         version: 0,
         consumedSteps: 1,
         cursor: { runId, sequence: 0 },
@@ -143,6 +163,7 @@ export class UiFixtureStore {
     this.messages.push({
       messageId,
       runId,
+      conversationId: input.conversationId,
       actor: "user",
       content: input.message,
       createdAt: FIXTURE_NOW,
@@ -162,96 +183,11 @@ export class UiFixtureStore {
     })
     this.setStatus(runId, "running")
     if (input.message.includes("stale")) this.staleReads.add(runId)
-    this.scheduleOutcome(runId, input.message, invocation)
+    scheduleFixtureOutcome({ store: this, runId, message: input.message, invocation })
     return CommandAcceptedOutputSchema.parse({
       commandId: `command_${invocation}`,
       status: "accepted",
       runId,
     })
-  }
-
-  private scheduleOutcome(runId: string, message: string, invocation: string): void {
-    if (message.includes("report")) {
-      setTimeout(() => {
-        this.append(runId, {
-          type: "tool.call.started",
-          visibility: "user",
-          payload: { callId: `call_${runId}`, toolName: "report.generate" },
-        })
-        this.append(runId, {
-          type: "job.accepted",
-          visibility: "user",
-          payload: { jobId: `job_${runId}`, callId: `call_${runId}`, status: "queued" },
-        })
-        this.append(runId, {
-          type: "job.progress",
-          visibility: "user",
-          payload: {
-            jobId: `job_${runId}`,
-            callId: `call_${runId}`,
-            status: "running",
-            percent: 50,
-          },
-        })
-      }, 30)
-      setTimeout(() => {
-        this.append(runId, {
-          type: "job.completed",
-          visibility: "user",
-          payload: {
-            jobId: `job_${runId}`,
-            callId: `call_${runId}`,
-            status: "completed",
-            reportId: `report_${runId}`,
-          },
-        })
-        this.complete(
-          runId,
-          `Report completed on ${this.runs.get(runId)?.runtime.replaceAll("_", " ")}.`,
-        )
-      }, 80)
-      return
-    }
-    if (message.includes("approval")) {
-      setTimeout(() => {
-        const approval = this.seedApproval(`approval_${invocation}`, runId)
-        this.approvals.set(approval.approvalId, approval)
-        this.append(runId, {
-          type: "tool.call.approval_required",
-          visibility: "user",
-          payload: {
-            callId: approval.callId,
-            toolName: approval.toolName,
-            approvalId: approval.approvalId,
-          },
-        })
-        this.append(runId, {
-          type: "approval.requested",
-          visibility: "admin",
-          payload: {
-            approvalId: approval.approvalId,
-            callId: approval.callId,
-            toolName: approval.toolName,
-            argumentsHash: approval.argumentsHash,
-            expiresAt: approval.expiresAt,
-          },
-        })
-        this.append(runId, {
-          type: "run.status_changed",
-          visibility: "user",
-          payload: { previous: "running", current: "waiting_for_admin" },
-        })
-        this.setStatus(runId, "waiting_for_admin")
-      }, 30)
-      return
-    }
-    setTimeout(
-      () =>
-        this.complete(
-          runId,
-          `Direct answer from ${this.runs.get(runId)?.runtime.replaceAll("_", " ")}: ${message}.`,
-        ),
-      45,
-    )
   }
 }
