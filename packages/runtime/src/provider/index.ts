@@ -22,7 +22,7 @@ export type ProviderFactoryOptions = {
 }
 
 export const createScriptedProvider = (script: unknown): ModelProvider =>
-  createAiSdkProvider(createScriptedModel(script))
+  createAiSdkProvider(createScriptedModel(script), "generate")
 
 export const createProvider = (
   configuration: EnvironmentConfig,
@@ -37,7 +37,7 @@ export const createProvider = (
         apiKey: configuration.apiKey,
         ...(options.fetch === undefined ? {} : { fetch: options.fetch }),
       })
-      return createAiSdkProvider(openai.responses(configuration.modelId))
+      return createAiSdkProvider(openai.responses(configuration.modelId), "stream")
     }
     default: {
       const exhaustiveConfiguration: never = configuration
