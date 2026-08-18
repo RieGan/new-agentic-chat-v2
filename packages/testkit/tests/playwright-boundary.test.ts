@@ -36,6 +36,7 @@ describe("Playwright project boundaries", () => {
     expect(runtimeList).not.toContain("ui-adversarial.spec.ts")
     expect(runtimeList).not.toContain("ui-approvals.spec.ts")
     expect(runtimeList).not.toContain("ui-races.spec.ts")
+    expect(runtimeList).not.toContain("ui-sessions.spec.ts")
   })
 
   it("keeps the intended UI specs in their UI projects", () => {
@@ -49,5 +50,6 @@ describe("Playwright project boundaries", () => {
     expect(adversarialList).toContain("ui-adversarial.spec.ts")
     expect(adversarialList).toContain("ui-approvals.spec.ts")
     expect(adversarialList).toContain("ui-races.spec.ts")
+    expect(adversarialList).toContain("ui-sessions.spec.ts")
   })
 })

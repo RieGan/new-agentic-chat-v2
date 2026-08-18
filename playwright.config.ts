@@ -24,7 +24,12 @@ export default defineConfig({
     },
     {
       name: "ui-adversarial",
-      testMatch: ["ui-adversarial.spec.ts", "ui-approvals.spec.ts", "ui-races.spec.ts"],
+      testMatch: [
+        "ui-adversarial.spec.ts",
+        "ui-approvals.spec.ts",
+        "ui-races.spec.ts",
+        "ui-sessions.spec.ts",
+      ],
       use: { baseURL: "http://127.0.0.1:4310", screenshot: "on", trace: "on" },
     },
     {
