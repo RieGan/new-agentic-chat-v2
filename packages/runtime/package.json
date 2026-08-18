@@ -16,7 +16,7 @@
     "build": "tsc -p tsconfig.build.json",
     "env:check": "pnpm build && node dist/check-environment.js",
     "test": "vitest run",
-    "test:integration": "vitest run tests/*.integration.test.ts",
+    "test:integration": "vitest run tests/*.integration.test.ts --fileParallelism=false",
     "test:temporal-replay": "node scripts/task18-temporal-replay.mjs",
     "typecheck": "tsc --noEmit"
   },
