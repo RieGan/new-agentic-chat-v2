@@ -6,24 +6,27 @@ import {
   parseContract,
   RunIdSchema,
 } from "@agentic-chat/contracts"
-import { applyAdminCommand, type StoredAdminCommand, submitAdminCommand } from "@agentic-chat/db"
+import {
+  claimAdminCommandAtBoundary,
+  type StoredAdminCommand,
+  submitAdminCommand,
+} from "@agentic-chat/db"
 import { z } from "zod"
 
 import { requireFixedAdmin } from "./admin-context.js"
 import type { ApplicationDependencies } from "./dependencies.js"
 
-const ApplyAdminCommandInputSchema = z
+const ClaimAdminCommandInputSchema = z
   .object({
-    commandId: AdminCommandIdSchema,
     runId: RunIdSchema,
-    boundary: z.literal("before_model"),
+    boundaryKey: z.string().trim().min(1),
   })
   .strict()
 
 const toAdminCommandEnvelope = (record: StoredAdminCommand) => {
   const base = {
     commandId: record.id,
-    runId: record.runId,
+    conversationId: record.conversationId,
     actorId: "mvp_admin",
     instruction: record.instruction,
     visibility: "model_only",
@@ -35,10 +38,14 @@ const toAdminCommandEnvelope = (record: StoredAdminCommand) => {
     case "accepted":
       return parseContract(AdminCommandEnvelopeSchema, { ...base, status: record.status })
     case "applied":
+      if (record.appliedRunId === null || record.appliedAt === null) {
+        throw new InvalidAdminCommandError("applied command is incomplete")
+      }
       return parseContract(AdminCommandEnvelopeSchema, {
         ...base,
         status: record.status,
-        ...(record.appliedAt ? { appliedAt: record.appliedAt.toISOString() } : {}),
+        appliedRunId: record.appliedRunId,
+        appliedAt: record.appliedAt.toISOString(),
       })
     case "expired":
       return parseContract(AdminCommandEnvelopeSchema, {
@@ -61,24 +68,23 @@ export const createAdminCommandService = (dependencies: ApplicationDependencies)
     const parsed = parseContract(AdminCommandInputSchema, input)
     const record = await submitAdminCommand(dependencies.database, {
       commandId: parseContract(AdminCommandIdSchema, dependencies.ids.next("admin_command")),
-      runId: parsed.runId,
+      conversationId: parsed.conversationId,
       instruction: parsed.instruction,
       expiresAt: new Date(parsed.expiresAt),
       idempotencyKey: parsed.idempotencyKey,
       now: dependencies.clock.now(),
-      eventId: dependencies.ids.next("event"),
-      correlationId: dependencies.ids.next("correlation"),
     })
     return toAdminCommandEnvelope(record)
   },
-  applyAtBoundary: async (input: unknown) => {
-    const parsed = parseContract(ApplyAdminCommandInputSchema, input)
-    const record = await applyAdminCommand(dependencies.database, {
+  claimAtBoundary: async (input: unknown) => {
+    const parsed = parseContract(ClaimAdminCommandInputSchema, input)
+    const record = await claimAdminCommandAtBoundary(dependencies.database, {
       ...parsed,
       now: dependencies.clock.now(),
       eventId: dependencies.ids.next("event"),
       correlationId: dependencies.ids.next("correlation"),
     })
+    if (record === null) return null
     return { command: toAdminCommandEnvelope(record), instruction: record.instruction }
   },
 })

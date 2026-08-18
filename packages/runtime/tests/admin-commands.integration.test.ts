@@ -36,7 +36,7 @@ describe("hidden Admin command service", () => {
       ids: createTestIds("admin_happy"),
     })
     const input = {
-      runId: fixture.runId,
+      conversationId: fixture.conversationId,
       instruction: "For the next response, use the approved Admin guidance.",
       expiresAt: "2026-08-16T12:05:00.000Z",
       idempotencyKey: "idempotency_admin_happy",
@@ -45,10 +45,9 @@ describe("hidden Admin command service", () => {
     const replay = await service.submit(ADMIN, input)
 
     // When: the runtime consumes it immediately before model execution.
-    const applied = await service.applyAtBoundary({
+    const applied = await service.claimAtBoundary({
       runId: fixture.runId,
-      commandId: accepted.commandId,
-      boundary: "before_model",
+      boundaryKey: `${fixture.runId}/before_model/step/1`,
     })
 
     // Then: one identity is applied once and raw content stays outside User projection data.
@@ -57,13 +56,11 @@ describe("hidden Admin command service", () => {
       instruction: input.instruction,
       command: { status: "applied" },
     })
-    await expect(
-      service.applyAtBoundary({
-        runId: fixture.runId,
-        commandId: accepted.commandId,
-        boundary: "before_model",
-      }),
-    ).rejects.toBeInstanceOf(InvalidAdminCommandError)
+    const boundaryReplay = await service.claimAtBoundary({
+      runId: fixture.runId,
+      boundaryKey: `${fixture.runId}/before_model/step/1`,
+    })
+    expect(boundaryReplay?.command.commandId).toBe(accepted.commandId)
     const projection = await createProjectionService(context.database).get({
       viewer: "user",
       runId: fixture.runId,
@@ -74,7 +71,7 @@ describe("hidden Admin command service", () => {
       "select payload::text event_payload from run_events where run_id = $1 order by sequence",
       [fixture.runId],
     )
-    expect(records.rows).toHaveLength(2)
+    expect(records.rows).toHaveLength(1)
     expect(records.rows.every((row) => !row.event_payload.includes(input.instruction))).toBe(true)
   })
 
@@ -87,7 +84,7 @@ describe("hidden Admin command service", () => {
       ids: createTestIds("admin_context"),
     })
     const input = {
-      runId: fixture.runId,
+      conversationId: fixture.conversationId,
       instruction: "Authorized guidance",
       expiresAt: "2026-08-16T12:05:00.000Z",
       idempotencyKey: "idempotency_admin_context",
@@ -101,58 +98,48 @@ describe("hidden Admin command service", () => {
     ).rejects.toBeInstanceOf(ConflictError)
   })
 
-  it("rejects expired, wrong-run, completed-run, and unsafe-boundary application", async () => {
-    // Given: accepted commands for independent active targets.
+  it("accepts terminal and idle session commands but only claims at a running boundary", async () => {
+    // Given: accepted commands for expired, terminal, and run-less sessions.
     const expiredFixture = await insertControlFixture(context, "admin_expired")
-    const wrongRunFixture = await insertControlFixture(context, "admin_wrong_run")
-    const otherFixture = await insertControlFixture(context, "admin_other_run")
     const completedFixture = await insertControlFixture(context, "admin_completed", "completed")
-    const unsafeFixture = await insertControlFixture(context, "admin_unsafe")
+    await context.database.pool.query(
+      "insert into conversations (id, user_id) values ('conversation_admin_idle', 'mvp_user')",
+    )
     const service = createAdminCommandService({
       database: context.database,
       clock,
       ids: createTestIds("admin_invalid"),
     })
-    const submit = (runId: string, key: string, expiresAt = "2026-08-16T12:05:00.000Z") =>
+    const submit = (conversationId: string, key: string, expiresAt = "2026-08-16T12:05:00.000Z") =>
       service.submit(ADMIN, {
-        runId,
+        conversationId,
         instruction: `guidance ${key}`,
         expiresAt,
         idempotencyKey: key,
       })
-    const expired = await submit(
-      expiredFixture.runId,
+    await submit(
+      expiredFixture.conversationId,
       "idempotency_admin_expired",
       "2026-08-16T12:00:01.000Z",
     )
-    const wrongRun = await submit(wrongRunFixture.runId, "idempotency_admin_wrong_run")
-    const unsafe = await submit(unsafeFixture.runId, "idempotency_admin_unsafe")
+    const terminal = await submit(completedFixture.conversationId, "idempotency_admin_completed")
+    const idle = await submit("conversation_admin_idle", "idempotency_admin_idle")
     clock.set(new Date("2026-08-16T12:00:02.000Z"))
 
-    // When/Then: no invalid target, lifetime, terminal run, or boundary can consume guidance.
+    // When/Then: submission remains session-owned while runtime state gates consumption.
+    expect(terminal.status).toBe("accepted")
+    expect(idle.status).toBe("accepted")
     await expect(
-      service.applyAtBoundary({
+      service.claimAtBoundary({
+        runId: completedFixture.runId,
+        boundaryKey: `${completedFixture.runId}/before_model/step/1`,
+      }),
+    ).rejects.toBeInstanceOf(InvalidAdminCommandError)
+    await expect(
+      service.claimAtBoundary({
         runId: expiredFixture.runId,
-        commandId: expired.commandId,
-        boundary: "before_model",
+        boundaryKey: `${expiredFixture.runId}/before_model/step/1`,
       }),
-    ).rejects.toBeInstanceOf(InvalidAdminCommandError)
-    await expect(
-      service.applyAtBoundary({
-        runId: otherFixture.runId,
-        commandId: wrongRun.commandId,
-        boundary: "before_model",
-      }),
-    ).rejects.toBeInstanceOf(InvalidAdminCommandError)
-    await expect(
-      submit(completedFixture.runId, "idempotency_admin_completed"),
-    ).rejects.toBeInstanceOf(InvalidAdminCommandError)
-    await expect(
-      service.applyAtBoundary({
-        runId: unsafeFixture.runId,
-        commandId: unsafe.commandId,
-        boundary: "in_flight",
-      }),
-    ).rejects.toMatchObject({ code: "INVALID_SCHEMA" })
+    ).resolves.toBeNull()
   })
 })
