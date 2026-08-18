@@ -10,8 +10,12 @@ import {
   CanonicalEventSchema,
   ChatSendMessageInputSchema,
   CommandAcceptedOutputSchema,
+  ConversationCreateInputSchema,
   ConversationGetInputSchema,
   ConversationProjectionSchema,
+  ConversationSummarySchema,
+  ConversationsListInputSchema,
+  ConversationsListOutputSchema,
   RunGetInputSchema,
   RunSubscriptionInputSchema,
   RunsListInputSchema,
@@ -86,6 +90,14 @@ const streamObserver = (observer: StreamObserver, allowHidden: boolean) => ({
 })
 
 export const userApi = {
+  async createConversation(input: unknown) {
+    const parsed = ConversationCreateInputSchema.parse(input)
+    return ConversationSummarySchema.parse(await userClient.conversations.create.mutate(parsed))
+  },
+  async listConversations(input: unknown) {
+    const parsed = ConversationsListInputSchema.parse(input)
+    return ConversationsListOutputSchema.parse(await userClient.conversations.list.query(parsed))
+  },
   async sendMessage(input: unknown) {
     const parsed = ChatSendMessageInputSchema.parse(input)
     return CommandAcceptedOutputSchema.parse(await userClient.chat.sendMessage.mutate(parsed))
@@ -105,6 +117,10 @@ export const userApi = {
 }
 
 export const adminApi = {
+  async listConversations(input: unknown) {
+    const parsed = ConversationsListInputSchema.parse(input)
+    return ConversationsListOutputSchema.parse(await adminClient.conversations.list.query(parsed))
+  },
   async runs(input: unknown) {
     const parsed = RunsListInputSchema.parse(input)
     return RunsListOutputSchema.parse(await adminClient.runs.list.query(parsed))
