@@ -6,14 +6,13 @@ import {
   JSONParseError,
   type LanguageModel,
   MissingToolResultsError,
-  type ModelMessage,
   NoSuchToolError,
+  streamText,
   TypeValidationError,
 } from "ai"
 import { ZodError } from "zod"
 
 import {
-  type ModelProvider,
   type ProviderError,
   type ProviderGeneration,
   type ProviderMessage,
@@ -23,7 +22,13 @@ import {
   type ProviderToolCall,
   ProviderToolCallSchema,
 } from "./contracts.js"
-import { providerTools } from "./tools.js"
+import { toModelMessage } from "./messages.js"
+import {
+  fromLanguageModelToolName,
+  type ProviderTransport,
+  providerToolsFor,
+  toLanguageModelToolName,
+} from "./tools.js"
 
 const error = (
   code: ProviderError["code"],
@@ -66,49 +71,6 @@ const hasValidContinuation = (messages: readonly ProviderMessage[]): boolean => 
   return pending.size === 0
 }
 
-const toModelMessage = (message: ProviderMessage): ModelMessage => {
-  switch (message.role) {
-    case "system":
-    case "user":
-      return { role: message.role, content: message.content }
-    case "assistant":
-      return {
-        role: "assistant",
-        content: message.content.map((part) => {
-          switch (part.kind) {
-            case "text":
-              return { type: "text" as const, text: part.text }
-            case "tool_call":
-              return {
-                type: "tool-call" as const,
-                toolCallId: part.callId,
-                toolName: part.toolName,
-                input: part.arguments,
-              }
-            default: {
-              const exhaustivePart: never = part
-              return exhaustivePart
-            }
-          }
-        }),
-      }
-    case "tool":
-      return {
-        role: "tool",
-        content: message.content.map((part) => ({
-          type: "tool-result" as const,
-          toolCallId: part.callId,
-          toolName: part.toolName,
-          output: { type: "json" as const, value: part.output },
-        })),
-      }
-    default: {
-      const exhaustiveMessage: never = message
-      return exhaustiveMessage
-    }
-  }
-}
-
 const mapFinishReason = (finishReason: string): ProviderGeneration["finishReason"] | undefined => {
   switch (finishReason) {
     case "stop":
@@ -126,15 +88,20 @@ const mapFinishReason = (finishReason: string): ProviderGeneration["finishReason
   }
 }
 
-const mapToolCall = (part: {
-  readonly toolCallId: string
-  readonly toolName: string
-  readonly input: unknown
-}): ProviderToolCall | undefined => {
+const mapToolCall = (
+  part: {
+    readonly toolCallId: string
+    readonly toolName: string
+    readonly input: unknown
+  },
+  transport: ProviderTransport,
+): ProviderToolCall | undefined => {
+  const toolName = fromLanguageModelToolName(part.toolName, transport)
+  if (toolName === undefined) return undefined
   const parsed = ProviderToolCallSchema.safeParse({
     kind: "tool_call",
     callId: part.toolCallId,
-    toolName: part.toolName,
+    toolName,
     arguments: part.input,
   })
   return parsed.success ? parsed.data : undefined
@@ -174,7 +141,7 @@ const mapFailure = (caught: unknown, request: ProviderRequest): ProviderResult =
   return error("PROVIDER_FAILURE", "Provider request failed", true)
 }
 
-export const createAiSdkProvider = (model: LanguageModel): ModelProvider => ({
+export const createAiSdkProvider = (model: LanguageModel, transport: ProviderTransport) => ({
   generate: async (input: unknown): Promise<ProviderResult> => {
     const requestResult = ProviderRequestSchema.safeParse(input)
     if (!requestResult.success) {
@@ -193,14 +160,14 @@ export const createAiSdkProvider = (model: LanguageModel): ModelProvider => ({
         )
         .map((message) => message.content)
         .join("\n")
-      const result = await generateText({
+      const generationOptions = {
         model,
         messages: request.messages
           .filter((message) => message.role !== "system")
-          .map(toModelMessage),
+          .map((message) => toModelMessage(message, transport)),
         ...(instructions === "" ? {} : { instructions }),
-        tools: providerTools,
-        activeTools: request.tools,
+        tools: providerToolsFor(transport),
+        activeTools: request.tools.map((toolName) => toLanguageModelToolName(toolName, transport)),
         maxRetries: 0,
         ...(request.abortSignal === undefined ? {} : { abortSignal: request.abortSignal }),
         timeout: { totalMs: request.timeoutMs, stepMs: request.timeoutMs },
@@ -211,7 +178,14 @@ export const createAiSdkProvider = (model: LanguageModel): ModelProvider => ({
             reasoningSummary: null,
           } satisfies OpenAILanguageModelResponsesOptions,
         },
-      })
+      }
+      const generation =
+        transport === "stream" ? streamText(generationOptions) : generateText(generationOptions)
+      const generated = await generation
+      const result = {
+        content: await generated.content,
+        finishReason: await generated.finishReason,
+      }
       const finishReason = mapFinishReason(result.finishReason)
       if (finishReason === undefined) {
         return error("PROVIDER_INVALID_RESPONSE", "Provider returned an invalid response", false)
@@ -221,7 +195,7 @@ export const createAiSdkProvider = (model: LanguageModel): ModelProvider => ({
         if (part.type === "text") {
           content.push({ kind: "text", text: part.text })
         } else if (part.type === "tool-call") {
-          const toolCall = mapToolCall(part)
+          const toolCall = mapToolCall(part, transport)
           if (toolCall === undefined) {
             return error(
               "PROVIDER_INVALID_RESPONSE",

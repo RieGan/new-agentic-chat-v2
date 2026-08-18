@@ -148,7 +148,7 @@ describe("provider failures", () => {
     })
   })
 
-  it("redacts live configuration while using the Responses request policy", async () => {
+  it("uses streaming Responses transport while redacting live configuration", async () => {
     // Given
     const observedRequests: { readonly url: string; readonly body: string }[] = []
     const baseUrl = "https://provider-secret.example/v1"
@@ -165,7 +165,16 @@ describe("provider failures", () => {
     )
 
     // When
-    const result = await provider.generate(request)
+    const result = await provider.generate({
+      ...request,
+      tools: [
+        "skill.load",
+        "calculator.evaluate",
+        "notification.preview",
+        "notification.send_email",
+        "report.generate",
+      ],
+    })
 
     // Then
     expect(observedRequests).toHaveLength(1)
@@ -174,6 +183,14 @@ describe("provider failures", () => {
       model: modelId,
       store: false,
       parallel_tool_calls: false,
+      stream: true,
+      tools: [
+        { name: "skill_load" },
+        { name: "calculator_evaluate" },
+        { name: "notification_preview" },
+        { name: "notification_send_email" },
+        { name: "report_generate" },
+      ],
     })
     expect(result.ok).toBe(false)
     if (!result.ok) {
