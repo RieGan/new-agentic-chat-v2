@@ -1,6 +1,7 @@
 import type { SyntheticEvent } from "react"
 import { useEffect, useRef, useState } from "react"
 
+import { ConversationControls } from "../components/conversation-controls.js"
 import { ConnectionStatus, EventLedger, MessageLog } from "../components/run-events.js"
 import { AppShell, Meta, Panel, StatusLabel } from "../components/ui.js"
 import { useUserChat } from "../state/use-user-chat.js"
@@ -61,6 +62,14 @@ export const UserChatRoute = () => {
           </div>
         </header>
 
+        <ConversationControls
+          conversations={chat.conversations}
+          selectedConversationId={chat.selectedConversationId}
+          busy={chat.sessionsBusy}
+          onSelect={chat.selectConversation}
+          onCreate={chat.createConversation}
+        />
+
         <div className="workspace-grid">
           <div className="stack">
             <Panel
@@ -86,7 +95,7 @@ export const UserChatRoute = () => {
                           : "simple_loop",
                       )
                     }
-                    disabled={chat.busy}
+                    disabled={chat.busy || chat.selectedConversationId === undefined}
                   >
                     <option value="simple_loop">Simple Loop</option>
                     <option value="state_workflow">State Workflow</option>
@@ -109,7 +118,7 @@ export const UserChatRoute = () => {
                     }}
                     aria-describedby="message-help message-error"
                     aria-invalid={validation !== undefined}
-                    disabled={chat.busy}
+                    disabled={chat.busy || chat.selectedConversationId === undefined}
                   />
                   <small id="message-help">
                     Messages are admitted to the selected runtime as one command.
@@ -123,7 +132,7 @@ export const UserChatRoute = () => {
                     className="button button--primary"
                     data-testid="send-message"
                     type="submit"
-                    disabled={chat.busy}
+                    disabled={chat.busy || chat.selectedConversationId === undefined}
                   >
                     {chat.busy ? "Sending..." : "Send message"}
                   </button>
