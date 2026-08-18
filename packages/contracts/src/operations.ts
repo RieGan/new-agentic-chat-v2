@@ -6,6 +6,7 @@ import {
   AggregateVersionSchema,
   ApprovalIdSchema,
   CallIdSchema,
+  ConversationIdSchema,
   IdempotencyKeySchema,
   JobIdSchema,
   ReportIdSchema,
@@ -80,7 +81,7 @@ export type JobEnvelope = z.infer<typeof JobEnvelopeSchema>
 
 const adminCommandBaseShape = {
   commandId: AdminCommandIdSchema,
-  runId: RunIdSchema,
+  conversationId: ConversationIdSchema,
   actorId: z.literal("mvp_admin"),
   instruction: z.string().min(1).max(16_000),
   visibility: z.literal("model_only"),
@@ -92,7 +93,12 @@ const adminCommandBaseShape = {
 export const AdminCommandEnvelopeSchema = z.discriminatedUnion("status", [
   z.object({ ...adminCommandBaseShape, status: z.literal("accepted") }).strict(),
   z
-    .object({ ...adminCommandBaseShape, status: z.literal("applied"), appliedAt: TimestampSchema })
+    .object({
+      ...adminCommandBaseShape,
+      status: z.literal("applied"),
+      appliedRunId: RunIdSchema,
+      appliedAt: TimestampSchema,
+    })
     .strict(),
   z
     .object({

@@ -45,7 +45,7 @@ export type ChatSendMessageInput = z.infer<typeof ChatSendMessageInputSchema>
 
 export const AdminCommandInputSchema = z
   .object({
-    runId: RunIdSchema,
+    conversationId: ConversationIdSchema,
     instruction: z.string().min(1).max(16_000),
     expiresAt: TimestampSchema,
     idempotencyKey: IdempotencyKeySchema,
@@ -163,6 +163,10 @@ export const CommandAcceptedOutputSchema = z
 export const ConversationGetInputSchema = z
   .object({ conversationId: ConversationIdSchema })
   .strict()
+export const ConversationCreateInputSchema = z
+  .object({ conversationId: ConversationIdSchema })
+  .strict()
+export const ConversationsListInputSchema = z.object({}).strict()
 export const RunsListInputSchema = z
   .object({ runtime: RuntimeSchema.optional(), status: RunStateSchema.optional() })
   .strict()

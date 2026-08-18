@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest"
 import {
   AdminCommandEnvelopeSchema,
   ApprovalEnvelopeSchema,
+  ConversationsListOutputSchema,
   JobEnvelopeSchema,
   RunSnapshotSchema,
   SkillSnapshotSchema,
@@ -74,7 +75,7 @@ describe("operation envelopes and snapshots", () => {
     expect(
       AdminCommandEnvelopeSchema.parse({
         commandId: "command_001",
-        runId: "run_001",
+        conversationId: "conversation_001",
         actorId: "mvp_admin",
         instruction: "hostile-looking text remains data",
         status: "accepted",
@@ -84,6 +85,46 @@ describe("operation envelopes and snapshots", () => {
         version: 1,
       }),
     ).toMatchObject({ visibility: "model_only" })
+  })
+
+  it("requires an applied run only after a conversation command is consumed", () => {
+    const base = {
+      commandId: "command_conversation_owned",
+      conversationId: "conversation_001",
+      actorId: "mvp_admin",
+      instruction: "apply once",
+      visibility: "model_only",
+      expiresAt: "2026-08-17T00:00:00.000Z",
+      idempotencyKey: "admin-command-conversation-owned",
+      version: 1,
+    } as const
+
+    expect(
+      AdminCommandEnvelopeSchema.safeParse({ ...base, status: "accepted", appliedRunId: "run_001" })
+        .success,
+    ).toBe(false)
+    expect(
+      AdminCommandEnvelopeSchema.parse({
+        ...base,
+        status: "applied",
+        appliedRunId: "run_001",
+        appliedAt: "2026-08-16T12:00:00.000Z",
+      }),
+    ).toMatchObject({ conversationId: "conversation_001", appliedRunId: "run_001" })
+  })
+
+  it("parses deterministic conversation summaries", () => {
+    expect(
+      ConversationsListOutputSchema.parse({
+        conversations: [
+          {
+            conversationId: "conversation_001",
+            createdAt: "2026-08-16T10:00:00.000Z",
+            updatedAt: "2026-08-16T12:00:00.000Z",
+          },
+        ],
+      }),
+    ).toMatchObject({ conversations: [{ conversationId: "conversation_001" }] })
   })
 
   it("parses a canonical run snapshot with a cursor", () => {

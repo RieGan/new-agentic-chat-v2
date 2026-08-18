@@ -31,6 +31,18 @@ export const ConversationProjectionSchema = z
   })
   .strict()
 
+export const ConversationSummarySchema = z
+  .object({
+    conversationId: ConversationIdSchema,
+    createdAt: TimestampSchema,
+    updatedAt: TimestampSchema,
+  })
+  .strict()
+
+export const ConversationsListOutputSchema = z
+  .object({ conversations: z.array(ConversationSummarySchema) })
+  .strict()
+
 export const RunSubscriptionInputSchema = z
   .object({
     runId: RunIdSchema,
