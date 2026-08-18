@@ -172,6 +172,7 @@ describe("Compose API application", () => {
         }),
       ],
     })
+    await client.conversations.create.mutate({ conversationId: "conversation_shutdown" })
     const receipt = await client.chat.sendMessage.mutate({
       kind: "new_run",
       conversationId: "conversation_shutdown",

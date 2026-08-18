@@ -38,6 +38,7 @@ describe("tracked tRPC SSE", () => {
     })
     const user = appRouter.createCaller(createApiContext(FIXED_ACTORS.USER, services, events))
     const admin = appRouter.createCaller(createApiContext(FIXED_ACTORS.ADMIN, services, events))
+    await user.conversations.create({ conversationId: `conversation_${namespace}` })
     const receipt = await user.chat.sendMessage({
       kind: "new_run",
       conversationId: `conversation_${namespace}`,

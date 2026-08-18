@@ -56,6 +56,7 @@ describe("tRPC HTTP and SSE transport", () => {
         }),
       ],
     })
+    await client.conversations.create.mutate({ conversationId: "conversation_http_sse" })
     const receipt = await client.chat.sendMessage.mutate({
       kind: "new_run",
       conversationId: "conversation_http_sse",
@@ -89,7 +90,7 @@ describe("tRPC HTTP and SSE transport", () => {
       )
     })
     const denied = client.admin.command.sendHidden.mutate({
-      runId: receipt.runId,
+      conversationId: "conversation_http_sse",
       instruction: "HTTP_SECRET",
       expiresAt: "2026-08-17T12:05:00.000Z",
       idempotencyKey: "idempotency_http_admin_denied",
@@ -131,6 +132,7 @@ describe("tRPC HTTP and SSE transport", () => {
         }),
       ],
     })
+    await services.createConversation({ conversationId: "conversation_http_stale" })
     const receipt = await services.sendMessage(
       ChatSendMessageInputSchema.parse({
         kind: "new_run",
