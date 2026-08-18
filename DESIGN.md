@@ -84,6 +84,12 @@ All intent spacing uses a 4px base: `--space-1` 4px, `--space-2` 8px, `--space-3
 - States: default, focus, disabled, invalid.
 - Accessibility: labels bind with `htmlFor`; errors use `role="alert"`.
 
+### Session Controls
+- Structure: a visible Session label with a native select composed beside the secondary New session action.
+- States: loading, ready, creating, and unavailable; session changes clear the prior message and run surfaces immediately.
+- Layout: select and action share a compact row on desktop and reflow to one full-width column below 768px.
+- Accessibility: native keyboard behavior, visible focus, and 44px targets come from the existing Field and Action primitives.
+
 ### Status Label
 - Structure: text label with an optional short context value.
 - Variants: neutral, active, success, warning, danger.

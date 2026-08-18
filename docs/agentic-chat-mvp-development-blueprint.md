@@ -137,7 +137,7 @@ apps/web/src/routes/
 ### Admin view
 
 - inspect active runs and runtime assignment;
-- send a model-only command to a selected run;
+- send a model-only command directly to a selected session;
 - see pending approvals and exact prepared arguments;
 - approve or reject the exact side-effect call;
 - see hidden-command and approval status that is not projected to the User view.
@@ -179,7 +179,7 @@ These are not ordinary AI-selected tools:
 
 | Operation | Approval | Purpose |
 | --- | --- | --- |
-| `admin.command.send_hidden` | Fixed `mvp_admin` context | Apply a model-only instruction to the targeted run at a safe boundary. |
+| `admin.command.send_hidden` | Fixed `mvp_admin` context | Queue a model-only instruction for the targeted session and apply it once at the next safe run boundary. |
 | `approvals.approve` | Fixed `mvp_admin` context | Permit the exact prepared side-effect call. |
 | `approvals.reject` | Fixed `mvp_admin` context | Reject the exact prepared side-effect call and resume with a rejection result. |
 
