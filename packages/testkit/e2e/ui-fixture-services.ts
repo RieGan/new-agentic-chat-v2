@@ -4,8 +4,11 @@ import {
   ApprovalEnvelopeSchema,
   ApprovalGetInputSchema,
   ApprovalListPendingInputSchema,
+  ConversationCreateInputSchema,
   ConversationGetInputSchema,
   ConversationProjectionSchema,
+  ConversationsListInputSchema,
+  ConversationsListOutputSchema,
   RunEventsInputSchema,
   RunGetInputSchema,
   RunsListInputSchema,
@@ -18,24 +21,31 @@ import { FIXTURE_NOW, UiFixtureStore } from "./ui-fixture-store.js"
 export const createUiFixtureServices = (): ApiServices => {
   const store = new UiFixtureStore()
   return {
+    async createConversation(unparsed: unknown) {
+      const input = ConversationCreateInputSchema.parse(unparsed)
+      return store.createConversation(input.conversationId)
+    },
+    async listConversations(unparsed: unknown) {
+      ConversationsListInputSchema.parse(unparsed)
+      return ConversationsListOutputSchema.parse({
+        conversations: [...store.conversations.values()].reverse(),
+      })
+    },
     sendMessage: store.sendMessage,
     async sendHidden(unparsed: unknown) {
       const input = AdminCommandInputSchema.parse(unparsed)
+      if (!store.conversations.has(input.conversationId)) {
+        throw new TypeError("Fixture conversation missing")
+      }
       const commandId = store.nextId("admin_command")
-      store.append(input.runId, {
-        type: "admin.command.accepted",
-        visibility: "model_only",
-        payload: { commandId, status: "accepted" },
-      })
-      store.append(input.runId, {
-        type: "admin.command.applied",
-        visibility: "model_only",
-        payload: { commandId, status: "applied" },
-      })
       if (input.instruction === "CREATE_APPROVAL_FIXTURE_EVENT") {
-        const approval = store.seedApproval(store.nextId("approval_discovery"), input.runId)
+        const run = [...store.runs.values()].findLast(
+          (candidate) => candidate.conversationId === input.conversationId,
+        )
+        if (run === undefined) throw new TypeError("Fixture conversation run missing")
+        const approval = store.seedApproval(store.nextId("approval_discovery"), run.runId)
         store.approvals.set(approval.approvalId, approval)
-        store.append(input.runId, {
+        store.append(run.runId, {
           type: "approval.requested",
           visibility: "admin",
           payload: {
@@ -83,7 +93,15 @@ export const createUiFixtureServices = (): ApiServices => {
       const input = ConversationGetInputSchema.parse(unparsed)
       return ConversationProjectionSchema.parse({
         conversationId: input.conversationId,
-        messages: store.messages,
+        messages: store.messages
+          .filter((message) => message.conversationId === input.conversationId)
+          .map((message) => ({
+            messageId: message.messageId,
+            runId: message.runId,
+            actor: message.actor,
+            content: message.content,
+            createdAt: message.createdAt,
+          })),
         runs: [...store.runs.values()].filter((run) => run.conversationId === input.conversationId),
       })
     },

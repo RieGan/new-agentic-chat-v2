@@ -24,7 +24,7 @@ export const clearPendingApprovals = async (): Promise<void> => {
 
 export const createPendingApproval = async (): Promise<void> => {
   await adminClient.admin.command.sendHidden.mutate({
-    runId: "run_race_fast",
+    conversationId: "conversation_race_fast",
     instruction: "CREATE_APPROVAL_FIXTURE_EVENT",
     expiresAt: new Date(Date.now() + 5 * 60_000).toISOString(),
     idempotencyKey: crypto.randomUUID(),
