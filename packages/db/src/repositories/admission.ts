@@ -1,5 +1,5 @@
 import { type CanonicalEvent, ConflictError, type MessageId } from "@agentic-chat/contracts"
-import { eq, max, sql } from "drizzle-orm"
+import { and, eq, max, sql } from "drizzle-orm"
 import { z } from "zod"
 
 import type { DatabaseClient } from "../database.js"
@@ -99,18 +99,19 @@ export const admitNewRun = async (
   database.db.transaction(async (transaction) => {
     const replay = await reserveInsideAdmission(transaction, input)
     if (replay) return replay
-    await transaction
-      .insert(conversations)
-      .values({ id: input.conversationId, userId: "mvp_user", updatedAt: input.occurredAt })
-      .onConflictDoNothing()
     const conversation = await transaction
       .select({ userId: conversations.userId })
       .from(conversations)
-      .where(eq(conversations.id, input.conversationId))
+      .where(and(eq(conversations.id, input.conversationId), eq(conversations.userId, "mvp_user")))
+      .for("update")
       .limit(1)
     if (conversation[0]?.userId !== "mvp_user") {
       throw new ConflictError(`conversation ${input.conversationId}`)
     }
+    await transaction
+      .update(conversations)
+      .set({ updatedAt: input.occurredAt })
+      .where(eq(conversations.id, input.conversationId))
     const workflowIdentity =
       input.runtime === "state_workflow" ? `agent-run/${input.receipt.runId}` : null
     await transaction.insert(runs).values({
@@ -201,6 +202,10 @@ export const admitContinuation = async (
         updatedAt: input.occurredAt,
       })
       .where(eq(runs.id, input.receipt.runId))
+    await transaction
+      .update(conversations)
+      .set({ updatedAt: input.occurredAt })
+      .where(eq(conversations.id, current.conversationId))
     await transaction.insert(messages).values({
       id: input.messageId,
       conversationId: input.conversationId,
