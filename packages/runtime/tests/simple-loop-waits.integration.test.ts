@@ -2,6 +2,7 @@ import {
   claimRunLease,
   completeReportJob,
   consumeSimpleLoopStep,
+  createConversation,
   persistSimpleLoopUserWait,
   readApprovalSnapshot,
   readReportJob,
@@ -52,6 +53,11 @@ describe("Simple Loop durable waits", () => {
   it("resumes one report call with stable identities and remaining budget", async () => {
     // Given: F06 requests one deterministic report and the same provider survives the wait.
     const ids = createTestIds("wait-f06")
+    await createConversation(context.database, {
+      conversationId: "conversation_wait_f06",
+      userId: "mvp_user",
+      now: testClock.now(),
+    })
     const receipt = await createAdmissionService({
       database: context.database,
       clock: testClock,
@@ -195,6 +201,11 @@ describe("Simple Loop durable waits", () => {
       // Given: F07/F08 reaches one approval-bound send after a durable preview.
       const namespace = `wait-${decision}`
       const ids = createTestIds(namespace)
+      await createConversation(context.database, {
+        conversationId: `conversation_${namespace}`,
+        userId: "mvp_user",
+        now: testClock.now(),
+      })
       const receipt = await createAdmissionService({
         database: context.database,
         clock: testClock,
@@ -328,6 +339,11 @@ describe("Simple Loop durable waits", () => {
     // Given: F09 has one safely paused run, one hidden command, and the frozen continuation correlation.
     const ids = createTestIds("wait-admin")
     const admission = createAdmissionService({ database: context.database, clock: testClock, ids })
+    await createConversation(context.database, {
+      conversationId: "conversation_wait_admin",
+      userId: "mvp_user",
+      now: testClock.now(),
+    })
     const receipt = await admission.admit({
       commandId: "command_wait_admin",
       createdAt: testClock.now().toISOString(),
@@ -384,7 +400,7 @@ describe("Simple Loop durable waits", () => {
     const command = await admin.submit(
       { actorId: "mvp_admin" },
       {
-        runId: receipt.runId,
+        conversationId: "conversation_wait_admin",
         instruction,
         expiresAt: "2026-08-17T13:00:00.000Z",
         idempotencyKey: "admin_wait_command",

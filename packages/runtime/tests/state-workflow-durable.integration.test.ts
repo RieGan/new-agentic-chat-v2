@@ -5,6 +5,7 @@ import {
   claimNextSimpleLoopRun,
   completeReportJob,
   consumeStateWorkflowStep,
+  createConversation,
   persistStateWorkflowUserWait,
   readApprovalSnapshot,
   recordReportProgress,
@@ -72,6 +73,11 @@ describe("State Workflow F06-F10 durable recovery", () => {
 
   const admit = async (namespace: string, message: string) => {
     const ids = createTestIds(namespace)
+    await createConversation(context.database, {
+      conversationId: `conversation_${namespace}`,
+      userId: "mvp_user",
+      now: testClock.now(),
+    })
     const receipt = await createAdmissionService({
       database: context.database,
       clock: testClock,
@@ -427,7 +433,7 @@ describe("State Workflow F06-F10 durable recovery", () => {
     }).submit(
       { actorId: "mvp_admin" },
       {
-        runId: admitted.receipt.runId,
+        conversationId: "conversation_state_durable_user",
         instruction,
         expiresAt: "2026-08-17T13:00:00.000Z",
         idempotencyKey: "admin_state_durable_user",

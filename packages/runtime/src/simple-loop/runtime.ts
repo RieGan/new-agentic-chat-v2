@@ -153,7 +153,13 @@ export const createSimpleLoopRuntime = (dependencies: SimpleLoopDependencies) =>
       dependencies.provider,
       {
         beforeGenerate: async (messages) => {
-          const prepared = await prepareAdminGuidance(dependencies, state, active.runId, messages)
+          const prepared = await prepareAdminGuidance(
+            dependencies,
+            state,
+            active.runId,
+            run.conversationId,
+            messages,
+          )
           const persisted = await consumeSimpleLoopStep(dependencies.database, {
             ...mutation(),
             eventId: active.ids.next("event"),

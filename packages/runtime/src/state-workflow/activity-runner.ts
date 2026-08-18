@@ -61,6 +61,7 @@ export const runStateWorkflowActivity = async (
           dependencies,
           input,
           state,
+          run.conversationId,
           messages,
         )
         const nextStep = state.consumedSteps + 1
