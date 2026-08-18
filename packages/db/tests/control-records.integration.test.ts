@@ -58,7 +58,7 @@ describe("PostgreSQL control records", () => {
     // When: the command is stored through the Admin-only repository.
     await storeAdminCommand(context.database, {
       id: "admin_command_hidden",
-      runId: "run_hidden_command",
+      conversationId: "conversation_run_hidden_command",
       instruction,
       expiresAt: new Date(Date.now() + 60_000),
       idempotencyKey: "admin_command_hidden_key",

@@ -6,7 +6,7 @@ import { adminCommands, runSkillSnapshots } from "../schema/index.js"
 
 export type AdminCommandRecord = {
   readonly id: string
-  readonly runId: string
+  readonly conversationId: string
   readonly instruction: string
   readonly expiresAt: Date
   readonly idempotencyKey: string
