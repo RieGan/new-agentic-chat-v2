@@ -9,6 +9,7 @@ import { createStateWorkflowActivityAdapter } from "../src/state-workflow/activi
 import { StateWorkflowContextSchema } from "../src/state-workflow/context.js"
 import type { ApplicationTestContext } from "./application-support.js"
 import {
+  createOwnedConversation,
   createTestIds,
   startApplicationTestContext,
   stopApplicationTestContext,
@@ -157,6 +158,7 @@ describe("State Workflow F01-F05 synchronous flows", () => {
   it("persists a canonical report wait before returning its directive", async () => {
     // Given: a State Workflow run requests one asynchronous report.
     const ids = createTestIds("state-wait-f06-red")
+    await createOwnedConversation(context, "conversation_state_wait_f06_red")
     const receipt = await createAdmissionService({
       database: context.database,
       clock: testClock,

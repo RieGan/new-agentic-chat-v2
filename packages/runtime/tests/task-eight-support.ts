@@ -3,6 +3,7 @@ import { hashApprovedArguments } from "@agentic-chat/tools"
 import type { ApplicationTestContext } from "./application-support.js"
 
 export type ControlFixture = {
+  readonly conversationId: string
   readonly runId: string
   readonly callId: string
   readonly arguments: { readonly previewId: string }
@@ -40,5 +41,5 @@ export const insertControlFixture = async (
      values ($1, $2, 'notification.send_email', '1', 'prepared', $3::jsonb, $4)`,
     [callId, runId, JSON.stringify(arguments_), argumentsHash],
   )
-  return { runId, callId, arguments: arguments_, argumentsHash }
+  return { conversationId, runId, callId, arguments: arguments_, argumentsHash }
 }
