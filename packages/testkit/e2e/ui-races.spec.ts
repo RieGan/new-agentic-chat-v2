@@ -70,8 +70,8 @@ test.describe("Task 16 deterministic UI races", () => {
     assertConsoleClean()
   })
 
-  test("Hidden command completion cannot overwrite a newly selected run", async ({ page }) => {
-    // Given: command and seed projection responses can be released after another run is selected.
+  test("Hidden command completion cannot overwrite a newly selected session", async ({ page }) => {
+    // Given: a command response can be released after another session is selected.
     const assertConsoleClean = observeConsole(page)
     let releaseCommandResponse = () => {}
     const commandResponseGate = new Promise<void>((resolve) => {
@@ -81,31 +81,6 @@ test.describe("Task 16 deterministic UI races", () => {
     const commandFetched = new Promise<void>((resolve) => {
       markCommandFetched = resolve
     })
-    let holdSeedProjection = false
-    let releaseSeedProjection = () => {}
-    const seedProjectionGate = new Promise<void>((resolve) => {
-      releaseSeedProjection = resolve
-    })
-    let markSeedProjectionFetched = () => {}
-    const seedProjectionFetched = new Promise<void>((resolve) => {
-      markSeedProjectionFetched = resolve
-    })
-    let markSeedProjectionFulfilled = () => {}
-    const seedProjectionFulfilled = new Promise<void>((resolve) => {
-      markSeedProjectionFulfilled = resolve
-    })
-    await page.route("**/trpc/admin/runs.get*", async (route) => {
-      const requestsSeed = decodeURIComponent(route.request().url()).includes("run_seed_admin")
-      if (!holdSeedProjection || !requestsSeed) {
-        await route.continue()
-        return
-      }
-      const response = await route.fetch()
-      markSeedProjectionFetched()
-      await seedProjectionGate
-      await route.fulfill({ response })
-      markSeedProjectionFulfilled()
-    })
     await page.route("**/trpc/admin/admin.command.sendHidden*", async (route) => {
       const response = await route.fetch()
       markCommandFetched()
@@ -113,47 +88,37 @@ test.describe("Task 16 deterministic UI races", () => {
       await route.fulfill({ response })
     })
     await page.goto("/admin")
-    await expect(page.getByTestId("admin-run-projection")).toContainText("run_seed_admin")
-    holdSeedProjection = true
+    const sessionSelector = page.getByTestId("admin-conversation-selector")
+    await sessionSelector.selectOption("conversation_admin_seed")
 
-    // When: Admin submits against the seed run, selects another run, then receives the response.
+    // When: Admin submits against one session, selects another session, then receives the response.
     await page.getByTestId("hidden-command-input").fill("RACE_SELECTION_COMMAND")
     await page.getByTestId("send-hidden-command").click()
     await commandFetched
-    await page.getByTestId("select-run-run_race_fast").click()
-    const projection = page.getByTestId("admin-run-projection")
-    await expect(projection).toContainText("run_race_fast")
-    await projection.evaluate((element) => {
-      element.dataset.observedStaleProjection = "false"
-      const Observer = element.ownerDocument.defaultView?.MutationObserver
-      if (Observer === undefined) return
-      const observer = new Observer(() => {
-        if (element.textContent?.includes("run_seed_admin") === true) {
-          element.dataset.observedStaleProjection = "true"
-        }
-      })
-      observer.observe(element, { childList: true, subtree: true, characterData: true })
-    })
+    await sessionSelector.selectOption("conversation_admin_idle")
     releaseCommandResponse()
-    await seedProjectionFetched
-    releaseSeedProjection()
-    await seedProjectionFulfilled
-    await projection.evaluate(
-      (element) =>
-        new Promise<void>((resolve) =>
-          element.ownerDocument.defaultView?.requestAnimationFrame(() =>
-            element.ownerDocument.defaultView?.requestAnimationFrame(() => resolve()),
-          ),
-        ),
-    )
 
-    // Then: the selected run and rendered projection remain aligned throughout completion.
-    await expect(projection).toContainText("run_race_fast")
-    await expect(projection).toHaveAttribute("data-observed-stale-projection", "false")
-    await expect(page.getByTestId("select-run-run_race_fast")).toHaveAttribute(
-      "aria-pressed",
-      "true",
-    )
+    // Then: completion leaves the explicit session target unchanged.
+    await expect(sessionSelector).toHaveValue("conversation_admin_idle")
+    await expect(page.getByTestId("admin-notice")).not.toContainText("Hidden command accepted")
+    assertConsoleClean()
+  })
+
+  test("Hidden guidance targets a selected session without requiring a run", async ({ page }) => {
+    // Given: an idle session with no run remains selectable in Admin.
+    const assertConsoleClean = observeConsole(page)
+    await page.goto("/admin")
+    const sessionSelector = page.getByTestId("admin-conversation-selector")
+    await sessionSelector.selectOption("conversation_admin_idle")
+
+    // When: Admin queues guidance directly for that session.
+    await page.getByTestId("hidden-command-input").fill("IDLE_SESSION_GUIDANCE")
+    await page.getByTestId("send-hidden-command").click()
+
+    // Then: conversation-scoped admission accepts it without a selected execution target.
+    await expect(page.getByTestId("admin-notice")).toContainText("Hidden command accepted")
+    await expect(page.getByTestId("hidden-command-input")).toHaveValue("")
+    await expect(sessionSelector).toHaveValue("conversation_admin_idle")
     assertConsoleClean()
   })
 })

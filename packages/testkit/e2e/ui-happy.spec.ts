@@ -52,21 +52,23 @@ test.describe("Task 16 accessible UI happy paths", () => {
     assertConsoleClean()
   })
 
-  test("Admin inspects a run and sends a model-only hidden command", async ({ page }, testInfo) => {
-    // Given: the Admin inspector loads canonical runs.
+  test("Admin inspects runs and sends a session-owned hidden command", async ({
+    page,
+  }, testInfo) => {
+    // Given: the Admin inspector loads canonical runs and sessions independently.
     const assertConsoleClean = observeConsole(page)
     await page.goto("/admin")
     await expect(page.getByTestId("admin-run-list")).toBeVisible()
     await expect(page.getByTestId("admin-run-projection")).toBeVisible()
+    await expect(page.getByTestId("admin-conversation-selector")).toBeVisible()
 
     // When: Admin submits hidden guidance with the native form.
     const command = page.getByTestId("hidden-command-input")
     await command.fill("ADMIN_ONLY_FIXTURE_GUIDANCE")
     await page.getByTestId("send-hidden-command").click()
 
-    // Then: lifecycle status is visible, command text is cleared, and focus is preserved.
+    // Then: admission status is visible, command text is cleared, and focus is preserved.
     await expect(page.getByTestId("admin-notice")).toContainText("Hidden command accepted")
-    await expect(page.getByTestId("admin-event-ledger")).toContainText("admin.command.applied")
     await expect(command).toHaveValue("")
     await expect(command).toBeFocused()
     await capture(page, testInfo, "admin-inspector-desktop")
