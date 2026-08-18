@@ -13,7 +13,7 @@ import { STATE_WORKFLOW_START_POLICIES } from "../src/state-workflow/client.js"
 import type { StateWorkflowActivities } from "../src/state-workflow/contracts.js"
 import { stateWorkflow } from "../src/state-workflow/workflows.js"
 import type { ApplicationTestContext } from "./application-support.js"
-import { createTestIds, testClock } from "./application-support.js"
+import { createOwnedConversation, createTestIds, testClock } from "./application-support.js"
 import type { SimpleLoopScenario } from "./simple-loop-support.js"
 import { readRunEvidence } from "./simple-loop-support.js"
 
@@ -57,6 +57,7 @@ export const executeStateWorkflowScenario = async (
 ) => {
   const namespace = scenario.namespace
   const ids = createTestIds(namespace)
+  await createOwnedConversation(context, `conversation_${namespace}`)
   const receipt = await createAdmissionService({
     database: context.database,
     clock: testClock,
