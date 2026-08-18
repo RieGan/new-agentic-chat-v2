@@ -74,6 +74,7 @@ describe("tRPC fixed-actor boundary", () => {
   it("returns a durable accepted receipt without executing a runtime when User sends chat", async () => {
     // Given: the fixed User API context and a valid new-run command.
     const { user } = callers("chat_receipt")
+    await user.conversations.create({ conversationId: "conversation_chat_receipt" })
 
     // When: the User admits a chat message.
     const receipt = await user.chat.sendMessage({
@@ -93,9 +94,26 @@ describe("tRPC fixed-actor boundary", () => {
     expect(stored.rows[0]?.count).toBe(1)
   })
 
+  it("creates, lists, and gets an explicit User conversation", async () => {
+    // Given: the fixed User API context and a client-generated branded ID.
+    const { user } = callers("conversation_lifecycle")
+    const conversationId = "conversation_lifecycle"
+
+    // When: the User creates the session and reads both collection and aggregate views.
+    const created = await user.conversations.create({ conversationId })
+    const listed = await user.conversations.list({})
+    const loaded = await user.conversations.get({ conversationId })
+
+    // Then: every shape carries the same client-provided identity without a generated replacement.
+    expect(created.conversationId).toBe(conversationId)
+    expect(listed.conversations.some((item) => item.conversationId === conversationId)).toBe(true)
+    expect(loaded).toEqual({ conversationId, messages: [], runs: [] })
+  })
+
   it("rejects malformed strict input before application admission", async () => {
     // Given: the fixed User caller and an input carrying an unknown field.
     const { user } = callers("malformed")
+    await user.conversations.create({ conversationId: "conversation_malformed" })
     const malformed = {
       kind: "new_run",
       conversationId: "conversation_malformed",
@@ -115,6 +133,7 @@ describe("tRPC fixed-actor boundary", () => {
   it("denies Admin procedures to User context without leaking hidden content", async () => {
     // Given: one run admitted by User and a secret Admin instruction.
     const { admin, user } = callers("actor_denial")
+    await user.conversations.create({ conversationId: "conversation_actor_denial" })
     const receipt = await user.chat.sendMessage({
       kind: "new_run",
       conversationId: "conversation_actor_denial",
@@ -124,16 +143,17 @@ describe("tRPC fixed-actor boundary", () => {
     })
     const secret = "PROVIDER_SECRET_ADMIN_GUIDANCE"
 
-    // When: User invokes the Admin command and Admin invokes it correctly.
+    // When: User invokes the Admin command and Admin targets the persisted session directly.
     const denied = user.admin.command.sendHidden({
-      runId: receipt.runId,
+      conversationId: "conversation_actor_denial",
       instruction: secret,
       expiresAt: "2026-08-17T12:05:00.000Z",
       idempotencyKey: "idempotency_denied_admin",
     })
     await expect(denied).rejects.toMatchObject({ code: "FORBIDDEN" })
+    const adminSessions = await admin.conversations.list({})
     await admin.admin.command.sendHidden({
-      runId: receipt.runId,
+      conversationId: "conversation_actor_denial",
       instruction: secret,
       expiresAt: "2026-08-17T12:05:00.000Z",
       idempotencyKey: "idempotency_allowed_admin",
@@ -141,6 +161,9 @@ describe("tRPC fixed-actor boundary", () => {
     const projection = await user.runs.get({ runId: receipt.runId })
 
     // Then: the User projection and denial serialization contain no hidden instruction.
+    expect(adminSessions.conversations.map((item) => item.conversationId)).toContain(
+      "conversation_actor_denial",
+    )
     expect(projection.viewer).toBe("user")
     expect(JSON.stringify(projection)).not.toContain(secret)
     await denied.catch((error: unknown) => {
@@ -151,6 +174,7 @@ describe("tRPC fixed-actor boundary", () => {
   it("serves every User read procedure from persisted projections", async () => {
     // Given: an admitted run and the seeded skill registry.
     const { services, user } = callers("read_models")
+    await user.conversations.create({ conversationId: "conversation_read_models" })
     const receipt = await user.chat.sendMessage({
       kind: "new_run",
       conversationId: "conversation_read_models",

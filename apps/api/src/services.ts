@@ -1,9 +1,18 @@
-import type {
-  ApprovalDecisionInput,
-  ChatSendMessageInput,
-  SnapshotCursor,
+import {
+  type ApprovalDecisionInput,
+  type ChatSendMessageInput,
+  ConversationCreateInputSchema,
+  ConversationSummarySchema,
+  ConversationsListInputSchema,
+  ConversationsListOutputSchema,
+  parseContract,
+  type SnapshotCursor,
 } from "@agentic-chat/contracts"
-import type { DatabaseClient } from "@agentic-chat/db"
+import {
+  createConversation as createConversationRecord,
+  type DatabaseClient,
+  listConversations as listConversationRecords,
+} from "@agentic-chat/db"
 import {
   type Clock,
   createAdminCommandService,
@@ -29,6 +38,30 @@ export const createApiServices = (dependencies: ApiServiceDependencies) => {
   const approvals = createApprovalService(dependencies)
   const queries = createApiQueryService(dependencies.database)
   return {
+    createConversation: async (input: unknown) => {
+      const parsed = parseContract(ConversationCreateInputSchema, input)
+      const record = await createConversationRecord(dependencies.database, {
+        conversationId: parsed.conversationId,
+        userId: "mvp_user",
+        now: dependencies.clock.now(),
+      })
+      return parseContract(ConversationSummarySchema, {
+        conversationId: record.id,
+        createdAt: record.createdAt.toISOString(),
+        updatedAt: record.updatedAt.toISOString(),
+      })
+    },
+    listConversations: async (input: unknown) => {
+      parseContract(ConversationsListInputSchema, input)
+      const records = await listConversationRecords(dependencies.database, { userId: "mvp_user" })
+      return parseContract(ConversationsListOutputSchema, {
+        conversations: records.map((record) => ({
+          conversationId: record.id,
+          createdAt: record.createdAt.toISOString(),
+          updatedAt: record.updatedAt.toISOString(),
+        })),
+      })
+    },
     sendMessage: (input: ChatSendMessageInput) =>
       admission.admit({
         commandId: dependencies.ids.next("command"),
